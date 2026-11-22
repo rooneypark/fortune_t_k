@@ -1,0 +1,99 @@
+{
+ "_source": "GDD v5 §3.2-3.6, §7, §10 / v5_rules.json",
+ "start_rice": 300,
+ "spin_base": 100,
+ "spin_step": 20,
+ "nudge_ratio": 0.25,
+ "strip_length": 18,
+ "weight_soldier": 4,
+ "weight_hero": 1,
+ "faction_line_atk": 0.15,
+ "max_rank_refund_ratio": 0.5,
+ "rank_max": 3,
+ "rank_absorbs": [
+  0,
+  2,
+  5
+ ],
+ "rank_mult": [
+  1.0,
+  1.6,
+  2.5
+ ],
+ "absorb_same_unit": 2,
+ "absorb_same_class": 1,
+ "jackpot_xp": 4,
+ "respawn_soldier": 5.0,
+ "respawn_hero": 12.0,
+ "respawn_per_rank": 2.0,
+ "castle_hp": 1000,
+ "castle_regen": 0.1,
+ "castle_attack_interval": 1.2,
+ "wave_income_base": 280,
+ "wave_income_step": 20,
+ "wave_clear_bonus": 80,
+ "field_cap_base": 6,
+ "field_cap_costs": [
+  100,
+  140,
+  180,
+  220,
+  260,
+  300
+ ],
+ "hero_quota_base": 3,
+ "hero_quota_costs": [],
+ "hero_lineup_max": 3,
+ "troop_lineup": 4,
+ "bench_size": 8,
+ "waves_per_stage": 10,
+ "judge_wave": 5,
+ "speeds": [
+  1,
+  2,
+  3
+ ],
+ "energy_max": 100,
+ "energy_per_attack": 20,
+ "energy_per_hit": 5,
+ "burn_tick": 0.5,
+ "burn_ratio": 0.2,
+ "slow_ratio": 0.45,
+ "crit_mult": 2.0,
+ "wave_scale": 1.08,
+ "spawn_gap": 0.55,
+ "default_lineup": [],
+ "default_advisor": "",
+ "soldiers_base": [
+  "spear",
+  "shield",
+  "archer",
+  "rider"
+ ],
+ "field": {
+  "left": 70,
+  "right": 954,
+  "spawn_top": 236,
+  "line_y": 810,
+  "ally_top": 830,
+  "ally_bottom": 1150,
+  "castle_y": 1150,
+  "respawn_y": 1160
+ },
+ "visual_boost": 2.4,
+ "rice_to_gold": 2,
+ "start_rice_lord": [
+  [
+   10,
+   20
+  ],
+  [
+   20,
+   20
+  ],
+  [
+   30,
+   20
+  ]
+ ]
+}

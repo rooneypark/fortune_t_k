@@ -1,0 +1,92 @@
+{
+ "_source": "화면-배치표 07-shop / 메타 §3.9. 결제는 개발용 가상 결제 (스토어 연동 전).",
+ "first_double": true,
+ "monthly": {
+  "id": "monthly",
+  "name": "월정액",
+  "desc": "매일 다이아 100 · 30일",
+  "price": 5500,
+  "now": 300,
+  "daily": 100,
+  "days": 30
+ },
+ "diamonds": [
+  {
+   "id": "d60",
+   "amount": 60,
+   "price": 1200
+  },
+  {
+   "id": "d300",
+   "amount": 300,
+   "price": 5900
+  },
+  {
+   "id": "d980",
+   "amount": 980,
+   "price": 19000
+  },
+  {
+   "id": "d1980",
+   "amount": 1980,
+   "price": 38000
+  },
+  {
+   "id": "d3280",
+   "amount": 3280,
+   "price": 59000
+  },
+  {
+   "id": "d6480",
+   "amount": 6480,
+   "price": 119000
+  }
+ ],
+ "gold_daily_limit": 3,
+ "gold": [
+  {
+   "id": "g1",
+   "gold": 10000,
+   "cost": 50
+  },
+  {
+   "id": "g2",
+   "gold": 60000,
+   "cost": 280
+  },
+  {
+   "id": "g3",
+   "gold": 150000,
+   "cost": 650
+  }
+ ],
+ "packages": [
+  {
+   "id": "p_start",
+   "name": "출정 준비 꾸러미",
+   "desc": "모집권 5 · 골드 50,000",
+   "price": 4400,
+   "tickets": 5,
+   "gold": 50000,
+   "limit": 1
+  },
+  {
+   "id": "p_hero",
+   "name": "명장 성장 꾸러미",
+   "desc": "모집권 10 · 다이아 500",
+   "price": 22000,
+   "tickets": 10,
+   "diamond": 500,
+   "limit": 1
+  },
+  {
+   "id": "p_treasure",
+   "name": "보물 상자 묶음",
+   "desc": "보물 상자 5회",
+   "price": 9900,
+   "boxes": 5,
+   "limit": 3
+  }
+ ],
+ "box_cost": 150
+}

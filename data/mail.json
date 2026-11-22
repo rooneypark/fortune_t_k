@@ -1,0 +1,32 @@
+{
+ "_source": "우편 (시안 10-mail)",
+ "welcome": [
+  {
+   "id": "m_welcome",
+   "title": "출시 기념 선물",
+   "body": "운빨삼국에 오신 것을 환영합니다!",
+   "reward": {
+    "diamond": 300
+   },
+   "days": 7
+  },
+  {
+   "id": "m_check",
+   "title": "점검 보상",
+   "body": "불편을 드려 죄송합니다.",
+   "reward": {
+    "gold": 10000
+   },
+   "days": 5
+  },
+  {
+   "id": "m_ticket",
+   "title": "주공 취임 축하",
+   "body": "모집권을 드립니다.",
+   "reward": {
+    "tickets": 2
+   },
+   "days": 14
+  }
+ ]
+}

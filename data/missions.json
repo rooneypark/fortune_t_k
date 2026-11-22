@@ -1,0 +1,222 @@
+{
+ "_source": "콘텐츠-기획-v5 §8",
+ "daily": [
+  {
+   "id": "d_run",
+   "name": "출정 3회",
+   "stat": "runs",
+   "need": 3,
+   "reward": {
+    "gold": 2000
+   },
+   "go": "stage"
+  },
+  {
+   "id": "d_spin",
+   "name": "슬롯 20회 돌리기",
+   "stat": "spins",
+   "need": 20,
+   "reward": {
+    "diamond": 20
+   },
+   "go": "stage"
+  },
+  {
+   "id": "d_absorb",
+   "name": "흡수 5회",
+   "stat": "absorbs",
+   "need": 5,
+   "reward": {
+    "gold": 1500
+   },
+   "go": "stage"
+  },
+  {
+   "id": "d_upgrade",
+   "name": "장수 강화 3회",
+   "stat": "upgrades",
+   "need": 3,
+   "reward": {
+    "gold": 1500
+   },
+   "go": "heroes"
+  },
+  {
+   "id": "d_recruit",
+   "name": "장수 모집 1회",
+   "stat": "recruits",
+   "need": 1,
+   "reward": {
+    "diamond": 20
+   },
+   "go": "recruit"
+  },
+  {
+   "id": "d_all",
+   "name": "일일 임무 모두 완료",
+   "stat": "daily_done",
+   "need": 5,
+   "reward": {
+    "diamond": 30
+   },
+   "go": ""
+  }
+ ],
+ "weekly": [
+  {
+   "id": "w_clear",
+   "name": "스테이지 15회 클리어",
+   "stat": "clears",
+   "need": 15,
+   "reward": {
+    "tickets": 1
+   },
+   "go": "stage"
+  },
+  {
+   "id": "w_jackpot",
+   "name": "3연 대박 10회",
+   "stat": "jackpots",
+   "need": 10,
+   "reward": {
+    "diamond": 50
+   },
+   "go": "stage"
+  },
+  {
+   "id": "w_treasure",
+   "name": "보물 강화 10회",
+   "stat": "treasure_ups",
+   "need": 10,
+   "reward": {
+    "gold": 20000
+   },
+   "go": "heroes"
+  },
+  {
+   "id": "w_kills",
+   "name": "적 500명 처치",
+   "stat": "kills",
+   "need": 500,
+   "reward": {
+    "diamond": 80
+   },
+   "go": "stage"
+  },
+  {
+   "id": "w_days",
+   "name": "일일 임무 완료 5일",
+   "stat": "daily_days",
+   "need": 5,
+   "reward": {
+    "tickets": 1
+   },
+   "go": ""
+  },
+  {
+   "id": "w_all",
+   "name": "주간 임무 모두 완료",
+   "stat": "weekly_done",
+   "need": 5,
+   "reward": {
+    "diamond": 100
+   },
+   "go": ""
+  }
+ ],
+ "achievements": [
+  {
+   "id": "a_ch1",
+   "name": "1장 완료",
+   "stat": "chapter1",
+   "need": 1,
+   "reward": {
+    "diamond": 100
+   },
+   "go": "stage"
+  },
+  {
+   "id": "a_hero10",
+   "name": "장수 10명 수집",
+   "stat": "heroes_owned",
+   "need": 10,
+   "reward": {
+    "diamond": 50
+   },
+   "go": "recruit"
+  },
+  {
+   "id": "a_hero20",
+   "name": "장수 20명 수집",
+   "stat": "heroes_owned",
+   "need": 20,
+   "reward": {
+    "diamond": 100
+   },
+   "go": "recruit"
+  },
+  {
+   "id": "a_star4",
+   "name": "4성 장수 1명",
+   "stat": "star4",
+   "need": 1,
+   "reward": {
+    "diamond": 50
+   },
+   "go": "heroes"
+  },
+  {
+   "id": "a_jack50",
+   "name": "3연 대박 누적 50회",
+   "stat": "jackpots_total",
+   "need": 50,
+   "reward": {
+    "diamond": 100
+   },
+   "go": "stage"
+  },
+  {
+   "id": "a_trait30",
+   "name": "특성 흡수 누적 30회",
+   "stat": "traits_total",
+   "need": 30,
+   "reward": {
+    "diamond": 60
+   },
+   "go": "stage"
+  },
+  {
+   "id": "a_legend",
+   "name": "전설 보물 획득",
+   "stat": "legend_treasure",
+   "need": 1,
+   "reward": {
+    "diamond": 200
+   },
+   "go": "shop"
+  }
+ ],
+ "attendance": [
+  {
+   "gold": 5000
+  },
+  {
+   "diamond": 30
+  },
+  {
+   "boxes": 1
+  },
+  {
+   "gold": 10000
+  },
+  {
+   "diamond": 50
+  },
+  {
+   "tickets": 1
+  },
+  {
+   "diamond": 100
+  }
+ ]
+}

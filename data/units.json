@@ -1,0 +1,1475 @@
+{
+ "_source": "GDD v5 §3.4b, §3.7 / 장수-명단-v5 / 콘텐츠-기획-v5 §3-5 / slice_units.json",
+ "classes": {
+  "inf": {
+   "name": "보병",
+   "spd": 70,
+   "aspd": 0.9,
+   "icon": "class_inf",
+   "hp_k": 1.15,
+   "atk_k": 0.95,
+   "range": 44
+  },
+  "arc": {
+   "name": "궁병",
+   "spd": 62,
+   "aspd": 0.8,
+   "icon": "class_arc",
+   "hp_k": 0.75,
+   "atk_k": 1.1,
+   "range": 250
+  },
+  "cav": {
+   "name": "기병",
+   "spd": 120,
+   "aspd": 1.0,
+   "icon": "class_cav",
+   "hp_k": 0.95,
+   "atk_k": 1.05,
+   "range": 46
+  },
+  "str": {
+   "name": "책사",
+   "spd": 56,
+   "aspd": 0.6,
+   "icon": "class_str",
+   "hp_k": 0.8,
+   "atk_k": 1.15,
+   "range": 230
+  }
+ },
+ "factions": {
+  "wei": {
+   "name": "위",
+   "color": "#3b74d6",
+   "dark": "#1d3f7a"
+  },
+  "shu": {
+   "name": "촉",
+   "color": "#3aa65a",
+   "dark": "#1d5a30"
+  },
+  "wu": {
+   "name": "오",
+   "color": "#d6463b",
+   "dark": "#7a1f1a"
+  },
+  "qun": {
+   "name": "군웅",
+   "color": "#8b4fd0",
+   "dark": "#47246e"
+  }
+ },
+ "rarities": {
+  "soldier": {
+   "name": "병졸",
+   "color": "#8a8f98",
+   "start_star": 1,
+   "tier": 1
+  },
+  "b": {
+   "name": "B",
+   "color": "#9aa4b2",
+   "start_star": 1,
+   "tier": 1.5
+  },
+  "a": {
+   "name": "A",
+   "color": "#3b8fe0",
+   "start_star": 1,
+   "tier": 2
+  },
+  "s": {
+   "name": "S",
+   "color": "#a35be8",
+   "start_star": 2,
+   "tier": 3.5
+  },
+  "ss": {
+   "name": "SS",
+   "color": "#ffc93c",
+   "start_star": 3,
+   "tier": 5
+  }
+ },
+ "soldiers": {
+  "spear": {
+   "name": "창병",
+   "cls": "inf",
+   "tier": "basic",
+   "hp": 300,
+   "atk": 22,
+   "def": 5,
+   "art": "spear",
+   "vs_cav": 1.5,
+   "desc": "긴 창으로 앞줄을 지킨다. 기병에게 1.5배."
+  },
+  "halberd": {
+   "name": "극병",
+   "cls": "inf",
+   "tier": "elite",
+   "hp": 340,
+   "atk": 28,
+   "def": 8,
+   "art": "halberd",
+   "cleave": 0.4,
+   "desc": "넓게 휘두른다. 주변 적에게 40% 피해."
+  },
+  "shield": {
+   "name": "방패병",
+   "cls": "inf",
+   "tier": "basic",
+   "hp": 460,
+   "atk": 12,
+   "def": 25,
+   "art": "shield",
+   "taunt": true,
+   "ranged_resist": 0.6,
+   "desc": "적을 끌어당긴다. 원거리 피해 -40%."
+  },
+  "axe": {
+   "name": "도부수",
+   "cls": "inf",
+   "tier": "elite",
+   "hp": 420,
+   "atk": 24,
+   "def": 18,
+   "art": "axe",
+   "armor_break": 0.3,
+   "desc": "도끼와 방패. 맞은 적 방어 -30%."
+  },
+  "archer": {
+   "name": "궁병",
+   "cls": "arc",
+   "tier": "basic",
+   "hp": 180,
+   "atk": 24,
+   "def": 0,
+   "art": "archer",
+   "desc": "멀리서 쏜다. 붙으면 약하다."
+  },
+  "crossbow": {
+   "name": "노병",
+   "cls": "arc",
+   "tier": "elite",
+   "hp": 200,
+   "atk": 30,
+   "def": 2,
+   "art": "crossbow",
+   "pierce": true,
+   "aspd_k": 0.75,
+   "desc": "느리지만 관통 사격."
+  },
+  "rider": {
+   "name": "경기병",
+   "cls": "cav",
+   "tier": "basic",
+   "hp": 250,
+   "atk": 26,
+   "def": 5,
+   "art": "rider",
+   "backline": true,
+   "desc": "적 궁병과 요술사를 먼저 노린다."
+  },
+  "heavy": {
+   "name": "중기병",
+   "cls": "cav",
+   "tier": "elite",
+   "hp": 420,
+   "atk": 30,
+   "def": 15,
+   "art": "heavy",
+   "first_hit": 1.8,
+   "desc": "느린 돌격. 첫 공격 1.8배."
+  },
+  "fire": {
+   "name": "화공술사",
+   "cls": "str",
+   "tier": "elite",
+   "hp": 200,
+   "atk": 18,
+   "def": 0,
+   "art": "fire",
+   "splash": 0.5,
+   "burn_on_hit": 2.0,
+   "desc": "불꽃 범위 공격. 화상 2초."
+  },
+  "thunder": {
+   "name": "뇌공술사",
+   "cls": "str",
+   "tier": "elite",
+   "hp": 200,
+   "atk": 20,
+   "def": 0,
+   "art": "thunder",
+   "stun_chance": 0.15,
+   "desc": "번개. 15% 확률로 잠깐 기절."
+  }
+ },
+ "heroes": {
+  "zhugeliang": {
+   "name": "제갈량",
+   "fac": "shu",
+   "rarity": "ss",
+   "cls": "str",
+   "troop": "fire",
+   "hp": 1016,
+   "atk": 123,
+   "def": 20,
+   "range": 250,
+   "skill": {
+    "name": "팔진",
+    "desc": "적 무리를 묶어 느리게 하고 피해",
+    "type": "aoe_target",
+    "radius": 170,
+    "mult": 1.6,
+    "slow": 4.0
+   },
+   "art": "zhugeliang",
+   "hue": 0
+  },
+  "guanyu": {
+   "name": "관우",
+   "fac": "shu",
+   "rarity": "s",
+   "cls": "inf",
+   "troop": "spear",
+   "hp": 1202,
+   "atk": 83,
+   "def": 26,
+   "range": 54,
+   "skill": {
+    "name": "청룡참",
+    "desc": "앞의 적을 크게 벤다 (3배)",
+    "type": "line",
+    "length": 180,
+    "width": 120,
+    "mult": 3.0
+   },
+   "art": "guanyu",
+   "hue": 0
+  },
+  "zhaoyun": {
+   "name": "조운",
+   "fac": "shu",
+   "rarity": "s",
+   "cls": "cav",
+   "troop": "rider",
+   "hp": 993,
+   "atk": 92,
+   "def": 20,
+   "range": 56,
+   "skill": {
+    "name": "단기 돌파",
+    "desc": "적진을 뚫고 지나가며 2배 피해",
+    "type": "line",
+    "length": 300,
+    "width": 70,
+    "mult": 2.0
+   },
+   "art": "zhaoyun",
+   "hue": 0
+  },
+  "zhangfei": {
+   "name": "장비",
+   "fac": "shu",
+   "rarity": "a",
+   "cls": "inf",
+   "troop": "halberd",
+   "hp": 943,
+   "atk": 65,
+   "def": 26,
+   "range": 54,
+   "skill": {
+    "name": "장판교 호통",
+    "desc": "주변 적 2초 기절",
+    "type": "stun_aoe",
+    "radius": 130,
+    "mult": 1.0,
+    "stun": 2.0
+   },
+   "art": "zhangfei",
+   "hue": 0
+  },
+  "huangzhong": {
+   "name": "황충",
+   "fac": "shu",
+   "rarity": "a",
+   "cls": "arc",
+   "troop": "archer",
+   "hp": 615,
+   "atk": 75,
+   "def": 20,
+   "range": 270,
+   "skill": {
+    "name": "백발백중",
+    "desc": "가장 강한 적 저격 (4배)",
+    "type": "snipe",
+    "mult": 4.0
+   },
+   "art": "huangzhong",
+   "hue": 0
+  },
+  "liubei": {
+   "name": "유비",
+   "fac": "shu",
+   "rarity": "a",
+   "cls": "cav",
+   "troop": "rider",
+   "hp": 779,
+   "atk": 71,
+   "def": 20,
+   "range": 56,
+   "skill": {
+    "name": "인덕",
+    "desc": "체력이 가장 낮은 아군 35% 회복",
+    "type": "heal_ally",
+    "heal": 0.35
+   },
+   "art": "liubei",
+   "hue": 0
+  },
+  "guanping": {
+   "name": "관평",
+   "fac": "shu",
+   "rarity": "b",
+   "cls": "inf",
+   "troop": "spear",
+   "hp": 857,
+   "atk": 58,
+   "def": 26,
+   "range": 54,
+   "skill": {
+    "name": "부자 협공",
+    "desc": "앞의 적을 베어 2배 피해",
+    "type": "line",
+    "length": 150,
+    "width": 100,
+    "mult": 2.0
+   },
+   "art": "guanping",
+   "hue": 0
+  },
+  "caocao": {
+   "name": "조조",
+   "fac": "wei",
+   "rarity": "ss",
+   "cls": "cav",
+   "troop": "heavy",
+   "hp": 1206,
+   "atk": 112,
+   "def": 20,
+   "range": 56,
+   "skill": {
+    "name": "패왕의 호령",
+    "desc": "아군 전체 공격 +30% (5초)",
+    "type": "ally_all",
+    "atk_mult": 1.3,
+    "time": 5.0
+   },
+   "art": "caocao",
+   "hue": 0
+  },
+  "simayi": {
+   "name": "사마의",
+   "fac": "wei",
+   "rarity": "s",
+   "cls": "cav",
+   "troop": "heavy",
+   "hp": 993,
+   "atk": 92,
+   "def": 20,
+   "range": 56,
+   "skill": {
+    "name": "매복",
+    "desc": "무작위 적 셋에게 낙석",
+    "type": "random_strike",
+    "count": 3,
+    "mult": 2.2,
+    "radius": 70
+   },
+   "art": "simayi",
+   "hue": 0
+  },
+  "zhangliao": {
+   "name": "장료",
+   "fac": "wei",
+   "rarity": "s",
+   "cls": "cav",
+   "troop": "rider",
+   "hp": 993,
+   "atk": 92,
+   "def": 20,
+   "range": 56,
+   "skill": {
+    "name": "요래 돌격",
+    "desc": "가장 많은 적에게 돌진",
+    "type": "aoe_target",
+    "radius": 140,
+    "mult": 2.0
+   },
+   "art": "zhangliao",
+   "hue": 0
+  },
+  "xiahoudun": {
+   "name": "하후돈",
+   "fac": "wei",
+   "rarity": "a",
+   "cls": "inf",
+   "troop": "spear",
+   "hp": 943,
+   "atk": 65,
+   "def": 26,
+   "range": 54,
+   "skill": {
+    "name": "발목 분노",
+    "desc": "체력 30% 회복, 4초간 공격 +40%",
+    "type": "self_buff",
+    "heal": 0.3,
+    "atk_mult": 1.4,
+    "time": 4.0
+   },
+   "art": "xiahoudun",
+   "hue": 0
+  },
+  "xiahouyuan": {
+   "name": "하후연",
+   "fac": "wei",
+   "rarity": "a",
+   "cls": "arc",
+   "troop": "crossbow",
+   "hp": 615,
+   "atk": 75,
+   "def": 20,
+   "range": 270,
+   "skill": {
+    "name": "질풍 사격",
+    "desc": "빠른 화살 연사 (5발)",
+    "type": "multi_shot",
+    "count": 5,
+    "mult": 1.2
+   },
+   "art": "xiahouyuan",
+   "hue": 0
+  },
+  "xuchu": {
+   "name": "허저",
+   "fac": "wei",
+   "rarity": "a",
+   "cls": "inf",
+   "troop": "axe",
+   "hp": 943,
+   "atk": 65,
+   "def": 26,
+   "range": 54,
+   "skill": {
+    "name": "호치",
+    "desc": "받는 피해 크게 감소 (5초 -50%)",
+    "type": "self_guard",
+    "dmg_taken": 0.5,
+    "time": 5.0
+   },
+   "art": "xuchu",
+   "hue": 0
+  },
+  "caoren": {
+   "name": "조인",
+   "fac": "wei",
+   "rarity": "b",
+   "cls": "inf",
+   "troop": "shield",
+   "hp": 857,
+   "atk": 58,
+   "def": 26,
+   "range": 54,
+   "skill": {
+    "name": "철벽 수비",
+    "desc": "주변 아군 받는 피해 -20% (4초)",
+    "type": "ally_aura",
+    "radius": 160,
+    "dmg_taken": 0.8,
+    "time": 4.0
+   },
+   "art": "caoren",
+   "hue": 0
+  },
+  "zhanghe": {
+   "name": "장합",
+   "fac": "wei",
+   "rarity": "b",
+   "cls": "inf",
+   "troop": "halberd",
+   "hp": 857,
+   "atk": 58,
+   "def": 26,
+   "range": 54,
+   "skill": {
+    "name": "교묘한 진퇴",
+    "desc": "빠르게 베고 물러남 (2배)",
+    "type": "snipe",
+    "mult": 2.0
+   },
+   "art": "zhanghe",
+   "hue": 0
+  },
+  "sunce": {
+   "name": "손책",
+   "fac": "wu",
+   "rarity": "ss",
+   "cls": "cav",
+   "troop": "heavy",
+   "hp": 1206,
+   "atk": 112,
+   "def": 20,
+   "range": 56,
+   "skill": {
+    "name": "소패왕",
+    "desc": "처치할 때마다 공격 속도 상승 (6초간 +40%)",
+    "type": "self_buff",
+    "aspd_mult": 1.4,
+    "atk_mult": 1.2,
+    "time": 6.0,
+    "heal": 0.1
+   },
+   "art": "sunce",
+   "hue": 0
+  },
+  "sunquan": {
+   "name": "손권",
+   "fac": "wu",
+   "rarity": "s",
+   "cls": "inf",
+   "troop": "shield",
+   "hp": 1202,
+   "atk": 83,
+   "def": 26,
+   "range": 54,
+   "skill": {
+    "name": "강동 진형",
+    "desc": "주변 아군 받는 피해 -25% (4초)",
+    "type": "ally_aura",
+    "radius": 200,
+    "dmg_taken": 0.75,
+    "time": 4.0
+   },
+   "art": "sunquan",
+   "hue": 0
+  },
+  "zhouyu": {
+   "name": "주유",
+   "fac": "wu",
+   "rarity": "s",
+   "cls": "str",
+   "troop": "fire",
+   "hp": 836,
+   "atk": 101,
+   "def": 20,
+   "range": 250,
+   "skill": {
+    "name": "적벽 화공",
+    "desc": "넓은 범위 화상 (4초)",
+    "type": "aoe_target",
+    "radius": 150,
+    "mult": 1.5,
+    "burn": 4.0
+   },
+   "art": "zhouyu",
+   "hue": 0
+  },
+  "luxun": {
+   "name": "육손",
+   "fac": "wu",
+   "rarity": "s",
+   "cls": "str",
+   "troop": "fire",
+   "hp": 836,
+   "atk": 101,
+   "def": 20,
+   "range": 250,
+   "skill": {
+    "name": "연영 화공",
+    "desc": "일렬로 불길",
+    "type": "line",
+    "length": 420,
+    "width": 90,
+    "mult": 1.8,
+    "burn": 3.0
+   },
+   "art": "luxun",
+   "hue": 0
+  },
+  "ganning": {
+   "name": "감녕",
+   "fac": "wu",
+   "rarity": "a",
+   "cls": "inf",
+   "troop": "axe",
+   "hp": 943,
+   "atk": 65,
+   "def": 26,
+   "range": 54,
+   "skill": {
+    "name": "백기 야습",
+    "desc": "치명 일격 (3배)",
+    "type": "snipe",
+    "mult": 3.0
+   },
+   "art": "ganning",
+   "hue": 0
+  },
+  "taishici": {
+   "name": "태사자",
+   "fac": "wu",
+   "rarity": "a",
+   "cls": "arc",
+   "troop": "archer",
+   "hp": 615,
+   "atk": 75,
+   "def": 20,
+   "range": 270,
+   "skill": {
+    "name": "신궁",
+    "desc": "관통 화살 (2.5배)",
+    "type": "line",
+    "length": 500,
+    "width": 50,
+    "mult": 2.5
+   },
+   "art": "taishici",
+   "hue": 0
+  },
+  "huanggai": {
+   "name": "황개",
+   "fac": "wu",
+   "rarity": "b",
+   "cls": "str",
+   "troop": "fire",
+   "hp": 596,
+   "atk": 71,
+   "def": 20,
+   "range": 250,
+   "skill": {
+    "name": "고육계",
+    "desc": "체력을 써서 주변 적에게 화염",
+    "type": "stun_aoe",
+    "radius": 140,
+    "mult": 1.6,
+    "stun": 0.0,
+    "burn": 3.0,
+    "self_cost": 0.1
+   },
+   "art": "huanggai",
+   "hue": 0
+  },
+  "handang": {
+   "name": "한당",
+   "fac": "wu",
+   "rarity": "b",
+   "cls": "arc",
+   "troop": "archer",
+   "hp": 559,
+   "atk": 68,
+   "def": 20,
+   "range": 270,
+   "skill": {
+    "name": "노장의 화살",
+    "desc": "가장 가까운 적 셋에게 화살",
+    "type": "multi_shot",
+    "count": 3,
+    "mult": 1.3
+   },
+   "art": "handang",
+   "hue": 0
+  },
+  "lvbu": {
+   "name": "여포",
+   "fac": "qun",
+   "rarity": "ss",
+   "cls": "inf",
+   "troop": "halberd",
+   "hp": 1460,
+   "atk": 102,
+   "def": 26,
+   "range": 54,
+   "skill": {
+    "name": "무쌍 돌격",
+    "desc": "일직선으로 돌진하며 큰 피해",
+    "type": "line",
+    "length": 360,
+    "width": 110,
+    "mult": 3.2
+   },
+   "art": "lvbu",
+   "hue": 0
+  },
+  "diaochan": {
+   "name": "초선",
+   "fac": "qun",
+   "rarity": "s",
+   "cls": "str",
+   "troop": "thunder",
+   "hp": 836,
+   "atk": 101,
+   "def": 20,
+   "range": 250,
+   "skill": {
+    "name": "경국",
+    "desc": "적 하나를 잠시 홀려 멈추게 함 (4초)",
+    "type": "charm",
+    "time": 4.0,
+    "mult": 1.0
+   },
+   "art": "diaochan",
+   "hue": 0
+  },
+  "dongzhuo": {
+   "name": "동탁",
+   "fac": "qun",
+   "rarity": "a",
+   "cls": "inf",
+   "troop": "shield",
+   "hp": 943,
+   "atk": 65,
+   "def": 26,
+   "range": 54,
+   "skill": {
+    "name": "폭정",
+    "desc": "주변 적 공격 감소, 자신 체력 회복",
+    "type": "debuff_aoe",
+    "radius": 160,
+    "enemy_atk": 0.7,
+    "time": 5.0,
+    "heal": 0.25
+   },
+   "art": "dongzhuo",
+   "hue": 0
+  },
+  "yuanshao": {
+   "name": "원소",
+   "fac": "qun",
+   "rarity": "a",
+   "cls": "arc",
+   "troop": "crossbow",
+   "hp": 615,
+   "atk": 75,
+   "def": 20,
+   "range": 270,
+   "skill": {
+    "name": "사세삼공",
+    "desc": "아군 궁병 공격 상승 (6초)",
+    "type": "ally_class",
+    "cls": "arc",
+    "atk_mult": 1.35,
+    "time": 6.0
+   },
+   "art": "yuanshao",
+   "hue": 0
+  },
+  "zhangjiao_h": {
+   "name": "장각",
+   "fac": "qun",
+   "rarity": "b",
+   "cls": "str",
+   "troop": "thunder",
+   "hp": 596,
+   "atk": 71,
+   "def": 20,
+   "range": 250,
+   "skill": {
+    "name": "태평요술",
+    "desc": "낙뢰 3발",
+    "type": "random_strike",
+    "count": 3,
+    "mult": 1.8,
+    "radius": 80,
+    "stun": 0.8
+   },
+   "art": "zhangjiao_h",
+   "hue": 0
+  },
+  "menghuo": {
+   "name": "맹획",
+   "fac": "qun",
+   "rarity": "b",
+   "cls": "inf",
+   "troop": "axe",
+   "hp": 857,
+   "atk": 58,
+   "def": 26,
+   "range": 54,
+   "skill": {
+    "name": "남만왕",
+    "desc": "받는 피해 감소 (5초 -40%)",
+    "type": "self_guard",
+    "dmg_taken": 0.6,
+    "time": 5.0
+   },
+   "art": "menghuo",
+   "hue": 0
+  },
+  "huaman": {
+   "name": "화만",
+   "fac": "qun",
+   "rarity": "b",
+   "cls": "arc",
+   "troop": "crossbow",
+   "hp": 559,
+   "atk": 68,
+   "def": 20,
+   "range": 270,
+   "skill": {
+    "name": "비도",
+    "desc": "가장 약한 적에게 2.5배",
+    "type": "snipe",
+    "mult": 2.5
+   },
+   "art": "huaman",
+   "hue": 0
+  },
+  "zuoci": {
+   "name": "좌자",
+   "fac": "qun",
+   "rarity": "b",
+   "cls": "str",
+   "troop": "thunder",
+   "hp": 596,
+   "atk": 71,
+   "def": 20,
+   "range": 250,
+   "skill": {
+    "name": "둔갑",
+    "desc": "적 하나를 잠시 멈추게 함 (3초)",
+    "type": "charm",
+    "time": 3.0,
+    "mult": 1.0
+   },
+   "art": "zuoci",
+   "hue": 0
+  },
+  "yuji": {
+   "name": "우길",
+   "fac": "qun",
+   "rarity": "b",
+   "cls": "str",
+   "troop": "thunder",
+   "hp": 596,
+   "atk": 71,
+   "def": 20,
+   "range": 250,
+   "skill": {
+    "name": "부적",
+    "desc": "체력이 가장 낮은 아군 30% 회복",
+    "type": "heal_ally",
+    "heal": 0.3
+   },
+   "art": "yuji",
+   "hue": 0
+  }
+ },
+ "advisors": {
+  "zhugeliang": {
+   "name": "한 줄 다시",
+   "desc": "꽝일 때 릴 하나를 공짜로 다시 돌린다",
+   "type": "respin"
+  },
+  "zhouyu": {
+   "name": "동남풍",
+   "desc": "꽝일 때 한 칸 밀기를 공짜로 1회",
+   "type": "free_nudge"
+  },
+  "luxun": {
+   "name": "화계",
+   "desc": "꽝일 때 릴 하나를 공짜로 다시 돌린다",
+   "type": "respin"
+  },
+  "diaochan": {
+   "name": "연환계",
+   "desc": "다음 돌리기 장수 칸 확률 2배",
+   "type": "hero_boost"
+  },
+  "zhangjiao_h": {
+   "name": "태평도",
+   "desc": "꽝일 때 릴 하나를 공짜로 다시 돌린다",
+   "type": "respin"
+  },
+  "zuoci": {
+   "name": "둔갑술",
+   "desc": "다음 돌리기 장수 칸 확률 2배",
+   "type": "hero_boost"
+  },
+  "yuji": {
+   "name": "기우",
+   "desc": "꽝일 때 한 칸 밀기를 공짜로 1회",
+   "type": "free_nudge"
+  },
+  "huanggai": {
+   "name": "화선",
+   "desc": "꽝일 때 한 칸 밀기를 공짜로 1회",
+   "type": "free_nudge"
+  }
+ },
+ "traits": {
+  "inf": [
+   {
+    "id": "iron",
+    "name": "철벽",
+    "desc": "받는 피해 -15%",
+    "dmg_taken": 0.85
+   },
+   {
+    "id": "taunt",
+    "name": "도발",
+    "desc": "근처 적이 먼저 노림",
+    "taunt": true
+   },
+   {
+    "id": "tough",
+    "name": "강골",
+    "desc": "최대 체력 +20%",
+    "hp": 1.2
+   }
+  ],
+  "arc": [
+   {
+    "id": "longbow",
+    "name": "장궁",
+    "desc": "사거리 +40",
+    "range": 40
+   },
+   {
+    "id": "rapid",
+    "name": "속사",
+    "desc": "공격 속도 +20%",
+    "aspd": 1.2
+   },
+   {
+    "id": "pierce",
+    "name": "관통",
+    "desc": "공격이 뒤의 적 1명까지 맞음",
+    "pierce": true
+   }
+  ],
+  "cav": [
+   {
+    "id": "gallop",
+    "name": "질주",
+    "desc": "이동 속도 +30%",
+    "spd": 1.3
+   },
+   {
+    "id": "charge",
+    "name": "돌격",
+    "desc": "첫 공격 피해 ×2",
+    "first_hit": 2.0
+   },
+   {
+    "id": "raid",
+    "name": "기습",
+    "desc": "적 원거리·책사를 먼저 노림",
+    "backline": true
+   }
+  ],
+  "str": [
+   {
+    "id": "wit",
+    "name": "지략",
+    "desc": "기력 획득 +40%",
+    "energy": 1.4
+   },
+   {
+    "id": "fire",
+    "name": "화공",
+    "desc": "공격에 작은 범위 피해(50%)",
+    "splash": 0.5
+   },
+   {
+    "id": "heal",
+    "name": "의술",
+    "desc": "6초마다 근처 아군 체력 5% 회복",
+    "heal_aura": 0.05
+   }
+  ]
+ },
+ "synergies": [
+  {
+   "id": "inf",
+   "kind": "class",
+   "key": "inf",
+   "need": 3,
+   "name": "보병",
+   "desc": "보병 받는 피해 -15%",
+   "dmg_taken": 0.85
+  },
+  {
+   "id": "arc",
+   "kind": "class",
+   "key": "arc",
+   "need": 3,
+   "name": "궁병",
+   "desc": "궁병 공격 속도 +20%",
+   "aspd": 1.2
+  },
+  {
+   "id": "cav",
+   "kind": "class",
+   "key": "cav",
+   "need": 2,
+   "name": "기병",
+   "desc": "기병 이동 +30%, 공격 +10%",
+   "spd": 1.3,
+   "atk": 1.1
+  },
+  {
+   "id": "str",
+   "kind": "class",
+   "key": "str",
+   "need": 2,
+   "name": "책사",
+   "desc": "책사 기력 획득 +40%",
+   "energy": 1.4
+  },
+  {
+   "id": "wei2",
+   "kind": "faction",
+   "key": "wei",
+   "need": 2,
+   "name": "위",
+   "desc": "공격 +12%",
+   "atk": 1.12
+  },
+  {
+   "id": "wei4",
+   "kind": "faction",
+   "key": "wei",
+   "need": 4,
+   "name": "위 4",
+   "desc": "공격 +25%",
+   "atk": 1.116
+  },
+  {
+   "id": "shu2",
+   "kind": "faction",
+   "key": "shu",
+   "need": 2,
+   "name": "촉",
+   "desc": "받는 피해 -10%",
+   "dmg_taken": 0.9
+  },
+  {
+   "id": "shu4",
+   "kind": "faction",
+   "key": "shu",
+   "need": 4,
+   "name": "촉 4",
+   "desc": "받는 피해 -20%",
+   "dmg_taken": 0.889
+  },
+  {
+   "id": "wu2",
+   "kind": "faction",
+   "key": "wu",
+   "need": 2,
+   "name": "오",
+   "desc": "공격에 화상 (3초)",
+   "burn_on_hit": 3.0
+  },
+  {
+   "id": "wu4",
+   "kind": "faction",
+   "key": "wu",
+   "need": 4,
+   "name": "오 4",
+   "desc": "화상 피해 2배",
+   "burn_mult": 2.0
+  },
+  {
+   "id": "qun2",
+   "kind": "faction",
+   "key": "qun",
+   "need": 2,
+   "name": "군웅",
+   "desc": "치명타 +15%",
+   "crit": 0.15
+  },
+  {
+   "id": "qun4",
+   "kind": "faction",
+   "key": "qun",
+   "need": 4,
+   "name": "군웅 4",
+   "desc": "치명타 +25%",
+   "crit": 0.1
+  }
+ ],
+ "bonds": [
+  {
+   "name": "도원결의",
+   "heroes": [
+    "liubei",
+    "guanyu",
+    "zhangfei"
+   ],
+   "need": 3,
+   "desc": "공격 +15%, 받는 피해 -10%",
+   "atk": 1.15,
+   "dmg_taken": 0.9
+  },
+  {
+   "name": "도원 형제",
+   "heroes": [
+    "guanyu",
+    "zhangfei"
+   ],
+   "need": 2,
+   "desc": "공격 +10%",
+   "atk": 1.1
+  },
+  {
+   "name": "오호대장",
+   "heroes": [
+    "guanyu",
+    "zhangfei",
+    "zhaoyun",
+    "huangzhong"
+   ],
+   "need": 3,
+   "desc": "3명 공격 +10%",
+   "atk": 1.1
+  },
+  {
+   "name": "부자",
+   "heroes": [
+    "guanyu",
+    "guanping"
+   ],
+   "need": 2,
+   "desc": "공격 +15%",
+   "atk": 1.15
+  },
+  {
+   "name": "수어지교",
+   "heroes": [
+    "liubei",
+    "zhugeliang"
+   ],
+   "need": 2,
+   "desc": "기력 획득 +30%",
+   "energy": 1.3
+  },
+  {
+   "name": "위의 기둥",
+   "heroes": [
+    "caocao",
+    "xiahoudun",
+    "xiahouyuan",
+    "caoren"
+   ],
+   "need": 3,
+   "desc": "체력 +15%",
+   "hp": 1.15
+  },
+  {
+   "name": "호위",
+   "heroes": [
+    "caocao",
+    "xuchu"
+   ],
+   "need": 2,
+   "desc": "받는 피해 -15%",
+   "dmg_taken": 0.85
+  },
+  {
+   "name": "오자양장",
+   "heroes": [
+    "zhangliao",
+    "zhanghe"
+   ],
+   "need": 2,
+   "desc": "이동 속도 +20%",
+   "spd": 1.2
+  },
+  {
+   "name": "소패왕과 대도독",
+   "heroes": [
+    "sunce",
+    "zhouyu"
+   ],
+   "need": 2,
+   "desc": "공격 속도 +20%",
+   "aspd": 1.2
+  },
+  {
+   "name": "강동의 호랑이",
+   "heroes": [
+    "sunquan",
+    "sunce"
+   ],
+   "need": 2,
+   "desc": "받는 피해 -8%",
+   "dmg_taken": 0.92
+  },
+  {
+   "name": "적벽의 불",
+   "heroes": [
+    "zhouyu",
+    "huanggai",
+    "luxun"
+   ],
+   "need": 2,
+   "desc": "화상 피해 +50%",
+   "burn_mult": 1.5
+  },
+  {
+   "name": "강동 명장",
+   "heroes": [
+    "ganning",
+    "taishici",
+    "handang"
+   ],
+   "need": 2,
+   "desc": "치명타 +20%",
+   "crit": 0.2
+  },
+  {
+   "name": "인중여포",
+   "heroes": [
+    "lvbu",
+    "diaochan"
+   ],
+   "need": 2,
+   "desc": "공격 +30%",
+   "atk": 1.3
+  },
+  {
+   "name": "폭군과 명문",
+   "heroes": [
+    "dongzhuo",
+    "yuanshao"
+   ],
+   "need": 2,
+   "desc": "체력 +20%",
+   "hp": 1.2
+  },
+  {
+   "name": "남만",
+   "heroes": [
+    "menghuo",
+    "huaman"
+   ],
+   "need": 2,
+   "desc": "체력 +20%",
+   "hp": 1.2
+  },
+  {
+   "name": "방사",
+   "heroes": [
+    "zuoci",
+    "yuji",
+    "zhangjiao_h"
+   ],
+   "need": 2,
+   "desc": "기력 획득 +25%",
+   "energy": 1.25
+  },
+  {
+   "name": "태평도",
+   "heroes": [
+    "zhangjiao_h"
+   ],
+   "need": 1,
+   "soldier": "thunder",
+   "soldier_need": 2,
+   "desc": "기술 범위 +30%",
+   "skill_radius": 1.3
+  }
+ ],
+ "enemies": {
+  "mob": {
+   "name": "황건 잡병",
+   "hp": 120,
+   "atk": 8,
+   "spd": 55,
+   "def": 0,
+   "range": 40,
+   "art": "enemy_mob",
+   "scale": 0.92
+  },
+  "sword": {
+   "name": "황건 검병",
+   "hp": 240,
+   "atk": 16,
+   "spd": 55,
+   "def": 5,
+   "range": 40,
+   "art": "enemy_sword"
+  },
+  "spear": {
+   "name": "황건 창병",
+   "hp": 220,
+   "atk": 20,
+   "spd": 55,
+   "def": 5,
+   "range": 46,
+   "art": "enemy_spear",
+   "vs_cav": 1.5
+  },
+  "archer": {
+   "name": "황건 궁병",
+   "hp": 170,
+   "atk": 18,
+   "spd": 55,
+   "def": 0,
+   "range": 220,
+   "aspd": 0.8,
+   "art": "enemy_archer"
+  },
+  "shield": {
+   "name": "황건 방패병",
+   "hp": 420,
+   "atk": 12,
+   "spd": 46,
+   "def": 25,
+   "range": 40,
+   "ranged_resist": 0.5,
+   "art": "enemy_shield"
+  },
+  "rider": {
+   "name": "황건 기병",
+   "hp": 220,
+   "atk": 18,
+   "spd": 105,
+   "def": 5,
+   "range": 46,
+   "beh": "assassin",
+   "cls": "cav",
+   "art": "enemy_rider"
+  },
+  "mage": {
+   "name": "요술사",
+   "hp": 220,
+   "atk": 10,
+   "spd": 46,
+   "def": 0,
+   "range": 170,
+   "aspd": 0.6,
+   "beh": "support",
+   "heal": 60,
+   "art": "enemy_mage"
+  },
+  "brute": {
+   "name": "괴력 장수",
+   "hp": 1600,
+   "atk": 45,
+   "spd": 46,
+   "def": 10,
+   "range": 50,
+   "elite": true,
+   "art": "enemy_brute",
+   "scale": 1.25
+  }
+ },
+ "bosses": {
+  "zhangjiao": {
+   "name": "장각",
+   "hp": 9000,
+   "atk": 55,
+   "spd": 28,
+   "def": 20,
+   "range": 200,
+   "aspd": 0.7,
+   "art": "enemy_zhangjiao",
+   "scale": 1.0,
+   "mech": "lightning",
+   "rule": "6초마다 낙뢰를 떨어뜨린다"
+  },
+  "chengyuanzhi": {
+   "name": "정원지",
+   "hp": 4200,
+   "atk": 48,
+   "spd": 40,
+   "def": 15,
+   "range": 52,
+   "art": "enemy_brute",
+   "scale": 1.45,
+   "mech": "stomp",
+   "rule": "주변을 내리찍어 아군을 기절시킨다"
+  },
+  "lvbu_b": {
+   "name": "여포",
+   "hp": 15000,
+   "atk": 80,
+   "spd": 60,
+   "def": 30,
+   "range": 60,
+   "art": "lvbu",
+   "scale": 1.6,
+   "mech": "stomp",
+   "rule": "돌진해 주변을 쓸어 버린다"
+  },
+  "jiling": {
+   "name": "기령",
+   "hp": 24000,
+   "atk": 90,
+   "spd": 30,
+   "def": 60,
+   "range": 56,
+   "art": "enemy_shield",
+   "scale": 1.6,
+   "mech": "stomp",
+   "rule": "단단한 방패 진형, 받는 피해 감소"
+  },
+  "yanwen": {
+   "name": "안량·문추",
+   "hp": 38000,
+   "atk": 120,
+   "spd": 44,
+   "def": 40,
+   "range": 60,
+   "art": "enemy_rider",
+   "scale": 1.6,
+   "mech": "stomp",
+   "rule": "두 장수가 번갈아 돌격한다"
+  },
+  "caoren": {
+   "name": "조인",
+   "hp": 62000,
+   "atk": 150,
+   "spd": 30,
+   "def": 80,
+   "range": 56,
+   "art": "enemy_shield",
+   "scale": 1.6,
+   "mech": "stomp",
+   "rule": "철벽: 받는 피해를 일부 되돌린다"
+  },
+  "xiahouyuan_b": {
+   "name": "하후연",
+   "hp": 90000,
+   "atk": 200,
+   "spd": 34,
+   "def": 50,
+   "range": 260,
+   "art": "xiahouyuan",
+   "scale": 1.6,
+   "mech": "lightning",
+   "rule": "멀리서 화살비를 퍼붓는다"
+  }
+ },
+ "enemy_aspd": 0.85,
+ "boss_mech": {
+  "lightning": {
+   "every": 6.0,
+   "warn": 1.2,
+   "radius": 90,
+   "dmg": 140,
+   "stun": 1.0
+  },
+  "stomp": {
+   "every": 7.0,
+   "warn": 0.9,
+   "radius": 150,
+   "dmg": 120,
+   "stun": 1.2
+  }
+ }
+}

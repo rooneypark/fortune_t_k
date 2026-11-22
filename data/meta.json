@@ -1,0 +1,666 @@
+{
+ "_source": "메타-성장-과금 §3-4, 콘텐츠-기획-v5 §6, §10",
+ "start": {
+  "gold": 15750,
+  "diamond": 480,
+  "tickets": 1,
+  "heroes": [],
+  "troops": [
+   "spear",
+   "shield",
+   "archer",
+   "rider"
+  ]
+ },
+ "recruit": {
+  "cost_one": 300,
+  "cost_ten": 2700,
+  "odds": {
+   "b": 55.0,
+   "a": 30.0,
+   "s": 12.0,
+   "ss": 3.0
+  },
+  "pity": 60,
+  "pity_grade": "ss",
+  "ten_guarantee": "s",
+  "tutorial_hero": "guanyu"
+ },
+ "gold_recruit": {
+  "cost_one": 10000,
+  "daily_max": 5,
+  "odds": {
+   "b": 75.0,
+   "a": 21.0,
+   "s": 3.7,
+   "ss": 0.3
+  }
+ },
+ "soldier_recruit": {
+  "cost_one": 3000,
+  "cost_ten": 27000,
+  "odds": {
+   "basic": 70.0,
+   "elite": 30.0
+  },
+  "max_star_gold": 500
+ },
+ "star": {
+  "max": 6,
+  "cards": [
+   1,
+   2,
+   3,
+   5,
+   8
+  ],
+  "mult": 1.15
+ },
+ "upgrade": {
+  "per_level": 0.04,
+  "cost_base": 50,
+  "cost_exp": 1.5,
+  "cap_per_star": 10
+ },
+ "barracks": {
+  "per_level": 0.03,
+  "cost_base": 30,
+  "cost_exp": 1.45,
+  "cap_per_lord_lv": 2
+ },
+ "treasure": {
+  "slots": [
+   "weapon",
+   "armor",
+   "charm"
+  ],
+  "slot_names": {
+   "weapon": "무기",
+   "armor": "갑옷",
+   "charm": "보패"
+  },
+  "main_stat": {
+   "weapon": "atk",
+   "armor": "def",
+   "charm": "hp"
+  },
+  "main_base": {
+   "weapon": {
+    "common": 8,
+    "rare": 14,
+    "epic": 24,
+    "legend": 40
+   },
+   "armor": {
+    "common": 6,
+    "rare": 10,
+    "epic": 18,
+    "legend": 30
+   },
+   "charm": {
+    "common": 80,
+    "rare": 140,
+    "epic": 240,
+    "legend": 400
+   }
+  },
+  "main_per_level": 0.1,
+  "max_level": 15,
+  "sub_slots": {
+   "common": 1,
+   "rare": 2,
+   "epic": 3,
+   "legend": 4
+  },
+  "sub_unlock": [
+   5,
+   10,
+   15
+  ],
+  "sub_kinds": [
+   {
+    "id": "crit",
+    "name": "치명타 확률",
+    "v": 0.03,
+    "fmt": "pct"
+   },
+   {
+    "id": "crit_dmg",
+    "name": "치명타 피해",
+    "v": 0.1,
+    "fmt": "pct"
+   },
+   {
+    "id": "aspd",
+    "name": "공격 속도",
+    "v": 0.04,
+    "fmt": "pct"
+   },
+   {
+    "id": "energy",
+    "name": "기력 획득",
+    "v": 0.06,
+    "fmt": "pct"
+   },
+   {
+    "id": "guard",
+    "name": "받는 피해 감소",
+    "v": 0.03,
+    "fmt": "pct"
+   },
+   {
+    "id": "spd",
+    "name": "이동 속도",
+    "v": 0.05,
+    "fmt": "pct"
+   }
+  ],
+  "level_cost_base": 120,
+  "level_cost_exp": 1.6,
+  "dismantle": {
+   "common": 100,
+   "rare": 300,
+   "epic": 1000,
+   "legend": 3000
+  },
+  "dismantle_refund": 0.5,
+  "bag_max": 200,
+  "box": {
+   "cost": 150,
+   "odds": {
+    "common": 50.0,
+    "rare": 35.0,
+    "epic": 12.0,
+    "legend": 3.0
+   },
+   "pity": 30
+  },
+  "list": [
+   {
+    "id": "weapon_common_0",
+    "name": "낡은 창",
+    "slot": "weapon",
+    "rarity": "common",
+    "exclusive": ""
+   },
+   {
+    "id": "weapon_common_1",
+    "name": "철검",
+    "slot": "weapon",
+    "rarity": "common",
+    "exclusive": ""
+   },
+   {
+    "id": "weapon_common_2",
+    "name": "사냥활",
+    "slot": "weapon",
+    "rarity": "common",
+    "exclusive": ""
+   },
+   {
+    "id": "weapon_common_3",
+    "name": "나무 방망이",
+    "slot": "weapon",
+    "rarity": "common",
+    "exclusive": ""
+   },
+   {
+    "id": "weapon_rare_0",
+    "name": "강철 장창",
+    "slot": "weapon",
+    "rarity": "rare",
+    "exclusive": ""
+   },
+   {
+    "id": "weapon_rare_1",
+    "name": "환두대도",
+    "slot": "weapon",
+    "rarity": "rare",
+    "exclusive": ""
+   },
+   {
+    "id": "weapon_rare_2",
+    "name": "각궁",
+    "slot": "weapon",
+    "rarity": "rare",
+    "exclusive": ""
+   },
+   {
+    "id": "weapon_rare_3",
+    "name": "철퇴",
+    "slot": "weapon",
+    "rarity": "rare",
+    "exclusive": ""
+   },
+   {
+    "id": "weapon_rare_4",
+    "name": "쌍검",
+    "slot": "weapon",
+    "rarity": "rare",
+    "exclusive": ""
+   },
+   {
+    "id": "weapon_epic_0",
+    "name": "사모",
+    "slot": "weapon",
+    "rarity": "epic",
+    "exclusive": ""
+   },
+   {
+    "id": "weapon_epic_1",
+    "name": "칠성검",
+    "slot": "weapon",
+    "rarity": "epic",
+    "exclusive": ""
+   },
+   {
+    "id": "weapon_epic_2",
+    "name": "양유기의 활",
+    "slot": "weapon",
+    "rarity": "epic",
+    "exclusive": ""
+   },
+   {
+    "id": "weapon_epic_3",
+    "name": "철태궁",
+    "slot": "weapon",
+    "rarity": "epic",
+    "exclusive": ""
+   },
+   {
+    "id": "weapon_epic_4",
+    "name": "방천극 모조품",
+    "slot": "weapon",
+    "rarity": "epic",
+    "exclusive": ""
+   },
+   {
+    "id": "weapon_legend_0",
+    "name": "청룡언월도",
+    "slot": "weapon",
+    "rarity": "legend",
+    "exclusive": "guanyu"
+   },
+   {
+    "id": "weapon_legend_1",
+    "name": "장팔사모",
+    "slot": "weapon",
+    "rarity": "legend",
+    "exclusive": "zhangfei"
+   },
+   {
+    "id": "weapon_legend_2",
+    "name": "방천화극",
+    "slot": "weapon",
+    "rarity": "legend",
+    "exclusive": "lvbu"
+   },
+   {
+    "id": "weapon_legend_3",
+    "name": "의천검",
+    "slot": "weapon",
+    "rarity": "legend",
+    "exclusive": "caocao"
+   },
+   {
+    "id": "weapon_legend_4",
+    "name": "고정도",
+    "slot": "weapon",
+    "rarity": "legend",
+    "exclusive": "sunquan"
+   },
+   {
+    "id": "weapon_legend_5",
+    "name": "백우선",
+    "slot": "weapon",
+    "rarity": "legend",
+    "exclusive": "zhugeliang"
+   },
+   {
+    "id": "armor_common_0",
+    "name": "가죽 갑옷",
+    "slot": "armor",
+    "rarity": "common",
+    "exclusive": ""
+   },
+   {
+    "id": "armor_common_1",
+    "name": "천 두건",
+    "slot": "armor",
+    "rarity": "common",
+    "exclusive": ""
+   },
+   {
+    "id": "armor_common_2",
+    "name": "나무 방패",
+    "slot": "armor",
+    "rarity": "common",
+    "exclusive": ""
+   },
+   {
+    "id": "armor_common_3",
+    "name": "짚신",
+    "slot": "armor",
+    "rarity": "common",
+    "exclusive": ""
+   },
+   {
+    "id": "armor_rare_0",
+    "name": "쇄자갑",
+    "slot": "armor",
+    "rarity": "rare",
+    "exclusive": ""
+   },
+   {
+    "id": "armor_rare_1",
+    "name": "철투구",
+    "slot": "armor",
+    "rarity": "rare",
+    "exclusive": ""
+   },
+   {
+    "id": "armor_rare_2",
+    "name": "등패",
+    "slot": "armor",
+    "rarity": "rare",
+    "exclusive": ""
+   },
+   {
+    "id": "armor_rare_3",
+    "name": "전투화",
+    "slot": "armor",
+    "rarity": "rare",
+    "exclusive": ""
+   },
+   {
+    "id": "armor_rare_4",
+    "name": "무명 망토",
+    "slot": "armor",
+    "rarity": "rare",
+    "exclusive": ""
+   },
+   {
+    "id": "armor_epic_0",
+    "name": "명광개",
+    "slot": "armor",
+    "rarity": "epic",
+    "exclusive": ""
+   },
+   {
+    "id": "armor_epic_1",
+    "name": "사자 투구",
+    "slot": "armor",
+    "rarity": "epic",
+    "exclusive": ""
+   },
+   {
+    "id": "armor_epic_2",
+    "name": "철갑 망토",
+    "slot": "armor",
+    "rarity": "epic",
+    "exclusive": ""
+   },
+   {
+    "id": "armor_epic_3",
+    "name": "호랑이 가죽 갑옷",
+    "slot": "armor",
+    "rarity": "epic",
+    "exclusive": ""
+   },
+   {
+    "id": "armor_epic_4",
+    "name": "비늘 갑옷",
+    "slot": "armor",
+    "rarity": "epic",
+    "exclusive": ""
+   },
+   {
+    "id": "armor_legend_0",
+    "name": "백은 갑옷",
+    "slot": "armor",
+    "rarity": "legend",
+    "exclusive": "zhaoyun"
+   },
+   {
+    "id": "armor_legend_1",
+    "name": "서량 철갑",
+    "slot": "armor",
+    "rarity": "legend",
+    "exclusive": ""
+   },
+   {
+    "id": "armor_legend_2",
+    "name": "적토마 안장",
+    "slot": "armor",
+    "rarity": "legend",
+    "exclusive": ""
+   },
+   {
+    "id": "armor_legend_3",
+    "name": "강동 수군 갑옷",
+    "slot": "armor",
+    "rarity": "legend",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_common_0",
+    "name": "옥 구슬",
+    "slot": "charm",
+    "rarity": "common",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_common_1",
+    "name": "나무 부적",
+    "slot": "charm",
+    "rarity": "common",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_common_2",
+    "name": "작은 북",
+    "slot": "charm",
+    "rarity": "common",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_common_3",
+    "name": "호리병",
+    "slot": "charm",
+    "rarity": "common",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_rare_0",
+    "name": "청동 인장",
+    "slot": "charm",
+    "rarity": "rare",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_rare_1",
+    "name": "병법 죽간",
+    "slot": "charm",
+    "rarity": "rare",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_rare_2",
+    "name": "향로",
+    "slot": "charm",
+    "rarity": "rare",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_rare_3",
+    "name": "비취 패",
+    "slot": "charm",
+    "rarity": "rare",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_rare_4",
+    "name": "깃발",
+    "slot": "charm",
+    "rarity": "rare",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_epic_0",
+    "name": "손자병법",
+    "slot": "charm",
+    "rarity": "epic",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_epic_1",
+    "name": "태평요술서",
+    "slot": "charm",
+    "rarity": "epic",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_epic_2",
+    "name": "옥새 모조품",
+    "slot": "charm",
+    "rarity": "epic",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_epic_3",
+    "name": "황금 사자상",
+    "slot": "charm",
+    "rarity": "epic",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_epic_4",
+    "name": "전국옥새 조각",
+    "slot": "charm",
+    "rarity": "epic",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_legend_0",
+    "name": "맹덕신서",
+    "slot": "charm",
+    "rarity": "legend",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_legend_1",
+    "name": "적벽 동남풍 부적",
+    "slot": "charm",
+    "rarity": "legend",
+    "exclusive": ""
+   },
+   {
+    "id": "charm_legend_2",
+    "name": "팔진도",
+    "slot": "charm",
+    "rarity": "legend",
+    "exclusive": "zhugeliang"
+   }
+  ]
+ },
+ "lord": {
+  "exp_base": 200,
+  "exp_exp": 1.3,
+  "max": 40,
+  "unlocks": [
+   [
+    1,
+    "로비·출정·장수 목록"
+   ],
+   [
+    3,
+    "편성·모집"
+   ],
+   [
+    5,
+    "편성 칸 +1 (7명)·보물"
+   ],
+   [
+    8,
+    "병영 강화·노병"
+   ],
+   [
+    10,
+    "상점·임무"
+   ],
+   [
+    12,
+    "군웅대전"
+   ],
+   [
+    15,
+    "도사·편성 칸 +1 (8명)"
+   ],
+   [
+    20,
+    "강화 상한 해제"
+   ]
+  ],
+  "lineup_slots": [
+   [
+    1,
+    6
+   ],
+   [
+    5,
+    7
+   ],
+   [
+    15,
+    8
+   ]
+  ]
+ },
+ "power": {
+  "atk": 10,
+  "def": 8,
+  "hp": 1
+ },
+ "arena": {
+  "free_per_day": 5,
+  "extra_cost": 20,
+  "extra_max": 5,
+  "win_honor": 20,
+  "lose_honor": 5,
+  "dup_honor": 30,
+  "shop": [
+   {
+    "id": "card",
+    "kind": "hero_card",
+    "cost": {
+     "b": 60,
+     "a": 100,
+     "s": 150,
+     "ss": 250
+    },
+    "limit": 5
+   },
+   {
+    "id": "treasure",
+    "kind": "treasure",
+    "rarity": "rare",
+    "cost": 200,
+    "limit": 1
+   },
+   {
+    "id": "tickets",
+    "kind": "tickets",
+    "amount": 1,
+    "cost": 150,
+    "limit": 2
+   },
+   {
+    "id": "gold",
+    "kind": "gold",
+    "amount": 10000,
+    "cost": 30,
+    "limit": 5
+   }
+  ]
+ }
+}

@@ -1,0 +1,12 @@
+# Godot
+.godot/
+/export/
+/build/
+*.tmp
+# Python
+__pycache__/
+# 다시 만들 수 있는 것 (tools/layout_map.sh)
+design/ux/배치-지도/raw/
+# 개인 세션 기록
+production/session-state/
+production/session-logs/
