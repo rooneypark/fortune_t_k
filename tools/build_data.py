@@ -465,59 +465,37 @@ shop = {
         {"id": "p_treasure", "name": "보물 재료 묶음", "desc": "희귀 재료 15개", "price": 9900, "mats": 15, "limit": 3}],
 }
 dump("shop.json", shop)
+# 보상은 금 · 군량 · 재료뿐이다 (개편 §13: 재화는 금 하나).
 missions = {
     "_source": "콘텐츠-기획-v5 §8",
     "daily": [
         {"id": "d_run", "name": "출정 3회", "stat": "runs", "need": 3, "reward": {"gold": 2000}, "go": "stage"},
-        {"id": "d_spin", "name": "슬롯 20회 돌리기", "stat": "spins", "need": 20, "reward": {"diamond": 20}, "go": "stage"},
+        {"id": "d_spin", "name": "슬롯 20회 돌리기", "stat": "spins", "need": 20, "reward": {"gold": 600}, "go": "stage"},
         {"id": "d_absorb", "name": "흡수 5회", "stat": "absorbs", "need": 5, "reward": {"gold": 1500}, "go": "stage"},
         {"id": "d_upgrade", "name": "같은 병종 흡수 3회", "stat": "star_absorbs", "need": 3, "reward": {"gold": 1500}, "go": "stage"},
-        {"id": "d_recruit", "name": "새 장수 · 병종 1명 얻기", "stat": "new_units", "need": 1, "reward": {"diamond": 20}, "go": "stage"},
-        {"id": "d_all", "name": "일일 임무 모두 완료", "stat": "daily_done", "need": 5, "reward": {"diamond": 30}, "go": ""}],
+        {"id": "d_recruit", "name": "새 장수 · 병종 1명 얻기", "stat": "new_units", "need": 1, "reward": {"gold": 600}, "go": "stage"},
+        {"id": "d_all", "name": "일일 임무 모두 완료", "stat": "daily_done", "need": 5, "reward": {"gold": 900}, "go": ""}],
     "weekly": [
-        {"id": "w_clear", "name": "스테이지 15회 클리어", "stat": "clears", "need": 15, "reward": {"tickets": 1}, "go": "stage"},
-        {"id": "w_jackpot", "name": "잭팟 3회", "stat": "jackpots", "need": 3, "reward": {"diamond": 50}, "go": "stage"},
+        {"id": "w_clear", "name": "스테이지 15회 클리어", "stat": "clears", "need": 15, "reward": {"rice": 10}, "go": "stage"},
+        {"id": "w_jackpot", "name": "잭팟 3회", "stat": "jackpots", "need": 3, "reward": {"gold": 1500}, "go": "stage"},
         {"id": "w_treasure", "name": "장비 강화 10회", "stat": "treasure_ups", "need": 10, "reward": {"gold": 20000}, "go": "heroes"},
-        {"id": "w_kills", "name": "적 500명 처치", "stat": "kills", "need": 500, "reward": {"diamond": 80}, "go": "stage"},
-        {"id": "w_days", "name": "일일 임무 완료 5일", "stat": "daily_days", "need": 5, "reward": {"tickets": 1}, "go": ""},
-        {"id": "w_all", "name": "주간 임무 모두 완료", "stat": "weekly_done", "need": 5, "reward": {"diamond": 100}, "go": ""}],
+        {"id": "w_kills", "name": "적 500명 처치", "stat": "kills", "need": 500, "reward": {"gold": 2400}, "go": "stage"},
+        {"id": "w_days", "name": "일일 임무 완료 5일", "stat": "daily_days", "need": 5, "reward": {"rice": 10}, "go": ""},
+        {"id": "w_all", "name": "주간 임무 모두 완료", "stat": "weekly_done", "need": 5, "reward": {"gold": 3000}, "go": ""}],
     "achievements": [
-        {"id": "a_ch1", "name": "스테이지 1 클리어", "stat": "chapter1", "need": 1, "reward": {"diamond": 100}, "go": "stage"},
-        {"id": "a_hero10", "name": "장수 10명 수집", "stat": "heroes_owned", "need": 10, "reward": {"diamond": 50}, "go": "heroes"},
-        {"id": "a_hero20", "name": "장수 20명 수집", "stat": "heroes_owned", "need": 20, "reward": {"diamond": 100}, "go": "heroes"},
-        {"id": "a_star4", "name": "4성 장수 1명", "stat": "star4", "need": 1, "reward": {"diamond": 50}, "go": "heroes"},
-        {"id": "a_jack50", "name": "잭팟 누적 20회", "stat": "jackpots_total", "need": 20, "reward": {"diamond": 100}, "go": "stage"},
-        {"id": "a_trait30", "name": "속성 흡수 누적 30회", "stat": "traits_total", "need": 30, "reward": {"diamond": 60}, "go": "stage"},
-        {"id": "a_legend", "name": "전설 보물 획득", "stat": "legend_treasure", "need": 1, "reward": {"diamond": 200}, "go": "heroes"}],
-    "attendance": [{"gold": 5000}, {"diamond": 30}, {"mats": 3}, {"gold": 10000}, {"diamond": 50}, {"tickets": 1}, {"diamond": 100}],
+        {"id": "a_ch1", "name": "스테이지 1 클리어", "stat": "chapter1", "need": 1, "reward": {"gold": 3000}, "go": "stage"},
+        {"id": "a_hero10", "name": "장수 10명 수집", "stat": "heroes_owned", "need": 10, "reward": {"gold": 1500}, "go": "heroes"},
+        {"id": "a_hero20", "name": "장수 20명 수집", "stat": "heroes_owned", "need": 20, "reward": {"gold": 3000}, "go": "heroes"},
+        {"id": "a_star4", "name": "4성 장수 1명", "stat": "star4", "need": 1, "reward": {"gold": 1500}, "go": "heroes"},
+        {"id": "a_jack50", "name": "잭팟 누적 20회", "stat": "jackpots_total", "need": 20, "reward": {"gold": 3000}, "go": "stage"},
+        {"id": "a_trait30", "name": "속성 흡수 누적 30회", "stat": "traits_total", "need": 30, "reward": {"gold": 1800}, "go": "stage"},
+        {"id": "a_legend", "name": "전설 보물 획득", "stat": "legend_treasure", "need": 1, "reward": {"gold": 6000}, "go": "heroes"}],
+    "attendance": [{"gold": 5000}, {"gold": 900}, {"mats": 3}, {"gold": 10000}, {"gold": 1500}, {"rice": 10}, {"gold": 3000}],
 }
-# 재화는 금 하나 (개편 §13): 예전 보상의 다이아는 금(x30), 모집권은 군량(x10)으로 바꾼다.
-def to_gold(rw):
-    out = {}
-    for k, v in rw.items():
-        if k == "diamond":
-            out["gold"] = out.get("gold", 0) + v * 30
-        elif k == "tickets":
-            out["rice"] = out.get("rice", 0) + v * 10
-        else:
-            out[k] = out.get(k, 0) + v if isinstance(v, (int, float)) else v
-    return out
-for _grp in ("daily", "weekly", "achievements"):
-    for _m in missions[_grp]:
-        _m["reward"] = to_gold(_m["reward"])
-missions["attendance"] = [to_gold(r) for r in missions["attendance"]]
 dump("missions.json", missions)
-pass_ = {"_source": "콘텐츠-기획-v5 §9", "season": 1, "name": "황건 토벌 시즌", "days": 28, "tiers": 30, "exp_per_tier": 1000,
-         "premium_price": 11000, "free": [], "premium": []}
-for t in range(1, 31):
-    pass_["free"].append({"tickets": 1} if t % 5 == 0 else ({"gold": 3000 + 200 * t} if t % 2 else {"diamond": 10}))
-    pass_["premium"].append({"mats": 3} if t in (10, 20) else ({"skin": "시즌 한정 외형"} if t == 30 else {"diamond": 20 + (t % 3) * 20}))
-# pass removed
 mail = {"_source": "우편 (시안 10-mail)", "welcome": [
-    {"id": "m_welcome", "title": "출시 기념 선물", "body": "운빨삼국에 오신 것을 환영합니다!", "reward": {"diamond": 300}, "days": 7},
+    {"id": "m_welcome", "title": "출시 기념 선물", "body": "운빨삼국에 오신 것을 환영합니다!", "reward": {"gold": 9000}, "days": 7},
     {"id": "m_check", "title": "점검 보상", "body": "불편을 드려 죄송합니다.", "reward": {"gold": 10000}, "days": 5},
-    {"id": "m_ticket", "title": "주공 취임 축하", "body": "군량을 드립니다.", "reward": {"tickets": 2}, "days": 14}]}
-for _m in mail["welcome"]:
-    _m["reward"] = to_gold(_m["reward"])
+    {"id": "m_ticket", "title": "주공 취임 축하", "body": "군량을 드립니다.", "reward": {"rice": 20}, "days": 14}]}
 dump("mail.json", mail)
 print("ok", len(heroes), "heroes", len(treasures), "treasures")
