@@ -14,17 +14,22 @@ signal skill_cast(f: Fighter)
 signal wave_done
 signal boss_spawned(f: Fighter)
 
-const LEFT := 70.0
-const RIGHT := 954.0
-const SPAWN_Y := 236.0
-const LINE_Y := 810.0
-const ALLY_TOP := 840.0
-const ALLY_BOTTOM := 1150.0
-const WALL_Y := 1160.0
+# 가로 전장 (2026-11-23): 왼쪽에 성벽, 오른쪽에서 적이 온다. 가운데 띠(공터)에서만 싸우고
+# 띠의 위아래는 배경이다. 좌표는 이 노드 안의 px (1024 x 1328).
+const BAND_TOP := 640.0
+const BAND_BOTTOM := 1180.0
+## 성벽 선: 적이 여기까지 오면 성을 친다.
+const WALL_X := 104.0
+## 아군 자리의 오른쪽 끝 (교전선).
+const LINE_X := 500.0
+## 적이 나오는 오른쪽 끝.
+const SPAWN_X := 1030.0
+const LEFT := WALL_X
+const RIGHT := 1000.0
 
 var run: RunState
 var profile: Dictionary = {}
-var chapter_hue := 0.0
+var stage_hue := 0.0
 var allies: Array[Fighter] = []
 var enemies: Array[Fighter] = []
 var fighting := false
@@ -57,7 +62,7 @@ func _init() -> void:
 func setup(r: RunState, prof: Dictionary) -> void:
 	run = r
 	profile = prof
-	chapter_hue = float(DB.chapter(r.chapter).get("hue", 0.0))
+	stage_hue = float(DB.stage_def(r.stage).get("hue", 0.0))
 	set_process(true)
 
 
@@ -110,47 +115,30 @@ func _make_ally(u: UnitState) -> Fighter:
 	return f
 
 
+## Stats and effects of an ally: 성급 · 군주 레벨 · 보물 (MetaRules.unit_stats) and the
+## troop's own feature + the account's 속성 (MetaRules.unit_fx). Read again on every
+## sync, so a 성급 or 속성 gained by absorbing shows at once.
 func _apply_stats(f: Fighter) -> void:
 	var u := f.unit
 	var cdef: Dictionary = DB.units["classes"].get(f.cls, {})
-	var st: Dictionary
 	var d := DB.unit_def(u.id)
-	if u.is_hero():
-		st = MetaRules.hero_stats(profile, u.id)
-		f.skill = d.get("skill", {})
-		f.reach = float(d.get("range", cdef.get("range", 44)))
-	else:
-		st = MetaRules.soldier_stats(profile, u.id)
-		f.skill = {}
-		f.reach = float(cdef.get("range", 44))
-	var k := u.rank_mult()
+	var troop := DB.soldier(DB.troop_of(u.id))
+	var st := MetaRules.unit_stats(profile, u.id)
+	var fx := MetaRules.unit_fx(profile, u.id)
+	f.skill = d.get("skill", {}) if u.is_hero() else {}
+	f.ctr = DB.ctr_of(u.id)
+	f.reach = float(d.get("range", cdef.get("range", 44))) + float(fx.get("range", 0.0))
 	var old_ratio := f.ratio() if f.max_hp > 1.0 else 1.0
-	f.atk = float(st["atk"]) * k
-	f.def = float(st["def"])
-	f.max_hp = float(st["hp"]) * k
-	f.crit = 0.05 + float(st.get("crit", 0.0))
-	f.crit_dmg = float(st.get("crit_dmg", 0.0))
-	f.aspd = float(cdef.get("aspd", 1.0)) * float(d.get("aspd_k", 1.0)) * (1.0 + float(st.get("aspd", 0.0)))
-	f.spd = float(cdef.get("spd", 60))
-	f.energy_k = 1.0 + float(st.get("energy", 0.0))
-	f.flags = {"taunt": bool(d.get("taunt", false)), "backline": bool(d.get("backline", false)),
-		"pierce": bool(d.get("pierce", false)), "ranged_resist": float(d.get("ranged_resist", 1.0)),
-		"vs_cav": float(d.get("vs_cav", 1.0)), "heal_aura": float(d.get("heal_aura", 0.0)), "splash": 0.0,
-		"dmg_taken": 1.0 - float(st.get("guard", 0.0))}
-	for tid in u.traits:
-		var t := DB.trait_def(tid)
-		if t.has("dmg_taken"): f.flags["dmg_taken"] *= float(t["dmg_taken"])
-		if t.has("taunt"): f.flags["taunt"] = true
-		if t.has("hp"): f.max_hp *= float(t["hp"])
-		if t.has("range"): f.reach += float(t["range"])
-		if t.has("aspd"): f.aspd *= float(t["aspd"])
-		if t.has("pierce"): f.flags["pierce"] = true
-		if t.has("spd"): f.spd *= float(t["spd"])
-		if t.has("first_hit"): f.flags["first_hit"] = float(t["first_hit"])
-		if t.has("backline"): f.flags["backline"] = true
-		if t.has("energy"): f.energy_k *= float(t["energy"])
-		if t.has("splash"): f.flags["splash"] = float(t["splash"])
-		if t.has("heal_aura"): f.flags["heal_aura"] = maxf(float(f.flags["heal_aura"]), float(t["heal_aura"]))
+	f.atk = float(st["atk"])
+	f.def = float(st["def"]) + float(fx.get("def_add", 0.0))
+	f.max_hp = float(st["hp"]) * float(fx.get("hp", 1.0))
+	f.crit = 0.05 + float(st.get("crit", 0.0)) + float(fx.get("crit", 0.0))
+	f.crit_dmg = float(st.get("crit_dmg", 0.0)) + float(fx.get("crit_dmg", 0.0))
+	f.aspd = float(cdef.get("aspd", 1.0)) * float(troop.get("aspd_k", 1.0)) * (1.0 + float(st.get("aspd", 0.0))) * float(fx.get("aspd", 1.0))
+	f.spd = float(cdef.get("spd", 60)) * float(fx.get("spd", 1.0))
+	f.energy_k = (1.0 + float(st.get("energy", 0.0))) * float(fx.get("energy", 1.0))
+	f.flags = fx.duplicate()
+	f.flags["dmg_taken"] = float(fx.get("dmg_taken", 1.0)) * (1.0 - float(st.get("guard", 0.0)))
 	f.ranged = f.reach > 100.0
 	if f.ranged:
 		f.reach *= 1.3
@@ -170,7 +158,7 @@ func _apply_synergy() -> void:
 			fac_n[f.fac] = int(fac_n.get(f.fac, 0)) + 1
 			ids[f.id] = true
 	for f in allies:
-		var m := {"syn_atk": 1.0, "syn_dt": 1.0, "syn_aspd": 1.0, "syn_spd": 1.0, "syn_energy": 1.0, "syn_crit": 0.0, "burn": 0.0, "burn_mult": 1.0}
+		var m := {"syn_atk": 1.0, "syn_dt": 1.0, "syn_aspd": 1.0, "syn_spd": 1.0, "syn_energy": 1.0, "syn_crit": 0.0, "syn_burn": 0.0, "burn_mult": 1.0}
 		for s: Dictionary in active_synergies():
 			var applies: bool = (s["kind"] == "class" and f.cls == s["key"]) or (s["kind"] == "faction" and f.fac == s["key"]) or s["kind"] == "bond" and (s["heroes"] as Array).has(f.id)
 			if not applies:
@@ -181,10 +169,8 @@ func _apply_synergy() -> void:
 			if s.has("spd"): m["syn_spd"] *= float(s["spd"])
 			if s.has("energy"): m["syn_energy"] *= float(s["energy"])
 			if s.has("crit"): m["syn_crit"] += float(s["crit"])
-			if s.has("burn_on_hit"): m["burn"] = float(s["burn_on_hit"])
+			if s.has("burn_on_hit"): m["syn_burn"] = float(s["burn_on_hit"])
 			if s.has("burn_mult"): m["burn_mult"] = float(s["burn_mult"])
-		var fb := float(run.faction_buff.get(f.fac, 0.0)) if f.unit.is_hero() else 0.0
-		m["syn_atk"] *= 1.0 + fb
 		for k: String in m:
 			f.flags[k] = m[k]
 
@@ -216,16 +202,19 @@ func active_synergies() -> Array:
 	return out
 
 
-## A free standing spot in the ally zone: melee in front, ranged behind.
+## A free standing spot in the ally zone: melee in front (right, near the line),
+## ranged behind (left, near the wall). Rows fan out from the middle of the band.
 func free_spot(cls: String) -> Vector2:
-	var rows: Array = [910.0, 1000.0] if cls == "inf" or cls == "cav" else [1080.0, 1000.0]
-	var cols := [512.0, 400.0, 624.0, 288.0, 736.0, 176.0, 848.0]
-	for y: float in rows:
-		for x: float in cols:
+	var front := cls == "inf" or cls == "cav" or cls == "pike"
+	var cols: Array = [430.0, 340.0, 250.0, 170.0] if front else [190.0, 270.0, 350.0, 430.0]
+	var mid := (BAND_TOP + BAND_BOTTOM) * 0.5 + 20.0
+	var rows := [mid, mid - 100.0, mid + 100.0, mid - 200.0, mid + 200.0]
+	for x: float in cols:
+		for y: float in rows:
 			var p := Vector2(x, y)
 			if _spot_free(p):
 				return p
-	return Vector2(_rng.randf_range(200, 820), _rng.randf_range(ALLY_TOP + 40, ALLY_BOTTOM - 20))
+	return Vector2(_rng.randf_range(WALL_X + 60, LINE_X - 40), _rng.randf_range(BAND_TOP + 60, BAND_BOTTOM - 20))
 
 
 func _spot_free(p: Vector2) -> bool:
@@ -236,11 +225,11 @@ func _spot_free(p: Vector2) -> bool:
 
 
 func clamp_zone(p: Vector2) -> Vector2:
-	return Vector2(clampf(p.x, LEFT + 40, RIGHT - 40), clampf(p.y, ALLY_TOP + 20, ALLY_BOTTOM))
+	return Vector2(clampf(p.x, WALL_X + 50, LINE_X - 20), clampf(p.y, BAND_TOP + 50, BAND_BOTTOM - 10))
 
 
 func in_zone(p: Vector2) -> bool:
-	return p.y >= LINE_Y - 20 and p.y <= ALLY_BOTTOM + 30 and p.x > LEFT - 40 and p.x < RIGHT + 40
+	return p.x >= WALL_X - 20 and p.x <= LINE_X + 30 and p.y > BAND_TOP - 20 and p.y < BAND_BOTTOM + 40
 
 
 func fighter_at(p: Vector2) -> Fighter:
@@ -275,7 +264,7 @@ func set_ghost(g: Dictionary) -> void:
 
 func start_wave() -> void:
 	var w := run.current_wave()
-	_wave_mult = DB.stage_mult(run.chapter, run.stage) * pow(float(DB.rules["wave_scale"]), run.wave)
+	_wave_mult = DB.stage_mult(run.stage, run.diff) * pow(float(DB.rules["wave_scale"]), run.wave)
 	_queue.clear()
 	var main: Array = []
 	for pair: Array in w["list"]:
@@ -325,7 +314,7 @@ func _spawn(q: Dictionary) -> void:
 	f.side = 1
 	f.id = id
 	f.art = String(d.get("art", "enemy_mob"))
-	f.hue = float(d.get("hue", 0.0)) + (chapter_hue if not is_boss and f.art.begins_with("enemy_") and f.art != "enemy_zhangjiao" else 0.0)
+	f.hue = float(d.get("hue", 0.0)) + (stage_hue if not is_boss and f.art.begins_with("enemy_") and f.art != "enemy_zhangjiao" else 0.0)
 	f.height = Art.target_h(f.art) * float(d.get("scale", 1.0))
 	var m := _wave_mult
 	f.max_hp = float(d["hp"]) * m
@@ -339,19 +328,22 @@ func _spawn(q: Dictionary) -> void:
 		f.reach = maxf(f.reach, 50.0)
 	f.aspd = float(d.get("aspd", DB.units["enemy_aspd"]))
 	f.cls = String(d.get("cls", ""))
+	f.ctr = String(d.get("ctr", f.cls))
 	f.flags = {"beh": String(d.get("beh", "")), "heal": float(d.get("heal", 0)), "ranged_resist": float(d.get("ranged_resist", 1.0)),
-		"vs_cav": float(d.get("vs_cav", 1.0)), "dmg_taken": 1.0}
+		"dmg_taken": 1.0, "backline": String(d.get("beh", "")) == "assassin"}
 	f.boss = is_boss
 	f.elite = bool(d.get("elite", false))
 	f.mech = String(d.get("mech", ""))
 	f.mech_t = 3.0
 	if bool(q.get("flank", false)):
-		var left := _rng.randf() < 0.5
-		f.pos = Vector2(LEFT - 20 if left else RIGHT + 20, _rng.randf_range(520, 640))
+		# 기습: 띠의 위나 아래에서, 교전선 바로 오른쪽으로 들어온다
+		var up := _rng.randf() < 0.5
+		f.pos = Vector2(_rng.randf_range(LINE_X + 80, LINE_X + 260), BAND_TOP - 10 if up else BAND_BOTTOM + 10)
 	else:
-		f.pos = Vector2(_rng.randf_range(LEFT + 50, RIGHT - 50), SPAWN_Y + _rng.randf_range(-10, 30))
+		f.pos = Vector2(SPAWN_X + _rng.randf_range(-10, 40), _rng.randf_range(BAND_TOP + 50, BAND_BOTTOM - 20))
 		if is_boss:
-			f.pos.x = 512
+			f.pos.y = (BAND_TOP + BAND_BOTTOM) * 0.5 + 30.0
+	f.flip = true
 	f.pop = 0.25
 	f.cd = _rng.randf_range(0.2, 0.8)
 	enemies.append(f)
@@ -489,6 +481,20 @@ func _nearest(from: Fighter, list: Array, max_d: float, pred: Callable = Callabl
 	return best
 
 
+## Whom [param f] goes for: 후열 노림(backline) = the nearest ranged opponent first;
+## an enemy near a 도발(taunt) ally goes for that ally; otherwise the nearest.
+func _pick_target(f: Fighter, opponents: Array) -> Fighter:
+	if bool(f.flags.get("backline", false)):
+		var back := _nearest(f, opponents, 1e9, func(o: Fighter) -> bool: return o.ranged)
+		if back != null:
+			return back
+	if f.side == 1:
+		var taunter := _nearest(f, opponents, 260.0, func(o: Fighter) -> bool: return bool(o.flags.get("taunt", false)))
+		if taunter != null:
+			return taunter
+	return _nearest(f, opponents, 1e9)
+
+
 const ATTACK_ANIM_LOCK := 0.45
 
 
@@ -516,6 +522,7 @@ func _unit_ai(f: Fighter, opponents: Array, dt: float) -> void:
 					if o.alive() and o.pos.distance_to(f.pos) < 220.0:
 						o.hp = minf(o.max_hp, o.hp + o.max_hp * ha)
 						_text(o.pos + Vector2(0, -o.height), "+" + str(int(o.max_hp * ha)), Color("#7cff7c"), 24)
+						_fx.append({"kind": "heal", "pos": o.pos + Vector2(0, -o.height * 0.6), "t": 0.0, "life": 0.5, "color": Color("#7cff7c")})
 	else:
 		if f.boss and f.mech != "":
 			_boss_mech(f, dt)
@@ -528,9 +535,9 @@ func _unit_ai(f: Fighter, opponents: Array, dt: float) -> void:
 						o.hp = minf(o.max_hp, o.hp + float(f.flags["heal"]) * _wave_mult)
 						_fx.append({"kind": "ring", "pos": o.pos, "t": 0.0, "life": 0.4, "color": Color("#7cff7c"), "r": 40.0})
 
-	# 대상이 없거나 죽었으면 즉시 가장 가까운 적을 찾는다
+	# 대상이 없거나 죽었으면 즉시 다음 대상을 찾는다 (후열 노림 · 도발 포함)
 	if f.target == null or not f.target.alive():
-		f.target = _nearest(f, opponents, 1e9)
+		f.target = _pick_target(f, opponents)
 
 	if f.target != null:
 		var tg := f.target
@@ -542,7 +549,7 @@ func _unit_ai(f: Fighter, opponents: Array, dt: float) -> void:
 				_attack(f, tg)
 			return
 		# 이동 중에는 더 가까운 적이 나타나면 그쪽으로 선회
-		var closest := _nearest(f, opponents, 1e9)
+		var closest := _pick_target(f, opponents)
 		if closest != null and closest != tg and f.pos.distance_to(closest.pos) < d - 1.0:
 			f.target = closest
 			tg = closest
@@ -569,11 +576,13 @@ func _unit_ai(f: Fighter, opponents: Array, dt: float) -> void:
 			f.set_action("idle")
 			f.flip = false
 		return
-	if f.pos.y < WALL_Y - (f.reach if f.ranged else 0.0) * 0.6:
-		f.pos.y += f.spd_now() * dt
+	if f.pos.x > WALL_X + 30.0 + (f.reach if f.ranged else 0.0) * 0.6:
+		f.pos.x -= f.spd_now() * dt
+		f.pos.y = clampf(f.pos.y, BAND_TOP + 30, BAND_BOTTOM)
 		f.set_action("walk")
-		f.flip = false
+		f.flip = true
 	else:
+		f.flip = true
 		f.set_action("attack")
 		f.castle_t -= dt
 		if f.castle_t <= 0.0:
@@ -582,7 +591,7 @@ func _unit_ai(f: Fighter, opponents: Array, dt: float) -> void:
 			castle_hit.emit(dmg)
 			if shake_on:
 				shake = minf(1.0, shake + 0.25)
-			_fx.append({"kind": "spark", "pos": Vector2(f.pos.x, WALL_Y + 10), "t": 0.0, "life": 0.25, "color": Color("#ff6a3a")})
+			_fx.append({"kind": "spark", "pos": Vector2(WALL_X - 10, f.pos.y - f.height * 0.4), "t": 0.0, "life": 0.25, "color": Color("#ff6a3a")})
 
 
 func _attack(f: Fighter, tg: Fighter) -> void:
@@ -594,19 +603,39 @@ func _attack(f: Fighter, tg: Fighter) -> void:
 	f.action = "attack"
 	f.anim_t = 0.0
 	var mult := 1.0
-	if f.side == 0 and float(f.flags.get("first_hit", 0.0)) > 0.0 and not f.first_hit:
-		mult *= float(f.flags["first_hit"])
+	var opener := f.side == 0 and not f.first_hit
+	if opener:
 		f.first_hit = true
-	if tg.cls == "cav":
-		mult *= float(f.flags.get("vs_cav", 1.0))
+		if float(f.flags.get("first_hit", 0.0)) > 0.0:
+			mult *= float(f.flags["first_hit"])
+		# 짓밟기: the first attack stuns (bosses shrug it off)
+		if float(f.flags.get("first_hit_stun", 0.0)) > 0.0 and not tg.boss:
+			tg.stun = maxf(tg.stun, float(f.flags["first_hit_stun"]))
+	# 밀집: stronger next to a comrade of the same troop
+	if float(f.flags.get("phalanx", 1.0)) > 1.0 and f.unit != null:
+		for o in allies:
+			if o != f and o.alive() and o.unit != null and o.unit.troop() == f.unit.troop() and o.pos.distance_to(f.pos) < 120.0:
+				mult *= float(f.flags["phalanx"])
+				break
+	_strike(f, tg, mult)
+	# 연격: 20% for one more, weaker hit
+	if float(f.flags.get("double", 0.0)) > 0.0 and _rng.randf() < 0.2:
+		_strike(f, tg, mult * float(f.flags["double"]))
+	# 유격: a burst of speed after attacking
+	if float(f.flags.get("skirmish", 0.0)) > 0.0:
+		f.add_buff("spd", 2.0, float(f.flags["skirmish"]))
+	if f.side == 0 and not f.skill.is_empty():
+		_gain_energy(f, float(DB.rules["energy_per_attack"]))
+
+
+## One hit of [param f] on [param tg]: an arrow / orb for ranged fighters, else at once.
+func _strike(f: Fighter, tg: Fighter, mult: float) -> void:
 	if f.ranged:
 		_projectiles.append({"from": f.pos + Vector2(0, -f.height * 0.55), "to": tg, "pos": f.pos + Vector2(0, -f.height * 0.55),
 			"src": f, "mult": mult, "speed": 900.0, "kind": "orb" if f.cls == "str" or f.art == "enemy_mage" else "arrow",
-			"pierce": bool(f.flags.get("pierce", false))})
+			"pierce": float(f.flags.get("pierce", 0.0))})
 	else:
 		_deal(f, tg, f.atk_now() * mult, false)
-	if f.side == 0 and not f.skill.is_empty():
-		_gain_energy(f, float(DB.rules["energy_per_attack"]))
 
 
 func _gain_energy(f: Fighter, amount: float) -> void:
@@ -621,9 +650,17 @@ func _gain_energy(f: Fighter, amount: float) -> void:
 func _deal(src: Fighter, tg: Fighter, raw: float, ranged: bool) -> void:
 	if not tg.alive():
 		return
-	var dmg := raw * 100.0 / (100.0 + tg.def * 2.0)
+	var dmg := raw * 100.0 / (100.0 + tg.def_now() * 2.0)
 	var crit := false
 	if src != null:
+		# 상성 (개편 §9.5) and the effects that depend on who is hit
+		dmg *= DB.counter(src.ctr, tg.cls)
+		if tg.cls == "cav":
+			dmg *= float(src.flags.get("vs_cav", 1.0))
+		if tg.ratio() >= 0.999:
+			dmg *= float(src.flags.get("full_hp_dmg", 1.0))
+		if tg.ranged:
+			dmg *= float(src.flags.get("backline_dmg", 1.0))
 		var cc := src.crit + float(src.flags.get("syn_crit", 0.0))
 		if _rng.randf() < cc:
 			crit = true
@@ -631,11 +668,32 @@ func _deal(src: Fighter, tg: Fighter, raw: float, ranged: bool) -> void:
 	if ranged:
 		dmg *= float(tg.flags.get("ranged_resist", 1.0))
 	_hurt(tg, dmg, src, crit, false)
-	if src != null and src.side == 0:
-		var burn := float(src.flags.get("burn", 0.0))
-		if burn > 0.0:
-			tg.burn_t = burn
-			tg.burn_dps = src.atk_now() * float(DB.rules["burn_ratio"]) * float(src.flags.get("burn_mult", 1.0))
+	if src == null:
+		return
+	if tg.alive():
+		# 파갑: the target's defence drops for 3 s
+		var ab := float(src.flags.get("armor_break", 0.0))
+		if ab > 0.0:
+			tg.add_buff("def", 3.0, 1.0 - ab)
+		# 감전: a short stun (not on bosses)
+		var sc := float(src.flags.get("stun_chance", 0.0))
+		if sc > 0.0 and not tg.boss and _rng.randf() < sc:
+			tg.stun = maxf(tg.stun, 0.6)
+		# 화상: troop feature / 속성 (2 s, a share of attack) or the 오 synergy (seconds)
+		var burn_dps := 0.0
+		var burn_time := 0.0
+		var ratio := float(src.flags.get("burn", 0.0))
+		if ratio > 0.0:
+			burn_time = 2.0
+			burn_dps = src.atk_now() * ratio / 2.0
+		var syn := float(src.flags.get("syn_burn", 0.0))
+		if syn > 0.0:
+			burn_time = maxf(burn_time, syn)
+			burn_dps = maxf(burn_dps, src.atk_now() * float(DB.rules["burn_ratio"]))
+		if burn_time > 0.0:
+			tg.burn_t = maxf(tg.burn_t, burn_time)
+			tg.burn_dps = maxf(tg.burn_dps, burn_dps * float(src.flags.get("burn_mult", 1.0)) * float(tg.flags.get("burn_taken", 1.0)))
+	if src.side == 0:
 		var sp := float(src.flags.get("splash", 0.0))
 		if sp > 0.0:
 			for o in enemies:
@@ -653,7 +711,7 @@ func _hurt(tg: Fighter, dmg: float, src: Fighter, crit: bool, quiet: bool) -> vo
 		tg.flash = 0.12
 		var col := Color("#ffe14a") if crit else (Color("#ffffff") if tg.side == 1 else Color("#ff7a7a"))
 		_text(tg.pos + Vector2(_rng.randf_range(-16, 16), -tg.height - 6), str(maxi(1, int(dmg))), col, 34 if crit else 24)
-		_fx.append({"kind": "spark", "pos": tg.pos + Vector2(0, -tg.height * 0.5), "t": 0.0, "life": 0.18, "color": col})
+		_hit_fx(tg, src, crit, col)
 	if src != null:
 		src.dmg_dealt += dmg
 		if src.unit != null:
@@ -685,6 +743,28 @@ func _hurt(tg: Fighter, dmg: float, src: Fighter, crit: bool, quiet: bool) -> vo
 			for e in enemies:
 				if e.target == tg:
 					e.target = null
+
+
+## 타격 이펙트 (도트 이펙트 기준, design/art/캐릭터-도트-컨셉.md §4): 공격한 쪽의 상성 줄마다
+## 모양과 색이 정해져 있다. 창 = 찌르기, 보병 = 베기, 기병 = 충돌 + 먼지, 궁 = 꽂힘,
+## 화공 = 불꽃, 뇌공 = 번개, 그 밖 = 십자 불꽃. 치명타는 금색 별이 하나 더 뜬다.
+const HIT_FX := {
+	"pike": ["thrust", "#f2e6b8"], "inf": ["cut", "#dfe6f0"], "cav": ["impact", "#ffb070"], "arc": ["pin", "#f0e0b0"],
+	"fire": ["flame", "#ff8a3a"], "thunder": ["zap", "#ffe14a"], "medic": ["pin", "#7cff7c"],
+}
+
+
+func _hit_fx(tg: Fighter, src: Fighter, crit: bool, col: Color) -> void:
+	var p := tg.pos + Vector2(0, -tg.height * 0.5)
+	var dx := 1.0 if src == null or src.pos.x <= tg.pos.x else -1.0
+	var kind := "spark"
+	var c := col
+	if src != null and HIT_FX.has(src.ctr):
+		kind = String(HIT_FX[src.ctr][0])
+		c = Color(String(HIT_FX[src.ctr][1]))
+	_fx.append({"kind": kind, "pos": p, "t": 0.0, "life": 0.24, "color": c, "dx": dx, "feet": tg.pos})
+	if crit:
+		_fx.append({"kind": "star", "pos": p + Vector2(0, -24), "t": 0.0, "life": 0.32, "color": Px.GOLD})
 
 
 func _separate(list: Array[Fighter], dt: float) -> void:
@@ -725,10 +805,10 @@ func _step_projectiles(dt: float) -> void:
 			var src: Fighter = p["src"]
 			if tg.alive():
 				_deal(src, tg, src.atk_now() * float(p["mult"]), true)
-				if bool(p["pierce"]):
+				if float(p["pierce"]) > 0.0:
 					var behind := _nearest(tg, enemies if tg.side == 1 else allies, 120.0, func(o: Fighter) -> bool: return o != tg)
 					if behind != null:
-						_deal(src, behind, src.atk_now() * float(p["mult"]) * 0.7, true)
+						_deal(src, behind, src.atk_now() * float(p["mult"]) * float(p["pierce"]), true)
 			continue
 		p["pos"] = cur + (dest - cur).normalized() * step
 		keep.append(p)
@@ -794,7 +874,7 @@ func _cast(f: Fighter) -> void:
 				if alive2.is_empty():
 					break
 				var e: Fighter = alive2[i % alive2.size()]
-				_projectiles.append({"pos": f.pos + Vector2(0, -f.height * 0.55), "to": e, "src": f, "mult": float(s["mult"]), "speed": 1000.0 + i * 80.0, "kind": "arrow", "pierce": false})
+				_projectiles.append({"pos": f.pos + Vector2(0, -f.height * 0.55), "to": e, "src": f, "mult": float(s["mult"]), "speed": 1000.0 + i * 80.0, "kind": "arrow", "pierce": 0.0})
 		"snipe":
 			var strongest: Fighter = null
 			for e in enemies:
@@ -913,7 +993,7 @@ func burst(p: Vector2, color: Color) -> void:
 	_fx.append({"kind": "pop", "pos": p, "t": 0.0, "life": 0.4, "color": color})
 
 
-func show_summon(u: UnitState, line_summon := false) -> void:
+func show_summon(u: UnitState) -> void:
 	var f := ally_of(u)
 	if f == null:
 		sync()
@@ -921,12 +1001,11 @@ func show_summon(u: UnitState, line_summon := false) -> void:
 	if f == null:
 		return
 	f.pop = 0.3
-	var col := Color("#7fe0ff") if line_summon else Px.GOLD
+	var col := Px.GOLD if u.is_hero() else Color("#7fe0ff")
 	_fx.append({"kind": "pillar", "pos": f.pos, "t": 0.0, "life": 0.65, "color": col})
 	_fx.append({"kind": "ring", "pos": f.pos, "t": 0.0, "life": 0.55, "color": col, "r": 76.0})
 	_fx.append({"kind": "pop", "pos": f.pos, "t": 0.0, "life": 0.45, "color": col})
-	var txt := ("줄 소환! %s %d단" if line_summon else "소환! %s %d단") % [u.display_name(), u.rank]
-	_text(f.pos + Vector2(0, -f.height - 28), txt, col, 26)
+	_text(f.pos + Vector2(0, -f.height - 28), u.display_name(), col, 26)
 	queue_redraw()
 
 
@@ -938,17 +1017,47 @@ func _draw() -> void:
 		off = Vector2(_rng.randf_range(-1, 1), _rng.randf_range(-1, 1)).round() * 10.0 * shake
 	_off = off
 	draw_set_transform(off)
-	# background: covers from the screen top (extra height on tall phones) to the wall
+	# 배경: 화면 맨 위부터 전장 아래까지 그림을 깔고 어둡게 한다. 싸우는 곳은 가운데 띠뿐이다.
 	var top := -position.y
-	var r := Rect2(0, top, size.x, WALL_Y + 40 - top)
-	Px.cover(self, _bg, r)
-	# engagement line
-	var x := LEFT
-	while x < RIGHT:
-		draw_rect(Rect2(x, LINE_Y, 22, 4), Color(1, 1, 1, 0.35))
-		x += 40
+	Px.cover(self, _bg, Rect2(0, top, size.x, size.y - top))
+	draw_rect(Rect2(0, top, size.x, BAND_TOP - top), Color(0.04, 0.06, 0.1, 0.55))
+	draw_rect(Rect2(0, BAND_BOTTOM + 40, size.x, size.y - BAND_BOTTOM - 40), Color(0.04, 0.06, 0.1, 0.6))
+	# 공터 (가로 띠): 흙바닥 + 위아래 턱
+	var band := Rect2(0, BAND_TOP - 20, size.x, BAND_BOTTOM + 40 - (BAND_TOP - 20))
+	draw_rect(band, Color("#6b5a3e"))
+	for i in 9:
+		var gy := band.position.y + 30 + i * (band.size.y - 40) / 9.0
+		draw_rect(Rect2(0, gy, size.x, 3), Color(0, 0, 0, 0.06))
+	draw_rect(Rect2(0, band.position.y, size.x, 8), Color("#3a2e1e"))
+	draw_rect(Rect2(0, band.position.y + 8, size.x, 4), Color("#8a7654"))
+	draw_rect(Rect2(0, band.end.y - 8, size.x, 8), Color("#3a2e1e"))
+	# 교전선 (세로 점선) + 준비 시간의 아군 자리 표시
+	var ly := BAND_TOP
+	while ly < BAND_BOTTOM + 20:
+		draw_rect(Rect2(LINE_X, ly, 4, 22), Color(1, 1, 1, 0.3))
+		ly += 40
 	if not fighting:
-		draw_rect(Rect2(LEFT - 30, LINE_Y + 10, RIGHT - LEFT + 60, ALLY_BOTTOM - LINE_Y + 10), Color(1, 1, 1, 0.05))
+		draw_rect(Rect2(WALL_X, BAND_TOP - 10, LINE_X - WALL_X, BAND_BOTTOM + 30 - (BAND_TOP - 10)), Color(1, 1, 1, 0.05))
+	# 성벽 (왼쪽): 돌벽 + 성가퀴
+	var wall := Rect2(0, band.position.y - 60, WALL_X - 14, band.size.y + 60)
+	draw_rect(wall, Px.INK)
+	draw_rect(wall.grow_individual(-4, -4, -4, 0), Color("#7d7566"))
+	var by := wall.position.y + 8
+	var row := 0
+	while by < wall.end.y - 10:
+		draw_rect(Rect2(4, by + 38, wall.size.x - 8, 3), Color(0, 0, 0, 0.18))
+		var bx := 4.0 + (22.0 if row % 2 == 1 else 0.0)
+		while bx < wall.size.x - 6:
+			draw_rect(Rect2(bx, by, 3, 38), Color(0, 0, 0, 0.14))
+			bx += 44
+		by += 41
+		row += 1
+	var cx := 0.0
+	while cx < wall.size.x:
+		draw_rect(Rect2(cx, wall.position.y - 22, 26, 26), Px.INK)
+		draw_rect(Rect2(cx + 3, wall.position.y - 19, 20, 23), Color("#8a8272"))
+		cx += 40
+	draw_rect(Rect2(wall.end.x - 6, wall.position.y, 6, wall.size.y), Color(0, 0, 0, 0.3))
 	for w: Dictionary in _warns:
 		var k := 1.0 - float(w["t"]) / float(w["life"])
 		var c: Vector2 = w["pos"]
@@ -968,11 +1077,20 @@ func _draw() -> void:
 		var cur: Vector2 = p["pos"]
 		var dir: Vector2 = (tg.pos + Vector2(0, -tg.height * 0.5) - cur).normalized()
 		if String(p["kind"]) == "arrow":
-			draw_line(cur.round(), (cur - dir * 26.0).round(), Px.INK, 6.0)
-			draw_line(cur.round(), (cur - dir * 24.0).round(), Color("#f0e0b0"), 3.0)
+			# 화살: 흰 촉 1칸 + 나무 자루 3칸 + 깃 1칸 (비스듬해도 칸 단위로)
+			_blk(cur, Px.INK, 1.6)
+			_blk(cur, Color.WHITE)
+			for i in range(1, 4):
+				_blk(cur - dir * PXB * i, Color("#c8a060"))
+			_blk(cur - dir * PXB * 4, Color("#e85a4a"))
 		else:
-			draw_rect(Rect2(cur.round() - Vector2(8, 8), Vector2(16, 16)), Color("#7fd8ff"))
-			draw_rect(Rect2(cur.round() - Vector2(4, 4), Vector2(8, 8)), Color.WHITE)
+			# 구슬: 2칸 색 + 1칸 흰 심 + 꼬리 2칸
+			var oc := Color("#ff8a3a") if (p["src"] as Fighter).ctr == "fire" else (Color("#ffe14a") if (p["src"] as Fighter).ctr == "thunder" else Color("#7fd8ff"))
+			_blk(cur - dir * PXB * 2, Color(oc, 0.5))
+			_blk(cur - dir * PXB * 4, Color(oc, 0.3))
+			_blk(cur, Px.INK, 2.6)
+			_blk(cur, oc, 2.0)
+			_blk(cur, Color.WHITE)
 	for fx: Dictionary in _fx:
 		_draw_fx(fx)
 	for t: Dictionary in _texts:
@@ -1012,10 +1130,11 @@ func _draw_fighter(f: Fighter) -> void:
 	var a := f.fade if f.side == 1 else 1.0
 	var shadow_w := f.height * (0.5 if not f.boss else 0.7)
 	draw_rect(Rect2(feet.x - shadow_w * 0.5, feet.y - 5, shadow_w, 10), Color(0, 0, 0, 0.25 * a))
-	if f.side == 0 and f.unit != null and f.unit.rank > 1:
-		var rcol := Color("#3cc8e8") if f.unit.rank == 2 else Color("#ff9d2e")
+	var star := MetaRules.unit_star(profile, f.unit.id) if f.side == 0 and f.unit != null else 0
+	if star >= 3:
+		var rcol := Color("#3cc8e8") if star < 5 else Color("#ff9d2e")
 		var rc := Color(rcol, 0.36 + 0.14 * sin(_t * 4.0))
-		_ellipse(feet, 34.0 + f.unit.rank * 6.0, rc)
+		_ellipse(feet, 34.0 + (star - 1) * 3.0, rc)
 	var rect := Rect2(Vector2(feet.x - sz.x * 0.5, feet.y - sz.y), sz)
 	var mod := Color(1, 1, 1, a)
 	if f.flash > 0.0:
@@ -1044,8 +1163,8 @@ func _draw_fighter(f: Fighter) -> void:
 		draw_rect(eb, Px.INK)
 		draw_rect(Rect2(eb.position + Vector2(2, 2), Vector2(floorf((bw - 4) * f.energy / float(DB.rules["energy_max"])), 4)), Color("#4fc3ff"))
 	if f.side == 0 and f.unit != null:
-		var tc := Color("#d8cfb8") if f.unit.rank == 1 else (Color("#3cc8e8") if f.unit.rank == 2 else Color("#ffaa22"))
-		var tag := "%d단" % f.unit.rank
+		var tc := Color("#d8cfb8") if star < 3 else (Color("#3cc8e8") if star < 5 else Color("#ffaa22"))
+		var tag := "%d성" % star
 		var tr := Rect2(feet.x - bw * 0.5 - 38, by - 4, 34, 20)
 		draw_rect(tr, Px.INK)
 		draw_rect(tr.grow(-2), tc.darkened(0.65))
@@ -1056,59 +1175,162 @@ func _draw_fighter(f: Fighter) -> void:
 			draw_rect(Rect2(feet.x + bw * 0.5 + 6, by, 10, 14), fc)
 
 
+# ---------------------------------------------------------------- 이펙트 (도트 기준)
+# 기준 (design/art/캐릭터-도트-컨셉.md §4):
+# - 모든 이펙트는 PXB(8px = 도트 2칸 x 4배) 크기의 네모 칸으로만 그린다. 매끈한 선 · 원 없음.
+# - 움직임은 부드럽게 흐르지 않고 4~5단계로 끊어진다 (_stp).
+# - 색은 흰 심 + 주색 하나. 사라질 때는 서서히 투명해지지 않고 끝 30%에서 반투명 한 번.
+
+const PXB := 8.0
+
+
+func _snap(p: Vector2) -> Vector2:
+	return (p / PXB).round() * PXB
+
+
+## One effect block of [param n] cells, centred on the snapped point.
+func _blk(p: Vector2, col: Color, n: float = 1.0) -> void:
+	var s := PXB * n
+	draw_rect(Rect2(_snap(p) - Vector2(s, s) * 0.5, Vector2(s, s)), col)
+
+
+## Blocks along a line every [param gap] px.
+func _blk_line(a: Vector2, b: Vector2, col: Color, n: float = 1.0, gap: float = PXB * 2.0) -> void:
+	var d := a.distance_to(b)
+	var steps := maxi(1, int(d / gap))
+	for i in steps + 1:
+		_blk(a.lerp(b, float(i) / steps), col, n)
+
+
+static func _stp(k: float, steps: int = 4) -> float:
+	return floorf(clampf(k, 0.0, 0.999) * steps) / float(steps)
+
+
 func _draw_fx(fx: Dictionary) -> void:
-	var k := float(fx["t"]) / float(fx["life"])
+	var k := clampf(float(fx["t"]) / float(fx["life"]), 0.0, 1.0)
+	var ks := _stp(k)
 	var p: Vector2 = fx["pos"]
 	var c: Color = fx["color"]
+	var al := 1.0 if k < 0.7 else 0.5
+	var col := Color(c, al)
+	var white := Color(1, 1, 1, al)
+	var dx := float(fx.get("dx", 1.0))
 	match String(fx["kind"]):
+		# ---- 타격
+		"spark":  # 십자 불꽃
+			var arm := 1 + int(ks * 3.0)
+			for i in range(1, arm + 1):
+				for d: Vector2 in [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1)]:
+					_blk(p + d * PXB * i, col)
+			_blk(p, white, 1.4)
+		"thrust":  # 창: 가로로 찌르는 줄 + 흰 끝
+			var reach := 2 + int(ks * 4.0)
+			for i in reach:
+				_blk(p + Vector2(dx * PXB * (i - 3), 0), col)
+			_blk(p + Vector2(dx * PXB * (reach - 3), 0), white, 1.6)
+			_blk(p + Vector2(dx * PXB * (reach - 3), -PXB), white)
+			_blk(p + Vector2(dx * PXB * (reach - 3), PXB), white)
+		"cut":  # 보병: 비스듬한 베기
+			var n := 2 + int(ks * 4.0)
+			for i in n:
+				var q := p + Vector2(dx * PXB * (i - 2.5) * 1.6, PXB * (i - 2.5) * 1.6)
+				_blk(q, col, 1.6)
+				_blk(q + Vector2(dx * PXB, -PXB), white)
+		"impact":  # 기병: 여덟 방향 충돌 + 발밑 먼지
+			var r := PXB * (1.5 + ks * 3.0)
+			for i in 8:
+				var a := TAU * i / 8.0
+				_blk(p + Vector2(cos(a), sin(a)) * r, col, 1.4)
+			_blk(p, white, 2.0)
+			var feet: Vector2 = fx.get("feet", p)
+			for i in 3:
+				_blk(feet + Vector2(-dx * PXB * (2 + i * 2 + ks * 4.0), -PXB * (i % 2 + ks * 2.0)), Color("#c8b48a", al), 1.4)
+		"pin":  # 화살이 꽂힘: 작은 십자
+			for d: Vector2 in [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1)]:
+				_blk(p + d * PXB * (1.0 + ks), col)
+			_blk(p, white)
+		"flame":  # 화공: 위로 솟는 불꽃 세 줄기
+			for i in 3:
+				var h := PXB * (1.0 + ks * 4.0 + i)
+				_blk(p + Vector2((i - 1) * PXB * 2.0, 0), Color("#ffe14a", al), 1.6)
+				_blk(p + Vector2((i - 1) * PXB * 2.0, -h * 0.5), col, 1.6)
+				_blk(p + Vector2((i - 1) * PXB * 2.0, -h), Color("#d83a2a", al))
+		"zap":  # 뇌공: 위에서 꺾여 내려오는 번개
+			var pts := [Vector2(-12, -60), Vector2(6, -42), Vector2(-6, -24), Vector2(12, -12), Vector2(0, 0)]
+			var upto := 2 + int(ks * 3.0)
+			for i in mini(upto, pts.size() - 1):
+				_blk_line(p + pts[i], p + pts[i + 1], col, 1.4, PXB)
+			_blk(p, white, 2.0)
+		"star":  # 치명타: 금색 네 꼭지 별
+			var arm := 2 + int(ks * 2.0)
+			for i in range(1, arm + 1):
+				for d: Vector2 in [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1)]:
+					_blk(p + d * PXB * i, col, 1.4 if i == 1 else 1.0)
+			for d: Vector2 in [Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1)]:
+				_blk(p + d * PXB, col)
+			_blk(p, white, 1.6)
+		"heal":  # 회복: 떠오르는 초록 십자
+			var q := p + Vector2(0, -PXB * ks * 5.0)
+			for d: Vector2 in [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1)]:
+				_blk(q + d * PXB, col, 1.4)
+			_blk(q, white, 1.4)
+		# ---- 등장 · 쓰러짐
 		"pop":
 			for i in 8:
 				var a := TAU * i / 8.0
-				var q := p + Vector2(cos(a), sin(a) * 0.6) * (20.0 + 70.0 * k) + Vector2(0, -40)
-				draw_rect(Rect2(q.round() - Vector2(5, 5), Vector2(10, 10)), Color(c, 1.0 - k))
-		"spark":
-			var s := 10.0 + 20.0 * k
-			draw_rect(Rect2(p.round() - Vector2(s, 3), Vector2(s * 2, 6)), Color(c, 1.0 - k))
-			draw_rect(Rect2(p.round() - Vector2(3, s), Vector2(6, s * 2)), Color(c, 1.0 - k))
+				_blk(p + Vector2(cos(a), sin(a) * 0.6) * (20.0 + 70.0 * ks) + Vector2(0, -40), col, 1.6)
 		"poof":
 			for i in 6:
 				var a := TAU * i / 6.0 + 0.4
-				var q := p + Vector2(cos(a), sin(a) * 0.5) * (10.0 + 40.0 * k) + Vector2(0, -20 - 30 * k)
-				draw_rect(Rect2(q.round() - Vector2(8, 8), Vector2(16, 16)), Color(c, 0.8 * (1.0 - k)))
-		"ring":
-			var r := float(fx.get("r", 80.0)) * (0.3 + 0.7 * k)
-			var pts := PackedVector2Array()
-			for i in 33:
-				var a := TAU * i / 32.0
-				pts.append(p + Vector2(cos(a) * r, sin(a) * r * 0.5))
-			draw_polyline(pts, Color(c, 1.0 - k), 8.0)
-		"pillar":
-			var h := 220.0
-			draw_rect(Rect2(p.x - 30, p.y - h, 60, h), Color(c, 0.35 * (1.0 - k)))
-			draw_rect(Rect2(p.x - 10, p.y - h, 20, h), Color(1, 1, 1, 0.4 * (1.0 - k)))
-		"slash":
+				_blk(p + Vector2(cos(a), sin(a) * 0.5) * (10.0 + 40.0 * ks) + Vector2(0, -20 - 30 * ks), col, 2.6 - ks * 1.2)
+		# ---- 기술
+		"ring":  # 범위: 칸으로 찍은 타원 테두리
+			var r := float(fx.get("r", 80.0)) * (0.4 + 0.6 * ks)
+			var n := clampi(int(r / 7.0), 12, 40)
+			for i in n:
+				var a := TAU * i / n
+				_blk(p + Vector2(cos(a) * r, sin(a) * r * 0.5), col, 1.4)
+		"pillar":  # 시전: 발밑에서 솟는 기둥 (세력색) + 흰 심
+			var h := 40.0 + 180.0 * ks
+			var y := 0.0
+			while y < h:
+				_blk(p + Vector2(-PXB * 3.0, -y), Color(c, 0.45 * al), 2.0)
+				_blk(p + Vector2(PXB * 3.0, -y), Color(c, 0.45 * al), 2.0)
+				_blk(p + Vector2(0, -y), Color(1, 1, 1, 0.55 * al), 2.0)
+				y += PXB * 2.0
+		"slash":  # 일직선 기술: 방향을 따라 뻗는 굵은 줄 + 흰 심
 			var dir: Vector2 = fx["dir"]
-			var l := float(fx["len"]) * minf(1.0, k * 2.5)
-			draw_line(p, p + dir * l, Color(c, 1.0 - k), float(fx["w"]) * 0.35)
-			draw_line(p, p + dir * l, Color(1, 1, 1, 1.0 - k), 6.0)
-		"rock":
-			var y := p.y - 300.0 * (1.0 - minf(1.0, k * 2.0))
-			draw_rect(Rect2(p.x - 18, y - 36, 36, 30), Color(c, 1.0 - maxf(0.0, k - 0.5) * 2.0))
-			if k > 0.5:
-				_ellipse(p, 70.0 * k, Color(0.6, 0.5, 0.4, 0.4 * (1.0 - k)))
-		"beam":
+			var l := float(fx["len"]) * minf(1.0, ks * 2.5 + 0.25)
+			var thick := clampf(float(fx["w"]) / 30.0, 2.0, 5.0)
+			_blk_line(p, p + dir * l, col, thick, PXB * 2.0)
+			_blk_line(p, p + dir * l, white, 1.0, PXB * 2.0)
+		"rock":  # 낙석: 뚝뚝 끊어지며 떨어지고 먼지 고리
+			var fall := minf(1.0, _stp(k * 2.0, 4) + 0.25)
+			if k < 0.5:
+				_blk(p + Vector2(0, -300.0 * (1.0 - fall) - 18), Px.INK, 6.6)
+				_blk(p + Vector2(0, -300.0 * (1.0 - fall) - 18), col, 6.0)
+			else:
+				var r := 70.0 * (0.5 + _stp((k - 0.5) * 2.0, 3) * 0.5)
+				for i in 14:
+					var a := TAU * i / 14.0
+					_blk(p + Vector2(cos(a) * r, sin(a) * r * 0.5), Color("#c8b48a", al), 1.6)
+		"beam":  # 저격: 두 점을 잇는 줄
 			var to: Vector2 = fx["to"]
-			draw_line(p, to, Color(c, 1.0 - k), 10.0)
-			draw_line(p, to, Color(1, 1, 1, 1.0 - k), 4.0)
-		"bolt":
-			var x0 := p.x
-			var y0 := p.y - 700.0
-			var pts := PackedVector2Array()
-			for i in 9:
-				pts.append(Vector2(x0 + (_rng.randf_range(-30, 30) if i > 0 and i < 8 else 0.0), lerpf(y0, p.y, i / 8.0)))
-			draw_polyline(pts, Color(c, 1.0 - k), 14.0)
-			draw_polyline(pts, Color(1, 1, 1, 1.0 - k), 5.0)
-			_ellipse(p, float(fx.get("r", 90.0)), Color(1, 1, 0.6, 0.35 * (1.0 - k)))
+			_blk_line(p, to, col, 2.0, PXB * 2.0)
+			_blk_line(p, to, white, 1.0, PXB * 2.0)
+			_blk(to, white, 3.0)
+		"bolt":  # 낙뢰 (보스): 화면 위에서 꺾여 내려온다, 모양은 고정
+			var zig := [0.0, 24.0, -18.0, 30.0, -24.0, 18.0, -30.0, 12.0, 0.0]
+			var top := p.y - 700.0
+			for i in zig.size() - 1:
+				var a := Vector2(p.x + float(zig[i]), lerpf(top, p.y, float(i) / (zig.size() - 1)))
+				var b := Vector2(p.x + float(zig[i + 1]), lerpf(top, p.y, float(i + 1) / (zig.size() - 1)))
+				_blk_line(a, b, col, 2.4, PXB * 2.0)
+				_blk_line(a, b, white, 1.0, PXB * 2.0)
+			var r := float(fx.get("r", 90.0))
+			for i in 16:
+				var a := TAU * i / 16.0
+				_blk(p + Vector2(cos(a) * r, sin(a) * r * 0.5), Color(1, 1, 0.6, al), 1.6)
 
 
 func _draw_ghost() -> void:

@@ -1,71 +1,62 @@
 extends TestCase
-## 장수 모집 odds, pity and 10-pull guarantee (메타 §3.3, §4.1, §8).
+## 슬롯 확률 (개편 §13): 모집은 없다. 캐릭터는 전투 중 슬롯에서만 나온다.
+## 당첨 칸이 장수면 등급 확률, 병사면 기본 / 정예 확률, 그 안에서는 같은 확률.
 
 
-func test_rates_over_100k_pulls() -> void:
+func test_no_recruit_data_left() -> void:
+	check(not DB.meta.has("recruit"), "장수 모집 없음")
+	check(not DB.meta.has("gold_recruit"), "골드 장수 모집 없음")
+	check(not DB.meta.has("soldier_recruit"), "병사 모집 없음")
+	check(DB.meta.has("slot_pool"), "slot pool odds")
+
+
+func test_hero_grade_odds() -> void:
+	var o := Gacha.hero_odds()
+	near(float(o["b"]) + float(o["a"]) + float(o["s"]) + float(o["ss"]), 100.0, 0.001, "sums to 100")
+	near(Gacha.hero_chance("zhugeliang"), 3.0 / 4.0, 0.001, "SS 4명이 3%를 나눈다")
+	near(Gacha.hero_chance("guanyu"), 12.0 / 8.0, 0.001, "S 8명이 12%를 나눈다")
+	var total := 0.0
+	for id: String in DB.hero_ids():
+		total += Gacha.hero_chance(id)
+	near(total, 100.0, 0.001, "every hero adds up to 100")
+
+
+func test_soldier_tier_odds() -> void:
+	eq(DB.soldier_ids_of_tier("basic").size(), 5, "5 basic troops")
+	eq(DB.soldier_ids_of_tier("elite").size(), 11, "11 elite troops")
+	near(Gacha.soldier_chance("spear"), 70.0 / 5.0, 0.001, "basic each 14%")
+	near(Gacha.soldier_chance("halberd"), 30.0 / 11.0, 0.001, "elite each 2.7%")
+
+
+func test_slot_hero_follows_grade_odds() -> void:
 	var rng := RandomNumberGenerator.new()
-	rng.seed = 2026
-	var counts := {"b": 0, "a": 0, "s": 0, "ss": 0}
-	var n := 100000
-	for i in n:
-		counts[Gacha.roll_rarity(rng, Gacha.odds())] += 1
-	near(100.0 * counts["b"] / n, 55.0, 0.5, "B 55%")
-	near(100.0 * counts["a"] / n, 30.0, 0.5, "A 30%")
-	near(100.0 * counts["s"] / n, 12.0, 0.5, "S 12%")
-	near(100.0 * counts["ss"] / n, 3.0, 0.3, "SS 3%")
+	rng.seed = 9
+	var count := {"b": 0, "a": 0, "s": 0, "ss": 0}
+	var n := 6000
+	for _i in n:
+		count[DB.rarity_of(Gacha.slot_hero(rng, DB.hero_ids()))] += 1
+	near(float(count["b"]) / n, 0.55, 0.03, "B 55%")
+	near(float(count["a"]) / n, 0.30, 0.03, "A 30%")
+	near(float(count["s"]) / n, 0.12, 0.02, "S 12%")
+	near(float(count["ss"]) / n, 0.03, 0.012, "SS 3%")
 
 
-func test_pity_61st_is_ss() -> void:
-	var rng := RandomNumberGenerator.new()
-	rng.seed = 1
-	var c := Gacha.pull(rng, 60)
-	eq(c["rarity"], "ss", "after 60 misses")
-	eq(int(c["pity"]), 0, "counter resets")
-
-
-func test_ten_pull_guarantee() -> void:
-	var ok := true
-	for seed in 300:
-		var rng := RandomNumberGenerator.new()
-		rng.seed = seed
-		var res := Gacha.pull_many(rng, 0, 10)
-		var good := false
-		for card: Dictionary in res["cards"]:
-			if Gacha.grade_rank(String(card["rarity"])) >= Gacha.grade_rank("s"):
-				good = true
-		if not good:
-			ok = false
-	check(ok, "every 10-pull has S+")
-
-
-func test_hero_chance_table() -> void:
-	near(Gacha.hero_chance("ss"), 3.0 / 4.0, 0.001, "SS each 0.75%")
-	near(Gacha.hero_chance("b"), 55.0 / 10.0, 0.01, "B each 5.5%")
-
-
-func test_gold_recruit_weaker_and_limited() -> void:
-	var g: Dictionary = DB.meta["gold_recruit"]["odds"]
-	check(float(g["ss"]) < float(DB.meta["recruit"]["odds"]["ss"]), "gold SS below diamond SS")
-	var p := Profile.new()
-	p.clock = func() -> int: return 1795000000
-	p.data["gold"] = 1000000
-	for i in int(DB.meta["gold_recruit"]["daily_max"]):
-		eq(String(p.recruit_gold(1)["error"]), "", "gold pull %d" % i)
-	check(String(p.recruit_gold(1)["error"]) != "", "daily limit")
-	eq(int(p.data["gold"]), 1000000 - int(DB.meta["gold_recruit"]["cost_one"]) * int(DB.meta["gold_recruit"]["daily_max"]), "paid gold")
-
-
-func test_soldier_pull_odds() -> void:
-	near(Gacha.soldier_chance("spear"), 70.0 / 4.0, 0.001, "basic each 17.5%")
-	near(Gacha.soldier_chance("halberd"), 30.0 / 6.0, 0.001, "elite each 5%")
+func test_slot_soldier_follows_tier_odds() -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 4
-	for i in 50:
-		check(DB.is_soldier(Gacha.pull_soldier(rng)), "pull gives a soldier")
+	var basic := 0
+	var n := 4000
+	for _i in n:
+		var id := Gacha.slot_soldier(rng, DB.soldier_ids())
+		check(DB.is_soldier(id), "a soldier")
+		if String(DB.soldier(id)["tier"]) == "basic":
+			basic += 1
+	near(float(basic) / n, 0.70, 0.03, "기본 70%")
 
 
-func test_box_pity() -> void:
+func test_short_lists_still_work() -> void:
 	var rng := RandomNumberGenerator.new()
-	rng.seed = 4
-	var r := Gacha.roll_box(rng, 29)
-	check(r["rarity"] == "epic" or r["rarity"] == "legend", "30th box epic+")
+	rng.seed = 2
+	for _i in 50:
+		eq(Gacha.slot_hero(rng, ["guanyu"]), "guanyu", "only one hero to pick")
+		eq(Gacha.slot_soldier(rng, ["spear"]), "spear", "only one troop to pick")

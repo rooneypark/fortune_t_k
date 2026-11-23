@@ -9,8 +9,8 @@ const SAVE_PATH := "user://save.json"
 
 var profile := Profile.new()
 var app: App
-## Chosen stage for the next run: {chapter, stage}.
-var next_stage := {"chapter": 1, "stage": 1}
+## Chosen stage and difficulty for the next run.
+var next_stage := {"stage": 1, "diff": 1}
 var save_path := SAVE_PATH
 var autosave := true
 var _dirty := false
@@ -82,39 +82,23 @@ func lord_lv() -> int:
 	return int(profile.data["lord_lv"])
 
 
-## 편성 장수 (최대 3명, 보유 장수만). 2026-11-22: 장수 없이 시작할 수 있다.
+## 대표 장수 3명 (전투력 순): 로비 · 프로필 · 군웅대전에 보여 준다. 출정 편성은 없다.
 func lineup() -> Array:
-	var out: Array = []
-	for id: Variant in profile.data["lineup"]:
-		if profile.owns(String(id)) and out.size() < int(DB.rules["hero_lineup_max"]):
-			out.append(String(id))
-	return out
+	var ids: Array = (profile.data["heroes"] as Dictionary).keys()
+	ids.sort_custom(func(a: String, b: String) -> bool:
+		return MetaRules.hero_power(profile.data, a) > MetaRules.hero_power(profile.data, b))
+	return ids.slice(0, 3)
 
 
-## Heroes put on the reels for a sortie: exactly the lineup.
+## Heroes on the reels: every hero, owned or not (개편 §13: 캐릭터는 전투 중 슬롯에서만
+## 얻는다 — 처음 나온 장수는 그 자리에서 합류한다).
 func sortie_heroes() -> Array:
-	return lineup()
+	return DB.hero_ids()
 
 
-## 병종 4개 for the reels: the troop lineup, topped up with other owned troops.
+## Troops on the reels: every troop, owned or not.
 func sortie_troops() -> Array:
-	var n := int(DB.rules["troop_lineup"])
-	var out: Array = []
-	for id: Variant in profile.data["troop_lineup"]:
-		if profile.owns_troop(String(id)) and out.size() < n:
-			out.append(String(id))
-	for id: String in DB.soldier_ids():
-		if out.size() >= n:
-			break
-		if profile.owns_troop(id) and not out.has(id):
-			out.append(id)
-	return out
-
-
-## 책사 slot skill owner, or "" (none).
-func advisor() -> String:
-	var a := String(profile.data["advisor"])
-	return a if profile.owns(a) and not DB.advisor_skill(a).is_empty() else ""
+	return DB.soldier_ids()
 
 
 func tutorial_done() -> bool:

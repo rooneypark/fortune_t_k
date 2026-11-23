@@ -2,25 +2,67 @@ extends TestCase
 ## Meta formulas (메타-성장-과금 §4).
 
 
-func test_upgrade_cost_curve() -> void:
-	eq(MetaRules.upgrade_cost(0), 50, "level 1 costs 50")
-	eq(MetaRules.upgrade_cost(9), 1581, "level 10 costs 1,581")
-	eq(MetaRules.upgrade_cost(29), 8216, "level 30 costs 8,216")
-	eq(MetaRules.upgrade_cost(59), 23238, "level 60 costs 23,238")
+func test_no_unit_levels_only_star_and_lord() -> void:
+	# 개편 §9.1: 기초 능력치 = 기본값 x 1.15^(성급-1) x (1 + 0.05 x (군주 Lv - 1)).
+	near(MetaRules.star_mult(6), 2.01, 0.01, "x2.01 at 6성")
+	near(MetaRules.lord_mult({"lord_lv": 1}), 1.0, 0.001, "Lv.1 = x1")
+	near(MetaRules.lord_mult({"lord_lv": 11}), 1.5, 0.001, "Lv.11 = +50%")
+	near(MetaRules.grown(50.0, 3, {"lord_lv": 11}), 50.0 * 1.15 * 1.15 * 1.5, 0.01, "star x lord")
+	var p := {"lord_lv": 1, "troops": {"spear": {"star": 1, "xp": 0, "traits": []}}}
+	var a: float = MetaRules.soldier_stats(p, "spear")["atk"]
+	p["lord_lv"] = 21
+	near(MetaRules.soldier_stats(p, "spear")["atk"], a * 2.0, 0.01, "군주 레벨이 병사 능력치를 올린다")
+	p["troops"]["spear"]["star"] = 2
+	near(MetaRules.soldier_stats(p, "spear")["atk"], a * 2.0 * 1.15, 0.01, "성급이 병사 능력치를 올린다")
 
 
-func test_upgrade_example() -> void:
-	# 공격 기본 50, 3성, 강화 20 -> 50 x 1.15^2 x 1.8 = 119
-	near(MetaRules.upgraded(50.0, 3, 20), 119.0, 0.1, "spec example")
-
-
-func test_star_costs() -> void:
+func test_star_xp_tables() -> void:
 	var total := 0
 	for s in range(1, 6):
-		total += MetaRules.star_cost(s)
-	eq(total, 19, "1->6 = 19 cards")
-	eq(MetaRules.star_cost(6), -1, "max 6")
-	near(MetaRules.star_mult(6), 2.01, 0.01, "x2.01 at 6")
+		total += MetaRules.star_need("guanyu", s)
+	eq(total, 190, "장수 1->6성 = 경험 190 (복사본 19명)")
+	eq(MetaRules.star_need("guanyu", 6), -1, "max 6")
+	eq(MetaRules.star_need("spear", 1), 5, "병종 1->2성 = 5")
+	eq(MetaRules.star_xp("guanyu", "guanyu"), 10, "같은 장수 복사본 = 10")
+	eq(MetaRules.star_xp("spear", "guanyu"), 1, "같은 병종 병사 = 1")
+	eq(MetaRules.star_xp("spear", "spear"), 1, "병사끼리 = 1")
+	eq(MetaRules.trait_slots(1), 1, "1성 1칸")
+	eq(MetaRules.trait_slots(3), 2, "3성 2칸")
+	eq(MetaRules.trait_slots(6), 3, "6성 3칸")
+
+
+func test_clear_exp() -> void:
+	eq(MetaRules.clear_exp(1, 1, false), 100, "stage 1 보통")
+	eq(MetaRules.clear_exp(3, 2, false), 450, "stage 3 어려움 = 100 x 3 x 1.5")
+	eq(MetaRules.clear_exp(1, 1, true), 200, "첫 클리어 2배")
+
+
+func test_counters() -> void:
+	# 개편 §9.5: 창병 -> 기병 -> 보병 -> 궁병 -> 창병.
+	near(DB.counter("pike", "cav"), 1.3, 0.001, "창병은 기병에 강하다")
+	near(DB.counter("cav", "inf"), 1.3, 0.001, "기병은 보병에 강하다")
+	near(DB.counter("inf", "arc"), 1.3, 0.001, "보병은 궁병에 강하다")
+	near(DB.counter("arc", "pike"), 1.3, 0.001, "궁병은 창병에 강하다")
+	near(DB.counter("pike", "arc"), 0.8, 0.001, "창병은 궁병에 약하다")
+	near(DB.counter("fire", "inf"), 1.3, 0.001, "화공은 보병에 강하다")
+	near(DB.counter("fire", "cav"), 0.8, 0.001, "화공은 기병에 약하다")
+	near(DB.counter("thunder", "cav"), 1.3, 0.001, "뇌공은 기병에 강하다")
+	near(DB.counter("medic", "inf"), 1.0, 0.001, "의원은 상성이 없다")
+	eq(DB.ctr_of("guanyu"), "pike", "관우 = 창병 줄")
+	eq(DB.ctr_of("zhugeliang"), "fire", "제갈량 = 화공 줄")
+	eq(DB.counter_lists("pike")["strong"], ["cav"], "list for the screen")
+
+
+func test_unit_fx_merges_feature_and_traits() -> void:
+	var p := {"lord_lv": 1, "heroes": {}, "troops": {"shield": {"star": 1, "xp": 0, "traits": [{"id": "iron", "lv": 2}]},
+		"spear": {"star": 1, "xp": 0, "traits": [{"id": "sweep", "lv": 3}, {"id": "longbow", "lv": 1}]}}}
+	var fx := MetaRules.unit_fx(p, "shield")
+	check(bool(fx.get("taunt", false)), "방패병은 타고난 도발")
+	near(float(fx["ranged_resist"]), 0.6, 0.001, "타고난 원거리 저항")
+	near(float(fx["dmg_taken"]), 0.87, 0.001, "철벽 Lv.2")
+	var fs := MetaRules.unit_fx(p, "spear")
+	near(float(fs["splash"]), 0.4, 0.001, "휩쓸기 Lv.3")
+	near(float(fs["range"]), 30.0, 0.001, "장궁 Lv.1")
 
 
 func test_start_stars_by_rarity() -> void:
@@ -75,27 +117,15 @@ func test_run_gold() -> void:
 
 
 func test_stage_scaling() -> void:
-	near(DB.stage_mult(1, 8), 1.83, 0.01, "s=8 1.83")
-	near(DB.stage_mult(3, 8), 7.26, 0.05, "s=24 ~7.25")
-	eq(DB.stage_boss(1, 8), "zhangjiao", "1-8 boss 장각")
-	eq(DB.stage_boss(1, 5) != "", true, "1-5 has a general")
-	eq(DB.stage_waves(1, 1).size(), 10, "10 waves")
-
-
-func test_auto_lineup_and_required_troops() -> void:
-	var p := Profile.new()
-	for id in ["guanyu", "zhangfei", "zhaoyun", "huangzhong"]:
-		p.add_hero_card(id)
-	var a := MetaRules.auto_lineup(p.data)
-	eq((a["heroes"] as Array).size(), 3, "3 heroes")
-	eq((a["troops"] as Array).size(), 4, "4 troops")
-	for h: String in a["heroes"]:
-		check((a["troops"] as Array).has(DB.troop_of(h)), "hero troop included: " + h)
-	eq(MetaRules.required_troops(["guanyu", "xiahoudun"]), ["spear"], "same troop once")
-
-
-func test_line_chance_falls_with_more_troops() -> void:
-	var four := MetaRules.line_chance(["spear", "shield", "archer", "rider"], [])
-	var ten := MetaRules.line_chance(DB.soldier_ids(), [])
-	near(four, 0.27, 0.02, "4 troops ~27%")
-	check(ten < 0.06, "10 troops ~5%")
+	near(DB.stage_mult(1, 1), 0.35, 0.001, "stage 1 보통 = 0.35 (처음은 쉽게)")
+	near(DB.stage_mult(3, 1), 0.35 * 1.2 * 1.2, 0.001, "x1.2 per stage")
+	near(DB.stage_mult(1, 3), 1.3, 0.001, "지옥 1.3")
+	eq(DB.stage_count(), 10, "10 stages")
+	eq(DB.difficulties().size(), 3, "3 difficulties")
+	eq(DB.stage_boss(1), "zhangjiao", "stage 1 boss 장각")
+	for s in range(1, DB.stage_count() + 1):
+		check(DB.is_boss(DB.stage_boss(s)), "stage %d has a boss" % s)
+	var waves := DB.stage_waves(1, 1)
+	eq(waves.size(), 10, "10 waves")
+	eq(String(waves[9]["boss"]), "zhangjiao", "boss on the last wave")
+	check(int(DB.stage_waves(1, 3)[0]["list"][0][1]) > int(waves[0]["list"][0][1]), "지옥 has more enemies")

@@ -42,7 +42,7 @@ const LINE_STYLE := {
 const LINE_DEFAULT := ["#141a22", "#cfd6df", 3]
 
 ## 배치 지도(점검): true인 동안 그려지는 글자·그림·버튼·판 자리를 화면 좌표로 모은다.
-## App --layout=<json> 이 켜고 끈다 (design/ux/배치-지도/).
+## tools/layout_dump.gd 가 켜고 끈다 (design/ux/규격/).
 static var recording := false
 static var records: Array = []
 
@@ -158,13 +158,6 @@ static func font() -> FontFile:
 		_font = load("res://assets/fonts/Galmuri11-Bold.ttf")
 		_setup_font(_font)
 	return _font
-
-
-static func font_thin() -> FontFile:
-	if _font_thin == null:
-		_font_thin = load("res://assets/fonts/Galmuri11.ttf")
-		_setup_font(_font_thin)
-	return _font_thin
 
 
 static func _setup_font(f: FontFile) -> void:

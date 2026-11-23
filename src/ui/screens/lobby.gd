@@ -6,7 +6,6 @@ var _walkers: Array = []
 var _t := 0.0
 var _sign: PxButton
 var _arena_btn: PxButton
-var _btn_recruit: PxButton
 var _clouds: DrawLayer
 var _rng := RandomNumberGenerator.new()
 
@@ -18,14 +17,14 @@ func build() -> void:
 	_clouds = DrawLayer.make(_draw_clouds)
 	put(_clouds, Rect2(0, 0, 1024, 600))
 	# 상단 HUD
-	var face := W.portrait_frame(String(Game.profile.data["avatar"]), Vector2(146, 185), "Lv.%d" % Game.lord_lv())
+	var face := W.portrait_frame(String(Game.profile.data["avatar"]), Vector2(148, 188), "Lv.%d" % Game.lord_lv())
 	face.pressed.connect(func() -> void: Game.app.popup("profile"))
-	put(face, Rect2(38, 12, 146, 185))
-	put(W.gold_chip(Vector2(321, 98)), Rect2(200, 36, 321, 98))
-	put(W.diamond_chip(Vector2(326, 98)), Rect2(536, 36, 326, 98))
+	put(face, Rect2(36, 12, 148, 188))
+	put(W.gold_chip(Vector2(320, 96)), Rect2(200, 36, 320, 96))
+	put(W.rice_chip(Vector2(328, 96)), Rect2(536, 36, 328, 96))
 	var gear := PxButton.make("btn_settings")
 	gear.pressed.connect(func() -> void: Game.app.popup("settings"))
-	put(gear, Rect2(878, 36, 108, 102))
+	put(gear, Rect2(880, 32, 104, 104))
 	# 왼쪽: 우편 · 임무
 	var left_side := [["btn_mail", "mail", "lobby.mail"], ["btn_mission", "missions", "lobby.missions"]]
 	for i in left_side.size():
@@ -38,43 +37,44 @@ func build() -> void:
 			var p := Game.app.popup(key)
 			p.closed.connect(_refresh_badges))
 		b.set_meta("route", key)
-		put(b, Rect2(36, 234 + i * 151, 120, 130))
-	# 오른쪽: 가방 · 모집 (딱 2개)
+		put(b, Rect2(36, 232 + i * 152, 120, 128))
+	# 오른쪽: 장수(장수 · 병종 도감) · 아이템(장비 가방 · 도감 · 합성) (딱 2개, 개편 §13)
 	var bag := PxButton.make("btn_bag")
 	bag.tooltip_text = DB.t("lobby.bag")
-	bag.pressed.connect(func() -> void: Game.app.goto("heroes"))
-	put(bag, Rect2(868, 234, 120, 130))
-	_btn_recruit = PxButton.make("btn_recruit")
-	_btn_recruit.tooltip_text = DB.t("lobby.recruit")
-	_btn_recruit.pressed.connect(func() -> void: Game.app.goto("recruit"))
-	put(_btn_recruit, Rect2(868, 385, 120, 130))
+	bag.pressed.connect(func() -> void: Game.app.goto("heroes", {"mode": "units"}))
+	put(bag, Rect2(868, 232, 120, 128))
+	var items := PxButton.make("btn_recruit")
+	items.tooltip_text = DB.t("lobby.recruit")
+	items.pressed.connect(func() -> void: Game.app.goto("heroes", {"mode": "items"}))
+	put(items, Rect2(868, 384, 120, 128))
 	# 주공 전투력
 	var info := DrawLayer.make(_draw_info)
 	put(info, Rect2(200, 146, 680, 60))
-	# 성문 앞 출정 팻말 + 군웅대전 버튼
-	_sign = PxButton.make("sign_battle")
+	# 성문 두 개 (2026-11-23): 왼쪽 성문 = 출정(스테이지), 오른쪽 성문 = 군웅대전(다른 유저와 대전)
+	_sign = PxButton.new()
+	_sign.size = GATE
 	_sign.sound = "whoosh"
+	_sign.tooltip_text = DB.t("lobby.sortie")
 	_sign.pressed.connect(_on_sign)
-	_sign.overlay = _draw_battle_sign
-	put(_sign, Rect2(340, 1068, SIGN.x, SIGN.y), Pin.MID)
-	_arena_btn = PxButton.make("btn_arena")
+	_sign.overlay = _draw_stage_gate
+	put(_sign, Rect2(92, 800, GATE.x, GATE.y), Pin.MID)
+	_arena_btn = PxButton.new()
+	_arena_btn.size = GATE
 	_arena_btn.tooltip_text = DB.t("lobby.arena")
-	_arena_btn.overlay = _draw_arena_btn
+	_arena_btn.overlay = _draw_arena_gate
 	_arena_btn.pressed.connect(func() -> void: Game.app.goto("arena"))
-	put(_arena_btn, Rect2(534, 1068, SIGN.x, SIGN.y), Pin.MID)
+	put(_arena_btn, Rect2(532, 800, GATE.x, GATE.y), Pin.MID)
 	# 성 안뜰을 돌아다니는 랜덤 장수 (최대 4명, 최소 표식: 별 + 레벨만)
 	_spawn_walkers()
 	set_process(true)
 	_daily()
 	if bool(params.get("tutorial", false)) and not Game.tutorial_done():
 		_tutorial_gate()
-	elif bool(params.get("tutorial_recruit", false)):
-		_tutorial_recruit()
 
 
 func _spawn_walkers() -> void:
 	_walkers.clear()
-	# 편성 장수 먼저, 남는 자리는 편성 병종 (장수 없이 시작해도 성 앞이 비지 않게)
+	# 대표 장수 먼저, 남는 자리는 보유 병종 (장수 없이 시작해도 성 앞이 비지 않게)
 	var picks: Array = Game.lineup()
 	for t: String in Game.sortie_troops():
 		if picks.size() < 4:
@@ -89,7 +89,7 @@ func _spawn_walkers() -> void:
 		put(u, Rect2(pos.x, pos.y, 0, 0), Pin.MID)
 		var tag := DrawLayer.make(func(ci: Control) -> void:
 			if DB.is_hero(id):
-				W.draw_rank(ci, Rect2(Vector2.ZERO, ci.size), Game.profile.star_of(id), MetaRules.hero_level(Game.profile.data, id), 20.0)
+				W.draw_rank(ci, Rect2(Vector2.ZERO, ci.size), Game.profile.star_of(id), 0, 20.0)
 			else:
 				W.draw_rank(ci, Rect2(Vector2.ZERO, ci.size), int(Game.profile.troop(id).get("star", 1)), 0, 20.0))
 		tag.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -178,30 +178,68 @@ func _step_walkers(dt: float) -> void:
 		hit.z_index = clampi(int(pos.y) - 1300, 0, 400) + 2
 
 
-## 출정 · 군웅대전 팻말: 같은 팻말(나무판 + 기둥), 왼쪽 아이콘 + 오른쪽 숫자만.
-const SIGN := Vector2(150, 147)
-const SIGN_TEXT := Rect2(80, 14, 56, 76)
+## 성문 두 개: 같은 모양(돌 문틀 + 나무 문짝 + 깃발 간판), 색과 글자만 다르다. 임시 그림.
+const GATE := Vector2(400, 432)
 
 
-func _draw_battle_sign(b: PxButton, off: Vector2) -> void:
-	var last := String(Game.profile.data["progress"]["last"]).split("-")
-	var stg := DB.stage_index(int(last[0]), int(last[1]))
-	Px.text(b, str(stg), Rect2(SIGN_TEXT.position + off, SIGN_TEXT.size), 40, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 7)
+func _draw_stage_gate(b: PxButton, off: Vector2) -> void:
+	_draw_gate(b, off, DB.t("lobby.gate_stage"), DB.t("lobby.gate_stage_sub", [Game.profile.current_stage()]), Color("#b8322a"), Px.WHITE)
 
 
-func _draw_arena_btn(b: PxButton, off: Vector2) -> void:
-	var st := Game.profile.sync_arena_entries()
-	var n := int(st["entries"])
-	var col := Px.WHITE if n > 0 else Color("#ff8a80")
-	Px.text(b, str(n), Rect2(SIGN_TEXT.position + off, SIGN_TEXT.size), 40, col, HORIZONTAL_ALIGNMENT_CENTER, 7)
+func _draw_arena_gate(b: PxButton, off: Vector2) -> void:
+	var n := int(Game.profile.sync_arena_entries()["entries"])
+	_draw_gate(b, off, DB.t("lobby.gate_arena"), DB.t("lobby.gate_arena_sub", [n]), Color("#2f5fb0"), Px.WHITE if n > 0 else Color("#ff8a80"))
+
+
+func _draw_gate(b: PxButton, off: Vector2, label: String, sub: String, flag: Color, sub_col: Color) -> void:
+	var r := Rect2(off, b.size)
+	# 돌 문틀
+	b.draw_rect(r, Px.INK)
+	b.draw_rect(r.grow(-5), Color("#857c6c"))
+	var row := 0
+	var y := r.position.y + 8
+	while y < r.end.y - 8:
+		b.draw_rect(Rect2(r.position.x + 5, y + 44, r.size.x - 10, 3), Color(0, 0, 0, 0.16))
+		var x := r.position.x + 5 + (36.0 if row % 2 == 1 else 0.0)
+		while x < r.end.x - 8:
+			b.draw_rect(Rect2(x, y, 3, 44), Color(0, 0, 0, 0.12))
+			x += 72
+		y += 47
+		row += 1
+	# 문 (둥근 윗부분 + 나무 문짝 두 장)
+	var door := Rect2(r.position.x + 56, r.position.y + 150, r.size.x - 112, r.size.y - 150)
+	var cx := door.get_center().x
+	var rad := door.size.x * 0.5
+	b.draw_circle(Vector2(cx, door.position.y + 10), rad + 8, Px.INK)
+	b.draw_rect(Rect2(door.position.x - 8, door.position.y + 10, door.size.x + 16, door.size.y - 10), Px.INK)
+	b.draw_circle(Vector2(cx, door.position.y + 10), rad, Color("#6a4526"))
+	b.draw_rect(Rect2(door.position.x, door.position.y + 10, door.size.x, door.size.y - 10), Color("#6a4526"))
+	var px := door.position.x + 26
+	while px < door.end.x - 6:
+		b.draw_rect(Rect2(px, door.position.y - rad * 0.5, 3, door.size.y + rad * 0.5), Color(0, 0, 0, 0.18))
+		px += 34
+	b.draw_rect(Rect2(cx - 3, door.position.y - rad + 14, 6, door.size.y + rad - 14), Px.INK)
+	for side in [-1.0, 1.0]:
+		b.draw_circle(Vector2(cx + side * 30, door.position.y + door.size.y * 0.55), 12, Px.INK)
+		b.draw_circle(Vector2(cx + side * 30, door.position.y + door.size.y * 0.55), 8, Px.GOLD)
+	# 깃발 간판
+	var sign := Rect2(r.position.x + 40, r.position.y + 18, r.size.x - 80, 104)
+	b.draw_rect(sign, Px.INK)
+	b.draw_rect(sign.grow(-4), flag)
+	b.draw_rect(Rect2(sign.position.x + 4, sign.position.y + 4, sign.size.x - 8, 8), flag.lightened(0.25))
+	Px.text(b, label, Rect2(sign.position.x, sign.position.y + 4, sign.size.x, 58), 44, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 7)
+	Px.text(b, sub, Rect2(sign.position.x, sign.position.y + 60, sign.size.x, 38), 26, sub_col, HORIZONTAL_ALIGNMENT_CENTER, 5)
 
 
 func _on_sign() -> void:
 	if not Game.tutorial_done():
-		Game.next_stage = {"chapter": 1, "stage": 1}
-		Game.app.goto("battle", {"chapter": 1, "stage": 1, "tutorial": true})
+		Game.next_stage = {"stage": 1, "diff": 1}
+		Game.app.goto("battle", {"stage": 1, "diff": 1, "tutorial": true})
 		return
-	Game.app.goto("stage")
+	# 스테이지 목록 없이 지금 스테이지의 난이도 창을 바로 띄운다.
+	Game.app.popup("difficulty", {"stage": Game.profile.current_stage()})
+	if not Game.profile.changed.is_connected(_sign.queue_redraw):
+		Game.profile.changed.connect(_sign.queue_redraw)
 
 
 func _badge_for(key: String) -> bool:
@@ -236,12 +274,6 @@ func _daily() -> void:
 
 func _tutorial_gate() -> void:
 	var g := Guide.show_at(Game.app.overlay_layer, Rect2(_sign.position, _sign.size).grow(10), DB.t("tut.gate"))
-	g.advanced.connect(g.queue_free)
-
-
-func _tutorial_recruit() -> void:
-	var r := Rect2(_btn_recruit.position, _btn_recruit.size).grow(8)
-	var g := Guide.show_at(Game.app.overlay_layer, r, DB.t("tut.recruit"))
 	g.advanced.connect(g.queue_free)
 
 

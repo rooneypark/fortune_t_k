@@ -6,8 +6,6 @@ extends RefCounted
 const SLOT_ICON := {"weapon": "ic_sword", "armor": "ic_shield", "charm": "ic_orb"}
 
 
-
-
 ## Currency chip (panel + icon + live number + optional plus).
 static func chip(icon_name: String, getter: Callable, sz: Vector2, on_plus: Callable = Callable()) -> PxButton:
 	var p := PxButton.make("panel_chip", true, sz)
@@ -24,8 +22,9 @@ static func chip(icon_name: String, getter: Callable, sz: Vector2, on_plus: Call
 		p.static_panel = false
 		p.mouse_filter = Control.MOUSE_FILTER_STOP
 		p.pressed.connect(on_plus)
-		var plus := PxButton.make("btn_plus", false, Vector2(h * 0.66, h * 0.66))
-		plus.position = Vector2(sz.x - h * 0.66 - h * 0.13, h * 0.17)
+		var ps := roundf(h * 0.66 / 4.0) * 4.0
+		var plus := PxButton.make("btn_plus", false, Vector2(ps, ps))
+		plus.position = Vector2(sz.x - ps - roundf(h * 0.13 / 4.0) * 4.0, roundf((h - ps) * 0.5))
 		plus.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		p.add_child(plus)
 	var refresh := func() -> void:
@@ -40,12 +39,32 @@ static func chip(icon_name: String, getter: Callable, sz: Vector2, on_plus: Call
 
 static func gold_chip(sz: Vector2, plus := true) -> PxButton:
 	return chip("icon_gold", func() -> String: return Px.num(int(Game.profile.data["gold"])), sz,
-		(func() -> void: Game.app.goto("shop", {"tab": 2})) if plus else Callable())
-
-
-static func diamond_chip(sz: Vector2, plus := true) -> PxButton:
-	return chip("icon_diamond", func() -> String: return Px.num(int(Game.profile.data["diamond"])), sz,
 		(func() -> void: Game.app.goto("shop", {"tab": 1})) if plus else Callable())
+
+
+## 군량 칩: 지금 / 최대. "+"를 누르면 금으로 가득 채울지 묻는다 (개편 §13).
+static func rice_chip(sz: Vector2, plus := true) -> PxButton:
+	return chip("icon_rice", func() -> String: return "%d/%d" % [Game.profile.rice_now(), int(DB.rules["rice_max"])], sz,
+		ask_rice if plus else Callable())
+
+
+## 군량 즉시 충전: asks, then pays 금 and fills 군량.
+static func ask_rice() -> void:
+	var p := Game.profile
+	var cost := p.rice_refill_cost()
+	if cost <= 0:
+		Game.app.toast(DB.t("rice.full"))
+		return
+	var c: PxPopup = Game.app.popup("confirm", {"title": DB.t("rice.title"),
+		"text": DB.t("rice.ask", [Px.num(cost), p.rice_now(), int(DB.rules["rice_max"])]), "ok": DB.t("common.buy")})
+	c.connect("confirmed", func() -> void:
+		var why := p.refill_rice()
+		if why != "":
+			Game.app.toast(why)
+			Sfx.play("error")
+		else:
+			Sfx.play("coin")
+			Game.app.toast(DB.t("rice.done")))
 
 
 ## Square back button (◀) at the top left.
@@ -53,7 +72,7 @@ static func back_button(on_back: Callable) -> PxButton:
 	return arrow_button(-1, on_back, Vector2(100, 92))
 
 
-## Common top row for sub screens: back · title ribbon · gold · diamond.
+## Common top row for sub screens: back · title ribbon · 금 · 군량.
 static func top_bar(screen: PxScreen, title: String, show_back := true) -> void:
 	if screen.dialog:
 		return
@@ -62,7 +81,7 @@ static func top_bar(screen: PxScreen, title: String, show_back := true) -> void:
 	var rib := DrawLayer.make(func(ci: Control) -> void: Px.ribbon(ci, Rect2(Vector2.ZERO, ci.size), title, 46))
 	screen.put(rib, Rect2(140, 22, 380, 110))
 	screen.put(gold_chip(Vector2(232, 76)), Rect2(530, 40, 232, 76))
-	screen.put(diamond_chip(Vector2(232, 76)), Rect2(772, 40, 232, 76))
+	screen.put(rice_chip(Vector2(232, 76)), Rect2(772, 40, 232, 76))
 
 
 ## Face portrait in a faction-coloured tile with rarity frame and optional stars.
@@ -103,62 +122,9 @@ static func portrait(id: String, sz: Vector2, opts: Dictionary = {}) -> Control:
 	return root
 
 
-## Collection card: illustration, rarity frame, faction badge, name, stars, power.
-static func hero_card(id: String, sz: Vector2, opts: Dictionary = {}) -> PxButton:
-	var b := PxButton.new()
-	b.size = sz
-	b.press_depth = 3.0
-	var owned: bool = opts.get("owned", true)
-	var fac := DB.fac_of(id)
-	var rar := DB.rarity_of(id)
-	var rc := DB.rarity_color(rar)
-	var bg := DrawLayer.make(func(ci: Control) -> void:
-		var r := Rect2(Vector2.ZERO, ci.size)
-		ci.draw_rect(r, Px.INK)
-		ci.draw_rect(r.grow(-4), rc.darkened(0.2) if owned else Color("#4a3e33"))
-		ci.draw_rect(r.grow(-9), (DB.fac_color(fac).darkened(0.45)) if owned else Color("#2a221b"))
-		ci.draw_rect(Rect2(9, 9, r.size.x - 18, (r.size.y - 18) * 0.5), (DB.fac_color(fac).darkened(0.25)) if owned else Color("#332a21")), sz)
-	b.add_child(bg)
-	var a := Art.of_unit(id)
-	var pic := ArtRect.new()
-	pic.texture = Art.illustration(String(a["art"])) if bool(opts.get("big", true)) else Art.portrait(String(a["art"]))
-	pic.position = Vector2(9, 9)
-	pic.size = Vector2(sz.x - 18, sz.y - 18)
-	pic.focus_y = 0.12
-	pic.set_look(float(a["hue"]), 0.0, 0.0 if owned else 0.9)
-	b.add_child(pic)
-	var stars := int(opts.get("stars", Game.profile.star_of(id) if owned else 0))
-	var lv := MetaRules.hero_level(Game.profile.data, id) if owned else 0
-	var ov := DrawLayer.make(func(ci: Control) -> void:
-		var w := ci.size.x
-		var h := ci.size.y
-		var band := Rect2(6, h - h * 0.2 - 6, w - 12, h * 0.2)
-		if owned and bool(opts.get("rank", true)):
-			W.draw_rank(ci, band, stars, lv, clampf(w / 9.0, 12, 24))
-		if bool(opts.get("new", false)):
-			var nr := Rect2(w - 74, 8, 66, 34)
-			ci.draw_rect(nr, Px.INK)
-			ci.draw_rect(nr.grow(-3), Color("#ff3b30"))
-			Px.text(ci, "NEW", nr, 22)
-		if opts.has("tag"):
-			var tr := Rect2(8, h * 0.5, w - 16, 40)
-			ci.draw_rect(tr, Color(0, 0, 0, 0.6))
-			Px.text(ci, String(opts["tag"]), tr, 24, Px.GOLD)
-		if bool(opts.get("selected", false)):
-			ci.draw_rect(Rect2(Vector2(2, 2), ci.size - Vector2(4, 4)), Px.GOLD, false, 7.0), sz)
-	b.add_child(ov)
-	return b
-
-
 ## Row panel used by lists (missions, mail, settings).
 static func row_panel(sz: Vector2) -> PxButton:
 	var p := PxButton.make("panel_small", true, sz)
-	p.static_panel = true
-	return p
-
-
-static func dark_panel(sz: Vector2) -> PxButton:
-	var p := PxButton.make("panel_slot", true, sz)
 	p.static_panel = true
 	return p
 
@@ -169,13 +135,17 @@ static func reward_text(rw: Dictionary) -> String:
 	for k: String in rw:
 		match k:
 			"gold":
-				parts.append("골드 " + Px.num(int(rw[k])))
+				parts.append("금 " + Px.num(int(rw[k])))
 			"diamond":
-				parts.append("다이아 " + Px.num(int(rw[k])))
+				parts.append("금 " + Px.num(int(rw[k]) * Profile.DIAMOND_GOLD))
+			"rice":
+				parts.append("군량 " + str(int(rw[k])))
 			"tickets":
-				parts.append("모집권 " + str(int(rw[k])))
-			"boxes":
-				parts.append("보물 상자 " + str(int(rw[k])))
+				parts.append("군량 " + str(int(rw[k]) * Profile.TICKET_RICE))
+			"mats":
+				parts.append("보물 재료 " + str(int(rw[k])))
+			"material":
+				parts.append(DB.t("synth.mat_name", [DB.t("rarity_t." + String(rw[k]["rarity"])), DB.t("slot." + String(rw[k]["slot"]))]))
 			"skin":
 				parts.append(String(rw[k]))
 			"treasure":
@@ -184,16 +154,14 @@ static func reward_text(rw: Dictionary) -> String:
 
 
 static func reward_icon(rw: Dictionary) -> String:
-	for k in ["diamond", "gold", "tickets", "boxes", "treasure", "skin"]:
+	for k in ["gold", "diamond", "rice", "tickets", "mats", "material", "treasure", "skin"]:
 		if rw.has(k):
 			match k:
-				"diamond":
-					return "icon_diamond"
-				"gold":
+				"gold", "diamond":
 					return "icon_gold"
-				"tickets":
-					return "ic_scroll"
-				"boxes", "treasure":
+				"rice", "tickets":
+					return "icon_rice"
+				"mats", "material", "treasure":
 					return "icon_chest"
 				"skin":
 					return "icon_hero"
@@ -291,7 +259,6 @@ static func draw_rank(ci: CanvasItem, r: Rect2, stars: int, lv: int, size: float
 		Px.text(ci, lab, Rect2(x + sw + 6.0, r.position.y, tw + 6.0, r.size.y), fs, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
 
 
-
 # ---------------------------------------------------------------- shared kit
 # 민수 님 원칙: 모든 화면이 같은 부품을 쓴다 (크기 · 여백 · 색 · 글꼴 · 상태).
 
@@ -339,49 +306,3 @@ static func portrait_frame(id: String, sz: Vector2, label := "") -> PxButton:
 	return b
 
 
-## Queue / lineup slot (전투 대기열 · 편성 칸), same look everywhere.
-## state: "unit" | "empty" | "locked". [param label] is shown for locked slots.
-static func draw_unit_slot(ci: CanvasItem, r: Rect2, id: String, stars: int, lv: int, state := "unit", label := "") -> void:
-	Px.draw_skin(ci, "tile", r)
-	var inner := r.grow(-12)
-	match state:
-		"empty":
-			ci.draw_rect(inner, Color(0, 0, 0, 0.28))
-			var c := inner.get_center()
-			var pc := Color("#c99a5e", 0.35)
-			ci.draw_rect(Rect2(c - Vector2(15, 3), Vector2(30, 6)), pc)
-			ci.draw_rect(Rect2(c - Vector2(3, 15), Vector2(6, 30)), pc)
-		"locked":
-			ci.draw_rect(inner, Color(0, 0, 0, 0.45))
-			Px.fit(ci, Px.tex("ic_lock"), Rect2(inner.get_center() - Vector2(18, 26), Vector2(36, 36)))
-			if label != "":
-				Px.text(ci, label, Rect2(inner.position.x, inner.end.y - 30, inner.size.x, 28), 20, Px.MUTED)
-		_:
-			var a := Art.of_unit(id)
-			var t := Art.hued_portrait(String(a["art"]), float(a["hue"]))
-			var hero: bool = DB.units["heroes"].has(id)
-			ci.draw_rect(inner, (DB.fac_color(DB.fac_of(id)) if hero else Color("#6b5a48")).darkened(0.35))
-			if t != null:
-				Px.cover(ci, t, inner)
-			if hero:
-				ci.draw_rect(inner.grow(-1.5), DB.rarity_color(DB.rarity_of(id)), false, 3.0)
-			W.draw_rank(ci, Rect2(inner.position.x, inner.end.y - 26, inner.size.x, 24), stars, lv, 20.0)
-
-
-## In-battle bench/merge slot: uses merge tier (1단/2단/3단) + tier border colour,
-## visually distinct from meta star rank (★).
-static func draw_battle_slot(ci: CanvasItem, r: Rect2, id: String, rank: int) -> void:
-	Px.draw_skin(ci, "tile", r)
-	var inner := r.grow(-12)
-	var a := Art.of_unit(id)
-	var t := Art.hued_portrait(String(a["art"]), float(a["hue"]))
-	var hero: bool = DB.units["heroes"].has(id)
-	ci.draw_rect(inner, (DB.fac_color(DB.fac_of(id)) if hero else Color("#6b5a48")).darkened(0.35))
-	if t != null:
-		Px.cover(ci, t, inner)
-	var tc := Color("#b8aa90") if rank <= 1 else (Color("#3cc8e8") if rank == 2 else Color("#ffaa22"))
-	ci.draw_rect(inner.grow(-1.5), tc, false, 3.0 if rank <= 1 else 4.0)
-	var badge := Rect2(inner.end.x - 46, inner.end.y - 26, 44, 24)
-	ci.draw_rect(badge, Px.INK)
-	ci.draw_rect(badge.grow(-2), tc.darkened(0.68))
-	Px.text(ci, "%d단" % maxi(1, rank), badge, 17, tc)

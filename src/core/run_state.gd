@@ -1,129 +1,129 @@
 class_name RunState
 extends RefCounted
-## One run (= one stage, 10 waves) under GDD v5: 군량, the 천명 slot, recruiting
-## into the field or the bench, absorb (rank / trait), castle health, respawn
-## times. No nodes: the battle screen owns the battlefield and asks this object.
+## One run (= one stage on one difficulty, 10 waves): the 천명 slot (군량 is the
+## account's: 1 per spin, at most spins_per_battle spins a run, 개편 §13),
+## recruiting straight onto the field, absorb (성급 / 속성), castle health,
+## respawn times. 스테이지-흡수-합성-개편 §3.2: no lineup, no bench, no hero limit —
+## every owned troop and hero is on the reels and a recruit stands on the field.
+## No nodes: the battle screen owns the battlefield and asks this object.
 
 signal changed
 
 var rng: RandomNumberGenerator
+## The account: absorbing writes 성급 경험 and 속성 here at once (개편 §9.2).
+var account: Profile
 var slot := SlotMachine.new()
-var chapter := 1
 var stage := 1
+var diff := 1
 var waves: Array = []
-var lineup: Array = []
+## Hero ids on the reels (every owned hero).
+var heroes: Array = []
 var soldiers: Array = []
-var advisor := ""
+## Fixed 책사 (tests / tutorial); "" = the first hero on the field with a slot skill.
+var advisor_fixed := ""
+var advisor: String:
+	get:
+		if advisor_fixed != "":
+			return advisor_fixed
+		for u in field:
+			if u.is_hero() and not DB.advisor_skill(u.id).is_empty():
+				return u.id
+		return ""
 
-var rice := 0
 ## 0-based wave index.
 var wave := 0
-var spins_this_wave := 0
+## Spins made this run (다시 돌리기는 세지 않는다).
+var spins := 0
 var field_cap := 0
-var hero_quota := 0
 var field_cap_bought := 0
-var hero_quota_bought := 0
 var castle_hp := 0
 var castle_max := 0
 var field: Array[UnitState] = []
-var bench: Array[UnitState] = []
-var bench_size := 8
-## faction id -> attack bonus this wave (faction lines).
-var faction_buff: Dictionary = {}
 var last_result: Dictionary = {}
 var advisor_used := false
-var faction_double := false
 var hero_boost_next := false
-var free_nudge := false
+## 책사 "동남풍": the next spin wins with slot_lucky_chance per reel.
+var lucky_next := false
 var continued := false
-## Tutorial: newly recruited units go to the bench.
-var force_bench := false
-## Tutorial: reserve 1 hero quota slot so 장수 배치 단계에서 장비가 막히지 않게.
-var reserve_tutorial_hero := false
 ## Counters for missions / results.
-var stats := {"spins": 0, "jackpots": 0, "absorbs": 0, "traits": 0, "kills": 0, "streak": 0, "best_streak": 0}
+var stats := {"spins": 0, "jackpots": 0, "absorbs": 0, "traits": 0, "stars": 0, "new_units": 0, "kills": 0, "streak": 0, "best_streak": 0}
 
 
-func _init(random: RandomNumberGenerator, lineup_heroes: Array = [], soldier_ids: Array = [],
-		advisor_id: String = "", c: int = 1, s: int = 1) -> void:
+func _init(random: RandomNumberGenerator, hero_ids: Array = [], soldier_ids: Array = [],
+		s: int = 1, d: int = 1, acc: Profile = null) -> void:
 	DB.ensure()
 	rng = random
-	chapter = c
+	account = acc if acc != null else Profile.new()
 	stage = s
-	waves = DB.stage_waves(c, s)
+	diff = d
+	waves = DB.stage_waves(s, d)
 	var r := DB.rules
-	lineup = lineup_heroes.slice(0, int(r["hero_lineup_max"]))
+	heroes = hero_ids.duplicate()
 	soldiers = soldier_ids if not soldier_ids.is_empty() else r["soldiers_base"]
-	advisor = advisor_id
-	rice = int(r["start_rice"])
 	field_cap = int(r["field_cap_base"])
-	hero_quota = int(r["hero_quota_base"])
-	bench_size = int(r["bench_size"])
 	castle_max = int(r["castle_hp"])
 	castle_hp = castle_max
-	slot.setup(lineup, soldiers, int(r["strip_length"]), int(r["weight_soldier"]), int(r["weight_hero"]), rng)
+	slot.setup(heroes, soldiers, int(r["strip_length"]), rng)
 
 
 # ---------------------------------------------------------------- costs
 
-## 군량 for the next spin: base + step x spins already made this wave (GDD §7).
+## 군량 the account has now (시간으로 차고 금으로 산다).
+var rice: int:
+	get:
+		return account.rice_now()
+
+
+## 군량 for one spin.
 func spin_cost() -> int:
-	return int(DB.rules["spin_base"]) + int(DB.rules["spin_step"]) * spins_this_wave
+	return int(DB.rules["spin_rice"])
 
 
-## Price of the last spin (for the nudge and the max-rank refund).
-func last_spin_price() -> int:
-	return int(DB.rules["spin_base"]) + int(DB.rules["spin_step"]) * maxi(0, spins_this_wave - 1)
-
-
-## Nudge = 1/4 of the spin that missed (GDD §3.2-6).
+## 군량 for shifting one blank reel (재배치).
 func nudge_cost() -> int:
-	if free_nudge:
-		return 0
-	return int(round(last_spin_price() * float(DB.rules["nudge_ratio"])))
+	return int(DB.rules["respin_rice"])
 
 
-## Why a spin is not possible now, or "".
+func spins_max() -> int:
+	return int(DB.rules["spins_per_battle"])
+
+
+func spins_left() -> int:
+	return maxi(0, spins_max() - spins)
+
+
+func field_full() -> bool:
+	return field.size() >= field_cap
+
+
+## Why a spin is not possible now, or "": the run's spins are used up, the field
+## is full (absorb or buy a slot), or the account has no 군량.
 func spin_block_reason() -> String:
-	if bench.size() >= bench_size:
-		return DB.t("battle.bench_full")
+	if spins_left() <= 0:
+		return DB.t("battle.no_spins")
+	if field_full():
+		return DB.t("battle.field_full")
 	if rice < spin_cost():
 		return DB.t("battle.no_rice")
 	return ""
 
 
 func can_nudge() -> bool:
-	return slot.can_nudge and rice >= nudge_cost()
+	return slot.can_nudge and rice >= nudge_cost() and not field_full()
 
 
+## 금 for the next field slot (this run only), or -1 at the limit.
 func field_cap_cost() -> int:
 	var costs: Array = DB.rules["field_cap_costs"]
 	return -1 if field_cap_bought >= costs.size() else int(costs[field_cap_bought])
 
 
-func hero_quota_cost() -> int:
-	var costs: Array = DB.rules["hero_quota_costs"]
-	return -1 if hero_quota_bought >= costs.size() else int(costs[hero_quota_bought])
-
-
 func buy_field_cap() -> bool:
 	var c := field_cap_cost()
-	if c < 0 or rice < c:
+	if c < 0 or not account.pay("gold", c):
 		return false
-	rice -= c
 	field_cap += 1
 	field_cap_bought += 1
-	changed.emit()
-	return true
-
-
-func buy_hero_quota() -> bool:
-	var c := hero_quota_cost()
-	if c < 0 or rice < c:
-		return false
-	rice -= c
-	hero_quota += 1
-	hero_quota_bought += 1
 	changed.emit()
 	return true
 
@@ -134,34 +134,34 @@ func buy_hero_quota() -> bool:
 func spin() -> Dictionary:
 	if spin_block_reason() != "":
 		return {}
-	rice -= spin_cost()
-	spins_this_wave += 1
+	account.spend_rice(spin_cost())
+	spins += 1
 	stats["spins"] += 1
-	free_nudge = false
-	last_result = slot.spin(rng, hero_boost_next)
+	# 전장에 아무도 없으면 최소 1칸은 당첨 (개편 §9.9 보장)
+	last_result = slot.spin(rng, hero_boost_next, lucky_next, 1 if field.is_empty() else 0)
 	hero_boost_next = false
+	lucky_next = false
 	var events := _apply(last_result)
 	changed.emit()
 	return {"result": last_result, "events": events}
 
 
-## Pays and nudges [param reel] by [param dir]. Returns {result, events} or {}.
+## Pays and shifts the blank [param reel] ([param dir] +1 = down: the cell above
+## comes into the row, -1 = up). Returns {result, events} or {}.
 func nudge(reel: int, dir: int) -> Dictionary:
 	if not can_nudge():
 		return {}
-	var cost := nudge_cost()
 	var res := slot.nudge(reel, dir)
 	if res.is_empty():
 		return {}
-	rice -= cost
-	free_nudge = false
+	account.spend_rice(nudge_cost())
 	last_result = res
 	var events := _apply(res)
 	changed.emit()
 	return {"result": res, "events": events}
 
 
-## Advisor skill type of the current advisor ("respin", "faction_double", ...).
+## Advisor skill type of the current advisor ("respin", "lucky", "hero_boost").
 func advisor_type() -> String:
 	return String(DB.advisor_skill(advisor).get("type", "respin"))
 
@@ -171,121 +171,71 @@ func advisor_ready() -> bool:
 	if advisor_used or advisor == "" or DB.advisor_skill(advisor).is_empty():
 		return false
 	match advisor_type():
-		"respin", "free_nudge":
-			return slot.can_nudge
+		"respin":
+			return not last_result.is_empty() and slot.first_blank() >= 0 and not field_full()
 		_:
 			return true
 
 
-## Uses the advisor skill (GDD §3.3b), once per wave. [param reel] for respin.
-## Returns {result, events} for respin, {ok: true} for buffs, or {}.
+## Uses the advisor skill (GDD §3.3b), once per wave. [param reel] for respin
+## (a blank reel). Returns {result, events} for respin, {ok: true} for buffs, or {}.
 func use_advisor(reel: int = 0) -> Dictionary:
 	if not advisor_ready():
 		return {}
-	advisor_used = true
 	match advisor_type():
 		"respin":
-			last_result = slot.respin_reel(reel, rng)
-			var events := _apply(last_result)
+			var res := slot.respin_reel(reel, rng)
+			if res.is_empty():
+				return {}
+			advisor_used = true
+			last_result = res
+			var events := _apply(res)
 			changed.emit()
-			return {"result": last_result, "events": events}
-		"free_nudge":
-			free_nudge = true
-		"faction_double":
-			faction_double = true
-			for f: String in faction_buff:
-				faction_buff[f] = float(DB.rules["faction_line_atk"]) * 2.0
+			return {"result": res, "events": events}
+		"lucky":
+			lucky_next = true
 		"hero_boost":
 			hero_boost_next = true
+	advisor_used = true
 	changed.emit()
 	return {"ok": true}
 
 
 ## Turns a slot result into units. Event types:
-## field / bench (new unit), rank (an owned hero absorbed the copy),
-## refund (owned hero already max rank), merged (overflow absorbed), lost.
+## field (a new unit stands on the field; "new": true when the hero / troop just
+## joined the account), lost (no room left), refund (잭팟: 군량 comes back).
 func _apply(res: Dictionary) -> Array:
 	var events: Array = []
-	var bonus := float(DB.rules["faction_line_atk"]) * (2.0 if faction_double else 1.0)
-	for f: String in res["factions"]:
-		faction_buff[f] = bonus
-	var lines: Array = res["lines"]
-	if lines.is_empty():
+	var recruits: Array = res["recruits"]
+	if recruits.is_empty():
 		stats["streak"] = 0
-	else:
-		stats["streak"] += 1
-		stats["best_streak"] = maxi(int(stats["best_streak"]), int(stats["streak"]))
-		for l: Dictionary in lines:
-			if l["kind"] == "unit":
-				stats["jackpots"] += 1
-			events.append_array(_summon_one_for_line(l))
+		return events
+	stats["streak"] += 1
+	stats["best_streak"] = maxi(int(stats["best_streak"]), int(stats["streak"]))
+	for rc: Dictionary in recruits:
+		events.append_array(recruit(String(rc["id"])))
+	if bool(res.get("jackpot", false)):
+		stats["jackpots"] += 1
+		var back := int(DB.rules["jackpot_refund_rice"])
+		account.add_rice(back)
+		events.append({"type": "refund", "rice": back})
 	return events
 
 
-## 줄 완성 소환 (2026-11-22 재설계): 같은 병종 한 줄 = 1명.
-## 줄에 장수가 끼어 있으면 그 장수만 들어온다 (창병·창병·관우 -> 관우).
-## 이미 이 런에 있는 장수면 등급 경험, 장수 칸(최대 3)이 차면 대기석.
-## 장수가 없으면 그 병종 병사 1명.
-func _summon_one_for_line(l: Dictionary) -> Array:
-	var heroes: Array = l.get("heroes", [])
-	if not heroes.is_empty():
-		var out: Array = []
-		for h: Variant in heroes:
-			out.append_array(recruit(String(h)))
-		return out
-	var troop := String(l.get("troop", ""))
-	if troop == "" or not DB.is_soldier(troop):
-		return []
-	var u := UnitState.create(troop, 0)
-	if not force_bench and _field_has_room_for(u):
-		field.append(u)
-		return [{"type": "field", "unit": u, "summon": true, "line_summon": true}]
-	if bench.size() < bench_size:
-		bench.append(u)
-		return [{"type": "bench", "unit": u, "line_summon": true}]
-	return []
-
-
-## Adds one recruited unit carrying [param xp] (merged copies).
-func recruit(id: String, xp: int = 0) -> Array:
-	if DB.is_hero(id):
-		var owned := find_owned(id)
-		if owned != null:
-			if owned.is_max_rank():
-				var refund := int(round(last_spin_price() * float(DB.rules["max_rank_refund_ratio"])))
-				rice += refund
-				return [{"type": "refund", "unit": owned, "rice": refund}]
-			var gained := owned.add_xp(int(DB.rules["absorb_same_unit"]) + xp)
-			return [{"type": "rank", "unit": owned, "gained": gained}]
-	var u := UnitState.create(id, xp)
-	if not force_bench and _field_has_room_for(u):
-		field.append(u)
-		return [{"type": "field", "unit": u, "summon": true}]
-	if bench.size() < bench_size:
-		bench.append(u)
-		return [{"type": "bench", "unit": u}]
-	# Overflow (GDD §8): absorb into a same-class unit, else lost.
-	for host in field + bench:
-		if host.cls() == u.cls() and not host.is_max_rank():
-			host.add_xp((int(DB.rules["absorb_same_unit"]) if host.id == u.id else int(DB.rules["absorb_same_class"])) + xp)
-			return [{"type": "merged", "unit": host}]
-	return [{"type": "lost", "unit": u}]
-
-
-func _field_has_room_for(u: UnitState) -> bool:
-	if field.size() >= field_cap:
-		return false
-	return not u.is_hero() or heroes_on_field() < hero_quota
-
-
-func find_owned(id: String) -> UnitState:
-	for u in field:
-		if u.id == id:
-			return u
-	for u in bench:
-		if u.id == id:
-			return u
-	return null
+## Adds one recruited unit to the field, or loses it when the field is full
+## (several winning reels can overflow the last free slots). A hero that is
+## already on the field is not merged: the copy stands beside it (개편 §3.3).
+## A hero or troop the account does not have yet joins it here, for good (개편 §13:
+## 캐릭터는 전투 중 슬롯에서만 얻는다) — also when there is no room for the body.
+func recruit(id: String) -> Array:
+	var is_new := account.join(id)
+	if is_new:
+		stats["new_units"] += 1
+	var u := UnitState.create(id, 0)
+	if field_full():
+		return [{"type": "lost", "unit": u, "new": is_new}]
+	field.append(u)
+	return [{"type": "field", "unit": u, "summon": true, "new": is_new}]
 
 
 func heroes_on_field() -> int:
@@ -298,88 +248,79 @@ func heroes_on_field() -> int:
 
 func remove_unit(u: UnitState) -> void:
 	field.erase(u)
-	bench.erase(u)
 
 
-## Bench -> field. Returns "" or the reason it failed.
-func deploy(u: UnitState) -> String:
-	if not bench.has(u):
-		return "?"
-	if field.size() >= field_cap:
-		return DB.t("battle.field_full")
-	if u.is_hero() and heroes_on_field() >= hero_quota:
-		return DB.t("battle.hero_full")
-	bench.erase(u)
-	field.append(u)
-	changed.emit()
-	return ""
+# ---------------------------------------------------------------- absorb (개편 §9.2)
+
+func star_of(u: UnitState) -> int:
+	return account.unit_star(u.id)
 
 
-## Field -> bench (prep only, checked by the caller). Returns "" or the reason.
-func to_bench(u: UnitState) -> String:
-	if not field.has(u):
-		return "?"
-	if bench.size() >= bench_size:
-		return DB.t("battle.bench_full")
-	field.erase(u)
-	bench.append(u)
-	changed.emit()
-	return ""
+## 속성 of a unit: [{id, lv}] (the hero's own, or its troop's for a soldier).
+func traits_of(u: UnitState) -> Array:
+	return MetaRules.unit_traits(account.data, u.id)
 
 
-# ---------------------------------------------------------------- absorb (GDD §3.4)
+func trait_slots(u: UnitState) -> int:
+	return MetaRules.trait_slots(star_of(u))
+
 
 ## How [param food] would be absorbed by [param target]:
-## {ok, mode: "rank" | "trait", reason, xp}
+## same 병종 -> {ok, mode: "star", xp}; another 병종 -> {ok, mode: "trait"}.
+## Not ok: {ok: false, reason}.
 func absorb_check(food: UnitState, target: UnitState) -> Dictionary:
 	if food == target or food == null or target == null:
 		return {"ok": false, "reason": ""}
-	if food.cls() == target.cls():
-		if target.is_max_rank():
-			return {"ok": false, "reason": DB.t("absorb.max_rank")}
-		var xp := int(DB.rules["absorb_same_unit"]) if food.id == target.id else int(DB.rules["absorb_same_class"])
-		return {"ok": true, "mode": "rank", "xp": xp}
+	if account.unit_entry(target.id).is_empty():
+		return {"ok": false, "reason": DB.t("absorb.guest")}
+	if food.troop() == target.troop():
+		if star_of(target) >= MetaRules.star_max():
+			return {"ok": false, "reason": DB.t("absorb.max_star")}
+		return {"ok": true, "mode": "star", "xp": MetaRules.star_xp(food.id, target.id)}
 	return {"ok": true, "mode": "trait"}
 
 
-## Same-class absorb: food disappears, target gains rank xp. Returns ranks gained or -1.
-func absorb_rank(food: UnitState, target: UnitState) -> int:
+## Same-병종 absorb: food disappears, the target's 성급 경험 rises in the account.
+## Returns {gained, star, xp, need}, or {} when not allowed.
+func absorb_star(food: UnitState, target: UnitState) -> Dictionary:
 	var chk := absorb_check(food, target)
-	if not chk["ok"] or chk["mode"] != "rank":
-		return -1
+	if not chk["ok"] or chk["mode"] != "star":
+		return {}
+	var res := account.add_star_xp(target.id, int(chk["xp"]))
+	if res.is_empty():
+		return {}
 	remove_unit(food)
-	var gained := target.add_xp(int(chk["xp"]))
 	stats["absorbs"] += 1
+	stats["stars"] += 1
 	changed.emit()
-	return gained
+	return res
 
 
-## The three traits of food's class for the picker, with "owned" flags.
+## The three 속성 of food's troop for the picker, with the target's level of each:
+## [{id, name, descs, lv (0 = not owned), maxed}].
 func trait_options(food: UnitState, target: UnitState) -> Array:
 	var out: Array = []
-	for tr: Dictionary in DB.traits_of(food.cls()):
+	for tr: Dictionary in DB.traits_for(food.troop()):
 		var d := tr.duplicate()
-		d["owned"] = target.has_trait(String(tr["id"]))
-		d["cls"] = food.cls()
+		d["lv"] = MetaRules.trait_level(account.data, target.id, String(tr["id"]))
+		d["maxed"] = int(d["lv"]) >= MetaRules.trait_max()
 		out.append(d)
 	return out
 
 
-## Different-class absorb: target takes [param trait_id]. When all slots are
-## full, [param replace_index] names the trait to swap out. Returns success.
+## Other-병종 absorb: the target takes [param trait_id] of food's troop (+1 level
+## when it already has it). When all slots are full, [param replace_index] names
+## the 속성 to swap out. Returns success; the food stays when it fails.
 func absorb_trait(food: UnitState, target: UnitState, trait_id: String, replace_index: int = -1) -> bool:
 	var chk := absorb_check(food, target)
 	if not chk["ok"] or chk["mode"] != "trait":
 		return false
-	var tcls := String(DB.trait_def(trait_id).get("cls", ""))
-	if target.has_trait(trait_id) or tcls == target.cls() or tcls != food.cls():
+	var offered := false
+	for tr: Dictionary in DB.traits_for(food.troop()):
+		if String(tr["id"]) == trait_id:
+			offered = true
+	if not offered or account.set_trait(target.id, trait_id, replace_index) != "":
 		return false
-	if target.traits.size() >= target.trait_slots():
-		if replace_index < 0 or replace_index >= target.traits.size():
-			return false
-		target.traits[replace_index] = trait_id
-	else:
-		target.traits.append(trait_id)
 	remove_unit(food)
 	stats["absorbs"] += 1
 	stats["traits"] += 1
@@ -389,11 +330,10 @@ func absorb_trait(food: UnitState, target: UnitState, trait_id: String, replace_
 
 # ---------------------------------------------------------------- waves & castle
 
-## Seconds a fallen unit waits: soldier 5 / hero 12, +2 per rank above 1 (GDD §3.6).
+## Seconds a fallen unit waits: soldier 5 / hero 12 (GDD §3.6).
 func respawn_time(u: UnitState) -> float:
 	var r := DB.rules
-	var base := float(r["respawn_hero"]) if u.is_hero() else float(r["respawn_soldier"])
-	return base + float(r["respawn_per_rank"]) * (u.rank - 1)
+	return float(r["respawn_hero"]) if u.is_hero() else float(r["respawn_soldier"])
 
 
 func damage_castle(amount: float) -> void:
@@ -409,27 +349,16 @@ func castle_ratio() -> float:
 	return float(castle_hp) / float(maxi(1, castle_max))
 
 
-## 군량 for clearing wave [param wave_index] (0-based): 280 + 20 x w + 80 (GDD §7).
-func wave_income(wave_index: int) -> int:
-	var r := DB.rules
-	return int(r["wave_income_base"]) + int(r["wave_income_step"]) * wave_index + int(r["wave_clear_bonus"])
-
-
-## Reward and reset after a cleared wave. Returns {rice, castle}.
+## Reset after a cleared wave: the castle mends 10 %. Returns {castle}.
+## (군량은 전투 안에서 벌지 않는다.)
 func finish_wave() -> Dictionary:
-	var gain := wave_income(wave)
 	var heal := mini(castle_max - castle_hp, int(round(castle_max * float(DB.rules["castle_regen"]))))
-	rice += gain
 	castle_hp += heal
 	wave += 1
-	spins_this_wave = 0
-	faction_buff.clear()
 	advisor_used = false
-	faction_double = false
-	free_nudge = false
 	slot.can_nudge = false
 	changed.emit()
-	return {"rice": gain, "castle": heal}
+	return {"castle": heal}
 
 
 func wave_count() -> int:

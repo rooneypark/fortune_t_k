@@ -13,7 +13,7 @@ func setup(params: Dictionary) -> void:
 
 
 func build() -> void:
-	var rows := [["icon_rice", DB.t("wave.rice"), "+" + Px.num(int(p["rice"]))], ["icon_castle", DB.t("wave.castle"), "+" + str(int(p["castle"]))], ["ic_sword", DB.t("wave.kills"), str(int(p["kills"]))]]
+	var rows := [["icon_rice", DB.t("wave.rice"), str(int(p.get("spins_left", 0)))], ["icon_castle", DB.t("wave.castle"), "+" + str(int(p["castle"]))], ["ic_sword", DB.t("wave.kills"), str(int(p["kills"]))]]
 	for i in rows.size():
 		var it: Array = rows[i]
 		var row := DrawLayer.make(func(ci: Control) -> void:
@@ -27,7 +27,7 @@ func build() -> void:
 		put(W.portrait(mvp.id, Vector2(130, 130)), Rect2(60, 370, 130, 130))
 		var info := DrawLayer.make(func(ci: Control) -> void:
 			Px.text(ci, DB.t("wave.mvp"), Rect2(0, 0, 500, 40), 26, Px.MUTED, HORIZONTAL_ALIGNMENT_LEFT)
-			Px.text(ci, mvp.display_name() + "  " + DB.t("battle.rank", [mvp.rank]), Rect2(0, 40, 520, 50), 36, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
+			Px.text(ci, mvp.display_name() + "  " + DB.t("battle.rank", [Game.profile.unit_star(mvp.id)]), Rect2(0, 40, 520, 50), 36, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
 			Px.text(ci, DB.t("wave.mvp_line", [Px.num(int(mvp.damage)), mvp.kills]), Rect2(0, 90, 520, 40), 26, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT))
 		put(info, Rect2(210, 370, 560, 130))
 	var nxt: Dictionary = p["next"]

@@ -41,7 +41,7 @@ func build() -> void:
 	# 추가 입장 · 군웅 상점
 	var buy := PxButton.colored("purple", DB.t("arena.buy"), Vector2(420, 120), 34)
 	buy.sub = str(int(DB.meta["arena"]["extra_cost"]))
-	buy.sub_icon = Px.tex("icon_diamond")
+	buy.sub_icon = Px.tex("icon_gold")
 	buy.pressed.connect(_ask_buy)
 	put(buy, Rect2(70, 1090, 420, 120))
 	var shop := PxButton.colored("yellow", DB.t("arena.shop"), Vector2(420, 120), 34)

@@ -1,32 +1,15 @@
 {
- "_source": "콘텐츠-기획-v5 §2 (적 배율 1.09^(s-1), 5 = 적장, 8 = 장 보스, 첫 클리어 다이아 50)",
- "difficulty_base": 1.09,
- "count_step": 0.05,
- "first_clear_diamond": 50,
+ "_source": "스테이지-흡수-합성-개편 §3.1, §4 (스테이지 10 × 난이도 3, 적 배율 1.2^(스테이지-1) × 난이도)",
+ "stage_base": 1.2,
+ "first_clear_gold": 2000,
  "gold_per_wave": 100,
  "gold_victory": 500,
- "lord_exp_per_wave": 10,
  "star_rules": [
   "클리어",
   "성 체력 50% 이상",
   "성 체력 90% 이상"
  ],
- "chapter_chests": [
-  {
-   "stars": 8,
-   "gold": 5000
-  },
-  {
-   "stars": 16,
-   "tickets": 1
-  },
-  {
-   "stars": 24,
-   "diamond": 150
-  }
- ],
  "recommended_power": 8000,
- "recommended_step": 1.8,
  "waves_template": [
   {
    "list": [
@@ -207,114 +190,96 @@
    "boss": "zhangjiao"
   }
  ],
- "chapters": [
+ "stages": [
   {
    "id": 1,
-   "name": "황건의 난",
+   "name": "황건적의 난",
    "enemy": "황건적",
    "hue": 0.0,
-   "boss": "zhangjiao",
-   "elite": "chengyuanzhi",
-   "stages": [
-    "탁현 들판",
-    "숲속 매복",
-    "황건적 야영지",
-    "성문 공방",
-    "광종 외곽",
-    "영천 평야",
-    "곡양 산길",
-    "광종성 결전"
-   ]
+   "boss": "zhangjiao"
   },
   {
    "id": 2,
    "name": "반동탁 연합",
    "enemy": "동탁군",
    "hue": 0.85,
-   "boss": "lvbu_b",
-   "elite": "chengyuanzhi",
-   "stages": [
-    "산조 집결",
-    "사수관 앞",
-    "화웅의 도발",
-    "호로관 길",
-    "낙양 외곽",
-    "불타는 낙양",
-    "형양 매복",
-    "호로관 결전"
-   ]
+   "boss": "lvbu_b"
   },
   {
    "id": 3,
    "name": "군웅할거",
    "enemy": "원술군",
    "hue": 0.55,
-   "boss": "jiling",
-   "elite": "chengyuanzhi",
-   "stages": [
-    "서주 들판",
-    "소패 성채",
-    "하비 물길",
-    "수춘 외곽",
-    "방패 대열",
-    "원술의 창고",
-    "회수 강변",
-    "수춘성 결전"
-   ]
+   "boss": "jiling"
   },
   {
    "id": 4,
    "name": "관도대전",
    "enemy": "원소군",
    "hue": 0.25,
-   "boss": "yanwen",
-   "elite": "chengyuanzhi",
-   "stages": [
-    "백마 구원",
-    "연진 나루",
-    "관도 진지",
-    "오소 습격",
-    "화살비 평원",
-    "토산 공방",
-    "창정 추격",
-    "관도 결전"
-   ]
+   "boss": "yanwen"
   },
   {
    "id": 5,
    "name": "적벽대전",
    "enemy": "조조군",
    "hue": 0.62,
-   "boss": "caoren",
-   "elite": "chengyuanzhi",
-   "stages": [
-    "장판 언덕",
-    "하구 나루",
-    "강하 수채",
-    "적벽 강가",
-    "연환선",
-    "동남풍",
-    "화용도",
-    "남군 결전"
-   ]
+   "boss": "caoren"
   },
   {
    "id": 6,
    "name": "한중 쟁탈",
-   "enemy": "장로·조조 연합",
+   "enemy": "위군",
    "hue": 0.4,
-   "boss": "xiahouyuan_b",
-   "elite": "chengyuanzhi",
-   "stages": [
-    "양평관",
-    "가맹관",
-    "탕거 산길",
-    "와구관",
-    "천탕산",
-    "정군산 기슭",
-    "한수 강변",
-    "정군산 결전"
-   ]
+   "boss": "xiahouyuan_b"
+  },
+  {
+   "id": 7,
+   "name": "형주 공방",
+   "enemy": "오군",
+   "hue": 0.95,
+   "boss": "zhouyu_b"
+  },
+  {
+   "id": 8,
+   "name": "남만 정벌",
+   "enemy": "남만군",
+   "hue": 0.3,
+   "boss": "menghuo_b"
+  },
+  {
+   "id": 9,
+   "name": "북벌",
+   "enemy": "위군 정예",
+   "hue": 0.7,
+   "boss": "simayi_b"
+  },
+  {
+   "id": 10,
+   "name": "천하통일",
+   "enemy": "연합군",
+   "hue": 0.5,
+   "boss": "caocao_b"
+  }
+ ],
+ "difficulties": [
+  {
+   "id": 1,
+   "name": "보통",
+   "mult": 0.35,
+   "count": 1.0
+  },
+  {
+   "id": 2,
+   "name": "어려움",
+   "mult": 0.7,
+   "count": 1.15
+  },
+  {
+   "id": 3,
+   "name": "지옥",
+   "mult": 1.3,
+   "count": 1.3
   }
  ]
 }

@@ -1,12 +1,15 @@
 extends PxScreen
-## 가방 (장수 탭 · 병종 탭 · 보물 탭, 2026-11-22):
-## 편성은 스테이지 → 출정 → 출정 편성 창에서 한다 (src/ui/popups/lineup.gd).
+## 장수(장수 탭 · 병종 탭) 또는 아이템(장비 가방) — 로비 오른쪽 메뉴 두 개가 여는 화면 (개편 §13).
+## 둘 다 도감이다: 아직 없는 것은 어두운 그림자로 보이고 위에 "도감 n / 전체"를 적는다.
+## 편성은 없다: 보유한 병종·장수 전부가 슬롯에 나온다 (스테이지-흡수-합성-개편 §3.2).
 ## 이미지 중심 · 텍스트 최소화 · 내것만/전체 토글 · 미보유 어두운 그림자 실루엣.
 
 const FACS := ["", "wei", "shu", "wu", "qun"]
 const SLOT_ICON := {"weapon": "ic_sword", "armor": "ic_shield", "charm": "ic_orb"}
 
 var tab := 0
+## "units" = 장수 · 병종, "items" = 아이템
+var mode := "units"
 var fac := ""
 var only_owned := false
 var slot_filter := ""
@@ -16,16 +19,26 @@ func build() -> void:
 	bg = Px.tex("menu_bg")
 	bg_dim = 0.35
 	tab = clampi(int(params.get("tab", 0)), 0, 2)
+	mode = String(params.get("mode", "items" if tab == 2 else "units"))
+	if mode == "items":
+		tab = 2
 	_rebuild()
 
 
 func _rebuild() -> void:
 	clear_children()
-	W.top_bar(self, DB.t("tab.heroes"))
-	put(W.tabs([DB.t("heroes.tab_heroes"), DB.t("heroes.tab_troops"), DB.t("heroes.tab_treasure")], tab, Vector2(904, 88),
-		func(i: int) -> void:
-			tab = i
-			_rebuild(), ["green", "blue", "purple"]), Rect2(60, 146, 904, 88))
+	W.top_bar(self, DB.t("tab.items") if mode == "items" else DB.t("tab.heroes"))
+	if mode != "items":
+		put(W.tabs([DB.t("heroes.tab_heroes"), DB.t("heroes.tab_troops")], mini(tab, 1), Vector2(904, 88),
+			func(i: int) -> void:
+				tab = i
+				_rebuild(), ["green", "blue"]), Rect2(60, 146, 904, 88))
+		_put_dex(DB.t("dex.heroes", [(Game.profile.data["heroes"] as Dictionary).size(), DB.hero_ids().size()]) if tab == 0 else "")
+	else:
+		var have := {}
+		for it: Dictionary in Game.profile.data["treasures"]:
+			have[String(it["tid"])] = true
+		_put_dex(DB.t("dex.items", [have.size(), (DB.meta["treasure"]["list"] as Array).size()]))
 	match tab:
 		0:
 			_build_heroes()
@@ -93,49 +106,6 @@ func _build_heroes() -> void:
 	content.custom_minimum_size.y = 8 + ceili(ids.size() / 4.0) * (chh + 12)
 
 
-func _build_barracks_strip() -> void:
-	var cap := MetaRules.barracks_cap(Game.lord_lv())
-	var classes := ["inf", "arc", "cav", "str"]
-	var reps := {"inf": "spear", "arc": "archer", "cav": "rider", "str": "fire"}
-	for i in classes.size():
-		var cls: String = classes[i]
-		var x := 60.0 + i * 228.0
-		var y := 248.0
-		var lv: Dictionary = Game.profile.data["barracks"][cls]
-		var panel := W.section(Vector2(218, 156))
-		put(panel, Rect2(x, y, 218, 156))
-		# 병종 아이콘 (좌측 상단)
-		var head := DrawLayer.make(func(ci: Control) -> void:
-			var rep := String(reps[cls])
-			var t := Art.portrait(String(Art.of_unit(rep)["art"]))
-			if t != null:
-				Px.fit(ci, t, Rect2(0, 0, 56, 56))
-			Px.fit(ci, Px.tex(String(DB.units["classes"][cls]["icon"])), Rect2(36, 32, 26, 26)))
-		put(head, Rect2(x + 8, y + 6, 64, 60))
-		for j in 2:
-			var stat: String = ["atk", "hp"][j]
-			var l := int(lv[stat])
-			var cost := MetaRules.barracks_cost(l)
-			var ic := "ic_sword" if j == 0 else "ic_heart"
-			var b := PxButton.make("panel_small", true, Vector2(138, 62))
-			b.disabled = l >= cap
-			b.overlay = func(btn: PxButton, off: Vector2) -> void:
-				var r := Rect2(off, btn.size)
-				Px.fit(btn, Px.tex(ic), Rect2(r.position + Vector2(8, 8), Vector2(28, 28)))
-				Px.text(btn, "Lv%d" % l, Rect2(r.position + Vector2(40, 2), Vector2(88, 28)), 22, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
-				Px.fit(btn, Px.tex("icon_gold"), Rect2(r.position + Vector2(8, 34), Vector2(22, 22)))
-				Px.text(btn, Px.short(cost) if l < cap else "MAX", Rect2(r.position + Vector2(34, 30), Vector2(96, 28)), 20, Px.WHITE if Game.profile.can_pay("gold", cost) else Color("#ff8a80"), HORIZONTAL_ALIGNMENT_LEFT)
-			b.pressed.connect(func() -> void:
-				var why := Game.profile.upgrade_barracks(cls, stat)
-				if why != "":
-					toast(why)
-					Sfx.play("error")
-				else:
-					Sfx.play("rankup")
-					_rebuild())
-			put(b, Rect2(x + 72, y + 12 + j * 68, 138, 62))
-
-
 func _hero_tile(id: String, sz: Vector2) -> PxButton:
 	var owned := Game.profile.owns(id)
 	var b := PxButton.new()
@@ -157,11 +127,8 @@ func _hero_tile(id: String, sz: Vector2) -> PxButton:
 	if owned:
 		var h: Dictionary = Game.profile.hero(id)
 		var stars := int(h.get("star", 1))
-		var lv := MetaRules.hero_level(Game.profile.data, id)
-		var need := MetaRules.star_cost(stars)
-		b.badge = need > 0 and int(h.get("cards", 0)) >= need
 		var ov := DrawLayer.make(func(ci: Control) -> void:
-			W.draw_rank(ci, Rect2(4, sz.y - 38, sz.x - 8, 34), stars, lv, 20.0), sz)
+			W.draw_rank(ci, Rect2(4, sz.y - 38, sz.x - 8, 34), stars, 0, 20.0), sz)
 		b.add_child(ov)
 		b.pressed.connect(func() -> void: Game.app.goto("hero", {"id": id}))
 	return b
@@ -208,16 +175,15 @@ func _troop_tile(id: String, sz: Vector2, in_lineup: bool) -> PxButton:
 	b.add_child(pic)
 	var t: Dictionary = Game.profile.troop(id)
 	var stars := int(t.get("star", 0))
-	var cards := int(t.get("cards", 0))
-	var need := MetaRules.star_cost(stars) if owned else -1
-	b.badge = need > 0 and cards >= need
+	var xp := int(t.get("xp", 0))
+	var need := MetaRules.star_need(id, stars) if owned else -1
 	# 간략 스펙: 이름 · 별 · 전투력 · 공/체 (자세한 속성과 강화는 누르면 병종 상세)
 	var ov := DrawLayer.make(func(ci: Control) -> void:
 		Px.text(ci, DB.troop_name(id), Rect2(8, sz.y - 94, sz.x - 16, 30), 26, Px.WHITE if owned else Px.MUTED)
 		if owned:
 			var st: Dictionary = MetaRules.soldier_stats(Game.profile.data, id)
 			W.draw_rank(ci, Rect2(8, sz.y - 64, sz.x * 0.5, 26), stars, 0, 18.0)
-			Px.text(ci, "%d/%s" % [cards, str(need) if need > 0 else "-"], Rect2(sz.x * 0.5, sz.y - 64, sz.x * 0.5 - 8, 26), 18, Px.GOLD if need > 0 and cards >= need else Px.MUTED, HORIZONTAL_ALIGNMENT_RIGHT)
+			Px.text(ci, "%d/%d" % [xp, need] if need > 0 else "MAX", Rect2(sz.x * 0.5, sz.y - 64, sz.x * 0.5 - 8, 26), 18, Px.MUTED, HORIZONTAL_ALIGNMENT_RIGHT)
 			Px.fit(ci, Px.tex("ic_sword"), Rect2(8, sz.y - 34, 22, 22))
 			Px.text(ci, Px.short(MetaRules.soldier_power(Game.profile.data, id)), Rect2(34, sz.y - 36, sz.x * 0.5 - 34, 28), 20, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
 			Px.text(ci, "%d/%d" % [int(st["atk"]), int(st["hp"])], Rect2(sz.x * 0.5, sz.y - 36, sz.x * 0.5 - 8, 28), 18, Px.WHITE, HORIZONTAL_ALIGNMENT_RIGHT), sz)
@@ -298,27 +264,24 @@ func _build_treasures() -> void:
 		cell.position = Vector2(4 + (idx % 5) * (cs + 12), 4 + (idx / 5) * (cs + 12))
 		content.add_child(cell)
 	content.custom_minimum_size.y = 8 + ceili(maxi(1, total) / 5.0) * (cs + 12)
-	# 보물 상자 (아이콘 + 천장 카운트 + 열기 버튼)
-	var box := DrawLayer.make(func(ci: Control) -> void:
+	# 재료 요약 + 합성 (개편 §3.8): 보물은 합성으로만 얻는다
+	var mats := DrawLayer.make(func(ci: Control) -> void:
 		Px.draw_skin(ci, "panel_slot", Rect2(Vector2.ZERO, ci.size))
 		Px.fit(ci, Px.tex("icon_chest"), Rect2(26, 20, 110, 100))
-		var left := int(DB.meta["treasure"]["box"]["pity"]) - int(Game.profile.data["pity"]["box"])
-		Px.text(ci, "%d/%d" % [left, int(DB.meta["treasure"]["box"]["pity"])], Rect2(150, 44, 200, 52), 34, Color("#ffb070"), HORIZONTAL_ALIGNMENT_LEFT))
-	put(box, Rect2(60, 1396, 904, 140))
-	var buy := PxButton.colored("purple", Px.num(int(DB.shop["box_cost"])), Vector2(220, 104), 34)
-	buy.icon = Px.tex("icon_diamond")
-	buy.icon_rect = Rect2(22, 28, 48, 48)
-	buy.text_rect = Rect2(74, 0, 126, 104)
-	buy.pressed.connect(func() -> void:
-		var g := Game.profile.buy_box()
-		if g.has("error"):
-			toast(String(g["error"]))
-			Sfx.play("error")
-			return
-		Sfx.play("jackpot")
-		var p: PxPopup = Game.app.popup("reward", {"title": DB.t("treasure.got"), "reward": {}, "items": [g]})
+		var mat_slots: Array = DB.meta["treasure"]["slots"]
+		for i in mat_slots.size():
+			var slot := String(mat_slots[i])
+			var n := 0
+			for r: String in DB.meta["treasure"]["rarity_order"]:
+				n += Game.profile.material_count(slot, r)
+			Px.text(ci, DB.t("slot." + slot), Rect2(160 + i * 180, 24, 170, 40), 26, Px.MUTED, HORIZONTAL_ALIGNMENT_LEFT)
+			Px.text(ci, DB.t("synth.summary", [n]), Rect2(160 + i * 180, 68, 170, 48), 30, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT))
+	put(mats, Rect2(60, 1396, 904, 140))
+	var synth := PxButton.colored("purple", DB.t("synth.open"), Vector2(220, 104), 36)
+	synth.pressed.connect(func() -> void:
+		var p: PxPopup = Game.app.popup("synth", {})
 		p.closed.connect(_rebuild))
-	put(buy, Rect2(724, 1414, 220, 104))
+	put(synth, Rect2(724, 1414, 220, 104))
 
 
 func _treasure_tile(it: Dictionary, sz: Vector2, owned: bool) -> PxButton:
@@ -347,3 +310,12 @@ func _treasure_tile(it: Dictionary, sz: Vector2, owned: bool) -> PxButton:
 			btn.draw_rect(fr, Px.INK)
 			Px.cover(btn, Art.hued_portrait(String(Art.of_unit(owner)["art"]), float(Art.of_unit(owner)["hue"])), fr.grow(-3))
 	return b
+
+
+## 도감 수 (화면 위 오른쪽).
+func _put_dex(text: String) -> void:
+	if text == "":
+		return
+	var d := DrawLayer.make(func(ci: Control) -> void:
+		Px.text(ci, text, Rect2(Vector2.ZERO, ci.size), 24, Px.GOLD, HORIZONTAL_ALIGNMENT_RIGHT))
+	put(d, Rect2(564, 246 if mode != "items" else 150, 400, 34))

@@ -6,7 +6,7 @@
    "title": "출시 기념 선물",
    "body": "운빨삼국에 오신 것을 환영합니다!",
    "reward": {
-    "diamond": 300
+    "gold": 9000
    },
    "days": 7
   },
@@ -22,9 +22,9 @@
   {
    "id": "m_ticket",
    "title": "주공 취임 축하",
-   "body": "모집권을 드립니다.",
+   "body": "군량을 드립니다.",
    "reward": {
-    "tickets": 2
+    "rice": 20
    },
    "days": 14
   }

@@ -1,0 +1,4543 @@
+{
+ "canvas": [
+  1792.0,
+  1792.0
+ ],
+ "items": [
+  {
+   "extra": {},
+   "h": 1792,
+   "kind": "image",
+   "label": "lobby_bg",
+   "node": "/root/Main/screen_layer/Lobby",
+   "sx": 1.0,
+   "w": 1792,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "extra": {},
+   "h": 188,
+   "kind": "button",
+   "label": "frame_portrait",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1224",
+   "sx": 1.0,
+   "w": 148,
+   "x": 420,
+   "y": 12
+  },
+  {
+   "extra": {},
+   "h": 188,
+   "kind": "panel",
+   "label": "frame_portrait",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1224",
+   "sx": 1.0,
+   "w": 148,
+   "x": 420,
+   "y": 12
+  },
+  {
+   "extra": {},
+   "h": 124,
+   "kind": "image",
+   "label": "guanyu_head",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1224",
+   "sx": 1.0,
+   "w": 124,
+   "x": 432,
+   "y": 24
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 30,
+    "req": 30,
+    "th": 35.0,
+    "tw": 65.0
+   },
+   "h": 40,
+   "kind": "text",
+   "label": "Lv.2",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1224",
+   "sx": 1.0,
+   "w": 148,
+   "x": 420,
+   "y": 148
+  },
+  {
+   "extra": {},
+   "h": 96,
+   "kind": "button",
+   "label": "133,956",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1226",
+   "sx": 1.0,
+   "w": 320,
+   "x": 584,
+   "y": 36
+  },
+  {
+   "extra": {},
+   "h": 96,
+   "kind": "panel",
+   "label": "panel_chip",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1226",
+   "sx": 1.0,
+   "w": 320,
+   "x": 584,
+   "y": 36
+  },
+  {
+   "extra": {},
+   "h": 73,
+   "kind": "image",
+   "label": "icon_gold",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1226",
+   "sx": 1.0,
+   "w": 73,
+   "x": 596,
+   "y": 48
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 30,
+    "req": 30,
+    "th": 35.0,
+    "tw": 125.0
+   },
+   "h": 96,
+   "kind": "text",
+   "label": "133,956",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1226",
+   "sx": 1.0,
+   "w": 149,
+   "x": 672,
+   "y": 36
+  },
+  {
+   "extra": {},
+   "h": 64,
+   "kind": "button",
+   "label": "btn_plus",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1226/@BaseButton@1225",
+   "sx": 1.0,
+   "w": 64,
+   "x": 828,
+   "y": 52
+  },
+  {
+   "extra": {},
+   "h": 64,
+   "kind": "panel",
+   "label": "btn_plus",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1226/@BaseButton@1225",
+   "sx": 1.0,
+   "w": 64,
+   "x": 828,
+   "y": 52
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 19,
+    "req": 19,
+    "th": 23.0,
+    "tw": 14.0
+   },
+   "h": 64,
+   "kind": "text",
+   "label": "+",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1226/@BaseButton@1225",
+   "sx": 1.0,
+   "w": 56,
+   "x": 832,
+   "y": 52
+  },
+  {
+   "extra": {},
+   "h": 96,
+   "kind": "button",
+   "label": "105/30",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1228",
+   "sx": 1.0,
+   "w": 328,
+   "x": 920,
+   "y": 36
+  },
+  {
+   "extra": {},
+   "h": 96,
+   "kind": "panel",
+   "label": "panel_chip",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1228",
+   "sx": 1.0,
+   "w": 328,
+   "x": 920,
+   "y": 36
+  },
+  {
+   "extra": {},
+   "h": 73,
+   "kind": "image",
+   "label": "icon_rice",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1228",
+   "sx": 1.0,
+   "w": 73,
+   "x": 932,
+   "y": 48
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 30,
+    "req": 30,
+    "th": 35.0,
+    "tw": 110.0
+   },
+   "h": 96,
+   "kind": "text",
+   "label": "105/30",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1228",
+   "sx": 1.0,
+   "w": 157,
+   "x": 1008,
+   "y": 36
+  },
+  {
+   "extra": {},
+   "h": 64,
+   "kind": "button",
+   "label": "btn_plus",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1228/@BaseButton@1227",
+   "sx": 1.0,
+   "w": 64,
+   "x": 1172,
+   "y": 52
+  },
+  {
+   "extra": {},
+   "h": 64,
+   "kind": "panel",
+   "label": "btn_plus",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1228/@BaseButton@1227",
+   "sx": 1.0,
+   "w": 64,
+   "x": 1172,
+   "y": 52
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 19,
+    "req": 19,
+    "th": 23.0,
+    "tw": 14.0
+   },
+   "h": 64,
+   "kind": "text",
+   "label": "+",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1228/@BaseButton@1227",
+   "sx": 1.0,
+   "w": 56,
+   "x": 1176,
+   "y": 52
+  },
+  {
+   "extra": {},
+   "h": 104,
+   "kind": "button",
+   "label": "btn_settings",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1229",
+   "sx": 1.0,
+   "w": 104,
+   "x": 1264,
+   "y": 32
+  },
+  {
+   "extra": {},
+   "h": 104,
+   "kind": "panel",
+   "label": "btn_settings",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1229",
+   "sx": 1.0,
+   "w": 104,
+   "x": 1264,
+   "y": 32
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 31,
+    "req": 31,
+    "th": 37.0,
+    "tw": 62.0
+   },
+   "h": 104,
+   "kind": "text",
+   "label": "설정",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1229",
+   "sx": 1.0,
+   "w": 96,
+   "x": 1268,
+   "y": 32
+  },
+  {
+   "extra": {},
+   "h": 128,
+   "kind": "button",
+   "label": "btn_mail",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1230",
+   "sx": 1.0,
+   "w": 120,
+   "x": 420,
+   "y": 232
+  },
+  {
+   "extra": {},
+   "h": 128,
+   "kind": "panel",
+   "label": "btn_mail",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1230",
+   "sx": 1.0,
+   "w": 120,
+   "x": 420,
+   "y": 232
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 38,
+    "req": 38,
+    "th": 45.0,
+    "tw": 76.0
+   },
+   "h": 128,
+   "kind": "text",
+   "label": "우편",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1230",
+   "sx": 1.0,
+   "w": 112,
+   "x": 424,
+   "y": 232
+  },
+  {
+   "extra": {},
+   "h": 128,
+   "kind": "button",
+   "label": "btn_mission",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1231",
+   "sx": 1.0,
+   "w": 120,
+   "x": 420,
+   "y": 384
+  },
+  {
+   "extra": {},
+   "h": 128,
+   "kind": "panel",
+   "label": "btn_mission",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1231",
+   "sx": 1.0,
+   "w": 120,
+   "x": 420,
+   "y": 384
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 38,
+    "req": 38,
+    "th": 45.0,
+    "tw": 76.0
+   },
+   "h": 128,
+   "kind": "text",
+   "label": "임무",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1231",
+   "sx": 1.0,
+   "w": 112,
+   "x": 424,
+   "y": 384
+  },
+  {
+   "extra": {},
+   "h": 128,
+   "kind": "button",
+   "label": "btn_bag",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1232",
+   "sx": 1.0,
+   "w": 120,
+   "x": 1252,
+   "y": 232
+  },
+  {
+   "extra": {},
+   "h": 128,
+   "kind": "panel",
+   "label": "btn_bag",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1232",
+   "sx": 1.0,
+   "w": 120,
+   "x": 1252,
+   "y": 232
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 38,
+    "req": 38,
+    "th": 45.0,
+    "tw": 76.0
+   },
+   "h": 128,
+   "kind": "text",
+   "label": "장수",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1232",
+   "sx": 1.0,
+   "w": 112,
+   "x": 1256,
+   "y": 232
+  },
+  {
+   "extra": {},
+   "h": 128,
+   "kind": "button",
+   "label": "btn_recruit",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1233",
+   "sx": 1.0,
+   "w": 120,
+   "x": 1252,
+   "y": 384
+  },
+  {
+   "extra": {},
+   "h": 128,
+   "kind": "panel",
+   "label": "btn_recruit",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1233",
+   "sx": 1.0,
+   "w": 120,
+   "x": 1252,
+   "y": 384
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 36,
+    "req": 38,
+    "th": 42.0,
+    "tw": 108.0
+   },
+   "h": 128,
+   "kind": "text",
+   "label": "아이템",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1233",
+   "sx": 1.0,
+   "w": 112,
+   "x": 1256,
+   "y": 384
+  },
+  {
+   "extra": {},
+   "h": 36,
+   "kind": "image",
+   "label": "icon_sword",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1234",
+   "sx": 1.0,
+   "w": 36,
+   "x": 584,
+   "y": 158
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 32,
+    "req": 32,
+    "th": 38.0,
+    "tw": 112.0
+   },
+   "h": 60,
+   "kind": "text",
+   "label": "10,582",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1234",
+   "sx": 1.0,
+   "w": 300,
+   "x": 628,
+   "y": 146
+  },
+  {
+   "extra": {},
+   "h": 432,
+   "kind": "button",
+   "label": "",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1235",
+   "sx": 1.0,
+   "w": 400,
+   "x": 476,
+   "y": 800
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 44,
+    "req": 44,
+    "th": 52.0,
+    "tw": 88.0
+   },
+   "h": 58,
+   "kind": "text",
+   "label": "출정",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1235",
+   "sx": 1.0,
+   "w": 320,
+   "x": 516,
+   "y": 822
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 132.0
+   },
+   "h": 38,
+   "kind": "text",
+   "label": "스테이지 2",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1235",
+   "sx": 1.0,
+   "w": 320,
+   "x": 516,
+   "y": 878
+  },
+  {
+   "extra": {},
+   "h": 432,
+   "kind": "button",
+   "label": "",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1236",
+   "sx": 1.0,
+   "w": 400,
+   "x": 916,
+   "y": 800
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 44,
+    "req": 44,
+    "th": 52.0,
+    "tw": 176.0
+   },
+   "h": 58,
+   "kind": "text",
+   "label": "군웅대전",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1236",
+   "sx": 1.0,
+   "w": 320,
+   "x": 956,
+   "y": 822
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 143.0
+   },
+   "h": 38,
+   "kind": "text",
+   "label": "남은 입장 5",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1236",
+   "sx": 1.0,
+   "w": 320,
+   "x": 956,
+   "y": 878
+  },
+  {
+   "extra": {},
+   "h": 150,
+   "kind": "image",
+   "label": "000",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1237",
+   "sx": 1.0,
+   "w": 150,
+   "x": 528,
+   "y": 1279
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1238",
+   "sx": 1.0,
+   "w": 24,
+   "x": 583,
+   "y": 1443
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1238",
+   "sx": 1.0,
+   "w": 20,
+   "x": 585,
+   "y": 1445
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1238",
+   "sx": 1.0,
+   "w": 24,
+   "x": 601,
+   "y": 1443
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1238",
+   "sx": 1.0,
+   "w": 20,
+   "x": 603,
+   "y": 1445
+  },
+  {
+   "extra": {},
+   "h": 150,
+   "kind": "image",
+   "label": "000",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1240",
+   "sx": 1.0,
+   "w": 171,
+   "x": 708,
+   "y": 1410
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1241",
+   "sx": 1.0,
+   "w": 24,
+   "x": 764,
+   "y": 1574
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1241",
+   "sx": 1.0,
+   "w": 20,
+   "x": 766,
+   "y": 1576
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1241",
+   "sx": 1.0,
+   "w": 24,
+   "x": 783,
+   "y": 1574
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1241",
+   "sx": 1.0,
+   "w": 20,
+   "x": 785,
+   "y": 1576
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1241",
+   "sx": 1.0,
+   "w": 24,
+   "x": 801,
+   "y": 1574
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1241",
+   "sx": 1.0,
+   "w": 20,
+   "x": 803,
+   "y": 1576
+  },
+  {
+   "extra": {},
+   "h": 150,
+   "kind": "image",
+   "label": "000",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1243",
+   "sx": 1.0,
+   "w": 171,
+   "x": 928,
+   "y": 1270
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1244",
+   "sx": 1.0,
+   "w": 24,
+   "x": 984,
+   "y": 1434
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1244",
+   "sx": 1.0,
+   "w": 20,
+   "x": 986,
+   "y": 1436
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1244",
+   "sx": 1.0,
+   "w": 24,
+   "x": 1003,
+   "y": 1434
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1244",
+   "sx": 1.0,
+   "w": 20,
+   "x": 1005,
+   "y": 1436
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1244",
+   "sx": 1.0,
+   "w": 24,
+   "x": 1021,
+   "y": 1434
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1244",
+   "sx": 1.0,
+   "w": 20,
+   "x": 1023,
+   "y": 1436
+  },
+  {
+   "extra": {},
+   "h": 150,
+   "kind": "image",
+   "label": "000",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1246",
+   "sx": 1.0,
+   "w": 150,
+   "x": 1101,
+   "y": 1405
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1247",
+   "sx": 1.0,
+   "w": 24,
+   "x": 1155,
+   "y": 1569
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1247",
+   "sx": 1.0,
+   "w": 20,
+   "x": 1157,
+   "y": 1571
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1247",
+   "sx": 1.0,
+   "w": 24,
+   "x": 1174,
+   "y": 1569
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1247",
+   "sx": 1.0,
+   "w": 20,
+   "x": 1176,
+   "y": 1571
+  },
+  {
+   "extra": {},
+   "h": 1360,
+   "kind": "panel",
+   "label": "panel_ctrl",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@Control@1252",
+   "sx": 1.0,
+   "w": 904,
+   "x": 444,
+   "y": 230
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 46,
+    "req": 46,
+    "th": 54.0,
+    "tw": 203.0
+   },
+   "h": 72,
+   "kind": "text",
+   "label": "확률 정보",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@Control@1253",
+   "sx": 1.0,
+   "w": 528,
+   "x": 632,
+   "y": 198
+  },
+  {
+   "extra": {},
+   "h": 88,
+   "kind": "button",
+   "label": "tab_red",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@BaseButton@1254",
+   "sx": 1.0,
+   "w": 88,
+   "x": 1256,
+   "y": 200
+  },
+  {
+   "extra": {},
+   "h": 88,
+   "kind": "panel",
+   "label": "tab_red",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@BaseButton@1254",
+   "sx": 1.0,
+   "w": 88,
+   "x": 1256,
+   "y": 200
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 22,
+    "req": 24,
+    "th": 26.0,
+    "tw": 735.0
+   },
+   "h": 40,
+   "kind": "text",
+   "label": "· 슬롯 3칸 · 칸마다 당첨 확률 33% (전장이 비어 있으면 최소 1칸 당첨)",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@Control@1255",
+   "sx": 1.0,
+   "w": 800,
+   "x": 496,
+   "y": 330
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 432.0
+   },
+   "h": 40,
+   "kind": "text",
+   "label": "· 당첨 칸의 5%는 장수, 나머지는 병사",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@Control@1255",
+   "sx": 1.0,
+   "w": 800,
+   "x": 496,
+   "y": 372
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 674.0
+   },
+   "h": 40,
+   "kind": "text",
+   "label": "· 장수 등급 · B 55.0% · A 30.0% · S 12.0% · SS 3.0%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@Control@1255",
+   "sx": 1.0,
+   "w": 800,
+   "x": 496,
+   "y": 414
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 408.0
+   },
+   "h": 40,
+   "kind": "text",
+   "label": "· 병사 · 기본 70.0% · 정예 30.0%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@Control@1255",
+   "sx": 1.0,
+   "w": 800,
+   "x": 496,
+   "y": 456
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 536.0
+   },
+   "h": 40,
+   "kind": "text",
+   "label": "· 처음 나온 장수와 병종은 그 자리에서 합류해요",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@Control@1255",
+   "sx": 1.0,
+   "w": 800,
+   "x": 496,
+   "y": 498
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 330.0
+   },
+   "h": 40,
+   "kind": "text",
+   "label": "당첨 칸 하나에서 나올 확률",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@Control@1255",
+   "sx": 1.0,
+   "w": 800,
+   "x": 496,
+   "y": 552
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 78.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "제갈량",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1260",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 610
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 32.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "SS",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1260",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 610
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.04%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1260",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 610
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "조조",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1261",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 664
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 32.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "SS",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1261",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 664
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.04%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1261",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 664
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "손책",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1262",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 718
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 32.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "SS",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1262",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 718
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.04%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1262",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 718
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "여포",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1263",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 772
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 32.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "SS",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1263",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 772
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.04%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1263",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 772
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "관우",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1264",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 826
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "S",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1264",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 826
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.08%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1264",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 826
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "조운",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1265",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 880
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "S",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1265",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 880
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.08%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1265",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 880
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 78.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "사마의",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1266",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 934
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "S",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1266",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 934
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.08%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1266",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 934
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "장료",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1267",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 988
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "S",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1267",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 988
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.08%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1267",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 988
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "손권",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1268",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1042
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "S",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1268",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1042
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.08%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1268",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1042
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "주유",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1269",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1096
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "S",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1269",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1096
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.08%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1269",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1096
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "육손",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1270",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1150
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "S",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1270",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1150
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.08%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1270",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1150
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "초선",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1271",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1204
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "S",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1271",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1204
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.08%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1271",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1204
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "장비",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1272",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1258
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 18.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "A",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1272",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1258
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 82.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.15%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1272",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1258
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "황충",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1273",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1312
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 18.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "A",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1273",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1312
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 82.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.15%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1273",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1312
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "유비",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1274",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1366
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 18.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "A",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1274",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1366
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 82.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.15%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1274",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1366
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 78.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "하후돈",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1275",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1420
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 18.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "A",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1275",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1420
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 82.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.15%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1275",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1420
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 78.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "하후연",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1276",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1474
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 18.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "A",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1276",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1474
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 82.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.15%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1276",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1474
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "허저",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1277",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1528
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 18.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "A",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1277",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1528
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 82.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.15%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1277",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1528
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "감녕",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1278",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1582
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 18.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "A",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1278",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1582
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 82.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.15%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1278",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1582
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 78.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "태사자",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1279",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1636
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 18.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "A",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1279",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1636
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 82.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.15%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1279",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1636
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "동탁",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1280",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1690
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 18.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "A",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1280",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1690
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 82.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.15%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1280",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1690
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "원소",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1281",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1744
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 18.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "A",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1281",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1744
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 82.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.15%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1281",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1744
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "관평",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1282",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1798
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "B",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1282",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1798
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.28%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1282",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1798
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "조인",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1283",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1852
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "B",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1283",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1852
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.28%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1283",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1852
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "장합",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1284",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1906
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "B",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1284",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1906
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.28%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1284",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1906
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "황개",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1285",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 1960
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "B",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1285",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 1960
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.28%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1285",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 1960
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "한당",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1286",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2014
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "B",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1286",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2014
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.28%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1286",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2014
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "장각",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1287",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2068
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "B",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1287",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2068
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.28%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1287",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2068
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "맹획",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1288",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2122
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "B",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1288",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2122
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.28%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1288",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2122
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "화만",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1289",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2176
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "B",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1289",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2176
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.28%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1289",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2176
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "좌자",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1290",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2230
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "B",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1290",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2230
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.28%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1290",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2230
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "우길",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1291",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2284
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 16.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "B",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1291",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2284
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "0.28%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1291",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2284
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "창병",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1292",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2338
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "기본",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1292",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2338
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 100.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "13.30%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1292",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2338
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "극병",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1293",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2392
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "정예",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1293",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2392
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "2.59%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1293",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2392
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 78.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "장창병",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1294",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2446
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "정예",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1294",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2446
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "2.59%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1294",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2446
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "검병",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1295",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2500
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "기본",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1295",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2500
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 100.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "13.30%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1295",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2500
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 78.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "방패병",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1296",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2554
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "기본",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1296",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2554
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 100.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "13.30%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1296",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2554
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 78.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "도부수",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1297",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2608
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "정예",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1297",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2608
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "2.59%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1297",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2608
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 78.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "등갑병",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1298",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2662
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "정예",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1298",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2662
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "2.59%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1298",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2662
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "궁병",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1299",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2716
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "기본",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1299",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2716
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 100.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "13.30%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1299",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2716
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "노병",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1300",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2770
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "정예",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1300",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2770
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "2.59%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1300",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2770
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 78.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "투석병",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1301",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2824
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "정예",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1301",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2824
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "2.59%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1301",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2824
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 78.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "경기병",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1302",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2878
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "기본",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1302",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2878
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 100.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "13.30%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1302",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2878
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 78.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "중기병",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1303",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2932
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "정예",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1303",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2932
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "2.59%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1303",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2932
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 78.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "궁기병",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1304",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 2986
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "정예",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1304",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 2986
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "2.59%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1304",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 2986
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 104.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "화공술사",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1305",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 3040
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "정예",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1305",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 3040
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "2.59%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1305",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 3040
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 104.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "뇌공술사",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1306",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 3094
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "정예",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1306",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 3094
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "2.59%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1306",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 3094
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "의원",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1307",
+   "sx": 1.0,
+   "w": 280,
+   "x": 512,
+   "y": 3148
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "정예",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1307",
+   "sx": 1.0,
+   "w": 200,
+   "x": 796,
+   "y": 3148
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 89.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "2.59%",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1307",
+   "sx": 1.0,
+   "w": 264,
+   "x": 1016,
+   "y": 3148
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1238",
+   "sx": 1.0,
+   "w": 24,
+   "x": 602,
+   "y": 1443
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1238",
+   "sx": 1.0,
+   "w": 20,
+   "x": 604,
+   "y": 1445
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1247",
+   "sx": 1.0,
+   "w": 24,
+   "x": 1173,
+   "y": 1569
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1247",
+   "sx": 1.0,
+   "w": 20,
+   "x": 1175,
+   "y": 1571
+  },
+  {
+   "extra": {},
+   "h": 150,
+   "kind": "image",
+   "label": "000",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1237",
+   "sx": 1.0,
+   "w": 150,
+   "x": 529,
+   "y": 1279
+  },
+  {
+   "extra": {},
+   "h": 150,
+   "kind": "image",
+   "label": "000",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1246",
+   "sx": 1.0,
+   "w": 150,
+   "x": 1100,
+   "y": 1405
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 1792,
+   "kind": "area",
+   "label": "lobby",
+   "node": "/root/Main/screen_layer/Lobby",
+   "w": 1792,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 600,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1223",
+   "w": 1024,
+   "x": 384,
+   "y": 0
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 188,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1224",
+   "w": 148,
+   "x": 420,
+   "y": 12
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 96,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1226",
+   "w": 320,
+   "x": 584,
+   "y": 36
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 64,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1226/@BaseButton@1225",
+   "w": 64,
+   "x": 828,
+   "y": 52
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 96,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1228",
+   "w": 328,
+   "x": 920,
+   "y": 36
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 64,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1228/@BaseButton@1227",
+   "w": 64,
+   "x": 1172,
+   "y": 52
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 104,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1229",
+   "w": 104,
+   "x": 1264,
+   "y": 32
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 128,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1230",
+   "w": 120,
+   "x": 420,
+   "y": 232
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 128,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1231",
+   "w": 120,
+   "x": 420,
+   "y": 384
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 128,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1232",
+   "w": 120,
+   "x": 1252,
+   "y": 232
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 128,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1233",
+   "w": 120,
+   "x": 1252,
+   "y": 384
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 60,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1234",
+   "w": 680,
+   "x": 584,
+   "y": 146
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 432,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1235",
+   "w": 400,
+   "x": 476,
+   "y": 800
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 432,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@1236",
+   "w": 400,
+   "x": 916,
+   "y": 800
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 36,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1238",
+   "w": 140,
+   "x": 534,
+   "y": 1437
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 195,
+   "kind": "area",
+   "label": "Button",
+   "node": "/root/Main/screen_layer/Lobby/@Button@1239",
+   "w": 130,
+   "x": 539,
+   "y": 1279
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 36,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1241",
+   "w": 140,
+   "x": 724,
+   "y": 1568
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 195,
+   "kind": "area",
+   "label": "Button",
+   "node": "/root/Main/screen_layer/Lobby/@Button@1242",
+   "w": 130,
+   "x": 729,
+   "y": 1410
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 36,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1244",
+   "w": 140,
+   "x": 944,
+   "y": 1428
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 195,
+   "kind": "area",
+   "label": "Button",
+   "node": "/root/Main/screen_layer/Lobby/@Button@1245",
+   "w": 130,
+   "x": 949,
+   "y": 1270
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 36,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/screen_layer/Lobby/@Control@1247",
+   "w": 140,
+   "x": 1105,
+   "y": 1563
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 195,
+   "kind": "area",
+   "label": "Button",
+   "node": "/root/Main/screen_layer/Lobby/@Button@1248",
+   "w": 130,
+   "x": 1110,
+   "y": 1405
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 1792,
+   "kind": "area",
+   "label": "odds",
+   "node": "/root/Main/popup_layer/@Control@1249",
+   "w": 1792,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 1792,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1250",
+   "w": 1792,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 1424,
+   "kind": "area",
+   "label": "Control",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251",
+   "w": 904,
+   "x": 444,
+   "y": 166
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 1360,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@Control@1252",
+   "w": 904,
+   "x": 444,
+   "y": 230
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 124,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@Control@1253",
+   "w": 560,
+   "x": 616,
+   "y": 172
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 88,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@BaseButton@1254",
+   "w": 88,
+   "x": 1256,
+   "y": 200
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 270,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@Control@1255",
+   "w": 800,
+   "x": 496,
+   "y": 330
+  },
+  {
+   "extra": {
+    "clip": true,
+    "parent_clip": false
+   },
+   "h": 940,
+   "kind": "area",
+   "label": "ScrollContainer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259",
+   "w": 800,
+   "x": 496,
+   "y": 610
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": true
+   },
+   "h": 2592,
+   "kind": "area",
+   "label": "Control",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258",
+   "w": 800,
+   "x": 496,
+   "y": 610
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1260",
+   "w": 800,
+   "x": 496,
+   "y": 610
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1261",
+   "w": 800,
+   "x": 496,
+   "y": 664
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1262",
+   "w": 800,
+   "x": 496,
+   "y": 718
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1263",
+   "w": 800,
+   "x": 496,
+   "y": 772
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1264",
+   "w": 800,
+   "x": 496,
+   "y": 826
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1265",
+   "w": 800,
+   "x": 496,
+   "y": 880
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1266",
+   "w": 800,
+   "x": 496,
+   "y": 934
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1267",
+   "w": 800,
+   "x": 496,
+   "y": 988
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1268",
+   "w": 800,
+   "x": 496,
+   "y": 1042
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1269",
+   "w": 800,
+   "x": 496,
+   "y": 1096
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1270",
+   "w": 800,
+   "x": 496,
+   "y": 1150
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1271",
+   "w": 800,
+   "x": 496,
+   "y": 1204
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1272",
+   "w": 800,
+   "x": 496,
+   "y": 1258
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1273",
+   "w": 800,
+   "x": 496,
+   "y": 1312
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1274",
+   "w": 800,
+   "x": 496,
+   "y": 1366
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1275",
+   "w": 800,
+   "x": 496,
+   "y": 1420
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1276",
+   "w": 800,
+   "x": 496,
+   "y": 1474
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1277",
+   "w": 800,
+   "x": 496,
+   "y": 1528
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1278",
+   "w": 800,
+   "x": 496,
+   "y": 1582
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1279",
+   "w": 800,
+   "x": 496,
+   "y": 1636
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1280",
+   "w": 800,
+   "x": 496,
+   "y": 1690
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1281",
+   "w": 800,
+   "x": 496,
+   "y": 1744
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1282",
+   "w": 800,
+   "x": 496,
+   "y": 1798
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1283",
+   "w": 800,
+   "x": 496,
+   "y": 1852
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1284",
+   "w": 800,
+   "x": 496,
+   "y": 1906
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1285",
+   "w": 800,
+   "x": 496,
+   "y": 1960
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1286",
+   "w": 800,
+   "x": 496,
+   "y": 2014
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1287",
+   "w": 800,
+   "x": 496,
+   "y": 2068
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1288",
+   "w": 800,
+   "x": 496,
+   "y": 2122
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1289",
+   "w": 800,
+   "x": 496,
+   "y": 2176
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1290",
+   "w": 800,
+   "x": 496,
+   "y": 2230
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1291",
+   "w": 800,
+   "x": 496,
+   "y": 2284
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1292",
+   "w": 800,
+   "x": 496,
+   "y": 2338
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1293",
+   "w": 800,
+   "x": 496,
+   "y": 2392
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1294",
+   "w": 800,
+   "x": 496,
+   "y": 2446
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1295",
+   "w": 800,
+   "x": 496,
+   "y": 2500
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1296",
+   "w": 800,
+   "x": 496,
+   "y": 2554
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1297",
+   "w": 800,
+   "x": 496,
+   "y": 2608
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1298",
+   "w": 800,
+   "x": 496,
+   "y": 2662
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1299",
+   "w": 800,
+   "x": 496,
+   "y": 2716
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1300",
+   "w": 800,
+   "x": 496,
+   "y": 2770
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1301",
+   "w": 800,
+   "x": 496,
+   "y": 2824
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1302",
+   "w": 800,
+   "x": 496,
+   "y": 2878
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1303",
+   "w": 800,
+   "x": 496,
+   "y": 2932
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1304",
+   "w": 800,
+   "x": 496,
+   "y": 2986
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1305",
+   "w": 800,
+   "x": 496,
+   "y": 3040
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1306",
+   "w": 800,
+   "x": 496,
+   "y": 3094
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 52,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1249/@Control@1251/@ScrollContainer@1259/@Control@1258/@Control@1307",
+   "w": 800,
+   "x": 496,
+   "y": 3148
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 1792,
+   "kind": "area",
+   "label": "ColorRect",
+   "node": "/root/Main/overlay_layer/@ColorRect@13",
+   "w": 1792,
+   "x": 0,
+   "y": 0
+  }
+ ]
+}

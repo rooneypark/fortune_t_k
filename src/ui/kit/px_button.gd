@@ -50,13 +50,12 @@ var _t := 0.0
 ## Line mode (임시 UI): whole-picture parts become a framed box with a text label
 ## (strings_ko "btn.<part>"). Sizes the old pictures had, for make(part) without a size.
 const LINE_SIZE := {
-	"btn_settings": Vector2(108, 102), "btn_mail": Vector2(120, 129), "btn_mission": Vector2(120, 129),
-	"btn_bag": Vector2(120, 129), "btn_recruit": Vector2(120, 129), "sign_battle": Vector2(150, 147),
-	"btn_arena": Vector2(150, 147), "sign_arena": Vector2(150, 147), "btn_pause": Vector2(87, 81),
-	"btn_plus": Vector2(60, 60), "btn_battle": Vector2(255, 105), "btn_nudge": Vector2(123, 114),
-	"btn_advisor": Vector2(123, 114), "btn_speed": Vector2(123, 114), "btn_bench": Vector2(123, 114),
-	"lever": Vector2(114, 216), "btn_small": Vector2(96, 87), "frame_portrait": Vector2(147, 186),
-	"tile": Vector2(147, 132),
+	# 크기는 전부 4의 배수 (도트 1칸 = 4px, design/ux/UI-그림-규격.md §2)
+	"btn_settings": Vector2(104, 104), "btn_mail": Vector2(120, 128), "btn_mission": Vector2(120, 128),
+	"btn_bag": Vector2(120, 128), "btn_recruit": Vector2(120, 128), "btn_pause": Vector2(88, 88),
+	"btn_plus": Vector2(64, 64), "btn_battle": Vector2(256, 152), "btn_advisor": Vector2(256, 128),
+	"lever": Vector2(112, 216), "btn_small": Vector2(96, 88), "frame_portrait": Vector2(148, 188),
+	"tile": Vector2(148, 132),
 }
 
 

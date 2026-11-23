@@ -1,0 +1,2587 @@
+{
+ "canvas": [
+  1792.0,
+  1792.0
+ ],
+ "items": [
+  {
+   "extra": {},
+   "h": 1792,
+   "kind": "image",
+   "label": "lobby_bg",
+   "node": "/root/Main/screen_layer/@Control@1136",
+   "sx": 1.0,
+   "w": 1792,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "extra": {},
+   "h": 188,
+   "kind": "button",
+   "label": "frame_portrait",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1138",
+   "sx": 1.0,
+   "w": 148,
+   "x": 420,
+   "y": 12
+  },
+  {
+   "extra": {},
+   "h": 188,
+   "kind": "panel",
+   "label": "frame_portrait",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1138",
+   "sx": 1.0,
+   "w": 148,
+   "x": 420,
+   "y": 12
+  },
+  {
+   "extra": {},
+   "h": 124,
+   "kind": "image",
+   "label": "guanyu_head",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1138",
+   "sx": 1.0,
+   "w": 124,
+   "x": 432,
+   "y": 24
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 30,
+    "req": 30,
+    "th": 35.0,
+    "tw": 65.0
+   },
+   "h": 40,
+   "kind": "text",
+   "label": "Lv.2",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1138",
+   "sx": 1.0,
+   "w": 148,
+   "x": 420,
+   "y": 148
+  },
+  {
+   "extra": {},
+   "h": 96,
+   "kind": "button",
+   "label": "133,956",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1140",
+   "sx": 1.0,
+   "w": 320,
+   "x": 584,
+   "y": 36
+  },
+  {
+   "extra": {},
+   "h": 96,
+   "kind": "panel",
+   "label": "panel_chip",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1140",
+   "sx": 1.0,
+   "w": 320,
+   "x": 584,
+   "y": 36
+  },
+  {
+   "extra": {},
+   "h": 73,
+   "kind": "image",
+   "label": "icon_gold",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1140",
+   "sx": 1.0,
+   "w": 73,
+   "x": 596,
+   "y": 48
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 30,
+    "req": 30,
+    "th": 35.0,
+    "tw": 125.0
+   },
+   "h": 96,
+   "kind": "text",
+   "label": "133,956",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1140",
+   "sx": 1.0,
+   "w": 149,
+   "x": 672,
+   "y": 36
+  },
+  {
+   "extra": {},
+   "h": 64,
+   "kind": "button",
+   "label": "btn_plus",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1140/@BaseButton@1139",
+   "sx": 1.0,
+   "w": 64,
+   "x": 828,
+   "y": 52
+  },
+  {
+   "extra": {},
+   "h": 64,
+   "kind": "panel",
+   "label": "btn_plus",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1140/@BaseButton@1139",
+   "sx": 1.0,
+   "w": 64,
+   "x": 828,
+   "y": 52
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 19,
+    "req": 19,
+    "th": 23.0,
+    "tw": 14.0
+   },
+   "h": 64,
+   "kind": "text",
+   "label": "+",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1140/@BaseButton@1139",
+   "sx": 1.0,
+   "w": 56,
+   "x": 832,
+   "y": 52
+  },
+  {
+   "extra": {},
+   "h": 96,
+   "kind": "button",
+   "label": "105/30",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1142",
+   "sx": 1.0,
+   "w": 328,
+   "x": 920,
+   "y": 36
+  },
+  {
+   "extra": {},
+   "h": 96,
+   "kind": "panel",
+   "label": "panel_chip",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1142",
+   "sx": 1.0,
+   "w": 328,
+   "x": 920,
+   "y": 36
+  },
+  {
+   "extra": {},
+   "h": 73,
+   "kind": "image",
+   "label": "icon_rice",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1142",
+   "sx": 1.0,
+   "w": 73,
+   "x": 932,
+   "y": 48
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 30,
+    "req": 30,
+    "th": 35.0,
+    "tw": 110.0
+   },
+   "h": 96,
+   "kind": "text",
+   "label": "105/30",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1142",
+   "sx": 1.0,
+   "w": 157,
+   "x": 1008,
+   "y": 36
+  },
+  {
+   "extra": {},
+   "h": 64,
+   "kind": "button",
+   "label": "btn_plus",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1142/@BaseButton@1141",
+   "sx": 1.0,
+   "w": 64,
+   "x": 1172,
+   "y": 52
+  },
+  {
+   "extra": {},
+   "h": 64,
+   "kind": "panel",
+   "label": "btn_plus",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1142/@BaseButton@1141",
+   "sx": 1.0,
+   "w": 64,
+   "x": 1172,
+   "y": 52
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 19,
+    "req": 19,
+    "th": 23.0,
+    "tw": 14.0
+   },
+   "h": 64,
+   "kind": "text",
+   "label": "+",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1142/@BaseButton@1141",
+   "sx": 1.0,
+   "w": 56,
+   "x": 1176,
+   "y": 52
+  },
+  {
+   "extra": {},
+   "h": 104,
+   "kind": "button",
+   "label": "btn_settings",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1143",
+   "sx": 1.0,
+   "w": 104,
+   "x": 1264,
+   "y": 32
+  },
+  {
+   "extra": {},
+   "h": 104,
+   "kind": "panel",
+   "label": "btn_settings",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1143",
+   "sx": 1.0,
+   "w": 104,
+   "x": 1264,
+   "y": 32
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 31,
+    "req": 31,
+    "th": 37.0,
+    "tw": 62.0
+   },
+   "h": 104,
+   "kind": "text",
+   "label": "설정",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1143",
+   "sx": 1.0,
+   "w": 96,
+   "x": 1268,
+   "y": 32
+  },
+  {
+   "extra": {},
+   "h": 128,
+   "kind": "button",
+   "label": "btn_mail",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1144",
+   "sx": 1.0,
+   "w": 120,
+   "x": 420,
+   "y": 232
+  },
+  {
+   "extra": {},
+   "h": 128,
+   "kind": "panel",
+   "label": "btn_mail",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1144",
+   "sx": 1.0,
+   "w": 120,
+   "x": 420,
+   "y": 232
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 38,
+    "req": 38,
+    "th": 45.0,
+    "tw": 76.0
+   },
+   "h": 128,
+   "kind": "text",
+   "label": "우편",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1144",
+   "sx": 1.0,
+   "w": 112,
+   "x": 424,
+   "y": 232
+  },
+  {
+   "extra": {},
+   "h": 128,
+   "kind": "button",
+   "label": "btn_mission",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1145",
+   "sx": 1.0,
+   "w": 120,
+   "x": 420,
+   "y": 384
+  },
+  {
+   "extra": {},
+   "h": 128,
+   "kind": "panel",
+   "label": "btn_mission",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1145",
+   "sx": 1.0,
+   "w": 120,
+   "x": 420,
+   "y": 384
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 38,
+    "req": 38,
+    "th": 45.0,
+    "tw": 76.0
+   },
+   "h": 128,
+   "kind": "text",
+   "label": "임무",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1145",
+   "sx": 1.0,
+   "w": 112,
+   "x": 424,
+   "y": 384
+  },
+  {
+   "extra": {},
+   "h": 128,
+   "kind": "button",
+   "label": "btn_bag",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1146",
+   "sx": 1.0,
+   "w": 120,
+   "x": 1252,
+   "y": 232
+  },
+  {
+   "extra": {},
+   "h": 128,
+   "kind": "panel",
+   "label": "btn_bag",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1146",
+   "sx": 1.0,
+   "w": 120,
+   "x": 1252,
+   "y": 232
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 38,
+    "req": 38,
+    "th": 45.0,
+    "tw": 76.0
+   },
+   "h": 128,
+   "kind": "text",
+   "label": "장수",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1146",
+   "sx": 1.0,
+   "w": 112,
+   "x": 1256,
+   "y": 232
+  },
+  {
+   "extra": {},
+   "h": 128,
+   "kind": "button",
+   "label": "btn_recruit",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1147",
+   "sx": 1.0,
+   "w": 120,
+   "x": 1252,
+   "y": 384
+  },
+  {
+   "extra": {},
+   "h": 128,
+   "kind": "panel",
+   "label": "btn_recruit",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1147",
+   "sx": 1.0,
+   "w": 120,
+   "x": 1252,
+   "y": 384
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 36,
+    "req": 38,
+    "th": 42.0,
+    "tw": 108.0
+   },
+   "h": 128,
+   "kind": "text",
+   "label": "아이템",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1147",
+   "sx": 1.0,
+   "w": 112,
+   "x": 1256,
+   "y": 384
+  },
+  {
+   "extra": {},
+   "h": 36,
+   "kind": "image",
+   "label": "icon_sword",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1148",
+   "sx": 1.0,
+   "w": 36,
+   "x": 584,
+   "y": 158
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 32,
+    "req": 32,
+    "th": 38.0,
+    "tw": 112.0
+   },
+   "h": 60,
+   "kind": "text",
+   "label": "10,582",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1148",
+   "sx": 1.0,
+   "w": 300,
+   "x": 628,
+   "y": 146
+  },
+  {
+   "extra": {},
+   "h": 432,
+   "kind": "button",
+   "label": "",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1149",
+   "sx": 1.0,
+   "w": 400,
+   "x": 476,
+   "y": 800
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 44,
+    "req": 44,
+    "th": 52.0,
+    "tw": 88.0
+   },
+   "h": 58,
+   "kind": "text",
+   "label": "출정",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1149",
+   "sx": 1.0,
+   "w": 320,
+   "x": 516,
+   "y": 822
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 132.0
+   },
+   "h": 38,
+   "kind": "text",
+   "label": "스테이지 2",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1149",
+   "sx": 1.0,
+   "w": 320,
+   "x": 516,
+   "y": 878
+  },
+  {
+   "extra": {},
+   "h": 432,
+   "kind": "button",
+   "label": "",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1150",
+   "sx": 1.0,
+   "w": 400,
+   "x": 916,
+   "y": 800
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 44,
+    "req": 44,
+    "th": 52.0,
+    "tw": 176.0
+   },
+   "h": 58,
+   "kind": "text",
+   "label": "군웅대전",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1150",
+   "sx": 1.0,
+   "w": 320,
+   "x": 956,
+   "y": 822
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 143.0
+   },
+   "h": 38,
+   "kind": "text",
+   "label": "남은 입장 5",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1150",
+   "sx": 1.0,
+   "w": 320,
+   "x": 956,
+   "y": 878
+  },
+  {
+   "extra": {},
+   "h": 150,
+   "kind": "image",
+   "label": "000",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1151",
+   "sx": 1.0,
+   "w": 150,
+   "x": 519,
+   "y": 1280
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1152",
+   "sx": 1.0,
+   "w": 24,
+   "x": 574,
+   "y": 1444
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1152",
+   "sx": 1.0,
+   "w": 20,
+   "x": 576,
+   "y": 1446
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1152",
+   "sx": 1.0,
+   "w": 24,
+   "x": 592,
+   "y": 1444
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1152",
+   "sx": 1.0,
+   "w": 20,
+   "x": 594,
+   "y": 1446
+  },
+  {
+   "extra": {},
+   "h": 150,
+   "kind": "image",
+   "label": "000",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1154",
+   "sx": 1.0,
+   "w": 171,
+   "x": 715,
+   "y": 1424
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1155",
+   "sx": 1.0,
+   "w": 24,
+   "x": 771,
+   "y": 1588
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1155",
+   "sx": 1.0,
+   "w": 20,
+   "x": 773,
+   "y": 1590
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1155",
+   "sx": 1.0,
+   "w": 24,
+   "x": 790,
+   "y": 1588
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1155",
+   "sx": 1.0,
+   "w": 20,
+   "x": 792,
+   "y": 1590
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1155",
+   "sx": 1.0,
+   "w": 24,
+   "x": 808,
+   "y": 1588
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1155",
+   "sx": 1.0,
+   "w": 20,
+   "x": 810,
+   "y": 1590
+  },
+  {
+   "extra": {},
+   "h": 150,
+   "kind": "image",
+   "label": "000",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1157",
+   "sx": 1.0,
+   "w": 171,
+   "x": 942,
+   "y": 1265
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1158",
+   "sx": 1.0,
+   "w": 24,
+   "x": 998,
+   "y": 1429
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1158",
+   "sx": 1.0,
+   "w": 20,
+   "x": 1000,
+   "y": 1431
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1158",
+   "sx": 1.0,
+   "w": 24,
+   "x": 1017,
+   "y": 1429
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1158",
+   "sx": 1.0,
+   "w": 20,
+   "x": 1019,
+   "y": 1431
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1158",
+   "sx": 1.0,
+   "w": 24,
+   "x": 1035,
+   "y": 1429
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1158",
+   "sx": 1.0,
+   "w": 20,
+   "x": 1037,
+   "y": 1431
+  },
+  {
+   "extra": {},
+   "h": 150,
+   "kind": "image",
+   "label": "000",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1160",
+   "sx": 1.0,
+   "w": 150,
+   "x": 1095,
+   "y": 1417
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1161",
+   "sx": 1.0,
+   "w": 24,
+   "x": 1149,
+   "y": 1581
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1161",
+   "sx": 1.0,
+   "w": 20,
+   "x": 1151,
+   "y": 1583
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1161",
+   "sx": 1.0,
+   "w": 24,
+   "x": 1168,
+   "y": 1581
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1161",
+   "sx": 1.0,
+   "w": 20,
+   "x": 1170,
+   "y": 1583
+  },
+  {
+   "extra": {},
+   "h": 1100,
+   "kind": "panel",
+   "label": "panel_ctrl",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1166",
+   "sx": 1.0,
+   "w": 904,
+   "x": 444,
+   "y": 330
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 46,
+    "req": 46,
+    "th": 54.0,
+    "tw": 203.0
+   },
+   "h": 72,
+   "kind": "text",
+   "label": "주공 정보",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1167",
+   "sx": 1.0,
+   "w": 528,
+   "x": 632,
+   "y": 298
+  },
+  {
+   "extra": {},
+   "h": 88,
+   "kind": "button",
+   "label": "tab_red",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1168",
+   "sx": 1.0,
+   "w": 88,
+   "x": 1256,
+   "y": 300
+  },
+  {
+   "extra": {},
+   "h": 88,
+   "kind": "panel",
+   "label": "tab_red",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1168",
+   "sx": 1.0,
+   "w": 88,
+   "x": 1256,
+   "y": 300
+  },
+  {
+   "extra": {},
+   "h": 220,
+   "kind": "panel",
+   "label": "frame_portrait",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1169",
+   "sx": 1.0,
+   "w": 220,
+   "x": 494,
+   "y": 440
+  },
+  {
+   "extra": {},
+   "h": 196,
+   "kind": "image",
+   "label": "guanyu_head",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1169",
+   "sx": 1.0,
+   "w": 196,
+   "x": 506,
+   "y": 452
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 46,
+    "req": 46,
+    "th": 54.0,
+    "tw": 92.0
+   },
+   "h": 60,
+   "kind": "text",
+   "label": "주공",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1170",
+   "sx": 1.0,
+   "w": 560,
+   "x": 744,
+   "y": 440
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 32,
+    "req": 32,
+    "th": 38.0,
+    "tw": 146.0
+   },
+   "h": 44,
+   "kind": "text",
+   "label": "주공 Lv.2",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1170",
+   "sx": 1.0,
+   "w": 560,
+   "x": 744,
+   "y": 506
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 22,
+    "req": 22,
+    "th": 26.0,
+    "tw": 90.0
+   },
+   "h": 32,
+   "kind": "text",
+   "label": "0 / 492",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1170",
+   "sx": 1.0,
+   "w": 560,
+   "x": 744,
+   "y": 558
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 30,
+    "req": 30,
+    "th": 35.0,
+    "tw": 281.0
+   },
+   "h": 44,
+   "kind": "text",
+   "label": "편성 전투력 10,582",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1170",
+   "sx": 1.0,
+   "w": 560,
+   "x": 744,
+   "y": 604
+  },
+  {
+   "extra": {},
+   "h": 270,
+   "kind": "panel",
+   "label": "panel_slot",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1171",
+   "sx": 1.0,
+   "w": 804,
+   "x": 494,
+   "y": 690
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 56.0
+   },
+   "h": 64,
+   "kind": "text",
+   "label": "출정",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1171",
+   "sx": 1.0,
+   "w": 200,
+   "x": 524,
+   "y": 714
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 32,
+    "req": 32,
+    "th": 38.0,
+    "tw": 13.0
+   },
+   "h": 64,
+   "kind": "text",
+   "label": "1",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1171",
+   "sx": 1.0,
+   "w": 140,
+   "x": 724,
+   "y": 714
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 56.0
+   },
+   "h": 64,
+   "kind": "text",
+   "label": "승리",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1171",
+   "sx": 1.0,
+   "w": 200,
+   "x": 906,
+   "y": 714
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 32,
+    "req": 32,
+    "th": 38.0,
+    "tw": 13.0
+   },
+   "h": 64,
+   "kind": "text",
+   "label": "1",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1171",
+   "sx": 1.0,
+   "w": 140,
+   "x": 1106,
+   "y": 714
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 115.0
+   },
+   "h": 64,
+   "kind": "text",
+   "label": "3연 대박",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1171",
+   "sx": 1.0,
+   "w": 200,
+   "x": 524,
+   "y": 790
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 32,
+    "req": 32,
+    "th": 38.0,
+    "tw": 21.0
+   },
+   "h": 64,
+   "kind": "text",
+   "label": "0",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1171",
+   "sx": 1.0,
+   "w": 140,
+   "x": 724,
+   "y": 790
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 56.0
+   },
+   "h": 64,
+   "kind": "text",
+   "label": "처치",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1171",
+   "sx": 1.0,
+   "w": 200,
+   "x": 906,
+   "y": 790
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 32,
+    "req": 32,
+    "th": 38.0,
+    "tw": 43.0
+   },
+   "h": 64,
+   "kind": "text",
+   "label": "30",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1171",
+   "sx": 1.0,
+   "w": 140,
+   "x": 1106,
+   "y": 790
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 124.0
+   },
+   "h": 64,
+   "kind": "text",
+   "label": "보유 장수",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1171",
+   "sx": 1.0,
+   "w": 200,
+   "x": 524,
+   "y": 866
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 32,
+    "req": 32,
+    "th": 38.0,
+    "tw": 35.0
+   },
+   "h": 64,
+   "kind": "text",
+   "label": "31",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1171",
+   "sx": 1.0,
+   "w": 140,
+   "x": 724,
+   "y": 866
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 56.0
+   },
+   "h": 64,
+   "kind": "text",
+   "label": "군공",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1171",
+   "sx": 1.0,
+   "w": 200,
+   "x": 906,
+   "y": 866
+  },
+  {
+   "extra": {
+    "align": 2,
+    "fs": 32,
+    "req": 32,
+    "th": 38.0,
+    "tw": 99.0
+   },
+   "h": 64,
+   "kind": "text",
+   "label": "2,000",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1171",
+   "sx": 1.0,
+   "w": 140,
+   "x": 1106,
+   "y": 866
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 30,
+    "req": 30,
+    "th": 35.0,
+    "tw": 133.0
+   },
+   "h": 50,
+   "kind": "text",
+   "label": "대표 장수",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1172",
+   "sx": 1.0,
+   "w": 804,
+   "x": 494,
+   "y": 980
+  },
+  {
+   "extra": {},
+   "h": 148,
+   "kind": "button",
+   "label": "",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1177",
+   "sx": 1.0,
+   "w": 148,
+   "x": 494,
+   "y": 1040
+  },
+  {
+   "extra": {},
+   "h": 136,
+   "kind": "image",
+   "label": "guanyu",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1177/@Control@1176/@Control@1174",
+   "sx": 1.0,
+   "w": 136,
+   "x": 500,
+   "y": 1046
+  },
+  {
+   "extra": {},
+   "h": 148,
+   "kind": "button",
+   "label": "",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1182",
+   "sx": 1.0,
+   "w": 148,
+   "x": 656,
+   "y": 1040
+  },
+  {
+   "extra": {},
+   "h": 136,
+   "kind": "image",
+   "label": "sunce",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1182/@Control@1181/@Control@1179",
+   "sx": 1.0,
+   "w": 136,
+   "x": 662,
+   "y": 1046
+  },
+  {
+   "extra": {},
+   "h": 148,
+   "kind": "button",
+   "label": "",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1187",
+   "sx": 1.0,
+   "w": 148,
+   "x": 818,
+   "y": 1040
+  },
+  {
+   "extra": {},
+   "h": 136,
+   "kind": "image",
+   "label": "caocao",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1187/@Control@1186/@Control@1184",
+   "sx": 1.0,
+   "w": 136,
+   "x": 824,
+   "y": 1046
+  },
+  {
+   "extra": {},
+   "h": 148,
+   "kind": "button",
+   "label": "",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1192",
+   "sx": 1.0,
+   "w": 148,
+   "x": 980,
+   "y": 1040
+  },
+  {
+   "extra": {},
+   "h": 136,
+   "kind": "image",
+   "label": "zhugeliang",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1192/@Control@1191/@Control@1189",
+   "sx": 1.0,
+   "w": 136,
+   "x": 986,
+   "y": 1046
+  },
+  {
+   "extra": {},
+   "h": 148,
+   "kind": "button",
+   "label": "",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1197",
+   "sx": 1.0,
+   "w": 148,
+   "x": 1142,
+   "y": 1040
+  },
+  {
+   "extra": {},
+   "h": 136,
+   "kind": "image",
+   "label": "sunquan",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1197/@Control@1196/@Control@1194",
+   "sx": 1.0,
+   "w": 136,
+   "x": 1148,
+   "y": 1046
+  },
+  {
+   "extra": {},
+   "h": 148,
+   "kind": "button",
+   "label": "",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1202",
+   "sx": 1.0,
+   "w": 148,
+   "x": 494,
+   "y": 1202
+  },
+  {
+   "extra": {},
+   "h": 136,
+   "kind": "image",
+   "label": "zhaoyun",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1202/@Control@1201/@Control@1199",
+   "sx": 1.0,
+   "w": 136,
+   "x": 500,
+   "y": 1208
+  },
+  {
+   "extra": {},
+   "h": 148,
+   "kind": "button",
+   "label": "",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1207",
+   "sx": 1.0,
+   "w": 148,
+   "x": 656,
+   "y": 1202
+  },
+  {
+   "extra": {},
+   "h": 136,
+   "kind": "image",
+   "label": "simayi",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1207/@Control@1206/@Control@1204",
+   "sx": 1.0,
+   "w": 136,
+   "x": 662,
+   "y": 1208
+  },
+  {
+   "extra": {},
+   "h": 148,
+   "kind": "button",
+   "label": "",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1212",
+   "sx": 1.0,
+   "w": 148,
+   "x": 818,
+   "y": 1202
+  },
+  {
+   "extra": {},
+   "h": 136,
+   "kind": "image",
+   "label": "zhangliao",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1212/@Control@1211/@Control@1209",
+   "sx": 1.0,
+   "w": 136,
+   "x": 824,
+   "y": 1208
+  },
+  {
+   "extra": {},
+   "h": 148,
+   "kind": "button",
+   "label": "",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1217",
+   "sx": 1.0,
+   "w": 148,
+   "x": 980,
+   "y": 1202
+  },
+  {
+   "extra": {},
+   "h": 136,
+   "kind": "image",
+   "label": "diaochan",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1217/@Control@1216/@Control@1214",
+   "sx": 1.0,
+   "w": 136,
+   "x": 986,
+   "y": 1208
+  },
+  {
+   "extra": {},
+   "h": 148,
+   "kind": "button",
+   "label": "",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1222",
+   "sx": 1.0,
+   "w": 148,
+   "x": 1142,
+   "y": 1202
+  },
+  {
+   "extra": {},
+   "h": 136,
+   "kind": "image",
+   "label": "luxun",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1222/@Control@1221/@Control@1219",
+   "sx": 1.0,
+   "w": 136,
+   "x": 1148,
+   "y": 1208
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1155",
+   "sx": 1.0,
+   "w": 24,
+   "x": 772,
+   "y": 1589
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1155",
+   "sx": 1.0,
+   "w": 20,
+   "x": 774,
+   "y": 1591
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1155",
+   "sx": 1.0,
+   "w": 24,
+   "x": 790,
+   "y": 1589
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1155",
+   "sx": 1.0,
+   "w": 20,
+   "x": 792,
+   "y": 1591
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1155",
+   "sx": 1.0,
+   "w": 24,
+   "x": 809,
+   "y": 1589
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1155",
+   "sx": 1.0,
+   "w": 20,
+   "x": 811,
+   "y": 1591
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1158",
+   "sx": 1.0,
+   "w": 24,
+   "x": 999,
+   "y": 1429
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1158",
+   "sx": 1.0,
+   "w": 20,
+   "x": 1001,
+   "y": 1431
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1158",
+   "sx": 1.0,
+   "w": 24,
+   "x": 1018,
+   "y": 1429
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1158",
+   "sx": 1.0,
+   "w": 20,
+   "x": 1020,
+   "y": 1431
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1158",
+   "sx": 1.0,
+   "w": 24,
+   "x": 1036,
+   "y": 1429
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1158",
+   "sx": 1.0,
+   "w": 20,
+   "x": 1038,
+   "y": 1431
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1161",
+   "sx": 1.0,
+   "w": 24,
+   "x": 1148,
+   "y": 1581
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1161",
+   "sx": 1.0,
+   "w": 20,
+   "x": 1150,
+   "y": 1583
+  },
+  {
+   "extra": {},
+   "h": 24,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1161",
+   "sx": 1.0,
+   "w": 24,
+   "x": 1166,
+   "y": 1581
+  },
+  {
+   "extra": {},
+   "h": 20,
+   "kind": "image",
+   "label": "ic_star",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1161",
+   "sx": 1.0,
+   "w": 20,
+   "x": 1168,
+   "y": 1583
+  },
+  {
+   "extra": {},
+   "h": 150,
+   "kind": "image",
+   "label": "000",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1154",
+   "sx": 1.0,
+   "w": 171,
+   "x": 715,
+   "y": 1425
+  },
+  {
+   "extra": {},
+   "h": 150,
+   "kind": "image",
+   "label": "000",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1157",
+   "sx": 1.0,
+   "w": 171,
+   "x": 943,
+   "y": 1265
+  },
+  {
+   "extra": {},
+   "h": 150,
+   "kind": "image",
+   "label": "000",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1160",
+   "sx": 1.0,
+   "w": 150,
+   "x": 1093,
+   "y": 1417
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 1792,
+   "kind": "area",
+   "label": "lobby",
+   "node": "/root/Main/screen_layer/@Control@1136",
+   "w": 1792,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 600,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1137",
+   "w": 1024,
+   "x": 384,
+   "y": 0
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 188,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1138",
+   "w": 148,
+   "x": 420,
+   "y": 12
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 96,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1140",
+   "w": 320,
+   "x": 584,
+   "y": 36
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 64,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1140/@BaseButton@1139",
+   "w": 64,
+   "x": 828,
+   "y": 52
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 96,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1142",
+   "w": 328,
+   "x": 920,
+   "y": 36
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 64,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1142/@BaseButton@1141",
+   "w": 64,
+   "x": 1172,
+   "y": 52
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 104,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1143",
+   "w": 104,
+   "x": 1264,
+   "y": 32
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 128,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1144",
+   "w": 120,
+   "x": 420,
+   "y": 232
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 128,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1145",
+   "w": 120,
+   "x": 420,
+   "y": 384
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 128,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1146",
+   "w": 120,
+   "x": 1252,
+   "y": 232
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 128,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1147",
+   "w": 120,
+   "x": 1252,
+   "y": 384
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 60,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1148",
+   "w": 680,
+   "x": 584,
+   "y": 146
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 432,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1149",
+   "w": 400,
+   "x": 476,
+   "y": 800
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 432,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/@Control@1136/@BaseButton@1150",
+   "w": 400,
+   "x": 916,
+   "y": 800
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 36,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1152",
+   "w": 140,
+   "x": 524,
+   "y": 1438
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 195,
+   "kind": "area",
+   "label": "Button",
+   "node": "/root/Main/screen_layer/@Control@1136/@Button@1153",
+   "w": 130,
+   "x": 529,
+   "y": 1280
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 36,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1155",
+   "w": 140,
+   "x": 731,
+   "y": 1583
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 195,
+   "kind": "area",
+   "label": "Button",
+   "node": "/root/Main/screen_layer/@Control@1136/@Button@1156",
+   "w": 130,
+   "x": 736,
+   "y": 1425
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 36,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1158",
+   "w": 140,
+   "x": 959,
+   "y": 1423
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 195,
+   "kind": "area",
+   "label": "Button",
+   "node": "/root/Main/screen_layer/@Control@1136/@Button@1159",
+   "w": 130,
+   "x": 964,
+   "y": 1265
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 36,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/screen_layer/@Control@1136/@Control@1161",
+   "w": 140,
+   "x": 1098,
+   "y": 1575
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 195,
+   "kind": "area",
+   "label": "Button",
+   "node": "/root/Main/screen_layer/@Control@1136/@Button@1162",
+   "w": 130,
+   "x": 1103,
+   "y": 1417
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 1792,
+   "kind": "area",
+   "label": "profile",
+   "node": "/root/Main/popup_layer/@Control@1163",
+   "w": 1792,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 1792,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1164",
+   "w": 1792,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 1164,
+   "kind": "area",
+   "label": "Control",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165",
+   "w": 904,
+   "x": 444,
+   "y": 266
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 1100,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1166",
+   "w": 904,
+   "x": 444,
+   "y": 330
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 124,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1167",
+   "w": 560,
+   "x": 616,
+   "y": 272
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 88,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1168",
+   "w": 88,
+   "x": 1256,
+   "y": 300
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 220,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1169",
+   "w": 220,
+   "x": 494,
+   "y": 440
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 220,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1170",
+   "w": 560,
+   "x": 744,
+   "y": 440
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 270,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1171",
+   "w": 804,
+   "x": 494,
+   "y": 690
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 50,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@Control@1172",
+   "w": 804,
+   "x": 494,
+   "y": 980
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1177",
+   "w": 148,
+   "x": 494,
+   "y": 1040
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "Control",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1177/@Control@1176",
+   "w": 148,
+   "x": 494,
+   "y": 1040
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1177/@Control@1176/@Control@1173",
+   "w": 148,
+   "x": 494,
+   "y": 1040
+  },
+  {
+   "extra": {
+    "clip": true,
+    "parent_clip": false
+   },
+   "h": 136,
+   "kind": "area",
+   "label": "art_rect",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1177/@Control@1176/@Control@1174",
+   "w": 136,
+   "x": 500,
+   "y": 1046
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1182",
+   "w": 148,
+   "x": 656,
+   "y": 1040
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "Control",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1182/@Control@1181",
+   "w": 148,
+   "x": 656,
+   "y": 1040
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1182/@Control@1181/@Control@1178",
+   "w": 148,
+   "x": 656,
+   "y": 1040
+  },
+  {
+   "extra": {
+    "clip": true,
+    "parent_clip": false
+   },
+   "h": 136,
+   "kind": "area",
+   "label": "art_rect",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1182/@Control@1181/@Control@1179",
+   "w": 136,
+   "x": 662,
+   "y": 1046
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1187",
+   "w": 148,
+   "x": 818,
+   "y": 1040
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "Control",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1187/@Control@1186",
+   "w": 148,
+   "x": 818,
+   "y": 1040
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1187/@Control@1186/@Control@1183",
+   "w": 148,
+   "x": 818,
+   "y": 1040
+  },
+  {
+   "extra": {
+    "clip": true,
+    "parent_clip": false
+   },
+   "h": 136,
+   "kind": "area",
+   "label": "art_rect",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1187/@Control@1186/@Control@1184",
+   "w": 136,
+   "x": 824,
+   "y": 1046
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1192",
+   "w": 148,
+   "x": 980,
+   "y": 1040
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "Control",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1192/@Control@1191",
+   "w": 148,
+   "x": 980,
+   "y": 1040
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1192/@Control@1191/@Control@1188",
+   "w": 148,
+   "x": 980,
+   "y": 1040
+  },
+  {
+   "extra": {
+    "clip": true,
+    "parent_clip": false
+   },
+   "h": 136,
+   "kind": "area",
+   "label": "art_rect",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1192/@Control@1191/@Control@1189",
+   "w": 136,
+   "x": 986,
+   "y": 1046
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1197",
+   "w": 148,
+   "x": 1142,
+   "y": 1040
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "Control",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1197/@Control@1196",
+   "w": 148,
+   "x": 1142,
+   "y": 1040
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1197/@Control@1196/@Control@1193",
+   "w": 148,
+   "x": 1142,
+   "y": 1040
+  },
+  {
+   "extra": {
+    "clip": true,
+    "parent_clip": false
+   },
+   "h": 136,
+   "kind": "area",
+   "label": "art_rect",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1197/@Control@1196/@Control@1194",
+   "w": 136,
+   "x": 1148,
+   "y": 1046
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1202",
+   "w": 148,
+   "x": 494,
+   "y": 1202
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "Control",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1202/@Control@1201",
+   "w": 148,
+   "x": 494,
+   "y": 1202
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1202/@Control@1201/@Control@1198",
+   "w": 148,
+   "x": 494,
+   "y": 1202
+  },
+  {
+   "extra": {
+    "clip": true,
+    "parent_clip": false
+   },
+   "h": 136,
+   "kind": "area",
+   "label": "art_rect",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1202/@Control@1201/@Control@1199",
+   "w": 136,
+   "x": 500,
+   "y": 1208
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1207",
+   "w": 148,
+   "x": 656,
+   "y": 1202
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "Control",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1207/@Control@1206",
+   "w": 148,
+   "x": 656,
+   "y": 1202
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1207/@Control@1206/@Control@1203",
+   "w": 148,
+   "x": 656,
+   "y": 1202
+  },
+  {
+   "extra": {
+    "clip": true,
+    "parent_clip": false
+   },
+   "h": 136,
+   "kind": "area",
+   "label": "art_rect",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1207/@Control@1206/@Control@1204",
+   "w": 136,
+   "x": 662,
+   "y": 1208
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1212",
+   "w": 148,
+   "x": 818,
+   "y": 1202
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "Control",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1212/@Control@1211",
+   "w": 148,
+   "x": 818,
+   "y": 1202
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1212/@Control@1211/@Control@1208",
+   "w": 148,
+   "x": 818,
+   "y": 1202
+  },
+  {
+   "extra": {
+    "clip": true,
+    "parent_clip": false
+   },
+   "h": 136,
+   "kind": "area",
+   "label": "art_rect",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1212/@Control@1211/@Control@1209",
+   "w": 136,
+   "x": 824,
+   "y": 1208
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1217",
+   "w": 148,
+   "x": 980,
+   "y": 1202
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "Control",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1217/@Control@1216",
+   "w": 148,
+   "x": 980,
+   "y": 1202
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1217/@Control@1216/@Control@1213",
+   "w": 148,
+   "x": 980,
+   "y": 1202
+  },
+  {
+   "extra": {
+    "clip": true,
+    "parent_clip": false
+   },
+   "h": 136,
+   "kind": "area",
+   "label": "art_rect",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1217/@Control@1216/@Control@1214",
+   "w": 136,
+   "x": 986,
+   "y": 1208
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1222",
+   "w": 148,
+   "x": 1142,
+   "y": 1202
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "Control",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1222/@Control@1221",
+   "w": 148,
+   "x": 1142,
+   "y": 1202
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 148,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1222/@Control@1221/@Control@1218",
+   "w": 148,
+   "x": 1142,
+   "y": 1202
+  },
+  {
+   "extra": {
+    "clip": true,
+    "parent_clip": false
+   },
+   "h": 136,
+   "kind": "area",
+   "label": "art_rect",
+   "node": "/root/Main/popup_layer/@Control@1163/@Control@1165/@BaseButton@1222/@Control@1221/@Control@1219",
+   "w": 136,
+   "x": 1148,
+   "y": 1208
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 1792,
+   "kind": "area",
+   "label": "ColorRect",
+   "node": "/root/Main/overlay_layer/@ColorRect@13",
+   "w": 1792,
+   "x": 0,
+   "y": 0
+  }
+ ]
+}

@@ -1,7 +1,9 @@
 extends PxScreen
 ## 병종 상세 (병종-장수-재설계 §3.6): 장수 상세와 같은 방식.
 ## 위: 병종 그림 · 이름 · 기본/정예 · 성급 · 전투력 · 공방체 · 특징, 이 병종 장수 2명, 이전/다음.
-## 탭: 강화(공·방·체 줄 3개 + 일괄 강화) · 성급(별 6칸, 카드 n/필요, 성급 올리기).
+## 탭: 성장(별 6칸, 성급 경험, 군주 레벨 효과) · 속성(속성 칸, 상성) · 장비(무기 · 갑옷 · 장신구).
+## 병종이 낀 장비는 그 병종의 모든 병사에게 적용된다 (개편 §11).
+## 성급과 속성은 전투 중 흡수로만 오른다 (개편 §9.1).
 ## 영역: 위 정보판 A(60,160 904×540) · 탭 B(60,716 904×96) · 내용 C(60,820 904×600).
 
 const STATS := ["atk", "def", "hp"]
@@ -9,6 +11,7 @@ const STAT_ICON := {"atk": "ic_sword", "def": "ic_shield", "hp": "ic_heart"}
 
 var id := ""
 var tab := 0
+var slot := "weapon"
 var _t := 0.0
 
 
@@ -38,19 +41,23 @@ func _rebuild() -> void:
 	W.top_bar(self, DB.t("troop.title"))
 	_build_showcase()
 	if not Game.profile.owns_troop(id):
-		var go := PxButton.colored("yellow", DB.t("troop.go_recruit"), Vector2(520, 120), 44)
-		go.pulse = true
-		go.pressed.connect(func() -> void: Game.app.goto("recruit"))
-		put(go, Rect2(252, 900, 520, 120))
+		var info := DrawLayer.make(func(ci: Control) -> void:
+			Px.paragraph(ci, DB.t("troop.not_owned"), Rect2(Vector2.ZERO, ci.size), 32, Px.MUTED, HORIZONTAL_ALIGNMENT_CENTER, 4))
+		put(info, Rect2(100, 860, 824, 140))
 		return
-	put(W.tabs([DB.t("hero.tab_up"), DB.t("hero.tab_star")], tab, Vector2(904, 96),
+	put(W.tabs([DB.t("hero.tab_up"), DB.t("hero.tab_star"), DB.t("hero.tab_treasure")], tab, Vector2(904, 96),
 		func(i: int) -> void:
 			tab = i
-			_rebuild(), ["yellow", "purple"]), Rect2(60, 716, 904, 96))
-	if tab == 0:
-		_build_upgrade()
-	else:
-		_build_star()
+			_rebuild(), ["yellow", "purple", "green"]), Rect2(60, 716, 904, 96))
+	match tab:
+		0:
+			put(Growth.star_panel(id), Rect2(60, 820, 904, 480))
+		1:
+			put(Growth.trait_panel(id), Rect2(60, 820, 904, 480))
+		_:
+			Growth.gear_tab(self, id, slot, func(s: String) -> void:
+				slot = s
+				_rebuild(), _rebuild)
 
 
 func _build_showcase() -> void:
@@ -110,98 +117,3 @@ func _build_showcase() -> void:
 			id = String(list[posmod(idx + sgn, list.size())])
 			_rebuild())
 		put(b, Rect2(72 if side < 0 else 868, 330, 84, 96))
-
-
-# ---------------------------------------------------------------- 강화
-
-func _build_upgrade() -> void:
-	var t := Game.profile.troop(id)
-	var star := int(t["star"])
-	var cap := MetaRules.upgrade_cap(star)
-	var d := DB.soldier(id)
-	for i in STATS.size():
-		var s: String = STATS[i]
-		var lv := int(t["up"][s])
-		var cost := MetaRules.upgrade_cost(lv)
-		var maxed := lv >= cap
-		var row := DrawLayer.make(func(ci: Control) -> void:
-			Px.draw_skin(ci, "panel_small", Rect2(Vector2.ZERO, ci.size))
-			Px.fit(ci, Px.tex(String(STAT_ICON[s])), Rect2(22, 27, 52, 52))
-			Px.text(ci, DB.t("stat." + s), Rect2(88, 8, 190, 44), 34, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
-			Px.text(ci, "Lv.%d / %d" % [lv, cap], Rect2(88, 54, 190, 30), 24, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
-			var base := float(d.get(s, 0))
-			Px.text(ci, Px.num(int(MetaRules.upgraded(base, star, lv))), Rect2(290, 0, 130, ci.size.y), 34, Px.WHITE, HORIZONTAL_ALIGNMENT_RIGHT)
-			if not maxed:
-				Px.text(ci, "▶", Rect2(430, 0, 40, ci.size.y), 28, Px.MUTED)
-				Px.text(ci, Px.num(int(MetaRules.upgraded(base, star, lv + 1))), Rect2(470, 0, 160, ci.size.y), 34, Px.HP_GREEN, HORIZONTAL_ALIGNMENT_LEFT)
-			else:
-				Px.text(ci, DB.t("hero.need_star_short"), Rect2(440, 0, 190, ci.size.y), 24, Color("#ffb070"), HORIZONTAL_ALIGNMENT_LEFT), Vector2(904, 106))
-		put(row, Rect2(60, 820 + i * 118, 904, 106))
-		var b := PxButton.colored("yellow", Px.short(cost), Vector2(250, 86), 32)
-		b.icon = Px.tex("icon_gold")
-		b.icon_rect = Rect2(16, 19, 46, 48)
-		b.text_rect = Rect2(64, 0, 176, 86)
-		b.disabled = maxed
-		b.pressed.connect(func() -> void:
-			var why := Game.profile.troop_upgrade_stat(id, s)
-			if why != "":
-				toast(why)
-				Sfx.play("error")
-			else:
-				Sfx.play("rankup")
-				_rebuild())
-		put(b, Rect2(700, 830 + i * 118, 250, 86))
-	var all := PxButton.colored("yellow", DB.t("hero.up_all"), Vector2(904, 88), 34)
-	all.pressed.connect(func() -> void:
-		var n := Game.profile.troop_upgrade_all(id)
-		if n == 0:
-			toast(DB.t("hero.up_none"))
-			Sfx.play("error")
-		else:
-			Sfx.play("rankup")
-			toast(DB.t("hero.up_done", [n]))
-			_rebuild())
-	put(all, Rect2(60, 1176, 904, 88))
-
-
-# ---------------------------------------------------------------- 성급
-
-func _build_star() -> void:
-	var t := Game.profile.troop(id)
-	var star := int(t["star"])
-	var need := MetaRules.star_cost(star)
-	var cards := int(t["cards"])
-	var panel := DrawLayer.make(func(ci: Control) -> void:
-		Px.draw_skin(ci, "panel_slot", Rect2(Vector2.ZERO, ci.size))
-		var w := ci.size.x
-		for i in 6:
-			var c := Vector2(w * 0.5 + (i - 2.5) * 120, 90)
-			var sz := 92.0 + (8.0 * sin(_t * 4.0) if i == star and need > 0 else 0.0)
-			Px.fit(ci, Px.tex("ic_star" if i < star else "ic_star_off"), Rect2(c - Vector2(sz, sz) * 0.5, Vector2(sz, sz)))
-		if need < 0:
-			Px.text(ci, DB.t("hero.max_star"), Rect2(0, 170, w, 60), 40, Px.GOLD)
-			return
-		Px.text(ci, DB.t("hero.star_step", [star, star + 1]), Rect2(0, 160, w, 60), 42, Px.WHITE)
-		Px.fit(ci, Art.portrait(String(Art.of_unit(id)["art"])), Rect2(70, 238, 64, 64))
-		Px.bar(ci, Rect2(150, 250, w - 300, 44), float(cards) / maxf(1.0, need), Color("#b070ff"))
-		Px.text(ci, "%d / %d" % [cards, need], Rect2(150, 250, w - 300, 44), 28)
-		Px.text(ci, "· " + DB.t("hero.star_fx1", [int(round((float(DB.meta["star"]["mult"]) - 1.0) * 100.0))]), Rect2(70, 320, w - 140, 44), 28, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
-		Px.text(ci, "· " + DB.t("hero.star_fx2", [MetaRules.upgrade_cap(star), MetaRules.upgrade_cap(star + 1)]), Rect2(70, 368, w - 140, 44), 28, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT), Vector2(904, 480))
-	panel.set_meta("anim", true)
-	put(panel, Rect2(60, 820, 904, 480))
-	if need > 0:
-		var ok := cards >= need
-		var b := PxButton.colored("purple" if ok else "blue", DB.t("hero.star_up") if ok else DB.t("troop.go_recruit"), Vector2(560, 120), 44)
-		b.pulse = ok
-		b.pressed.connect(func() -> void:
-			if not ok:
-				Game.app.goto("recruit")
-				return
-			var why := Game.profile.troop_star_up(id)
-			if why != "":
-				toast(why)
-				return
-			Sfx.play("jackpot")
-			toast(DB.t("hero.star_done", [int(Game.profile.troop(id)["star"])]))
-			_rebuild())
-		put(b, Rect2(232, 1316, 560, 120))

@@ -1,19 +1,16 @@
 extends PxScreen
-## 전투 (화면 설계서 §4.2, GDD v5): HUD 칩 · 성 체력 · 전장 · 성벽 위 대기석 8칸 ·
-## 천명 슬롯 · 조작 판. 준비 → 전투 시작 → 웨이브 승리 → 준비 ... 10웨이브.
-## 끌어서 배치 / 대기석 / 흡수, 밀기 · 책사 기술, 보스 경고, 결과, 튜토리얼.
-
-const BENCH_X := 12.0
-const BENCH_Y := 1188.0
-const BENCH_STEP := 125.0
-const BENCH_SIZE := 118.0
+## 전투 (화면 설계서 §4.2, GDD v5, 스테이지-흡수-합성-개편 §3.2): HUD 칩 · 성 체력 ·
+## 가로 전장(왼쪽 성벽, 오른쪽에서 적, 가운데 띠가 공터) · 천명 슬롯 · 조작 판.
+## 준비 → 전투 시작 → 웨이브 승리 → 준비 ... 10웨이브.
+## 뽑힌 유닛은 바로 전장에 선다 (대기석 없음). 끌어서 자리 옮기기 / 흡수(준비 중에만),
+## 밀기 · 책사 기술, 보스 경고, 결과, 튜토리얼.
 
 var run: RunState
 var field: BattleField
 var slot_view: SlotView
 var state := "prep"  # prep / fight / over
-var chapter := 1
 var stage := 1
+var diff := 1
 var tutorial := false
 var tut_step := 0
 var _rng := RandomNumberGenerator.new()
@@ -24,8 +21,6 @@ const LEVER_Y := 1400.0
 var _lever: PxButton
 var _lever_pull := 0.0
 var _btn: Dictionary = {}
-var _bench_layer: DrawLayer
-var _bench_pop: Dictionary = {}
 var _drag: Dictionary = {}
 var _press_pos := Vector2.ZERO
 var _banner: DrawLayer
@@ -41,26 +36,20 @@ var _wave_kills := 0
 
 
 func build() -> void:
-	chapter = int(params.get("chapter", Game.next_stage["chapter"]))
 	stage = int(params.get("stage", Game.next_stage["stage"]))
+	diff = int(params.get("diff", Game.next_stage["diff"]))
 	tutorial = bool(params.get("tutorial", false)) and not Game.tutorial_done()
 	_rng.randomize()
 	if params.has("seed"):
 		_rng.seed = int(params["seed"])
-	var lord := Game.lord_lv()
-	run = RunState.new(_rng, ["guanyu"] if tutorial else Game.sortie_heroes(), Game.sortie_troops(), Game.advisor(), chapter, stage)
-	if tutorial:
-		run.rice = 600
-		run.reserve_tutorial_hero = true
-	else:
-		run.rice += MetaRules.start_rice_bonus(lord)
+	run = RunState.new(_rng, ["guanyu"] if tutorial else Game.sortie_heroes(), Game.sortie_troops(), stage, diff, Game.profile)
 	run.changed.connect(_on_run_changed)
 	Sfx.play_bgm("bgm_battle")
 	# 전장
 	field = BattleField.new()
 	field.setup(run, Game.profile.data)
 	field.shake_on = bool(Game.settings().get("shake", true))
-	put(field, Rect2(0, 0, 1024, 1172), Pin.BOTTOM)
+	put(field, Rect2(0, 0, 1024, 1328), Pin.BOTTOM)
 	field.castle_hit.connect(_on_castle_hit)
 	field.wave_done.connect(_on_wave_done)
 	field.enemy_killed.connect(func(_f: Fighter) -> void:
@@ -72,14 +61,9 @@ func build() -> void:
 			_show_hint(DB.t("tut.respawn"))
 			tut_step = 51)
 	field.boss_spawned.connect(func(_f: Fighter) -> void: Sfx.play("boss"))
-	# 성벽 + 대기석
-	var wall := DrawLayer.make(func(ci: Control) -> void:
-		ci.draw_texture_rect(Px.tex("wall"), Rect2(0, 0, 1024, 160), false))
-	put(wall, Rect2(0, 1172, 1024, 160), Pin.BOTTOM)
-	_bench_layer = DrawLayer.make(_draw_bench)
-	put(_bench_layer, Rect2(0, 1172, 1024, 160), Pin.BOTTOM)
+	# 부활 대기 (전장 띠 위, 오른쪽 구석)
 	var rings := DrawLayer.make(_draw_rings)
-	put(rings, Rect2(0, 840, 140, 340), Pin.BOTTOM)
+	put(rings, Rect2(884, 356, 140, 340), Pin.BOTTOM)
 	_hud["rings"] = rings
 	# 슬롯
 	slot_view = SlotView.new()
@@ -95,7 +79,7 @@ func build() -> void:
 	put(_hint, Rect2(40, 300, 944, 120), Pin.TOP)
 	set_process(true)
 	_refresh()
-	_show_banner("%d-%d" % [chapter, stage], DB.t("battle.wave_n", [1, run.wave_count()]))
+	_show_banner("%s · %s" % [DB.stage_name(stage), String(DB.difficulty(diff)["name"])], DB.t("battle.wave_n", [1, run.wave_count()]))
 	if tutorial:
 		_tut(10)
 
@@ -114,24 +98,29 @@ func _chip(icon: String, r: Rect2) -> PxButton:
 
 
 func _build_hud() -> void:
-	_hud["rice"] = _chip("icon_rice", Rect2(26, 28, 186, 86))
-	_hud["army"] = _chip("icon_soldier", Rect2(214, 28, 186, 86))
-	_hud["hero"] = _chip("icon_hero", Rect2(402, 28, 186, 86))
-	_hud["wave"] = _chip("icon_flag", Rect2(592, 28, 196, 86))
-	for k in ["army", "hero"]:
-		var b: PxButton = _hud[k]
-		b.static_panel = false
-		b.mouse_filter = Control.MOUSE_FILTER_STOP
-		b.pressed.connect(_buy_slot.bind(k))
-	var sp := PxButton.make("btn_small", true, Vector2(96, 86))
+	# 군량 칩: 누르면 금으로 가득 채운다 (개편 §13)
+	_hud["rice"] = _chip("icon_rice", Rect2(24, 28, 188, 88))
+	var rice_chip: PxButton = _hud["rice"]
+	rice_chip.static_panel = false
+	rice_chip.mouse_filter = Control.MOUSE_FILTER_STOP
+	rice_chip.pressed.connect(W.ask_rice)
+	_hud["army"] = _chip("icon_soldier", Rect2(216, 28, 188, 88))
+	_hud["hero"] = _chip("icon_hero", Rect2(408, 28, 188, 88))
+	_hud["wave"] = _chip("icon_flag", Rect2(600, 28, 196, 88))
+	# 전장 칸 칩: 누르면 군량으로 한 칸 늘린다. 장수 칩은 전장의 장수 수만 보여 준다 (제한 없음).
+	var army: PxButton = _hud["army"]
+	army.static_panel = false
+	army.mouse_filter = Control.MOUSE_FILTER_STOP
+	army.pressed.connect(_buy_slot)
+	var sp := PxButton.make("btn_small", true, Vector2(96, 88))
 	sp.font_size = 36
 	sp.text = "1x"
 	sp.pressed.connect(_cycle_speed)
-	put(sp, Rect2(806, 28, 96, 86))
+	put(sp, Rect2(808, 28, 96, 88))
 	_hud["speed"] = sp
 	var pause := PxButton.make("btn_pause")
 	pause.pressed.connect(_pause)
-	put(pause, Rect2(910, 30, 87, 82))
+	put(pause, Rect2(912, 28, 88, 88))
 	var castle := DrawLayer.make(_draw_castle)
 	put(castle, Rect2(26, 126, 968, 92))
 	_hud["castle"] = castle
@@ -146,8 +135,8 @@ func _build_controls() -> void:
 	var plate := DrawLayer.make(func(ci: Control) -> void:
 		Px.draw_skin(ci, "plate_lever", Rect2(Vector2.ZERO, ci.size))
 		Px.fit(ci, Px.tex("icon_rice"), Rect2(10, 8, 44, 44))
-		var c := run.spin_cost()
-		Px.text(ci, str(c), Rect2(54, 0, ci.size.x - 64, ci.size.y), 34, Px.WHITE if run.rice >= c else Color("#ff8a80")))
+		var left := run.spins_left()
+		Px.text(ci, "%d/%d" % [left, run.spins_max()], Rect2(54, 0, ci.size.x - 64, ci.size.y), 30, Px.WHITE if left > 0 and run.rice >= run.spin_cost() else Color("#ff8a80")))
 	put(plate, Rect2(563, LEVER_Y + 236, 140, 60), Pin.BOTTOM)  # 비용은 레버 아래
 	_hud["plate"] = plate
 	_lever = PxButton.make("lever")
@@ -155,13 +144,11 @@ func _build_controls() -> void:
 	_lever.press_depth = 0.0
 	_lever.overlay = func(b: PxButton, _off: Vector2) -> void: pass
 	_lever.pressed.connect(_spin)
-	put(_lever, Rect2(576, LEVER_Y, 114, 216), Pin.BOTTOM)
+	put(_lever, Rect2(576, LEVER_Y, 112, 216), Pin.BOTTOM)
+	# 버튼은 둘뿐: 전투 시작 · 책사. 재배치는 릴의 위아래 칸을 직접 누르고, 배속은 위쪽 HUD에 있다.
 	var specs := [
-		["battle", "btn_battle", Rect2(721, 1380, 255, 105), _start_wave],
-		["nudge", "btn_nudge", Rect2(721, 1503, 123, 114), _nudge],
-		["advisor", "btn_advisor", Rect2(853, 1503, 123, 114), _advisor],
-		["speed", "btn_speed", Rect2(721, 1631, 123, 114), _cycle_speed],
-		["bench", "btn_bench", Rect2(853, 1631, 123, 114), _auto_deploy],
+		["battle", "btn_battle", Rect2(720, 1400, 256, 152), _start_wave],
+		["advisor", "btn_advisor", Rect2(720, 1584, 256, 128), _advisor],
 	]
 	for s: Array in specs:
 		var b := PxButton.make(String(s[1]))
@@ -170,30 +157,14 @@ func _build_controls() -> void:
 		b.tooltip_text = _ctrl_tip(String(s[0]))
 		put(b, s[2], Pin.BOTTOM)
 		_btn[s[0]] = b
-	# 아이콘 전용 버튼: 꼭 필요한 숫자만 모서리에 (남은 적 · 비용 · 배속 · 대기 수).
+	# 전투 중에는 남은 적 수를 모서리에 적는다.
 	_btn["battle"].overlay = func(b: PxButton, off: Vector2) -> void:
 		if state != "prep":
 			_num(b, off, str(field.enemies_left()))
-	_btn["nudge"].overlay = func(b: PxButton, off: Vector2) -> void:
-		if run.slot.can_nudge:
-			_num(b, off, str(run.nudge_cost()))
-	_btn["speed"].overlay = func(b: PxButton, off: Vector2) -> void:
-		_num(b, off, "%dx" % int(field.speed))
-	_btn["bench"].overlay = func(b: PxButton, off: Vector2) -> void:
-		_num(b, off, str(run.bench.size()))
 
 
 func _ctrl_tip(k: String) -> String:
-	match k:
-		"battle":
-			return DB.t("battle.start")
-		"nudge":
-			return DB.t("battle.nudge")
-		"advisor":
-			return DB.t("battle.advisor")
-		"speed":
-			return DB.t("battle.speed")
-	return DB.t("battle.auto")
+	return DB.t("battle.start") if k == "battle" else DB.t("battle.advisor")
 
 
 ## Corner number on an icon-only button: outlined text, no plate.
@@ -209,23 +180,21 @@ func _on_run_changed() -> void:
 
 
 func _refresh() -> void:
-	(_hud["rice"] as PxButton).text = Px.num(run.rice)
+	(_hud["rice"] as PxButton).text = "%d/%d" % [run.rice, int(DB.rules["rice_max"])]
 	(_hud["army"] as PxButton).text = "%d/%d" % [run.field.size(), run.field_cap]
-	(_hud["hero"] as PxButton).text = "%d/%d" % [run.heroes_on_field(), run.hero_quota]
+	(_hud["hero"] as PxButton).text = str(run.heroes_on_field())
 	(_hud["wave"] as PxButton).text = "%d/%d" % [mini(run.wave + 1, run.wave_count()), run.wave_count()]
 	(_hud["speed"] as PxButton).text = "%dx" % int(field.speed)
 	var busy := slot_view.spinning
 	_btn["battle"].disabled = state != "prep" or busy
 	_btn["battle"].pulse = state == "prep" and not busy and not run.field.is_empty() and not tutorial
-	_btn["nudge"].disabled = not run.can_nudge() or busy
-	_btn["nudge"].pulse = run.can_nudge() and not busy
+	# 재배치: 꽝 줄의 위아래 칸을 누를 수 있는 동안 슬롯이 그 칸을 밝힌다
+	slot_view.nudge_ready = run.can_nudge() and not busy
 	_btn["advisor"].disabled = not run.advisor_ready() or busy
-	_btn["bench"].disabled = run.bench.is_empty()
 	_lever.disabled = busy or state == "over"
 	for k in _btn:
 		_btn[k].queue_redraw()
 	_hud["plate"].queue_redraw()
-	_bench_layer.queue_redraw()
 
 
 func _process(delta: float) -> void:
@@ -237,7 +206,6 @@ func _process(delta: float) -> void:
 	_lever.scale.y = 1.0 - 0.2 * sin(_lever_pull * PI)
 	for k in ["castle", "syn"]:
 		_hud[k].queue_redraw()
-	_bench_layer.queue_redraw()
 	if state == "fight":
 		_btn["battle"].queue_redraw()
 	_hud["rings"].queue_redraw()
@@ -280,26 +248,29 @@ var _pending_events: Array = []
 
 func _on_reels_stopped() -> void:
 	var res := run.last_result
-	var lines: Array = res.get("lines", [])
-	if lines.is_empty():
+	var got: Array = []
+	for e: Dictionary in _pending_events:
+		if String(e["type"]) == "field":
+			got.append(e["unit"])
+	if got.is_empty():
 		Sfx.play("miss")
 	else:
 		var hero := ""
-		var jackpot := false
-		for l: Dictionary in lines:
-			if l["kind"] == "unit":
-				jackpot = true
-			if hero == "" and not (l.get("heroes", []) as Array).is_empty():
-				hero = String(l["heroes"][0])
-		if hero != "":
-			Sfx.play("jackpot")
-			_show_banner(DB.t("slot.hero_line", [DB.unit_name(hero)]), DB.t("slot.hero_sub", [DB.troop_name(DB.troop_of(hero))]), Px.GOLD)
-		elif jackpot:
+		for u: UnitState in got:
+			if hero == "" and u.is_hero():
+				hero = u.id
+		if bool(res.get("jackpot", false)):
 			Sfx.play("jackpot")
 			_show_banner(DB.t("slot.jackpot"), DB.t("slot.jackpot_sub"), Px.GOLD)
+		elif hero != "":
+			Sfx.play("jackpot")
+			_show_banner(DB.t("slot.hero_line", [DB.unit_name(hero)]), DB.t("slot.hero_sub"), Px.GOLD)
+		elif got.size() == 1:
+			Sfx.play("win")
+			_show_banner(DB.t("slot.win_one", [(got[0] as UnitState).display_name()]), "", Color("#7fe0ff"))
 		else:
 			Sfx.play("win")
-			_show_banner(DB.t("slot.troop_line", [DB.troop_name(String(lines[0].get("troop", "")))]), "", Color("#7fe0ff"))
+			_show_banner(DB.t("slot.win_many", [got.size()]), "", Color("#7fe0ff"))
 	_apply_events(_pending_events)
 	_pending_events = []
 	_refresh()
@@ -311,38 +282,21 @@ func _apply_events(events: Array) -> void:
 	field.sync()
 	var msgs: Array = []
 	for e: Dictionary in events:
-		var u: UnitState = e["unit"]
 		match String(e["type"]):
 			"field":
-				field.show_summon(u, bool(e.get("line_summon", false)))
+				field.show_summon(e["unit"])
 				Sfx.play("pop")
-				if bool(e.get("line_summon", false)):
-					msgs.append("줄 소환: %s %d단" % [u.display_name(), u.rank])
-			"bench":
-				_bench_pop[u.uid] = 0.3
-			"rank":
-				msgs.append(DB.t("battle.rank_up", [u.display_name(), u.rank]))
-				Sfx.play("rankup")
-				var f := field.ally_of(u)
-				if f != null:
-					field.burst(f.pos, Px.GOLD)
+				if bool(e.get("new", false)):
+					msgs.append(DB.t("battle.new_unit", [(e["unit"] as UnitState).display_name()]))
 			"refund":
-				msgs.append(DB.t("battle.refund", [u.display_name(), int(e["rice"])]))
+				msgs.append(DB.t("battle.refund", [int(e["rice"])]))
 				Sfx.play("coin")
-			"merged":
-				msgs.append(DB.t("battle.merged", [u.display_name()]))
 			"lost":
-				msgs.append(DB.t("battle.lost", [u.display_name()]))
+				if bool(e.get("new", false)):
+					msgs.append(DB.t("battle.new_unit", [(e["unit"] as UnitState).display_name()]))
+				msgs.append(DB.t("battle.lost", [(e["unit"] as UnitState).display_name()]))
 	if not msgs.is_empty():
 		_show_hint(" / ".join(msgs))
-
-
-func _nudge() -> void:
-	if not run.can_nudge():
-		return
-	slot_view.mode = "" if slot_view.mode == "nudge" else "nudge"
-	if tutorial and tut_step == 31:
-		_tut(32)
 
 
 func _advisor() -> void:
@@ -358,19 +312,11 @@ func _advisor() -> void:
 			_refresh()
 
 
+## A reel was tapped. 책사 "한 칸 다시" (respin mode): the blank reel spins again.
+## Otherwise 재배치: [param dir] +1 = the cell above was tapped and comes down,
+## -1 = the cell below comes up.
 func _on_reel_tapped(reel: int, dir: int) -> void:
-	if tutorial and tut_step == 32 and (reel != 2 or dir != 1):
-		return
-	if slot_view.mode == "nudge":
-		var r := run.nudge(reel, dir)
-		if r.is_empty():
-			toast(DB.t("battle.no_rice"))
-			slot_view.mode = ""
-			return
-		_pending_events = r["events"]
-		slot_view.move_reel(reel, r["result"], Game.slot_speed())
-		Sfx.play("whoosh")
-	elif slot_view.mode == "respin":
+	if slot_view.mode == "respin":
 		var r2 := run.use_advisor(reel)
 		if r2.is_empty():
 			slot_view.mode = ""
@@ -378,44 +324,34 @@ func _on_reel_tapped(reel: int, dir: int) -> void:
 		_pending_events = r2["events"]
 		slot_view.move_reel(reel, r2["result"], Game.slot_speed(), true)
 		Sfx.play("lever")
+		_refresh()
+		return
+	if tutorial and (tut_step != 32 or reel != 2 or dir != 1):
+		return
+	var r := run.nudge(reel, dir)
+	if r.is_empty():
+		toast(DB.t("battle.no_rice") if run.rice < run.nudge_cost() else DB.t("slot.nudge_tip"))
+		return
+	if tutorial:
+		_close_guide()
+	_pending_events = r["events"]
+	slot_view.move_reel(reel, r["result"], Game.slot_speed())
+	Sfx.play("whoosh")
 	_refresh()
 
 
-func _buy_slot(kind: String) -> void:
-	var cost := run.field_cap_cost() if kind == "army" else run.hero_quota_cost()
+func _buy_slot() -> void:
+	var cost := run.field_cap_cost()
 	if cost < 0:
 		toast(DB.t("battle.slot_max"))
 		return
-	var c := Game.app.popup("confirm", {"title": DB.t("battle.buy_" + kind), "text": DB.t("battle.buy_text", [cost]), "ok": DB.t("common.buy")})
+	var c := Game.app.popup("confirm", {"title": DB.t("battle.buy_army"), "text": DB.t("battle.buy_text", [cost]), "ok": DB.t("common.buy")})
 	c.confirmed.connect(func() -> void:
-		var ok := run.buy_field_cap() if kind == "army" else run.buy_hero_quota()
-		if not ok:
-			toast(DB.t("battle.no_rice"))
+		if not run.buy_field_cap():
+			toast(DB.t("common.no_gold"))
 		else:
 			Sfx.play("coin")
-			_auto_fill())
-
-
-## After a cap rise: bench units join the field while there is room.
-func _auto_fill() -> void:
-	for u in run.bench.duplicate():
-		if run.deploy(u) == "":
-			pass
-	field.sync()
-	_refresh()
-
-
-func _auto_deploy() -> void:
-	for u in run.bench.duplicate():
-		var why := run.deploy(u)
-		if why == "":
-			field.sync()
-			Sfx.play("pop")
-			if tutorial and tut_step == 40:
-				_tut(45)
-			_refresh()
-			return
-	toast(DB.t("battle.field_full"))
+			_refresh())
 
 
 func _cycle_speed() -> void:
@@ -480,7 +416,7 @@ func _on_wave_done() -> void:
 		return
 	state = "prep"
 	Sfx.play("victory")
-	var p := Game.app.popup("wave_clear", {"wave": run.wave, "total": run.wave_count(), "rice": res["rice"], "castle": res["castle"],
+	var p := Game.app.popup("wave_clear", {"wave": run.wave, "total": run.wave_count(), "spins_left": run.spins_left(), "castle": res["castle"],
 		"kills": _wave_kills, "mvp": top, "next": run.current_wave()})
 	p.closed.connect(func() -> void:
 		_refresh()
@@ -501,19 +437,19 @@ func _victory() -> void:
 	state = "over"
 	field.fighting = false
 	var stars := run.stars_earned(true)
-	var out := Game.profile.finish_run(chapter, stage, run.wave_count(), true, stars, run.stats, run.rice)
+	var out := Game.profile.finish_run(stage, diff, run.wave_count(), true, stars, run.stats)
 	if tutorial or not Game.tutorial_done():
 		Game.profile.data["tutorial"]["done"] = true
 		Game.profile.changed.emit()
 	Sfx.stop_bgm()
 	Sfx.play("victory")
-	Game.app.popup("result", {"victory": true, "chapter": chapter, "stage": stage, "out": out, "stats": run.stats, "mvp": _mvp_overall(),
-		"castle": run.castle_ratio(), "waves": run.wave_count(), "tutorial": not bool(Game.profile.data["tutorial"]["recruit"])})
+	Game.app.popup("result", {"victory": true, "stage": stage, "diff": diff, "out": out, "stats": run.stats, "mvp": _mvp_overall(),
+		"castle": run.castle_ratio(), "waves": run.wave_count()})
 
 
 func _mvp_overall() -> String:
 	var best: UnitState = null
-	for u in run.field + run.bench:
+	for u in run.field:
 		if best == null or u.damage > best.damage:
 			best = u
 	return best.id if best != null else ""
@@ -523,16 +459,16 @@ func _defeat() -> void:
 	state = "over"
 	field.fighting = false
 	Sfx.play("defeat")
-	var p := Game.app.popup("result", {"victory": false, "chapter": chapter, "stage": stage, "stats": run.stats, "mvp": _mvp_overall(),
+	var p := Game.app.popup("result", {"victory": false, "stage": stage, "diff": diff, "stats": run.stats, "mvp": _mvp_overall(),
 		"castle": 0.0, "waves": run.wave, "can_continue": not run.continued})
 	p.set_meta("battle", self)
 
 
 ## Called by the defeat pop-up: 이어하기 (다이아 100, once per run).
 func continue_run() -> bool:
-	var cost := int(DB.meta["recruit"].get("continue_cost", 100))
-	if not Game.profile.pay("diamond", cost):
-		toast(DB.t("common.no_diamond"))
+	var cost := int(DB.rules["continue_gold"])
+	if not Game.profile.pay("gold", cost):
+		toast(DB.t("common.no_gold"))
 		return false
 	run.revive()
 	field.clear_enemies()
@@ -548,7 +484,7 @@ func give_up() -> Dictionary:
 	if state == "done":
 		return {}
 	state = "done"
-	return Game.profile.finish_run(chapter, stage, run.wave, false, 0, run.stats, run.rice)
+	return Game.profile.finish_run(stage, diff, run.wave, false, 0, run.stats)
 
 
 func _show_boss(id: String) -> void:
@@ -603,17 +539,6 @@ func back() -> bool:
 
 # ---------------------------------------------------------------- drag & drop
 
-func _bench_rect(i: int) -> Rect2:
-	return Rect2(BENCH_X + BENCH_STEP * i, BENCH_Y + dy(Pin.BOTTOM), BENCH_SIZE, BENCH_SIZE)
-
-
-func _bench_index_at(p: Vector2) -> int:
-	for i in run.bench_size:
-		if _bench_rect(i).has_point(p):
-			return i
-	return -1
-
-
 func _gui_input(e: InputEvent) -> void:
 	if state == "over":
 		return
@@ -635,10 +560,6 @@ func _field_pos(p: Vector2) -> Vector2:
 
 func _begin_drag(p: Vector2) -> void:
 	_drag = {}
-	var bi := _bench_index_at(p)
-	if bi >= 0 and bi < run.bench.size():
-		_drag = {"src": "bench", "unit": run.bench[bi], "index": bi}
-		return
 	var f := field.fighter_at(_field_pos(p))
 	if f != null:
 		_drag = {"src": "field", "unit": f.unit, "fighter": f}
@@ -649,26 +570,13 @@ func _drop_target(p: Vector2, d: Dictionary = _drag) -> Dictionary:
 		return {"kind": "none", "ok": false, "label": ""}
 	var u: UnitState = d["unit"]
 	var fp := _field_pos(p)
-	var bi := _bench_index_at(p)
-	if bi >= 0:
-		if bi < run.bench.size() and run.bench[bi] != u:
-			return _absorb_target(u, run.bench[bi])
-		if d["src"] == "field":
-			if state == "fight":
-				return {"kind": "none", "ok": false, "label": DB.t("battle.no_bench_fight")}
-			return {"kind": "bench", "ok": run.bench.size() < run.bench_size, "label": DB.t("battle.to_bench")}
-		return {"kind": "none", "ok": false, "label": ""}
 	var f := field.fighter_at(fp)
 	if f != null and f.unit != u:
+		# 흡수는 준비 시간에만 (개편 §5).
+		if state == "fight":
+			return {"kind": "none", "ok": false, "label": DB.t("battle.no_absorb_fight")}
 		return _absorb_target(u, f.unit)
 	if field.in_zone(fp):
-		if d["src"] == "bench":
-			var why := ""
-			if run.field.size() >= run.field_cap:
-				why = DB.t("battle.field_full")
-			elif u.is_hero() and run.heroes_on_field() >= run.hero_quota:
-				why = DB.t("battle.hero_full")
-			return {"kind": "deploy", "ok": why == "", "label": DB.t("battle.deploy") if why == "" else why}
 		return {"kind": "move", "ok": true, "label": ""}
 	return {"kind": "none", "ok": false, "label": ""}
 
@@ -677,7 +585,7 @@ func _absorb_target(food: UnitState, target: UnitState) -> Dictionary:
 	var chk := run.absorb_check(food, target)
 	if not chk["ok"]:
 		return {"kind": "none", "ok": false, "label": String(chk.get("reason", ""))}
-	var label := DB.t("absorb.rank_label") if chk["mode"] == "rank" else DB.t("absorb.trait_label")
+	var label := DB.t("absorb.rank_label") if chk["mode"] == "star" else DB.t("absorb.trait_label")
 	return {"kind": "absorb", "ok": true, "target": target, "label": label}
 
 
@@ -707,20 +615,8 @@ func _end_drag(p: Vector2) -> void:
 			Sfx.play("error")
 		return
 	match String(tgt["kind"]):
-		"deploy":
-			u.anchor = field.clamp_zone(_field_pos(p) + Vector2(0, 40))
-			run.deploy(u)
-			field.sync()
-			Sfx.play("pop")
-			if tutorial and tut_step == 40:
-				_tut(45)
 		"move":
 			field.move_home(d["fighter"], _field_pos(p) + Vector2(0, 40))
-			Sfx.play("click")
-		"bench":
-			run.to_bench(u)
-			u.anchor = Vector2.ZERO
-			field.sync()
 			Sfx.play("click")
 		"absorb":
 			_open_absorb(u, tgt["target"])
@@ -728,25 +624,37 @@ func _end_drag(p: Vector2) -> void:
 
 
 func _unit_line(u: UnitState) -> String:
-	var s := "%s · %s · %s" % [u.display_name(), DB.cls_name(u.cls()), DB.t("battle.rank", [u.rank])]
-	if not u.traits.is_empty():
-		var names: Array = []
-		for t in u.traits:
-			names.append(String(DB.trait_def(t).get("name", t)))
+	var s := "%s · %s · %s" % [u.display_name(), DB.cls_name(u.cls()), DB.t("battle.rank", [run.star_of(u)])]
+	var names: Array = []
+	for t: Dictionary in run.traits_of(u):
+		names.append("%s %d" % [String(DB.trait_def(String(t["id"])).get("name", "")), int(t["lv"])])
+	if not names.is_empty():
 		s += " · " + ", ".join(names)
 	return s
 
 
+## 흡수 창을 열고, 결과를 전장에 보여 준다: 성급이 오르면 띠 + 오른 능력치,
+## 아니면 성급 경험, 속성이면 얻은 속성과 레벨.
 func _open_absorb(food: UnitState, target: UnitState) -> void:
+	var before := MetaRules.unit_stats(Game.profile.data, target.id)
 	var p := Game.app.popup("absorb", {"run": run, "food": food, "target": target})
-	p.connect("done", func(gained: int) -> void:
+	p.connect("done", func(info: Dictionary) -> void:
 		field.sync()
 		var f := field.ally_of(target)
 		if f != null:
 			field.burst(f.pos, Px.GOLD)
-		Sfx.play("rankup" if gained > 0 else "pop")
-		if gained > 0:
-			_show_hint(DB.t("battle.rank_up", [target.display_name(), target.rank]))
+		if String(info.get("mode", "")) == "star":
+			if int(info.get("gained", 0)) > 0:
+				var after := MetaRules.unit_stats(Game.profile.data, target.id)
+				Sfx.play("jackpot")
+				_show_banner(DB.t("absorb.star_banner", [target.display_name(), int(info["star"])]),
+					DB.t("absorb.stat_delta", [Px.num(int(before["atk"])), Px.num(int(after["atk"])), Px.num(int(before["hp"])), Px.num(int(after["hp"]))]), Px.GOLD)
+			else:
+				Sfx.play("rankup")
+				_show_hint(DB.t("absorb.xp_hint", [target.display_name(), int(info.get("xp", 0)), int(info.get("need", 0))]))
+		else:
+			Sfx.play("rankup")
+			_show_hint(DB.t("absorb.trait_got", [target.display_name(), String(DB.trait_def(String(info.get("trait", ""))).get("name", "")), int(info.get("lv", 1))]))
 		_refresh())
 
 
@@ -779,15 +687,13 @@ func _draw_synergy(ci: Control) -> void:
 		y = 64.0
 	var x := 0.0
 	var list: Array = field.active_synergies()
-	for f: String in run.faction_buff:
-		list.push_front({"name": DB.fac_name(f) + " +" + str(int(float(run.faction_buff[f]) * 100.0)) + "%", "kind": "buff", "key": f})
 	for s: Dictionary in list:
 		var label := String(s["name"])
 		var w := Px.text_width(label, 22) + 30
 		if x + w > ci.size.x:
 			break
 		var c := Color("#5a3a22")
-		if s["kind"] == "faction" or s["kind"] == "buff":
+		if s["kind"] == "faction":
 			c = DB.fac_color(String(s["key"])).darkened(0.2)
 		elif s["kind"] == "bond":
 			c = Color("#7a3a9a")
@@ -795,25 +701,6 @@ func _draw_synergy(ci: Control) -> void:
 		Px.draw_skin(ci, "panel_chip", Rect2(x, y, w, 40))
 		Px.text(ci, label, Rect2(x + 4, y, w - 8, 40), 22, c.lightened(0.55))
 		x += w + 8
-
-
-## 전투 대기열: 같은 간격 나무 칸 8개. 빈 칸은 움푹한 홈 + 옅은 "+",
-## 찬 칸은 얼굴 + 장수 희귀도 테두리 + 작은 별(등급)만 (받침 없음).
-func _draw_bench(ci: Control) -> void:
-	for i in run.bench_size:
-		var r := Rect2(BENCH_X + BENCH_STEP * i, BENCH_Y - 1172, BENCH_SIZE, BENCH_SIZE)
-		if i >= run.bench.size():
-			W.draw_unit_slot(ci, r, "", 0, 0, "empty")
-			continue
-		var u := run.bench[i]
-		if not _drag.is_empty() and _drag["unit"] == u and _drag.get("moved", false):
-			W.draw_unit_slot(ci, r, "", 0, 0, "empty")
-			continue
-		var pop := float(_bench_pop.get(u.uid, 0.0))
-		if pop > 0.0:
-			_bench_pop[u.uid] = maxf(0.0, pop - get_process_delta_time())
-			r = r.grow(8.0 * pop / 0.3)
-		W.draw_battle_slot(ci, r, u.id, u.rank)
 
 
 func _draw_rings(ci: Control) -> void:
@@ -872,9 +759,10 @@ func _draw_hint(ci: Control) -> void:
 
 # ---------------------------------------------------------------- tutorial (콘텐츠 §12)
 
-const TUT_SPEAR := {"cols": [["rider", "spear", "archer"], ["archer", "spear", "rider"], ["shield", "spear", "archer"]]}
-const TUT_MISS := {"cols": [["archer", "shield", "rider"], ["archer", "rider", "spear"], ["shield", "spear", "rider"]], "above": ["", "", "archer"]}
-const TUT_CLASS := {"cols": [["archer", "guanyu", "rider"], ["rider", "spear", "archer"], ["rider", "spear", "archer"]]}
+# 슬롯 3칸: 첫 칸 창병 당첨 → 전부 꽝(세 번째 줄 위의 궁병을 재배치로 끌어옴) → 창병 + 관우.
+const TUT_SPEAR := {"cells": ["spear", "", ""]}
+const TUT_MISS := {"cells": ["", "", ""], "above": ["", "", "archer"], "below": ["", "", ""]}
+const TUT_CLASS := {"cells": ["spear", "guanyu", ""]}
 
 
 func _close_guide() -> void:
@@ -903,15 +791,16 @@ func _tut(step: int) -> void:
 		30:
 			_guide_at(_lever_rect(), DB.t("tut.spin_third"))
 		31:
-			_guide_at(Rect2(_btn["nudge"].position, _btn["nudge"].size), DB.t("tut.nudge"))
+			var g31 := _guide_at(Rect2(), DB.t("tut.nudge"), true)
+			g31.advanced.connect(func() -> void: _tut(32))
 		32:
-			# 누를 칸 = 세 번째 릴 맨 아래 칸 (아래 절반 안이라 누르면 한 칸 내려감)
-			var tr := slot_view.cell_rect(2, 2)
+			# 누를 칸 = 세 번째 줄 위에 살짝 보이는 궁병 — 누르면 가운데로 내려온다
+			var tr := slot_view.peek_rect(2, -1)
 			_guide_at(Rect2(slot_view.global_position + tr.position, tr.size), DB.t("tut.nudge_reel"))
 		40:
-			run.reserve_tutorial_hero = false
-			var g := _guide_at(Rect2(0, 790 + dy(Pin.BOTTOM), 1024, 530), DB.t("tut.drag"))
-			g.bubble_top = true
+			# 관우는 뽑히자마자 전장에 선다: 알려 주고 전투 시작으로.
+			var g := _guide_at(Rect2(), DB.t("tut.drag"), true)
+			g.advanced.connect(func() -> void: _tut(45))
 		45:
 			_guide_at(Rect2(_btn["battle"].position, _btn["battle"].size), DB.t("tut.battle"))
 		50:
@@ -938,7 +827,6 @@ func _tut_before_spin() -> void:
 			run.slot.forced = TUT_MISS.duplicate(true)
 		30:
 			run.slot.forced = TUT_CLASS.duplicate(true)
-			run.force_bench = true
 
 
 func _tut_after_spin_started() -> void:
@@ -956,7 +844,6 @@ func _tut_after_stop() -> void:
 			var g2 := _guide_at(Rect2(), DB.t("tut.nudge_done"), true)
 			g2.advanced.connect(func() -> void: _tut(30))
 		30:
-			run.force_bench = false
 			_tut(40)
 
 
@@ -979,7 +866,7 @@ func demo(name: String) -> void:
 					for j in 300:
 						await get_tree().process_frame
 						if tut_step == 31: break
-					_nudge()
+					_tut(32)
 					_on_reel_tapped(2, 1)
 					for j in 300:
 						await get_tree().process_frame
@@ -1011,25 +898,17 @@ func demo(name: String) -> void:
 				await get_tree().process_frame
 				if tut_step == 31:
 					break
-			_nudge()
+			_tut(32)
 		"prep", "fight", "boss", "absorb", "wave_clear":
 			Game.settings()["slot_speed"] = 2
-			run.rice = 2000
-			var grids := [
-				{"cols": [["rider", "spear", "archer"], ["archer", "spear", "rider"], ["shield", "spear", "archer"]]},
-				{"cols": [["guanyu", "archer", "rider"], ["spear", "archer", "spear"], ["spear", "archer", "shield"]]},
-				{"cols": [["rider", "shield", "huangzhong"], ["spear", "rider", "archer"], ["archer", "shield", "archer"]]},
-				{"cols": [["archer", "spear", "rider"], ["shield", "shield", "spear"], ["rider", "shield", "archer"]]},
-			]
-			for g: Dictionary in grids:
-				run.slot.forced = g.duplicate(true)
+			Game.profile.add_rice(20)
+			run.field_cap = maxi(run.field_cap, 8)  # 장면용: 다섯 번 돌려도 자리가 남게
+			for cells: Array in [["spear", "guanyu", ""], ["archer", "", "shield"], ["", "huangzhong", "rider"], ["shield", "", ""]]:
+				run.slot.forced = {"cells": cells}
 				var r := run.spin()
 				_apply_events(r["events"])
 			slot_view.bind(run.slot)
-			slot_view.lines = run.last_result["lines"]
-			for i in run.bench.size():
-				pass
-			run.slot.forced = {"cols": [["xiahoudun", "guanyu", "rider"], ["sunquan", "zhangfei", "spear"], ["archer", "zhaoyun", "shield"]]}
+			run.slot.forced = {"cells": ["xiahoudun", "", "spear"]}
 			var r2 := run.spin()
 			_pending_events = r2["events"]
 			slot_view.spin_to_result(r2["result"], 0.0)
@@ -1043,15 +922,15 @@ func demo(name: String) -> void:
 			elif name == "absorb":
 				var food: UnitState = null
 				var target: UnitState = null
-				for u in run.field + run.bench:
+				for u in run.field:
 					if target == null and u.is_hero():
 						target = u
-				for u in run.field + run.bench:
+				for u in run.field:
 					if food == null and target != null and u != target and u.cls() != target.cls():
 						food = u
 				if food != null and target != null:
 					_open_absorb(food, target)
 			elif name == "wave_clear":
-				Game.app.popup("wave_clear", {"wave": 3, "total": run.wave_count(), "rice": 360, "castle": 100,
+				Game.app.popup("wave_clear", {"wave": 3, "total": run.wave_count(), "spins_left": run.spins_left(), "castle": 100,
 					"kills": 24, "mvp": run.field[0] if not run.field.is_empty() else null, "next": run.current_wave()})
 			_refresh()

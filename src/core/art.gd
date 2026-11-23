@@ -104,10 +104,6 @@ static func illustration(art: String) -> Texture2D:
 	return t if t else portrait(art)
 
 
-static func has_illustration(art: String) -> bool:
-	return _load(String(entry(art).get("illustration", ""))) != null
-
-
 static var _hued: Dictionary = {}
 
 

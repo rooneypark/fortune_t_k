@@ -1,6 +1,6 @@
 extends PxScreen
-## 상점 (화면-배치표 07-shop / 메타 §3.9): 추천·다이아·골드·패키지 탭.
-## 결제는 "개발용 가상 결제" — 실제 돈이 나가지 않는다. 다이아로 군량은 살 수 없다.
+## 상점 (개편 §13): 추천 · 금 · 군량 · 꾸러미 탭. 현금으로 파는 것은 금뿐이고,
+## 군량은 금으로 채운다. 결제는 "개발용 가상 결제" — 실제 돈이 나가지 않는다.
 
 var tab := 0
 var _t := 0.0
@@ -97,36 +97,14 @@ func _rec(c: Control) -> float:
 	var until := int(Game.profile.data["shop"]["monthly_until"])
 	var days_left := maxi(0, ceili((until - now) / 86400.0))
 	_card(c, Rect2(0, y, 944, 250), func(b: PxButton, r: Rect2) -> void:
-		Px.fit(b, Px.tex("icon_diamond"), Rect2(r.position + Vector2(30, 40), Vector2(150, 150)))
+		Px.fit(b, Px.tex("icon_gold"), Rect2(r.position + Vector2(30, 40), Vector2(150, 150)))
 		Px.text(b, String(mo["name"]), Rect2(r.position + Vector2(210, 26), Vector2(440, 54)), 40, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
 		Px.text(b, String(mo["desc"]), Rect2(r.position + Vector2(210, 86), Vector2(440, 40)), 26, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
-		Px.text(b, DB.t("shop.monthly_now", [int(mo["now"])]), Rect2(r.position + Vector2(210, 128), Vector2(440, 40)), 26, Color("#9be27a"), HORIZONTAL_ALIGNMENT_LEFT)
+		Px.text(b, DB.t("shop.monthly_now", [Px.num(int(mo["now"]))]), Rect2(r.position + Vector2(210, 128), Vector2(440, 40)), 26, Color("#9be27a"), HORIZONTAL_ALIGNMENT_LEFT)
 		if days_left > 0:
 			Px.text(b, DB.t("shop.monthly_left", [days_left]), Rect2(r.position + Vector2(210, 172), Vector2(440, 40)), 26, Color("#e0b0ff"), HORIZONTAL_ALIGNMENT_LEFT)
-		Px.text(b, DB.t("shop.value", [int(mo["daily"]) * int(mo["days"]) + int(mo["now"])]), Rect2(r.position + Vector2(660, 30), Vector2(250, 40)), 24, Px.MUTED, HORIZONTAL_ALIGNMENT_RIGHT))
+		Px.text(b, DB.t("shop.value", [Px.num(int(mo["daily"]) * int(mo["days"]) + int(mo["now"]))]), Rect2(r.position + Vector2(660, 30), Vector2(250, 40)), 24, Px.MUTED, HORIZONTAL_ALIGNMENT_RIGHT))
 	_price_btn(c, Rect2(676, y + 140, 240, 90), Px.won(int(mo["price"])), "yellow", "", func() -> void: _buy("monthly", String(mo["name"]), String(mo["desc"]), int(mo["price"])))
-	y += 270
-	# 보물 상자
-	var cost := int(sh["box_cost"])
-	_card(c, Rect2(0, y, 944, 250), func(b: PxButton, r: Rect2) -> void:
-		var bob := roundf(sin(_t * 3.0) * 4.0)
-		Px.fit(b, Px.tex("icon_chest"), Rect2(r.position + Vector2(30, 40 + bob), Vector2(150, 150)))
-		Px.text(b, DB.t("shop.box"), Rect2(r.position + Vector2(210, 26), Vector2(440, 54)), 40, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
-		Px.text(b, DB.t("shop.box_desc"), Rect2(r.position + Vector2(210, 86), Vector2(460, 40)), 26, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
-		var bx: Dictionary = DB.meta["treasure"]["box"]
-		Px.text(b, DB.t("odds.box_left", [maxi(1, int(bx["pity"]) - int(Game.profile.data["pity"]["box"]))]), Rect2(r.position + Vector2(210, 128), Vector2(460, 40)), 26, Color("#e0b0ff"), HORIZONTAL_ALIGNMENT_LEFT))
-	var ob := PxButton.colored("blue", DB.t("recruit.odds"), Vector2(200, 70), 26)
-	ob.position = Vector2(716, y + 22)
-	ob.pressed.connect(func() -> void: Game.app.popup("odds", {"kind": "box"}))
-	c.add_child(ob)
-	_price_btn(c, Rect2(676, y + 140, 240, 90), Px.num(cost), "purple", "icon_diamond", func() -> void:
-		var g := Game.profile.buy_box()
-		if g.has("error"):
-			toast(String(g["error"]))
-			Sfx.play("error")
-			return
-		var p: PxPopup = Game.app.popup("reward", {"title": DB.t("treasure.got"), "reward": {}, "items": [g]})
-		p.closed.connect(_rebuild))
 	y += 270
 	# 첫 꾸러미
 	var p0: Dictionary = sh["packages"][0]
@@ -134,11 +112,11 @@ func _rec(c: Control) -> float:
 	return y
 
 
-# ------------------------------------------------------------------ 다이아
+# ------------------------------------------------------------------ 금 (현금으로 사는 유일한 재화)
 
 func _dia(c: Control) -> float:
 	var sh := DB.shop
-	var list: Array = sh["diamonds"]
+	var list: Array = sh["gold_packs"]
 	var cw := 300.0
 	var ch := 380.0
 	for i in list.size():
@@ -148,7 +126,7 @@ func _dia(c: Control) -> float:
 		var size_k := 0.55 + 0.09 * i
 		_card(c, r, func(b: PxButton, rr: Rect2) -> void:
 			var s := 170.0 * size_k
-			Px.fit(b, Px.tex("icon_diamond"), Rect2(rr.position + Vector2((cw - s) * 0.5, 130 - s * 0.5), Vector2(s, s)))
+			Px.fit(b, Px.tex("icon_gold"), Rect2(rr.position + Vector2((cw - s) * 0.5, 130 - s * 0.5), Vector2(s, s)))
 			Px.text(b, Px.num(int(p["amount"])), Rect2(rr.position + Vector2(0, 222), Vector2(cw, 50)), 40, Px.WHITE)
 			if first:
 				var fr := Rect2(rr.position + Vector2(0, 16), Vector2(170, 44))
@@ -162,37 +140,34 @@ func _dia(c: Control) -> float:
 	return ceili(list.size() / 3.0) * (ch + 22)
 
 
-# ------------------------------------------------------------------ 골드
+# ------------------------------------------------------------------ 군량 (금으로 채운다)
 
 func _gold(c: Control) -> float:
-	var list: Array = DB.shop["gold"]
-	var y := 0.0
-	for i in list.size():
-		var g: Dictionary = list[i]
-		_card(c, Rect2(0, y, 944, 200), func(b: PxButton, r: Rect2) -> void:
-			for k in i + 1:
-				Px.fit(b, Px.tex("icon_gold"), Rect2(r.position + Vector2(40 + k * 34, 36 - k * 8), Vector2(120, 120)))
-			Px.text(b, DB.t("shop.gold_name", [Px.num(int(g["gold"]))]), Rect2(r.position + Vector2(260, 40), Vector2(400, 56)), 40, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
-			Px.text(b, DB.t("shop.gold_desc") + " · " + DB.t("shop.gold_left", [Game.profile.gold_buys_left()]), Rect2(r.position + Vector2(260, 104), Vector2(400, 40)), 24, Px.MUTED, HORIZONTAL_ALIGNMENT_LEFT))
-		var idx := i
-		_price_btn(c, Rect2(676, y + 56, 240, 90), Px.num(int(g["cost"])), "purple", "icon_diamond", func() -> void:
-			var c2: PxPopup = Game.app.popup("confirm", {"title": DB.t("shop.t_gold"), "text": DB.t("shop.gold_confirm", [int(g["cost"]), Px.num(int(g["gold"]))]), "ok": DB.t("common.buy")})
-			c2.confirmed.connect(func() -> void:
-				var err := Game.profile.buy_gold(idx)
-				if err != "":
-					toast(err)
-					Sfx.play("error")
-				else:
-					Sfx.play("coin")
-					toast(DB.t("shop.bought"))))
-		y += 220
+	var p := Game.profile
+	var cap := int(DB.rules["rice_max"])
+	var cost := p.rice_refill_cost()
+	_card(c, Rect2(0, 0, 944, 220), func(b: PxButton, r: Rect2) -> void:
+		Px.fit(b, Px.tex("icon_rice"), Rect2(r.position + Vector2(40, 40), Vector2(140, 140)))
+		Px.text(b, DB.t("rice.name"), Rect2(r.position + Vector2(220, 30), Vector2(440, 56)), 40, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
+		Px.text(b, DB.t("rice.desc", [int(DB.rules["rice_price"]), p.rice_now(), cap]), Rect2(r.position + Vector2(220, 94), Vector2(440, 40)), 24, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
+		var nxt := p.rice_next_sec()
+		Px.text(b, DB.t("rice.full") if nxt <= 0 else DB.t("rice.next", [Profile.format_hms(nxt)]), Rect2(r.position + Vector2(220, 140), Vector2(440, 40)), 24, Px.MUTED, HORIZONTAL_ALIGNMENT_LEFT))
+	_price_btn(c, Rect2(676, 66, 240, 90), Px.num(cost) if cost > 0 else DB.t("rice.full"), "yellow" if cost > 0 else "blue", "icon_gold" if cost > 0 else "", func() -> void:
+		var why := p.refill_rice()
+		if why != "":
+			toast(why)
+			Sfx.play("error")
+		else:
+			Sfx.play("coin")
+			toast(DB.t("rice.done"))
+			_rebuild(), cost <= 0)
 	var info := DrawLayer.make(func(ci: Control) -> void:
 		Px.draw_skin(ci, "panel_slot", Rect2(Vector2.ZERO, ci.size))
 		Px.fit(ci, Px.tex("icon_rice"), Rect2(24, 24, 72, 72))
-		Px.paragraph(ci, DB.t("shop.rice_rule"), Rect2(116, 16, ci.size.x - 136, ci.size.y - 32), 24, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT, 4), Vector2(944, 130))
-	info.position = Vector2(0, y)
+		Px.paragraph(ci, DB.t("rice.rule"), Rect2(116, 16, ci.size.x - 136, ci.size.y - 32), 24, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT, 4), Vector2(944, 130))
+	info.position = Vector2(0, 240)
 	c.add_child(info)
-	return y + 150
+	return 390.0
 
 
 # ------------------------------------------------------------------ 패키지
@@ -208,14 +183,12 @@ func _pack_row(c: Control, p: Dictionary, y: float) -> float:
 	var bought := int(Game.profile.data["shop"]["packages"].get(String(p["id"]), 0))
 	var lim := int(p["limit"])
 	var icons: Array = []
-	if p.has("tickets"):
-		icons.append(["ic_scroll", "×%d" % int(p["tickets"])])
+	if p.has("rice"):
+		icons.append(["icon_rice", "×%d" % int(p["rice"])])
 	if p.has("gold"):
 		icons.append(["icon_gold", Px.short(int(p["gold"]))])
-	if p.has("diamond"):
-		icons.append(["icon_diamond", Px.num(int(p["diamond"]))])
-	if p.has("boxes"):
-		icons.append(["icon_chest", "×%d" % int(p["boxes"])])
+	if p.has("mats"):
+		icons.append(["icon_chest", "×%d" % int(p["mats"])])
 	_card(c, Rect2(0, y, 944, 260), func(b: PxButton, r: Rect2) -> void:
 		Px.text(b, String(p["name"]), Rect2(r.position + Vector2(30, 20), Vector2(600, 54)), 38, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
 		Px.text(b, DB.t("shop.limit", [bought, lim]), Rect2(r.position + Vector2(640, 26), Vector2(274, 40)), 24, Px.MUTED, HORIZONTAL_ALIGNMENT_RIGHT)

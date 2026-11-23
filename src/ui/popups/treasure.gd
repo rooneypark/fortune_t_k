@@ -46,7 +46,12 @@ func build() -> void:
 		var cur := MetaRules.treasure_main(it)
 		var nx := it.duplicate()
 		nx["lv"] = mini(maxlv, int(it["lv"]) + 1)
-		Px.text(ci, DB.t("treasure.main"), Rect2(30, 16, 300, 40), 26, Px.MUTED, HORIZONTAL_ALIGNMENT_LEFT)
+		Px.text(ci, DB.t("treasure.main"), Rect2(30, 16, 200, 40), 26, Px.MUTED, HORIZONTAL_ALIGNMENT_LEFT)
+		# 일반 장비는 능력치만, 보물(영웅 · 전설)은 특수 능력이 하나 더 있다 (개편 §11)
+		if String(d.get("fx_desc", "")) != "":
+			Px.text(ci, DB.t("gear.special", [String(d["fx_desc"])]), Rect2(230, 16, ci.size.x - 260, 40), 24, Color("#e0b0ff"), HORIZONTAL_ALIGNMENT_RIGHT)
+		else:
+			Px.text(ci, DB.t("gear.normal"), Rect2(230, 16, ci.size.x - 260, 40), 24, Px.MUTED, HORIZONTAL_ALIGNMENT_RIGHT)
 		Px.text(ci, DB.t("stat." + ms), Rect2(30, 60, 200, 56), 38, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
 		Px.text(ci, "+" + Px.num(int(cur)), Rect2(240, 60, 180, 56), 40, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
 		if int(it["lv"]) < maxlv:

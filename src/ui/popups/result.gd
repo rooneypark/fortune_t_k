@@ -22,7 +22,7 @@ func setup(params: Dictionary) -> void:
 func build() -> void:
 	var w := panel_rect.size.x
 	var head := DrawLayer.make(func(ci: Control) -> void:
-		var s := DB.t("result.clear", ["%d-%d" % [int(p["chapter"]), int(p["stage"])]]) if victory else DB.t("result.fallen")
+		var s := DB.t("result.clear", ["%d %s" % [int(p["stage"]), String(DB.difficulty(int(p["diff"]))["name"])]]) if victory else DB.t("result.fallen")
 		Px.text(ci, s, Rect2(0, 0, ci.size.x, 60), 44, Px.WHITE)
 		if victory:
 			var stars := int(_out.get("stars", 0))
@@ -58,18 +58,15 @@ func build() -> void:
 	var rw := DrawLayer.make(func(ci: Control) -> void:
 		ci.draw_rect(Rect2(Vector2.ZERO, ci.size), Color(0, 0, 0, 0.28))
 		Px.text(ci, DB.t("result.rewards"), Rect2(20, 0, 160, 50), 28, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
-		if int(_out.get("rice_left", 0)) > 0:
-			Px.text(ci, DB.t("result.rice_gold", [Px.num(int(_out["rice_left"])), Px.num(int(_out["rice_gold"]))]),
-				Rect2(200, 0, ci.size.x - 220, 50), 24, Px.GOLD, HORIZONTAL_ALIGNMENT_RIGHT)
 		var items: Array = []
 		if victory or _out.has("gold"):
 			items.append(["icon_gold", Px.num(int(_out.get("gold", 0)))])
 			items.append(["ic_scroll", DB.t("result.exp", [int(_out.get("lord_exp", 0))])])
-		if int(_out.get("diamond", 0)) > 0:
-			items.append(["icon_diamond", DB.t("result.first", [int(_out["diamond"])])])
-		var tr: Dictionary = _out.get("treasure", {})
-		if not tr.is_empty():
-			items.append(["icon_chest", String(DB.treasure_def(String(tr["tid"])).get("name", ""))])
+		if int(_out.get("first_gold", 0)) > 0:
+			items.append(["icon_gold", DB.t("result.first", [int(_out["first_gold"])])])
+		var mats: Array = _out.get("materials", [])
+		if not mats.is_empty():
+			items.append(["icon_chest", DB.t("result.mats", [mats.size()])])
 		if items.is_empty():
 			Px.text(ci, DB.t("result.after"), Rect2(20, 60, ci.size.x - 40, 80), 26, Px.MUTED)
 		for i in items.size():
@@ -80,8 +77,8 @@ func build() -> void:
 	put(rw, Rect2(30, 610, w - 60, 190))
 	if not victory and bool(p.get("can_continue", false)):
 		var cont := PxButton.colored("purple", DB.t("result.continue"), Vector2(560, 130), 40)
-		cont.sub = "100"
-		cont.sub_icon = Px.tex("icon_diamond")
+		cont.sub = Px.num(int(DB.rules["continue_gold"]))
+		cont.sub_icon = Px.tex("icon_gold")
 		cont.pulse = true
 		cont.pressed.connect(func() -> void:
 			var b: Node = Game.app.current
@@ -91,7 +88,7 @@ func build() -> void:
 	var home := PxButton.colored("blue", DB.t("result.lobby"), Vector2(380, 130), 40)
 	home.pressed.connect(func() -> void: _leave("lobby"))
 	put(home, Rect2(60, 1000, 380, 130))
-	var again_label := DB.t("result.next") if victory and int(p["stage"]) < 8 else DB.t("result.again")
+	var again_label := DB.t("result.next") if victory and int(p["diff"]) == 1 and int(p["stage"]) < DB.stage_count() else DB.t("result.again")
 	var again := PxButton.colored("yellow", again_label, Vector2(380, 130), 40)
 	again.pressed.connect(func() -> void: _leave("again"))
 	put(again, Rect2(480, 1000, 380, 130))
@@ -113,15 +110,13 @@ func _leave(where: String) -> void:
 		var b: Node = Game.app.current
 		if b != null and b.has_method("give_up"):
 			b.give_up()
-	var c := int(p["chapter"])
 	var s := int(p["stage"])
+	var d := int(p["diff"])
 	if where == "lobby":
-		Game.app.goto("lobby", {"tutorial_recruit": bool(p.get("tutorial", false)) and victory})
+		Game.app.goto("lobby")
 		return
-	if victory and s < 8:
+	# 보통을 깼으면 다음 스테이지 보통, 그 밖에는 같은 곳을 다시.
+	if victory and d == 1 and s < DB.stage_count():
 		s += 1
-	elif victory and c < DB.chapters().size():
-		c += 1
-		s = 1
-	Game.next_stage = {"chapter": c, "stage": s}
-	Game.app.goto("battle", {"chapter": c, "stage": s})
+	Game.next_stage = {"stage": s, "diff": d}
+	Game.app.goto("battle", {"stage": s, "diff": d})

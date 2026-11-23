@@ -170,20 +170,64 @@ static func hero_ids_of_rarity(rarity: String) -> Array:
 	return out
 
 
-static func traits_of(cls: String) -> Array:
+## 속성 3장 a food of [param troop] offers: its class's two + its own (개편 §9.6).
+static func traits_for(troop: String) -> Array:
 	ensure()
-	return units["traits"].get(cls, [])
+	var out: Array = []
+	var cls := String(units["soldiers"].get(troop, {}).get("cls", ""))
+	for tr: Dictionary in units["traits"]["class"].get(cls, []):
+		out.append(tr)
+	if units["traits"]["troop"].has(troop):
+		out.append(units["traits"]["troop"][troop])
+	return out
 
 
 static func trait_def(trait_id: String) -> Dictionary:
 	ensure()
-	for cls: String in units["traits"]:
-		for tr: Dictionary in units["traits"][cls]:
+	for cls: String in units["traits"]["class"]:
+		for tr: Dictionary in units["traits"]["class"][cls]:
 			if String(tr["id"]) == trait_id:
-				var d := tr.duplicate()
-				d["cls"] = cls
-				return d
+				return tr
+	for troop: String in units["traits"]["troop"]:
+		var t: Dictionary = units["traits"]["troop"][troop]
+		if String(t["id"]) == trait_id:
+			return t
 	return {}
+
+
+## "철벽 2 · 받는 피해 -13%" style text of a trait at [param lv] (1-based).
+static func trait_desc(trait_id: String, lv: int) -> String:
+	var descs: Array = trait_def(trait_id).get("descs", [])
+	return String(descs[clampi(lv - 1, 0, descs.size() - 1)]) if not descs.is_empty() else ""
+
+
+## 상성 줄 of a unit or enemy (창병 / 보병 / 궁병 / 기병 / 화공 / 뇌공 / 의원).
+static func ctr_of(id: String) -> String:
+	ensure()
+	var d := unit_def(id)
+	if d.is_empty():
+		d = enemy_def(id)
+	return String(d.get("ctr", d.get("cls", "")))
+
+
+## Damage multiplier of an attacker of line [param ctr] against a defender of class [param cls] (§9.5).
+static func counter(ctr: String, cls: String) -> float:
+	ensure()
+	return float(units["counters"].get(ctr, {}).get(cls, 1.0))
+
+
+## Classes [param ctr] is strong (mult > 1) or weak (mult < 1) against: {strong: [cls], weak: [cls]}.
+static func counter_lists(ctr: String) -> Dictionary:
+	ensure()
+	var strong: Array = []
+	var weak: Array = []
+	var row: Dictionary = units["counters"].get(ctr, {})
+	for cls: String in row:
+		if float(row[cls]) > 1.0:
+			strong.append(cls)
+		elif float(row[cls]) < 1.0:
+			weak.append(cls)
+	return {"strong": strong, "weak": weak}
 
 
 static func advisor_skill(id: String) -> Dictionary:
@@ -205,49 +249,54 @@ static func is_boss(id: String) -> bool:
 
 # ---------------------------------------------------------------- stages
 
-static func chapters() -> Array:
+## 스테이지 10개 (스테이지-흡수-합성-개편 §3.1): [{id, name, enemy, hue, boss}].
+static func stage_list() -> Array:
 	ensure()
-	return stages["chapters"]
+	return stages["stages"]
 
 
-static func chapter(c: int) -> Dictionary:
-	var list := chapters()
-	return list[clampi(c - 1, 0, list.size() - 1)]
+static func stage_def(s: int) -> Dictionary:
+	var list := stage_list()
+	return list[clampi(s - 1, 0, list.size() - 1)]
 
 
 static func stage_count() -> int:
-	return chapters().size() * 8
+	return stage_list().size()
 
 
-## "1-3" style key.
-static func stage_key(c: int, s: int) -> String:
-	return "%d-%d" % [c, s]
-
-
-## Global 1-based stage number (1-1 = 1, 2-1 = 9).
-static func stage_index(c: int, s: int) -> int:
-	return (c - 1) * 8 + s
-
-
-static func stage_name(c: int, s: int) -> String:
-	var names: Array = chapter(c)["stages"]
-	return String(names[clampi(s - 1, 0, names.size() - 1)])
-
-
-## Enemy hp/atk multiplier of a stage: 1.09^(s-1) (콘텐츠 §2.2).
-static func stage_mult(c: int, s: int) -> float:
+## 난이도: [{id, name, mult, count}] (보통 · 어려움 · 지옥).
+static func difficulties() -> Array:
 	ensure()
-	return pow(float(stages["difficulty_base"]), stage_index(c, s) - 1)
+	return stages["difficulties"]
 
 
-## The 10 waves of stage c-s: the template with stage scaling, the 5th stage's
-## general and the 8th stage's chapter boss on wave 10.
+static func difficulty(d: int) -> Dictionary:
+	var list := difficulties()
+	return list[clampi(d - 1, 0, list.size() - 1)]
+
+
+## "3-2" style key: stage 3, difficulty 2.
+static func stage_key(s: int, d: int) -> String:
+	return "%d-%d" % [s, d]
+
+
+static func stage_name(s: int) -> String:
+	return String(stage_def(s).get("name", ""))
+
+
+## Enemy hp/atk multiplier: stage_base^(stage-1) x difficulty (§4).
+static func stage_mult(s: int, d: int) -> float:
+	ensure()
+	return pow(float(stages["stage_base"]), s - 1) * float(difficulty(d)["mult"])
+
+
+## The 10 waves of stage s on difficulty d: the template with the difficulty's
+## enemy count and the stage boss on the last wave.
 ## Each wave: {list: [[enemy, n]], flank: [...], boss: id or "", judge: bool}
-static func stage_waves(c: int, s: int) -> Array:
+static func stage_waves(s: int, d: int) -> Array:
 	ensure()
 	var tmpl: Array = stages["waves_template"]
-	var ch := chapter(c)
-	var grow := 1.0 + float(stages["count_step"]) * (s - 1)
+	var grow := float(difficulty(d)["count"])
 	var out: Array = []
 	for w in tmpl.size():
 		var src: Dictionary = tmpl[w]
@@ -257,25 +306,18 @@ static func stage_waves(c: int, s: int) -> Array:
 		for pair: Array in src.get("flank", []):
 			wave["flank"].append([String(pair[0]), maxi(1, int(round(float(pair[1]) * grow)))])
 		if w == tmpl.size() - 1:
-			if s == 8:
-				wave["boss"] = String(ch["boss"])
-			elif s == 5:
-				wave["boss"] = String(ch["elite"])
-			else:
-				wave["list"].append(["brute", 1 + int(s >= 3)])
+			wave["boss"] = stage_boss(s)
 		out.append(wave)
 	return out
 
 
-static func stage_boss(c: int, s: int) -> String:
-	var waves := stage_waves(c, s)
-	return String(waves[waves.size() - 1]["boss"])
+static func stage_boss(s: int) -> String:
+	return String(stage_def(s).get("boss", ""))
 
 
-static func recommended_power(c: int, s: int) -> int:
+static func recommended_power(s: int, d: int) -> int:
 	ensure()
-	var base := float(stages["recommended_power"]) * pow(float(stages["recommended_step"]), c - 1)
-	return int(round(base * (0.55 + 0.45 * float(s) / 8.0) / 100.0)) * 100
+	return int(round(float(stages["recommended_power"]) * stage_mult(s, d) / 100.0)) * 100
 
 
 # ---------------------------------------------------------------- treasures
@@ -286,6 +328,24 @@ static func treasure_def(tid: String) -> Dictionary:
 		if String(t["id"]) == tid:
 			return t
 	return {}
+
+
+## Treasures of one slot (weapon / armor / charm) and rarity: the pool a 합성 picks from.
+static func treasures_of(slot: String, rarity: String) -> Array:
+	ensure()
+	var out: Array = []
+	for t: Dictionary in meta["treasure"]["list"]:
+		if String(t["slot"]) == slot and String(t["rarity"]) == rarity:
+			out.append(t)
+	return out
+
+
+## Next rarity up ("" for the top one).
+static func next_rarity(rarity: String) -> String:
+	ensure()
+	var order: Array = meta["treasure"]["rarity_order"]
+	var i := order.find(rarity)
+	return String(order[i + 1]) if i >= 0 and i + 1 < order.size() else ""
 
 
 static func treasures_of_rarity(rarity: String) -> Array:

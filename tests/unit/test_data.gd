@@ -14,10 +14,12 @@ func test_roster_32_by_troop() -> void:
 			ok = false
 	eq(by, {"b": 10, "a": 10, "s": 8, "ss": 4}, "grades")
 	check(ok, "every hero has a valid troop of the same class")
-	eq(DB.soldier_ids().size(), 10, "10 troops")
+	eq(DB.soldier_ids().size(), 16, "16 troops")
+	eq((DB.units["classes"] as Dictionary).size(), 5, "5 classes (창병 · 보병 · 궁병 · 기병 · 책사)")
 	for t: String in DB.soldier_ids():
 		var n := DB.heroes_of_troop(t).size()
-		check(n >= 3 and n <= 4, "3-4 heroes in " + t)
+		check(n >= 1 and n <= 4, "1-4 heroes in " + t)
+		check((DB.units["classes"] as Dictionary).has(DB.cls_of(t)), "valid class for " + t)
 	eq(DB.troop_of("guanyu"), "spear", "관우 = 창병")
 
 
@@ -30,11 +32,28 @@ func test_every_hero_has_art() -> void:
 	check(ok, "art mapping for all heroes")
 
 
-func test_traits_12() -> void:
-	var n := 0
-	for cls: String in DB.units["traits"]:
-		n += (DB.units["traits"][cls] as Array).size()
-	eq(n, 12, "12 traits")
+func test_traits_per_troop() -> void:
+	# 개편 §9.6: 분류 공통 2개 + 병종 고유 1개 = 먹이마다 3장, 레벨 3까지.
+	var ids := {}
+	for t: String in DB.soldier_ids():
+		var offered := DB.traits_for(t)
+		eq(offered.size(), 3, "3 traits offered by " + t)
+		for tr: Dictionary in offered:
+			ids[String(tr["id"])] = true
+			eq((tr["v"] as Array).size(), 3, "3 levels: " + String(tr["id"]))
+			eq((tr["descs"] as Array).size(), 3, "3 texts: " + String(tr["id"]))
+	eq(ids.size(), 26, "10 class + 16 troop traits")
+	check(not DB.trait_def("phalanx").is_empty(), "trait lookup")
+	check(DB.trait_desc("iron", 2).find("13") >= 0, "철벽 Lv.2 text shows 13%")
+
+
+func test_every_enemy_has_a_class() -> void:
+	var ok := true
+	for group in ["enemies", "bosses"]:
+		for id: String in DB.units[group]:
+			if not (DB.units["classes"] as Dictionary).has(String(DB.units[group][id].get("cls", ""))):
+				ok = false
+	check(ok, "every enemy and boss has a class for 상성")
 
 
 func test_all_text_keys_exist() -> void:

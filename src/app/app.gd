@@ -8,7 +8,7 @@ signal dialog_changed(route: String)
 
 ## Bottom-tab screens open as a dialog over the castle-gate lobby (민수 님 피드백),
 ## between the lobby's top HUD and its bottom tab bar.
-const DIALOG_ROUTES := ["heroes", "hero", "troop", "arena", "recruit", "shop", "stage"]
+const DIALOG_ROUTES := ["heroes", "hero", "troop", "arena", "shop"]
 ## Dialog frame in canvas px; content shows screen coords x 32..992, y 146..1462.
 const DIALOG_RECT := Rect2(16, 212, 992, 1520)
 const DIALOG_INSET := 16.0
@@ -101,40 +101,11 @@ func _shot_mode() -> void:
 	if pop != "":
 		popup(pop, pop_params)
 	await get_tree().create_timer(after).timeout
-	var layout := ""
-	for a in OS.get_cmdline_user_args():
-		if a.begins_with("--layout="):
-			layout = a.substr(9)
-	if layout != "":
-		await _record_layout(layout)
 	await RenderingServer.frame_post_draw
 	var img := get_viewport().get_texture().get_image()
 	img.save_png(shot)
 	print("shot saved: ", shot)
 	get_tree().quit()
-
-
-## Layout map (점검): redraws everything once with Px.recording on and saves
-## every text / image / button / panel slot (canvas px, 1024 wide) as JSON.
-func _record_layout(path: String) -> void:
-	Px.records.clear()
-	Px.recording = true
-	_redraw_all(self)
-	await RenderingServer.frame_post_draw
-	Px.recording = false
-	_record_areas(self)
-	var seen := {}
-	var out: Array = []
-	for r: Dictionary in Px.records:
-		var key := "%s|%d|%d|%d|%d|%s" % [r["kind"], r["x"], r["y"], r["w"], r["h"], r["label"]]
-		if seen.has(key):
-			continue
-		seen[key] = true
-		out.append(r)
-	var f := FileAccess.open(path, FileAccess.WRITE)
-	if f != null:
-		f.store_string(JSON.stringify({"canvas": [size.x, size.y], "items": out}, " "))
-	print("layout saved: ", path, " items: ", out.size())
 
 
 ## Every visible Control box = an "area" (container). Draws must stay inside

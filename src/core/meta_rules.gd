@@ -19,27 +19,126 @@ static func star_mult(star: int) -> float:
 	return pow(float(_m()["star"]["mult"]), star - 1)
 
 
-## Value of one stat after stars and upgrades (§4.3).
-static func upgraded(base: float, star: int, level: int) -> float:
-	return base * star_mult(star) * (1.0 + float(_m()["upgrade"]["per_level"]) * level)
+## 군주 레벨 배율 (개편 §9.3): every unit's base atk / def / hp x (1 + 0.03 x (Lv - 1)).
+static func lord_mult(profile: Dictionary) -> float:
+	return 1.0 + float(_m()["lord"]["stat_per_level"]) * (int(profile.get("lord_lv", 1)) - 1)
 
 
-## Gold for raising a stat from [param level] to level + 1: round(50 x (level+1)^1.5).
-static func upgrade_cost(level: int) -> int:
-	var u: Dictionary = _m()["upgrade"]
-	return int(round(float(u["cost_base"]) * pow(level + 1, float(u["cost_exp"]))))
+## Base stat after 성급 and 군주 레벨. Units have no level of their own (§9.1).
+static func grown(base: float, star: int, profile: Dictionary) -> float:
+	return base * star_mult(star) * lord_mult(profile)
 
 
-static func upgrade_cap(star: int) -> int:
-	return star * int(_m()["upgrade"]["cap_per_star"])
+## 군주 경험 for clearing stage s on difficulty d (only a clear pays, first clear x2).
+static func clear_exp(s: int, d: int, first: bool) -> int:
+	var l: Dictionary = _m()["lord"]
+	var diffs: Array = l["diff_exp"]
+	var e := float(l["clear_exp"]) * s * float(diffs[clampi(d - 1, 0, diffs.size() - 1)])
+	return int(round(e * (float(l["first_mult"]) if first else 1.0)))
 
 
-## Cards needed to go from [param star] to star + 1, or -1 at max.
-static func star_cost(star: int) -> int:
-	var cards: Array = _m()["star"]["cards"]
-	if star < 1 or star > cards.size():
+# ---------------------------------------------------------------- 성급 · 속성 (계정, 개편 §9.2)
+
+## The account entry that holds a unit's 성급 / 속성: the hero's own, or its troop's
+## for a soldier. {} when not owned.
+static func entry(profile: Dictionary, id: String) -> Dictionary:
+	if DB.is_hero(id):
+		return profile.get("heroes", {}).get(id, {})
+	return profile.get("troops", {}).get(id, {})
+
+
+static func unit_star(profile: Dictionary, id: String) -> int:
+	var e := entry(profile, id)
+	if e.is_empty():
+		return start_star(id) if DB.is_hero(id) else 1
+	return int(e.get("star", 1))
+
+
+static func star_max() -> int:
+	return int(_m()["star"]["max"])
+
+
+## 성급 경험 needed to go from [param star] to star + 1, or -1 at max.
+static func star_need(id: String, star: int) -> int:
+	var table: Array = _m()["star"]["hero_xp" if DB.is_hero(id) else "troop_xp"]
+	if star < 1 or star > table.size() or star >= star_max():
 		return -1
-	return int(cards[star - 1])
+	return int(table[star - 1])
+
+
+## 성급 경험 a food gives a target of the same troop: 10 for a copy of the same hero, else 1.
+static func star_xp(food_id: String, target_id: String) -> int:
+	var s: Dictionary = _m()["star"]
+	return int(s["xp_copy"]) if food_id == target_id and DB.is_hero(food_id) else int(s["xp_troop"])
+
+
+## 속성 칸 수 by 성급 (1~2성 1, 3~4성 2, 5~6성 3).
+static func trait_slots(star: int) -> int:
+	var slots: Array = _m()["star"]["trait_slots"]
+	return int(slots[clampi(star - 1, 0, slots.size() - 1)])
+
+
+static func trait_max() -> int:
+	return int(_m()["star"]["trait_max"])
+
+
+## 속성 of a unit: [{id, lv}].
+static func unit_traits(profile: Dictionary, id: String) -> Array:
+	return entry(profile, id).get("traits", [])
+
+
+static func trait_level(profile: Dictionary, id: String, trait_id: String) -> int:
+	for t: Dictionary in unit_traits(profile, id):
+		if String(t["id"]) == trait_id:
+			return int(t["lv"])
+	return 0
+
+
+## Adds one effect to a fighter's fx set. Multipliers multiply, flat bonuses add,
+## "best of" effects keep the larger value.
+static func merge_fx(out: Dictionary, key: String, v: Variant) -> void:
+	match key:
+		"dmg_taken", "ranged_resist", "hp", "aspd", "spd", "energy", "vs_cav", "full_hp_dmg", "phalanx", "burn_taken":
+			out[key] = float(out.get(key, 1.0)) * float(v)
+		"def_add", "range", "crit", "crit_dmg":
+			out[key] = float(out.get(key, 0.0)) + float(v)
+		"taunt":
+			out["taunt"] = true
+		"taunt_guard":
+			out["taunt"] = true
+			out["dmg_taken"] = float(out.get("dmg_taken", 1.0)) * float(v)
+		"backline":
+			out["backline"] = true
+			if v is float or v is int:
+				out["backline_dmg"] = maxf(float(out.get("backline_dmg", 1.0)), float(v))
+		_:
+			# splash, pierce, first_hit, armor_break, burn, stun_chance, heal_aura, double, first_hit_stun, skirmish
+			out[key] = maxf(float(out.get(key, 0.0)), float(v))
+
+
+## Everything the battle needs to know about a unit's effects: the troop's own
+## feature (a hero fights like its troop) plus the account's 속성 at their levels.
+static func unit_fx(profile: Dictionary, id: String) -> Dictionary:
+	var out := {}
+	var innate: Dictionary = DB.soldier(DB.troop_of(id)).get("fx", {})
+	for k: String in innate:
+		merge_fx(out, k, innate[k])
+	# 보물(영웅 · 전설 장비)의 특수 능력 (개편 §11)
+	var eq: Dictionary = entry(profile, id).get("eq", {})
+	for slot: String in eq:
+		var item := find_treasure(profile, int(eq[slot]))
+		if item.is_empty():
+			continue
+		var gear: Array = DB.treasure_def(String(item["tid"])).get("fx", [])
+		if gear.size() == 2:
+			merge_fx(out, String(gear[0]), gear[1])
+	for t: Dictionary in unit_traits(profile, id):
+		var def := DB.trait_def(String(t["id"]))
+		if def.is_empty():
+			continue
+		var vals: Array = def["v"]
+		merge_fx(out, String(def["fx"]), vals[clampi(int(t["lv"]) - 1, 0, vals.size() - 1)])
+	return out
 
 
 static func start_star(id: String) -> int:
@@ -106,54 +205,63 @@ static func make_treasure(tid: String, uid: int, rng: RandomNumberGenerator) -> 
 
 # ---------------------------------------------------------------- hero totals
 
-## Final account stats of a hero (§4.5): base x 1.15^(star-1) x (1 + 0.04 x lv) + treasures.
-## Also returns the summed open sub stats (crit, crit_dmg, aspd, energy, guard, spd).
-static func hero_stats(profile: Dictionary, id: String) -> Dictionary:
-	var b := base_stats(id)
-	var h: Dictionary = profile.get("heroes", {}).get(id, {})
-	var star := int(h.get("star", start_star(id)))
-	var up: Dictionary = h.get("up", {})
-	var out := {
-		"atk": upgraded(b["atk"], star, int(up.get("atk", 0))),
-		"def": upgraded(b["def"], star, int(up.get("def", 0))),
-		"hp": upgraded(b["hp"], star, int(up.get("hp", 0))),
-		"crit": 0.0, "crit_dmg": 0.0, "aspd": 0.0, "energy": 0.0, "guard": 0.0, "spd": 0.0,
-	}
-	var eq: Dictionary = h.get("eq", {})
+## Adds what the worn 장비 give to [param out]: the main stat (a hero wearing its
+## own 전용 보물 gets exclusive_bonus on it) and the open sub stats.
+static func _add_gear(out: Dictionary, profile: Dictionary, id: String) -> void:
+	var eq: Dictionary = entry(profile, id).get("eq", {})
 	for slot: String in eq:
 		var item := find_treasure(profile, int(eq[slot]))
 		if item.is_empty():
 			continue
-		out[treasure_main_stat(item)] += treasure_main(item)
+		var main := treasure_main(item)
+		if String(DB.treasure_def(String(item["tid"])).get("exclusive", "")) == id:
+			main *= float(_m()["treasure"]["exclusive_bonus"])
+		out[treasure_main_stat(item)] += main
 		var open := treasure_open_subs(item)
 		var subs: Array = item.get("subs", [])
 		for i in mini(open, subs.size()):
 			out[String(subs[i]["kind"])] += float(subs[i]["v"])
+
+
+## Final account stats of a hero: base x 1.15^(star-1) x 군주 배율 + 장비.
+## Also returns the summed open sub stats (crit, crit_dmg, aspd, energy, guard, spd).
+static func hero_stats(profile: Dictionary, id: String) -> Dictionary:
+	var b := base_stats(id)
+	var star := int(profile.get("heroes", {}).get(id, {}).get("star", start_star(id)))
+	var out := {
+		"atk": grown(b["atk"], star, profile),
+		"def": grown(b["def"], star, profile),
+		"hp": grown(b["hp"], star, profile),
+		"crit": 0.0, "crit_dmg": 0.0, "aspd": 0.0, "energy": 0.0, "guard": 0.0, "spd": 0.0,
+	}
+	_add_gear(out, profile, id)
 	return out
 
 
-## Soldier stats: 병종 카드 성급 x1.15^(star-1) and barracks upgrades (+3 % per level on atk and hp).
+## Soldier stats: base x 1.15^(병종 성급 - 1) x 군주 배율 + the troop's 장비
+## (worn by the troop, so every soldier of it has them).
 static func soldier_stats(profile: Dictionary, id: String) -> Dictionary:
 	var d := DB.soldier(id)
-	var cls := String(d.get("cls", "inf"))
-	var lv: Dictionary = profile.get("barracks", {}).get(cls, {})
-	var k := float(_m()["barracks"]["per_level"])
-	var t: Dictionary = profile.get("troops", {}).get(id, {})
-	var star := int(t.get("star", 1))
-	var up: Dictionary = t.get("up", {})
-	return {"atk": upgraded(float(d["atk"]), star, int(up.get("atk", 0))) * (1.0 + k * int(lv.get("atk", 0))),
-		"hp": upgraded(float(d["hp"]), star, int(up.get("hp", 0))) * (1.0 + k * int(lv.get("hp", 0))),
-		"def": upgraded(float(d.get("def", 0)), star, int(up.get("def", 0))),
+	var star := int(profile.get("troops", {}).get(id, {}).get("star", 1))
+	var out := {"atk": grown(float(d["atk"]), star, profile), "hp": grown(float(d["hp"]), star, profile),
+		"def": grown(float(d.get("def", 0)), star, profile),
 		"crit": 0.0, "crit_dmg": 0.0, "aspd": 0.0, "energy": 0.0, "guard": 0.0, "spd": 0.0}
+	_add_gear(out, profile, id)
+	return out
 
 
-static func barracks_cost(level: int) -> int:
-	var b: Dictionary = _m()["barracks"]
-	return int(round(float(b["cost_base"]) * pow(level + 1, float(b["cost_exp"]))))
+## Stats of a unit without its 장비 (for the "장비 합계" line).
+static func bare_stats(profile: Dictionary, id: String) -> Dictionary:
+	var e := entry(profile, id).duplicate()
+	e["eq"] = {}
+	var p := {"lord_lv": profile.get("lord_lv", 1), "heroes": {}, "troops": {}, "treasures": []}
+	p["heroes" if DB.is_hero(id) else "troops"][id] = e
+	return unit_stats(p, id)
 
 
-static func barracks_cap(lord_lv: int) -> int:
-	return lord_lv * int(_m()["barracks"]["cap_per_lord_lv"])
+## Stats of any recruitable unit.
+static func unit_stats(profile: Dictionary, id: String) -> Dictionary:
+	return hero_stats(profile, id) if DB.is_hero(id) else soldier_stats(profile, id)
 
 
 ## 전투력 = atk x 10 + def x 8 + hp (§4.7).
@@ -173,14 +281,15 @@ static func find_treasure(profile: Dictionary, uid: int) -> Dictionary:
 	return {}
 
 
-## Hero id wearing treasure [param uid], or "".
+## Hero or troop id wearing 장비 [param uid], or "".
 static func treasure_owner(profile: Dictionary, uid: int) -> String:
-	var heroes: Dictionary = profile.get("heroes", {})
-	for id: String in heroes:
-		var eq: Dictionary = heroes[id].get("eq", {})
-		for slot: String in eq:
-			if int(eq[slot]) == uid:
-				return id
+	for group in ["heroes", "troops"]:
+		var units: Dictionary = profile.get(group, {})
+		for id: String in units:
+			var eq: Dictionary = units[id].get("eq", {})
+			for slot: String in eq:
+				if int(eq[slot]) == uid:
+					return id
 	return ""
 
 
@@ -192,14 +301,6 @@ static func lord_exp_need(lv: int) -> int:
 	return int(round(float(l["exp_base"]) * pow(lv, float(l["exp_exp"]))))
 
 
-static func lineup_slots(lord_lv: int) -> int:
-	var n := 6
-	for pair: Array in _m()["lord"]["lineup_slots"]:
-		if lord_lv >= int(pair[0]):
-			n = int(pair[1])
-	return n
-
-
 ## 병종 전투력 (병종 탭 표시용).
 static func soldier_power(profile: Dictionary, id: String) -> int:
 	return power_of(soldier_stats(profile, id))
@@ -209,87 +310,3 @@ static func soldier_power(profile: Dictionary, id: String) -> int:
 static func run_gold(waves_reached: int, victory: bool) -> int:
 	var s := DB.stages
 	return int(s["gold_per_wave"]) * waves_reached + (int(s["gold_victory"]) if victory else 0)
-
-
-## Gold for the 군량 left when a run ends (메타 §3.10: 남은 군량 × rice_to_gold).
-static func rice_gold(rice_left: int) -> int:
-	return maxi(0, rice_left) * int(DB.rules["rice_to_gold"])
-
-
-## Extra starting 군량 from 주공 레벨 (메타 §3.10: Lv 10·20·30에서 +20씩).
-static func start_rice_bonus(lord_lv: int) -> int:
-	var n := 0
-	for step: Array in DB.rules["start_rice_lord"]:
-		if lord_lv >= int(step[0]):
-			n += int(step[1])
-	return n
-
-
-## Card / lobby "Lv": 1 + the average of the three stat upgrade levels.
-static func hero_level(profile: Dictionary, id: String) -> int:
-	var h: Dictionary = profile["heroes"].get(id, {})
-	if h.is_empty():
-		return 0
-	var up: Dictionary = h["up"]
-	return 1 + int((int(up.get("atk", 0)) + int(up.get("def", 0)) + int(up.get("hp", 0))) / 3)
-
-
-# ---------------------------------------------------------------- 출정 편성 (병종 4 + 장수 최대 3)
-
-## Troops a hero lineup needs on the reels (each hero's own troop, no repeats).
-static func required_troops(heroes: Array) -> Array:
-	var out: Array = []
-	for h: Variant in heroes:
-		var t := DB.troop_of(String(h))
-		if t != "" and not out.has(t):
-			out.append(t)
-	return out
-
-
-## 자동 편성: the strongest owned heroes (max hero_lineup_max) whose troops still
-## fit, their troops, then the strongest other owned troops up to troop_lineup.
-## Returns {heroes, troops}.
-static func auto_lineup(profile: Dictionary) -> Dictionary:
-	var hmax := int(DB.rules["hero_lineup_max"])
-	var tmax := int(DB.rules["troop_lineup"])
-	var heroes: Array = (profile.get("heroes", {}) as Dictionary).keys()
-	heroes.sort_custom(func(a: String, b: String) -> bool: return hero_power(profile, a) > hero_power(profile, b))
-	var pick: Array = []
-	var troops: Array = []
-	for h: String in heroes:
-		if pick.size() >= hmax:
-			break
-		var t := DB.troop_of(h)
-		if not troops.has(t) and troops.size() >= tmax:
-			continue
-		pick.append(h)
-		if not troops.has(t):
-			troops.append(t)
-	var owned: Array = (profile.get("troops", {}) as Dictionary).keys()
-	owned.sort_custom(func(a: String, b: String) -> bool: return soldier_power(profile, a) > soldier_power(profile, b))
-	for t: String in owned:
-		if troops.size() >= tmax:
-			break
-		if not troops.has(t):
-			troops.append(t)
-	return {"heroes": pick, "troops": troops}
-
-
-## Chance (0..1) that one spin completes at least one line, for a reel made of
-## [param troops] (weight_soldier each) and [param heroes] (weight_hero each).
-## A line matches when its 3 cells share a troop (heroes count as their troop).
-static func line_chance(troops: Array, heroes: Array) -> float:
-	var ws := float(DB.rules["weight_soldier"])
-	var wh := float(DB.rules["weight_hero"])
-	var total := ws * troops.size() + wh * heroes.size()
-	if total <= 0.0:
-		return 0.0
-	var per_line := 0.0
-	for t: Variant in troops:
-		var w := ws
-		for h: Variant in heroes:
-			if DB.troop_of(String(h)) == String(t):
-				w += wh
-		var p := w / total
-		per_line += p * p * p
-	return 1.0 - pow(1.0 - per_line, SlotMachine.LINES.size())

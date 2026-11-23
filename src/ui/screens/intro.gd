@@ -66,10 +66,6 @@ func _draw() -> void:
 		draw_rect(Rect2(0, size.y - (i + 1) * 30, size.x, 30), Color(0.04, 0.03, 0.08, 0.5 - i * 0.03))
 
 
-func _draw_road(ci: Control) -> void:
-	ci.draw_rect(Rect2(0, 250, 1024, 30), Color(0.15, 0.09, 0.06, 0.55))
-
-
 func _draw_petals(ci: Control) -> void:
 	for p: Array in _petal_data:
 		var c: Color = [Color("#ffb7c9"), Color("#ffd6e0"), Color("#f48fb1")][p[4]]

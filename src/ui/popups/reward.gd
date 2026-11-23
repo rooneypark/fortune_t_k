@@ -17,12 +17,15 @@ func setup(p: Dictionary) -> void:
 func build() -> void:
 	var entries: Array = []
 	for k: String in _reward:
-		if k.begins_with("_") or k == "boxes" or k == "skin":
+		# 재료(mats)는 아래 items에 낱개로 들어온다
+		if k.begins_with("_") or k == "mats" or k == "boxes" or k == "skin":
 			continue
 		entries.append({k: _reward[k]})
 	for it: Dictionary in _items:
 		if String(it.get("type", "")) == "treasure":
 			entries.append({"treasure": String(it["tid"])})
+		elif String(it.get("type", "")) == "material":
+			entries.append({"material": it})
 		elif String(it.get("type", "")) == "hero":
 			entries.append({"hero": String(it["id"])})
 	var n := maxi(1, entries.size())

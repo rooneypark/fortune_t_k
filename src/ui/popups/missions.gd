@@ -61,7 +61,11 @@ func build() -> void:
 				btn.disabled = route == ""
 				btn.pressed.connect(func() -> void:
 					close()
-					Game.app.goto(route))
+					# 스테이지 목록 화면은 없다: 지금 스테이지의 난이도 창을 바로 띄운다.
+					if route == "stage":
+						Game.app.popup("difficulty", {"stage": Game.profile.current_stage()})
+					else:
+						Game.app.goto(route))
 		btn.position = Vector2(600, 30)
 		row.add_child(btn)
 		content.add_child(row)

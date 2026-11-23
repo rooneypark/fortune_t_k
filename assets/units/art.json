@@ -3,15 +3,15 @@
   "dir": "res://assets/units/spear",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -24,27 +24,27 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/spear.png",
   "head": "res://assets/portraits/spear_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
  },
  "halberd": {
   "dir": "res://assets/units/halberd",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -57,27 +57,93 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/halberd.png",
   "head": "res://assets/portraits/halberd_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
+ },
+ "longspear": {
+  "dir": "res://assets/units/longspear",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/longspear.png",
+  "head": "res://assets/portraits/longspear_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
+ },
+ "sword": {
+  "dir": "res://assets/units/sword",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/sword.png",
+  "head": "res://assets/portraits/sword_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
  },
  "shield": {
   "dir": "res://assets/units/shield",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -90,27 +156,27 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/shield.png",
   "head": "res://assets/portraits/shield_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
  },
  "axe": {
   "dir": "res://assets/units/axe",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -123,27 +189,60 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/axe.png",
   "head": "res://assets/portraits/axe_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
+ },
+ "vine": {
+  "dir": "res://assets/units/vine",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/vine.png",
+  "head": "res://assets/portraits/vine_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
  },
  "archer": {
   "dir": "res://assets/units/archer",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -156,27 +255,27 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/archer.png",
   "head": "res://assets/portraits/archer_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
  },
  "crossbow": {
   "dir": "res://assets/units/crossbow",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -189,27 +288,60 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/crossbow.png",
   "head": "res://assets/portraits/crossbow_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
+ },
+ "catapult": {
+  "dir": "res://assets/units/catapult",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/catapult.png",
+  "head": "res://assets/portraits/catapult_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
  },
  "rider": {
   "dir": "res://assets/units/rider",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -222,27 +354,27 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 80,
-  "frame_w": 96,
-  "target_h": 58,
+  "frame_w": 128,
+  "frame_h": 112,
+  "target_h": 112,
   "portrait": "res://assets/portraits/rider.png",
   "head": "res://assets/portraits/rider_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
  },
  "heavy": {
   "dir": "res://assets/units/heavy",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -255,27 +387,60 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 80,
-  "frame_w": 96,
-  "target_h": 58,
+  "frame_w": 128,
+  "frame_h": 112,
+  "target_h": 112,
   "portrait": "res://assets/portraits/heavy.png",
   "head": "res://assets/portraits/heavy_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
+ },
+ "harcher": {
+  "dir": "res://assets/units/harcher",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 128,
+  "frame_h": 112,
+  "target_h": 112,
+  "portrait": "res://assets/portraits/harcher.png",
+  "head": "res://assets/portraits/harcher_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
  },
  "fire": {
   "dir": "res://assets/units/fire",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -288,27 +453,27 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/fire.png",
   "head": "res://assets/portraits/fire_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
  },
  "thunder": {
   "dir": "res://assets/units/thunder",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -321,27 +486,27 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/thunder.png",
   "head": "res://assets/portraits/thunder_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
  },
- "liubei": {
-  "dir": "res://assets/units/liubei",
+ "medic": {
+  "dir": "res://assets/units/medic",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -354,918 +519,27 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 80,
   "frame_w": 96,
-  "target_h": 58,
-  "portrait": "res://assets/portraits/liubei.png",
-  "head": "res://assets/portraits/liubei_head.png",
-  "illustration": "res://assets/portraits/liubei_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "guanping": {
-  "dir": "res://assets/units/guanping",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/guanping.png",
-  "head": "res://assets/portraits/guanping_head.png",
-  "illustration": "res://assets/portraits/guanping_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "simayi": {
-  "dir": "res://assets/units/simayi",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 80,
-  "frame_w": 96,
-  "target_h": 58,
-  "portrait": "res://assets/portraits/simayi.png",
-  "head": "res://assets/portraits/simayi_head.png",
-  "illustration": "res://assets/portraits/simayi_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "caoren": {
-  "dir": "res://assets/units/caoren",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/caoren.png",
-  "head": "res://assets/portraits/caoren_head.png",
-  "illustration": "res://assets/portraits/caoren_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "zhanghe": {
-  "dir": "res://assets/units/zhanghe",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/zhanghe.png",
-  "head": "res://assets/portraits/zhanghe_head.png",
-  "illustration": "res://assets/portraits/zhanghe_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "luxun": {
-  "dir": "res://assets/units/luxun",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/luxun.png",
-  "head": "res://assets/portraits/luxun_head.png",
-  "illustration": "res://assets/portraits/luxun_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "huanggai": {
-  "dir": "res://assets/units/huanggai",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/huanggai.png",
-  "head": "res://assets/portraits/huanggai_head.png",
-  "illustration": "res://assets/portraits/huanggai_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "handang": {
-  "dir": "res://assets/units/handang",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/handang.png",
-  "head": "res://assets/portraits/handang_head.png",
-  "illustration": "res://assets/portraits/handang_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "menghuo": {
-  "dir": "res://assets/units/menghuo",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/menghuo.png",
-  "head": "res://assets/portraits/menghuo_head.png",
-  "illustration": "res://assets/portraits/menghuo_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "huaman": {
-  "dir": "res://assets/units/huaman",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/huaman.png",
-  "head": "res://assets/portraits/huaman_head.png",
-  "illustration": "res://assets/portraits/huaman_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "zuoci": {
-  "dir": "res://assets/units/zuoci",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/zuoci.png",
-  "head": "res://assets/portraits/zuoci_head.png",
-  "illustration": "res://assets/portraits/zuoci_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "yuji": {
-  "dir": "res://assets/units/yuji",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/yuji.png",
-  "head": "res://assets/portraits/yuji_head.png",
-  "illustration": "res://assets/portraits/yuji_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "guanyu": {
-  "dir": "res://assets/units/guanyu",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/guanyu.png",
-  "head": "res://assets/portraits/guanyu_head.png",
-  "illustration": "res://assets/portraits/guanyu_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "xiahoudun": {
-  "dir": "res://assets/units/xiahoudun",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/xiahoudun.png",
-  "head": "res://assets/portraits/xiahoudun_head.png",
-  "illustration": "res://assets/portraits/xiahoudun_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "zhangfei": {
-  "dir": "res://assets/units/zhangfei",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/zhangfei.png",
-  "head": "res://assets/portraits/zhangfei_head.png",
-  "illustration": "res://assets/portraits/zhangfei_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "lvbu": {
-  "dir": "res://assets/units/lvbu",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/lvbu.png",
-  "head": "res://assets/portraits/lvbu_head.png",
-  "illustration": "res://assets/portraits/lvbu_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "sunquan": {
-  "dir": "res://assets/units/sunquan",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/sunquan.png",
-  "head": "res://assets/portraits/sunquan_head.png",
-  "illustration": "res://assets/portraits/sunquan_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "dongzhuo": {
-  "dir": "res://assets/units/dongzhuo",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/dongzhuo.png",
-  "head": "res://assets/portraits/dongzhuo_head.png",
-  "illustration": "res://assets/portraits/dongzhuo_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "xuchu": {
-  "dir": "res://assets/units/xuchu",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/xuchu.png",
-  "head": "res://assets/portraits/xuchu_head.png",
-  "illustration": "res://assets/portraits/xuchu_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "ganning": {
-  "dir": "res://assets/units/ganning",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/ganning.png",
-  "head": "res://assets/portraits/ganning_head.png",
-  "illustration": "res://assets/portraits/ganning_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "huangzhong": {
-  "dir": "res://assets/units/huangzhong",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/huangzhong.png",
-  "head": "res://assets/portraits/huangzhong_head.png",
-  "illustration": "res://assets/portraits/huangzhong_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "taishici": {
-  "dir": "res://assets/units/taishici",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/taishici.png",
-  "head": "res://assets/portraits/taishici_head.png",
-  "illustration": "res://assets/portraits/taishici_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "xiahouyuan": {
-  "dir": "res://assets/units/xiahouyuan",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/xiahouyuan.png",
-  "head": "res://assets/portraits/xiahouyuan_head.png",
-  "illustration": "res://assets/portraits/xiahouyuan_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "yuanshao": {
-  "dir": "res://assets/units/yuanshao",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
-  "portrait": "res://assets/portraits/yuanshao.png",
-  "head": "res://assets/portraits/yuanshao_head.png",
-  "illustration": "res://assets/portraits/yuanshao_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "zhaoyun": {
-  "dir": "res://assets/units/zhaoyun",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 80,
-  "frame_w": 96,
-  "target_h": 58,
-  "portrait": "res://assets/portraits/zhaoyun.png",
-  "head": "res://assets/portraits/zhaoyun_head.png",
-  "illustration": "res://assets/portraits/zhaoyun_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "zhangliao": {
-  "dir": "res://assets/units/zhangliao",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 80,
-  "frame_w": 96,
-  "target_h": 58,
-  "portrait": "res://assets/portraits/zhangliao.png",
-  "head": "res://assets/portraits/zhangliao_head.png",
-  "illustration": "res://assets/portraits/zhangliao_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "caocao": {
-  "dir": "res://assets/units/caocao",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 80,
-  "frame_w": 96,
-  "target_h": 58,
-  "portrait": "res://assets/portraits/caocao.png",
-  "head": "res://assets/portraits/caocao_head.png",
-  "illustration": "res://assets/portraits/caocao_lihui.png",
-  "_source": "tools/draw_art.py"
- },
- "sunce": {
-  "dir": "res://assets/units/sunce",
-  "actions": {
-   "idle": {
-    "frames": 4,
-    "fps": 6.0
-   },
-   "run": {
-    "frames": 6,
-    "fps": 10.0
-   },
-   "attack": {
-    "frames": 5,
-    "fps": 10.0
-   }
-  },
-  "alias": {
-   "idle": "idle",
-   "walk": "run",
-   "run": "run",
-   "attack": "attack",
-   "skill": "attack",
-   "hit": "idle",
-   "die": "idle"
-  },
-  "frame_h": 80,
-  "frame_w": 96,
-  "target_h": 58,
-  "portrait": "res://assets/portraits/sunce.png",
-  "head": "res://assets/portraits/sunce_head.png",
-  "illustration": "res://assets/portraits/sunce_lihui.png",
-  "_source": "tools/draw_art.py"
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/medic.png",
+  "head": "res://assets/portraits/medic_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
  },
  "zhugeliang": {
   "dir": "res://assets/units/zhugeliang",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -1278,27 +552,555 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/zhugeliang.png",
   "head": "res://assets/portraits/zhugeliang_head.png",
   "illustration": "res://assets/portraits/zhugeliang_lihui.png",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
+ },
+ "guanyu": {
+  "dir": "res://assets/units/guanyu",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/guanyu.png",
+  "head": "res://assets/portraits/guanyu_head.png",
+  "illustration": "res://assets/portraits/guanyu_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "zhaoyun": {
+  "dir": "res://assets/units/zhaoyun",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 128,
+  "frame_h": 112,
+  "target_h": 112,
+  "portrait": "res://assets/portraits/zhaoyun.png",
+  "head": "res://assets/portraits/zhaoyun_head.png",
+  "illustration": "res://assets/portraits/zhaoyun_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "zhangfei": {
+  "dir": "res://assets/units/zhangfei",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/zhangfei.png",
+  "head": "res://assets/portraits/zhangfei_head.png",
+  "illustration": "res://assets/portraits/zhangfei_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "huangzhong": {
+  "dir": "res://assets/units/huangzhong",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/huangzhong.png",
+  "head": "res://assets/portraits/huangzhong_head.png",
+  "illustration": "res://assets/portraits/huangzhong_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "liubei": {
+  "dir": "res://assets/units/liubei",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/liubei.png",
+  "head": "res://assets/portraits/liubei_head.png",
+  "illustration": "res://assets/portraits/liubei_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "guanping": {
+  "dir": "res://assets/units/guanping",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/guanping.png",
+  "head": "res://assets/portraits/guanping_head.png",
+  "illustration": "res://assets/portraits/guanping_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "caocao": {
+  "dir": "res://assets/units/caocao",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 128,
+  "frame_h": 112,
+  "target_h": 112,
+  "portrait": "res://assets/portraits/caocao.png",
+  "head": "res://assets/portraits/caocao_head.png",
+  "illustration": "res://assets/portraits/caocao_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "simayi": {
+  "dir": "res://assets/units/simayi",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 128,
+  "frame_h": 112,
+  "target_h": 112,
+  "portrait": "res://assets/portraits/simayi.png",
+  "head": "res://assets/portraits/simayi_head.png",
+  "illustration": "res://assets/portraits/simayi_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "zhangliao": {
+  "dir": "res://assets/units/zhangliao",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 128,
+  "frame_h": 112,
+  "target_h": 112,
+  "portrait": "res://assets/portraits/zhangliao.png",
+  "head": "res://assets/portraits/zhangliao_head.png",
+  "illustration": "res://assets/portraits/zhangliao_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "xiahoudun": {
+  "dir": "res://assets/units/xiahoudun",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/xiahoudun.png",
+  "head": "res://assets/portraits/xiahoudun_head.png",
+  "illustration": "res://assets/portraits/xiahoudun_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "xiahouyuan": {
+  "dir": "res://assets/units/xiahouyuan",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/xiahouyuan.png",
+  "head": "res://assets/portraits/xiahouyuan_head.png",
+  "illustration": "res://assets/portraits/xiahouyuan_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "xuchu": {
+  "dir": "res://assets/units/xuchu",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/xuchu.png",
+  "head": "res://assets/portraits/xuchu_head.png",
+  "illustration": "res://assets/portraits/xuchu_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "caoren": {
+  "dir": "res://assets/units/caoren",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/caoren.png",
+  "head": "res://assets/portraits/caoren_head.png",
+  "illustration": "res://assets/portraits/caoren_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "zhanghe": {
+  "dir": "res://assets/units/zhanghe",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/zhanghe.png",
+  "head": "res://assets/portraits/zhanghe_head.png",
+  "illustration": "res://assets/portraits/zhanghe_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "sunce": {
+  "dir": "res://assets/units/sunce",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 128,
+  "frame_h": 112,
+  "target_h": 112,
+  "portrait": "res://assets/portraits/sunce.png",
+  "head": "res://assets/portraits/sunce_head.png",
+  "illustration": "res://assets/portraits/sunce_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "sunquan": {
+  "dir": "res://assets/units/sunquan",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/sunquan.png",
+  "head": "res://assets/portraits/sunquan_head.png",
+  "illustration": "res://assets/portraits/sunquan_lihui.png",
+  "_source": "tools/draw_units24.py"
  },
  "zhouyu": {
   "dir": "res://assets/units/zhouyu",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -1311,27 +1113,225 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/zhouyu.png",
   "head": "res://assets/portraits/zhouyu_head.png",
   "illustration": "res://assets/portraits/zhouyu_lihui.png",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
+ },
+ "luxun": {
+  "dir": "res://assets/units/luxun",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/luxun.png",
+  "head": "res://assets/portraits/luxun_head.png",
+  "illustration": "res://assets/portraits/luxun_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "ganning": {
+  "dir": "res://assets/units/ganning",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/ganning.png",
+  "head": "res://assets/portraits/ganning_head.png",
+  "illustration": "res://assets/portraits/ganning_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "taishici": {
+  "dir": "res://assets/units/taishici",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 128,
+  "frame_h": 112,
+  "target_h": 112,
+  "portrait": "res://assets/portraits/taishici.png",
+  "head": "res://assets/portraits/taishici_head.png",
+  "illustration": "res://assets/portraits/taishici_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "huanggai": {
+  "dir": "res://assets/units/huanggai",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/huanggai.png",
+  "head": "res://assets/portraits/huanggai_head.png",
+  "illustration": "res://assets/portraits/huanggai_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "handang": {
+  "dir": "res://assets/units/handang",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/handang.png",
+  "head": "res://assets/portraits/handang_head.png",
+  "illustration": "res://assets/portraits/handang_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "lvbu": {
+  "dir": "res://assets/units/lvbu",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/lvbu.png",
+  "head": "res://assets/portraits/lvbu_head.png",
+  "illustration": "res://assets/portraits/lvbu_lihui.png",
+  "_source": "tools/draw_units24.py"
  },
  "diaochan": {
   "dir": "res://assets/units/diaochan",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -1344,27 +1344,159 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/diaochan.png",
   "head": "res://assets/portraits/diaochan_head.png",
   "illustration": "res://assets/portraits/diaochan_lihui.png",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
+ },
+ "dongzhuo": {
+  "dir": "res://assets/units/dongzhuo",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/dongzhuo.png",
+  "head": "res://assets/portraits/dongzhuo_head.png",
+  "illustration": "res://assets/portraits/dongzhuo_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "yuanshao": {
+  "dir": "res://assets/units/yuanshao",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/yuanshao.png",
+  "head": "res://assets/portraits/yuanshao_head.png",
+  "illustration": "res://assets/portraits/yuanshao_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "menghuo": {
+  "dir": "res://assets/units/menghuo",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/menghuo.png",
+  "head": "res://assets/portraits/menghuo_head.png",
+  "illustration": "res://assets/portraits/menghuo_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "huaman": {
+  "dir": "res://assets/units/huaman",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/huaman.png",
+  "head": "res://assets/portraits/huaman_head.png",
+  "illustration": "res://assets/portraits/huaman_lihui.png",
+  "_source": "tools/draw_units24.py"
  },
  "zhangjiao_h": {
   "dir": "res://assets/units/zhangjiao_h",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -1377,27 +1509,93 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/zhangjiao_h.png",
   "head": "res://assets/portraits/zhangjiao_h_head.png",
   "illustration": "res://assets/portraits/zhangjiao_h_lihui.png",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
+ },
+ "zuoci": {
+  "dir": "res://assets/units/zuoci",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/zuoci.png",
+  "head": "res://assets/portraits/zuoci_head.png",
+  "illustration": "res://assets/portraits/zuoci_lihui.png",
+  "_source": "tools/draw_units24.py"
+ },
+ "yuji": {
+  "dir": "res://assets/units/yuji",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
+  "portrait": "res://assets/portraits/yuji.png",
+  "head": "res://assets/portraits/yuji_head.png",
+  "illustration": "res://assets/portraits/yuji_lihui.png",
+  "_source": "tools/draw_units24.py"
  },
  "enemy_mob": {
   "dir": "res://assets/units/enemy_mob",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -1410,27 +1608,27 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/enemy_mob.png",
   "head": "res://assets/portraits/enemy_mob_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
  },
  "enemy_sword": {
   "dir": "res://assets/units/enemy_sword",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -1443,27 +1641,27 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/enemy_sword.png",
   "head": "res://assets/portraits/enemy_sword_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
  },
  "enemy_spear": {
   "dir": "res://assets/units/enemy_spear",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -1476,27 +1674,27 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/enemy_spear.png",
   "head": "res://assets/portraits/enemy_spear_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
  },
  "enemy_archer": {
   "dir": "res://assets/units/enemy_archer",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -1509,27 +1707,27 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/enemy_archer.png",
   "head": "res://assets/portraits/enemy_archer_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
  },
  "enemy_shield": {
   "dir": "res://assets/units/enemy_shield",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -1542,27 +1740,27 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/enemy_shield.png",
   "head": "res://assets/portraits/enemy_shield_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
  },
  "enemy_rider": {
   "dir": "res://assets/units/enemy_rider",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -1575,27 +1773,27 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 80,
-  "frame_w": 96,
-  "target_h": 58,
+  "frame_w": 128,
+  "frame_h": 112,
+  "target_h": 112,
   "portrait": "res://assets/portraits/enemy_rider.png",
   "head": "res://assets/portraits/enemy_rider_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
  },
  "enemy_mage": {
   "dir": "res://assets/units/enemy_mage",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -1608,27 +1806,27 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/enemy_mage.png",
   "head": "res://assets/portraits/enemy_mage_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
  },
  "enemy_brute": {
   "dir": "res://assets/units/enemy_brute",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -1641,27 +1839,27 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 128,
+  "frame_h": 128,
+  "target_h": 128,
   "portrait": "res://assets/portraits/enemy_brute.png",
   "head": "res://assets/portraits/enemy_brute_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
  },
  "enemy_zhangjiao": {
   "dir": "res://assets/units/enemy_zhangjiao",
   "actions": {
    "idle": {
-    "frames": 4,
-    "fps": 6.0
+    "frames": 2,
+    "fps": 3.0
    },
    "run": {
-    "frames": 6,
-    "fps": 10.0
+    "frames": 4,
+    "fps": 8.0
    },
    "attack": {
-    "frames": 5,
+    "frames": 3,
     "fps": 10.0
    }
   },
@@ -1674,12 +1872,375 @@
    "hit": "idle",
    "die": "idle"
   },
-  "frame_h": 64,
-  "frame_w": 64,
-  "target_h": 47,
+  "frame_w": 96,
+  "frame_h": 96,
+  "target_h": 96,
   "portrait": "res://assets/portraits/enemy_zhangjiao.png",
   "head": "res://assets/portraits/enemy_zhangjiao_head.png",
   "illustration": "",
-  "_source": "tools/draw_art.py"
+  "_source": "tools/draw_units24.py"
+ },
+ "boss_zhangjiao": {
+  "dir": "res://assets/units/boss_zhangjiao",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 160,
+  "frame_h": 160,
+  "target_h": 160,
+  "portrait": "res://assets/portraits/boss_zhangjiao.png",
+  "head": "res://assets/portraits/boss_zhangjiao_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
+ },
+ "boss_chengyuanzhi": {
+  "dir": "res://assets/units/boss_chengyuanzhi",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 160,
+  "frame_h": 160,
+  "target_h": 160,
+  "portrait": "res://assets/portraits/boss_chengyuanzhi.png",
+  "head": "res://assets/portraits/boss_chengyuanzhi_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
+ },
+ "boss_lvbu_b": {
+  "dir": "res://assets/units/boss_lvbu_b",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 160,
+  "frame_h": 160,
+  "target_h": 160,
+  "portrait": "res://assets/portraits/boss_lvbu_b.png",
+  "head": "res://assets/portraits/boss_lvbu_b_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
+ },
+ "boss_jiling": {
+  "dir": "res://assets/units/boss_jiling",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 160,
+  "frame_h": 160,
+  "target_h": 160,
+  "portrait": "res://assets/portraits/boss_jiling.png",
+  "head": "res://assets/portraits/boss_jiling_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
+ },
+ "boss_yanwen": {
+  "dir": "res://assets/units/boss_yanwen",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 160,
+  "frame_h": 160,
+  "target_h": 160,
+  "portrait": "res://assets/portraits/boss_yanwen.png",
+  "head": "res://assets/portraits/boss_yanwen_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
+ },
+ "boss_caoren": {
+  "dir": "res://assets/units/boss_caoren",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 160,
+  "frame_h": 160,
+  "target_h": 160,
+  "portrait": "res://assets/portraits/boss_caoren.png",
+  "head": "res://assets/portraits/boss_caoren_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
+ },
+ "boss_xiahouyuan_b": {
+  "dir": "res://assets/units/boss_xiahouyuan_b",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 160,
+  "frame_h": 160,
+  "target_h": 160,
+  "portrait": "res://assets/portraits/boss_xiahouyuan_b.png",
+  "head": "res://assets/portraits/boss_xiahouyuan_b_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
+ },
+ "boss_zhouyu_b": {
+  "dir": "res://assets/units/boss_zhouyu_b",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 160,
+  "frame_h": 160,
+  "target_h": 160,
+  "portrait": "res://assets/portraits/boss_zhouyu_b.png",
+  "head": "res://assets/portraits/boss_zhouyu_b_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
+ },
+ "boss_menghuo_b": {
+  "dir": "res://assets/units/boss_menghuo_b",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 160,
+  "frame_h": 160,
+  "target_h": 160,
+  "portrait": "res://assets/portraits/boss_menghuo_b.png",
+  "head": "res://assets/portraits/boss_menghuo_b_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
+ },
+ "boss_simayi_b": {
+  "dir": "res://assets/units/boss_simayi_b",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 160,
+  "frame_h": 160,
+  "target_h": 160,
+  "portrait": "res://assets/portraits/boss_simayi_b.png",
+  "head": "res://assets/portraits/boss_simayi_b_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
+ },
+ "boss_caocao_b": {
+  "dir": "res://assets/units/boss_caocao_b",
+  "actions": {
+   "idle": {
+    "frames": 2,
+    "fps": 3.0
+   },
+   "run": {
+    "frames": 4,
+    "fps": 8.0
+   },
+   "attack": {
+    "frames": 3,
+    "fps": 10.0
+   }
+  },
+  "alias": {
+   "idle": "idle",
+   "walk": "run",
+   "run": "run",
+   "attack": "attack",
+   "skill": "attack",
+   "hit": "idle",
+   "die": "idle"
+  },
+  "frame_w": 160,
+  "frame_h": 160,
+  "target_h": 160,
+  "portrait": "res://assets/portraits/boss_caocao_b.png",
+  "head": "res://assets/portraits/boss_caocao_b_head.png",
+  "illustration": "",
+  "_source": "tools/draw_units24.py"
  }
 }

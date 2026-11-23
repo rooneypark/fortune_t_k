@@ -21,6 +21,8 @@ var aspd := 1.0
 var crit := 0.05
 var crit_dmg := 0.0
 var cls := ""
+## 상성 줄 (창병 / 보병 / 궁병 / 기병 / 화공 / 뇌공 / 의원): what this fighter attacks as.
+var ctr := ""
 var fac := ""
 var skill: Dictionary = {}
 var energy := 0.0
@@ -83,8 +85,13 @@ func aspd_now() -> float:
 	return aspd * buff("aspd") * float(flags.get("syn_aspd", 1.0)) * (0.55 if slow_t > 0.0 else 1.0)
 
 
+## Defence after 파갑 (a "def" debuff on this fighter).
+func def_now() -> float:
+	return def * buff("def")
+
+
 func spd_now() -> float:
-	return spd * float(flags.get("syn_spd", 1.0)) * (1.0 - float(DB.rules["slow_ratio"]) if slow_t > 0.0 else 1.0)
+	return spd * buff("spd") * float(flags.get("syn_spd", 1.0)) * (1.0 - float(DB.rules["slow_ratio"]) if slow_t > 0.0 else 1.0)
 
 
 func taken_mult() -> float:

@@ -17,7 +17,7 @@
    "stat": "spins",
    "need": 20,
    "reward": {
-    "diamond": 20
+    "gold": 600
    },
    "go": "stage"
   },
@@ -33,23 +33,23 @@
   },
   {
    "id": "d_upgrade",
-   "name": "장수 강화 3회",
-   "stat": "upgrades",
+   "name": "같은 병종 흡수 3회",
+   "stat": "star_absorbs",
    "need": 3,
    "reward": {
     "gold": 1500
    },
-   "go": "heroes"
+   "go": "stage"
   },
   {
    "id": "d_recruit",
-   "name": "장수 모집 1회",
-   "stat": "recruits",
+   "name": "새 장수 · 병종 1명 얻기",
+   "stat": "new_units",
    "need": 1,
    "reward": {
-    "diamond": 20
+    "gold": 600
    },
-   "go": "recruit"
+   "go": "stage"
   },
   {
    "id": "d_all",
@@ -57,7 +57,7 @@
    "stat": "daily_done",
    "need": 5,
    "reward": {
-    "diamond": 30
+    "gold": 900
    },
    "go": ""
   }
@@ -69,23 +69,23 @@
    "stat": "clears",
    "need": 15,
    "reward": {
-    "tickets": 1
+    "rice": 10
    },
    "go": "stage"
   },
   {
    "id": "w_jackpot",
-   "name": "3연 대박 10회",
+   "name": "잭팟 3회",
    "stat": "jackpots",
-   "need": 10,
+   "need": 3,
    "reward": {
-    "diamond": 50
+    "gold": 1500
    },
    "go": "stage"
   },
   {
    "id": "w_treasure",
-   "name": "보물 강화 10회",
+   "name": "장비 강화 10회",
    "stat": "treasure_ups",
    "need": 10,
    "reward": {
@@ -99,7 +99,7 @@
    "stat": "kills",
    "need": 500,
    "reward": {
-    "diamond": 80
+    "gold": 2400
    },
    "go": "stage"
   },
@@ -109,7 +109,7 @@
    "stat": "daily_days",
    "need": 5,
    "reward": {
-    "tickets": 1
+    "rice": 10
    },
    "go": ""
   },
@@ -119,7 +119,7 @@
    "stat": "weekly_done",
    "need": 5,
    "reward": {
-    "diamond": 100
+    "gold": 3000
    },
    "go": ""
   }
@@ -127,11 +127,11 @@
  "achievements": [
   {
    "id": "a_ch1",
-   "name": "1장 완료",
+   "name": "스테이지 1 클리어",
    "stat": "chapter1",
    "need": 1,
    "reward": {
-    "diamond": 100
+    "gold": 3000
    },
    "go": "stage"
   },
@@ -141,9 +141,9 @@
    "stat": "heroes_owned",
    "need": 10,
    "reward": {
-    "diamond": 50
+    "gold": 1500
    },
-   "go": "recruit"
+   "go": "heroes"
   },
   {
    "id": "a_hero20",
@@ -151,9 +151,9 @@
    "stat": "heroes_owned",
    "need": 20,
    "reward": {
-    "diamond": 100
+    "gold": 3000
    },
-   "go": "recruit"
+   "go": "heroes"
   },
   {
    "id": "a_star4",
@@ -161,27 +161,27 @@
    "stat": "star4",
    "need": 1,
    "reward": {
-    "diamond": 50
+    "gold": 1500
    },
    "go": "heroes"
   },
   {
    "id": "a_jack50",
-   "name": "3연 대박 누적 50회",
+   "name": "잭팟 누적 20회",
    "stat": "jackpots_total",
-   "need": 50,
+   "need": 20,
    "reward": {
-    "diamond": 100
+    "gold": 3000
    },
    "go": "stage"
   },
   {
    "id": "a_trait30",
-   "name": "특성 흡수 누적 30회",
+   "name": "속성 흡수 누적 30회",
    "stat": "traits_total",
    "need": 30,
    "reward": {
-    "diamond": 60
+    "gold": 1800
    },
    "go": "stage"
   },
@@ -191,9 +191,9 @@
    "stat": "legend_treasure",
    "need": 1,
    "reward": {
-    "diamond": 200
+    "gold": 6000
    },
-   "go": "shop"
+   "go": "heroes"
   }
  ],
  "attendance": [
@@ -201,22 +201,22 @@
    "gold": 5000
   },
   {
-   "diamond": 30
+   "gold": 900
   },
   {
-   "boxes": 1
+   "mats": 3
   },
   {
    "gold": 10000
   },
   {
-   "diamond": 50
+   "gold": 1500
   },
   {
-   "tickets": 1
+   "rice": 10
   },
   {
-   "diamond": 100
+   "gold": 3000
   }
  ]
 }

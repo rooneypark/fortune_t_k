@@ -9,7 +9,7 @@ extends TestCase
 func _mk_field() -> BattleField:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 42
-	var r := RunState.new(rng, ["guanyu", "zhangfei"], [], "zhugeliang", 1, 1)
+	var r := RunState.new(rng, ["guanyu", "zhangfei"], [], 1, 1)
 	var bf := BattleField.new()
 	bf.setup(r, {})
 	bf.fighting = true
