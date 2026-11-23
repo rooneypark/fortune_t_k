@@ -103,6 +103,43 @@ static func tex(name: String) -> Texture2D:
 	return t
 
 
+## 통째 그림 부품(버튼 · 성문 · 성벽)의 그림 파일이 있는가. 선 UI 중에도 그림이 있으면 그림을 쓴다
+## (임시 그림 tools/draw_ui_placeholders.py, 정식 그림은 같은 이름으로 덮어쓴다).
+static func has_art(name: String) -> bool:
+	return name != "" and (ResourceLoader.exists(UI + name + ".png") or FileAccess.file_exists(UI + name + ".png"))
+
+
+## 글자 버튼 → 아이콘 버튼 (design/ux/UI-그림-규격.md §5). 문구 열쇠 -> 아이콘 파일.
+## 버튼 글자가 이 문구와 같으면 글자 대신 아이콘을 그린다 (글자는 툴팁으로 남는다).
+const ICON_FOR := {
+	"common.ok": "act_ok", "common.cancel": "act_cancel", "common.buy": "act_buy",
+	"absorb.do": "act_absorb", "wave.next_btn": "act_play", "pause.resume": "act_play",
+	"pause.settings": "act_settings", "pause.retreat": "act_retreat", "pause.retreat_ok": "act_retreat",
+	"treasure.enhance": "act_enhance", "treasure.dismantle": "act_break", "purchase.pay": "act_buy",
+	"mail.get": "act_claim", "mail.get_all": "act_claim_all", "mail.delete": "act_trash", "mail.claimed": "act_done",
+	"missions.go": "act_go", "hero.auto_equip": "act_auto", "hero.unequip": "act_unequip",
+	"arena.shop": "act_shop", "arena.fight": "icon_swords", "arena.buy": "act_ticket",
+	"synth.open": "act_synth", "result.continue": "act_revive", "result.lobby": "act_home",
+	"result.next": "act_next", "result.again": "act_retry", "stage.odds": "act_odds", "quit.ok": "act_exit",
+	"heroes.all": "flt_all", "heroes.mine": "flt_mine",
+	"heroes.tab_heroes": "tab_hero", "heroes.tab_troops": "tab_soldier",
+	"hero.tab_up": "tab_growth", "hero.tab_star": "tab_trait", "hero.tab_treasure": "tab_gear",
+	"missions.daily": "tab_daily", "missions.weekly": "tab_weekly", "missions.achieve": "tab_trophy",
+	"shop.t_rec": "tab_pick", "shop.t_dia": "icon_gold", "shop.t_gold": "icon_rice", "shop.t_pack": "tab_pack",
+}
+static var _icon_by_text: Dictionary = {}
+
+
+## Icon file for a button label, or "" (the label stays text).
+static func icon_for(label_text: String) -> String:
+	if label_text == "":
+		return ""
+	if _icon_by_text.is_empty():
+		for k: String in ICON_FOR:
+			_icon_by_text[DB.t(k)] = ICON_FOR[k]
+	return String(_icon_by_text.get(label_text, ""))
+
+
 static func _cut_meta() -> Dictionary:
 	if _meta.is_empty():
 		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(UI + "cuts.json"))

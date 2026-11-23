@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://56cq2ctfasqg"
-path="res://.godot/imported/lobby_bg.webp-93eec0d6787130e6e1c8042d4da158a9.ctex"
+uid="uid://b2egppj0mhfuf"
+path="res://.godot/imported/btn_mission.png-634eb2a4bce58518768658d3f10873c5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/bg/lobby_bg.webp"
-dest_files=["res://.godot/imported/lobby_bg.webp-93eec0d6787130e6e1c8042d4da158a9.ctex"]
+source_file="res://assets/ui/btn_mission.png"
+dest_files=["res://.godot/imported/btn_mission.png-634eb2a4bce58518768658d3f10873c5.ctex"]
 
 [params]
 

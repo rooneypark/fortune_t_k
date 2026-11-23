@@ -10,7 +10,8 @@ signal dialog_changed(route: String)
 ## between the lobby's top HUD and its bottom tab bar.
 const DIALOG_ROUTES := ["heroes", "hero", "troop", "arena", "shop"]
 ## Dialog frame in canvas px; content shows screen coords x 32..992, y 146..1462.
-const DIALOG_RECT := Rect2(16, 212, 992, 1520)
+## 2026-11-23: 아래 끝을 로비 하단 탭(y 1592) 위에서 멈춘다 — 장수 · 가방 화면에서도 하단 탭이 보이고 눌린다.
+const DIALOG_RECT := Rect2(16, 212, 992, 1364)
 const DIALOG_INSET := 16.0
 ## Band above the dialog frame for the close X (inside the dialog container).
 const DIALOG_HEAD := 32.0

@@ -42,7 +42,18 @@ func build() -> void:
 	_rng.randomize()
 	if params.has("seed"):
 		_rng.seed = int(params["seed"])
+	# 퇴각해 둔 전투를 이어서 한다 (깬 웨이브 다음부터, 전장 유닛 그대로).
+	var save: Dictionary = Game.profile.suspended() if bool(params.get("resume", false)) and not tutorial else {}
+	if not save.is_empty():
+		stage = int(save["stage"])
+		diff = int(save["diff"])
 	run = RunState.new(_rng, ["guanyu"] if tutorial else Game.sortie_heroes(), Game.sortie_troops(), stage, diff, Game.profile)
+	if not save.is_empty():
+		run.restore(save)
+		Game.profile.clear_suspend()
+	elif not tutorial:
+		# 내 부대가 그대로 전장에 선다 (이겨도 져도 남는다, 죽은 병사만 빠진다)
+		run.load_units(Game.profile.army())
 	run.changed.connect(_on_run_changed)
 	Sfx.play_bgm("bgm_battle")
 	# 전장
@@ -52,6 +63,7 @@ func build() -> void:
 	put(field, Rect2(0, 0, 1024, 1328), Pin.BOTTOM)
 	field.castle_hit.connect(_on_castle_hit)
 	field.wave_done.connect(_on_wave_done)
+	field.soldiers_lost.connect(_refresh)
 	field.enemy_killed.connect(func(_f: Fighter) -> void:
 		run.stats["kills"] += 1
 		_wave_kills += 1
@@ -79,7 +91,8 @@ func build() -> void:
 	put(_hint, Rect2(40, 300, 944, 120), Pin.TOP)
 	set_process(true)
 	_refresh()
-	_show_banner("%s · %s" % [DB.stage_name(stage), String(DB.difficulty(diff)["name"])], DB.t("battle.wave_n", [1, run.wave_count()]))
+	field.sync()
+	_show_banner("%s · %s" % [DB.stage_name(stage), String(DB.difficulty(diff)["name"])], DB.t("battle.wave_n", [run.wave + 1, run.wave_count()]))
 	if tutorial:
 		_tut(10)
 
@@ -107,11 +120,11 @@ func _build_hud() -> void:
 	_hud["army"] = _chip("icon_soldier", Rect2(216, 28, 188, 88))
 	_hud["hero"] = _chip("icon_hero", Rect2(408, 28, 188, 88))
 	_hud["wave"] = _chip("icon_flag", Rect2(600, 28, 196, 88))
-	# 전장 칸 칩: 누르면 군량으로 한 칸 늘린다. 장수 칩은 전장의 장수 수만 보여 준다 (제한 없음).
-	var army: PxButton = _hud["army"]
-	army.static_panel = false
-	army.mouse_filter = Control.MOUSE_FILTER_STOP
-	army.pressed.connect(_buy_slot)
+	# 장수 칩: 장수 자리 (지금 / 한도), 누르면 금으로 한 자리 늘린다. 병사 칩은 병사 수만 (한도 없음).
+	var hero_chip: PxButton = _hud["hero"]
+	hero_chip.static_panel = false
+	hero_chip.mouse_filter = Control.MOUSE_FILTER_STOP
+	hero_chip.pressed.connect(_buy_slot)
 	var sp := PxButton.make("btn_small", true, Vector2(96, 88))
 	sp.font_size = 36
 	sp.text = "1x"
@@ -135,8 +148,8 @@ func _build_controls() -> void:
 	var plate := DrawLayer.make(func(ci: Control) -> void:
 		Px.draw_skin(ci, "plate_lever", Rect2(Vector2.ZERO, ci.size))
 		Px.fit(ci, Px.tex("icon_rice"), Rect2(10, 8, 44, 44))
-		var left := run.spins_left()
-		Px.text(ci, "%d/%d" % [left, run.spins_max()], Rect2(54, 0, ci.size.x - 64, ci.size.y), 30, Px.WHITE if left > 0 and run.rice >= run.spin_cost() else Color("#ff8a80")))
+		# 한 번 돌리는 값 (돌리기 횟수 제한은 없다: 군량이 있는 만큼)
+		Px.text(ci, str(run.spin_cost()), Rect2(54, 0, ci.size.x - 64, ci.size.y), 30, Px.WHITE if run.rice >= run.spin_cost() else Color("#ff8a80")))
 	put(plate, Rect2(563, LEVER_Y + 236, 140, 60), Pin.BOTTOM)  # 비용은 레버 아래
 	_hud["plate"] = plate
 	_lever = PxButton.make("lever")
@@ -181,8 +194,8 @@ func _on_run_changed() -> void:
 
 func _refresh() -> void:
 	(_hud["rice"] as PxButton).text = "%d/%d" % [run.rice, int(DB.rules["rice_max"])]
-	(_hud["army"] as PxButton).text = "%d/%d" % [run.field.size(), run.field_cap]
-	(_hud["hero"] as PxButton).text = str(run.heroes_on_field())
+	(_hud["army"] as PxButton).text = str(run.field.size() - run.heroes_on_field())
+	(_hud["hero"] as PxButton).text = "%d/%d" % [run.heroes_on_field(), run.field_cap]
 	(_hud["wave"] as PxButton).text = "%d/%d" % [mini(run.wave + 1, run.wave_count()), run.wave_count()]
 	(_hud["speed"] as PxButton).text = "%dx" % int(field.speed)
 	var busy := slot_view.spinning
@@ -191,6 +204,8 @@ func _refresh() -> void:
 	# 재배치: 꽝 줄의 위아래 칸을 누를 수 있는 동안 슬롯이 그 칸을 밝힌다
 	slot_view.nudge_ready = run.can_nudge() and not busy
 	_btn["advisor"].disabled = not run.advisor_ready() or busy
+	# 책사 기술을 가진 장수가 전장에 없으면 책사 버튼을 숨긴다 (2026-11-23)
+	_btn["advisor"].visible = run.advisor != ""
 	_lever.disabled = busy or state == "over"
 	for k in _btn:
 		_btn[k].queue_redraw()
@@ -437,6 +452,8 @@ func _victory() -> void:
 	state = "over"
 	field.fighting = false
 	var stars := run.stars_earned(true)
+	field.store_hp()
+	Game.profile.set_army(run.field)
 	var out := Game.profile.finish_run(stage, diff, run.wave_count(), true, stars, run.stats)
 	if tutorial or not Game.tutorial_done():
 		Game.profile.data["tutorial"]["done"] = true
@@ -479,11 +496,29 @@ func continue_run() -> bool:
 	return true
 
 
-## Called by the defeat pop-up or pause: record the run and leave.
+## 퇴각 (일시정지 창): 포기가 아니다. 지금 웨이브의 준비 시간부터 다음 출정 때 이어서 한다.
+## 깬 웨이브 · 전장 유닛 · 성 체력이 남는다. 튜토리얼은 저장하지 않는다.
+func retreat() -> void:
+	if state == "done" or state == "over":
+		return
+	state = "done"
+	field.fighting = false
+	if not tutorial:
+		field.store_hp()
+		Game.profile.set_army(run.field)
+		Game.profile.suspend_run(run.to_save())
+	Game.save_now()
+
+
+## Called by the defeat pop-up: record the run and leave.
 func give_up() -> Dictionary:
 	if state == "done":
 		return {}
 	state = "done"
+	# 져도 부대는 남는다 (살아남은 유닛 그대로). 스테이지도 그대로.
+	if not tutorial:
+		field.store_hp()
+		Game.profile.set_army(run.field)
 	return Game.profile.finish_run(stage, diff, run.wave, false, 0, run.stats)
 
 

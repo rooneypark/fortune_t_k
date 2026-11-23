@@ -12,6 +12,8 @@ signal ally_fell(f: Fighter)
 signal ally_back(f: Fighter)
 signal skill_cast(f: Fighter)
 signal wave_done
+## 병사가 죽어서 부대에서 빠졌다 (HUD를 새로 그린다).
+signal soldiers_lost
 signal boss_spawned(f: Fighter)
 
 # 가로 전장 (2026-11-23): 왼쪽에 성벽, 오른쪽에서 적이 온다. 가운데 띠(공터)에서만 싸우고
@@ -111,8 +113,17 @@ func _make_ally(u: UnitState) -> Fighter:
 	f.pos = u.anchor
 	f.pop = 0.25
 	_apply_stats(f)
-	f.hp = f.max_hp
+	# 부대에 남은 체력 그대로 (2026-11-23)
+	f.hp = f.max_hp * clampf(u.hp_ratio, 0.05, 1.0)
 	return f
+
+
+## 전장 체력을 유닛에 적어 둔다 (부대 저장 전에). 쓰러진 장수는 30%로 일어난다.
+func store_hp() -> void:
+	for f in allies:
+		if f.unit == null:
+			continue
+		f.unit.hp_ratio = 0.3 if f.dead else clampf(f.ratio(), 0.05, 1.0)
 
 
 ## Stats and effects of an ally: 성급 · 군주 레벨 · 보물 (MetaRules.unit_stats) and the
@@ -182,7 +193,8 @@ func active_synergies() -> Array:
 	var ids := {}
 	for f in allies:
 		cls_n[f.cls] = int(cls_n.get(f.cls, 0)) + 1
-		if f.unit.is_hero() and f.fac != "":
+		# 세력 시너지는 '서로 다른' 장수 수로 센다 (같은 장수 복사본은 한 명, 2026-11-23)
+		if f.unit.is_hero() and f.fac != "" and not ids.has(f.id):
 			fac_n[f.fac] = int(fac_n.get(f.fac, 0)) + 1
 			ids[f.id] = true
 	var out: Array = []
@@ -272,7 +284,7 @@ func start_wave() -> void:
 			main.append(String(pair[0]))
 	_shuffle(main)
 	var tt := 0.6
-	var gap := float(DB.rules["spawn_gap"])
+	var gap := float(DB.rules["spawn_gap"]) * float(w.get("gap_mult", 1.0))
 	for id: String in main:
 		_queue.append({"id": id, "t": tt, "flank": false})
 		tt += gap
@@ -378,8 +390,38 @@ func _process(delta: float) -> void:
 		for f in allies:
 			f.anim_t += dt
 			_idle_ally(f, dt)
+		# 웨이브가 끝난 뒤에도 마지막에 쓰러진 적이 마저 사라지게 한다 (시체가 남지 않게).
+		_fade_dead_enemies(dt)
 	_step_fx(dt)
 	queue_redraw()
+
+
+## 죽은 병사를 전장과 부대(run.field)에서 뺀다.
+func _purge_fallen() -> void:
+	var gone := false
+	for f in allies:
+		if f.flags.get("gone", false):
+			run.remove_unit(f.unit)
+			gone = true
+	if gone:
+		var keep: Array[Fighter] = []
+		for f in allies:
+			if not f.flags.get("gone", false):
+				keep.append(f)
+		allies = keep
+		_apply_synergy()
+		soldiers_lost.emit()
+
+
+## Dead enemies fade out and leave the list (also between waves).
+func _fade_dead_enemies(dt: float) -> void:
+	var still: Array[Fighter] = []
+	for e in enemies:
+		if not e.alive():
+			e.fade = maxf(0.0, e.fade - dt * 2.0)
+		if e.alive() or e.fade > 0.0:
+			still.append(e)
+	enemies = still
 
 
 func _idle_ally(f: Fighter, dt: float) -> void:
@@ -421,6 +463,7 @@ func _step(dt: float) -> void:
 		_tick_common(e, dt)
 		if e.alive():
 			_unit_ai(e, allies, dt)
+	_purge_fallen()
 	_separate(allies, dt)
 	_separate(enemies, dt)
 	_step_projectiles(dt)
@@ -434,12 +477,17 @@ func _step(dt: float) -> void:
 		fighting = false
 		_projectiles.clear()
 		_warns.clear()
+		var heal := float(DB.rules.get("wave_heal", 0.0))
 		for f in allies:
 			if f.dead:
+				# 쓰러진 장수는 웨이브가 끝나면 일어난다 (체력 30%)
 				f.dead = false
-				f.hp = f.max_hp
+				f.hp = f.max_hp * 0.3
 				f.pos = f.home
 				ally_back.emit(f)
+			else:
+				# 웨이브 사이 회복 (2026-11-23): 최대 체력의 wave_heal 만큼
+				f.hp = minf(f.max_hp, f.hp + f.max_hp * heal)
 			f.buffs.clear()
 			f.stun = 0.0
 			f.slow_t = 0.0
@@ -763,6 +811,10 @@ func _hurt(tg: Fighter, dmg: float, src: Fighter, crit: bool, quiet: bool) -> vo
 			tg.dead = true
 			tg.respawn_max = run.respawn_time(tg.unit)
 			tg.respawn_t = tg.respawn_max
+			# 병사는 죽으면 부대에서 영영 빠진다 (장수는 부활한다, 2026-11-23)
+			if tg.unit != null and not tg.unit.is_hero():
+				tg.flags["gone"] = true
+				tg.respawn_t = INF
 			tg.target = null
 			_fx.append({"kind": "poof", "pos": tg.pos, "t": 0.0, "life": 0.4, "color": Color("#a0a8b8")})
 			ally_fell.emit(tg)

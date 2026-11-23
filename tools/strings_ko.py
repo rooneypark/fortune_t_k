@@ -6,7 +6,7 @@ S = {
  # common
  # 임시 글자 버튼 (그림 없는 UI 틀, 2026-11-22)
  "btn.btn_settings": "설정", "btn.btn_mail": "우편", "btn.btn_mission": "임무", "btn.btn_bag": "장수",
- "btn.btn_recruit": "아이템", "btn.sign_battle": "출정", "btn.btn_arena": "군웅", "btn.sign_arena": "군웅",
+ "btn.btn_recruit": "아이템", "btn.sign_battle": "출정", "btn.btn_arena": "쟁패", "btn.sign_arena": "쟁패",
  "btn.btn_pause": "멈춤", "btn.btn_plus": "+", "btn.btn_battle": "전투 시작", "btn.btn_nudge": "밀기",
  "btn.btn_advisor": "책사", "btn.btn_speed": "배속", "btn.btn_bench": "배치", "btn.lever": "돌리기",
  "common.ok": "확인", "common.cancel": "취소", "common.buy": "구매", "common.no_gold": "금이 부족해요",
@@ -18,18 +18,18 @@ S = {
  "quit.title": "게임 종료", "quit.text": "게임을 종료할까요?\n진행 상황은 자동 저장돼요.", "quit.ok": "종료",
  "reward.title": "획득!",
  # tabs
- "tab.heroes": "장수", "tab.items": "아이템", "tab.arena": "군웅대전", "tab.shop": "상점",
+ "tab.heroes": "장수", "tab.items": "아이템", "tab.arena": "쟁패", "tab.shop": "상점",
  # lobby
- "lobby.mail": "우편", "lobby.missions": "임무", "lobby.bag": "장수", "lobby.recruit": "아이템", "lobby.arena": "군웅대전", "lobby.sortie": "출정", "lobby.gate_stage": "출정", "lobby.gate_stage_sub": "스테이지 %d", "lobby.gate_arena": "군웅대전", "lobby.gate_arena_sub": "남은 입장 %d",
+ "lobby.btn_stage": "출정", "lobby.arena_soon": "쟁패는 준비 중이에요", "lobby.soon": "준비 중", "lobby.btn_arena": "쟁패", "lobby.mail": "우편", "lobby.missions": "임무", "lobby.bag": "장수", "lobby.recruit": "가방", "lobby.arena": "쟁패", 
  "lobby.attendance": "출석 %d일차", "lobby.monthly": "월정액 금 +%d",
  # battle
- "battle.no_rice": "군량이 부족해요 · 위의 군량을 눌러 금으로 채울 수 있어요", "battle.no_spins": "이번 전투의 돌리기를 다 썼어요",
+ "battle.no_rice": "군량이 부족해요 · 위의 군량을 눌러 금으로 채울 수 있어요",
  "battle.new_unit": "%s 합류! (도감에 추가)", 
- "battle.field_full": "전장이 가득 찼어요 · 흡수해서 자리를 비우세요",
+ 
  "battle.wave_n": "웨이브 %d / %d", "battle.start": "전투 시작", 
  "battle.advisor": "책사", 
  "battle.rank": "★%d", "battle.refund": "잭팟! 군량 +%d",
- "battle.lost": "자리가 없어 %s 영입 실패",
+ "battle.lost": "장수 자리가 없어 %s 영입 실패",
  "battle.slot_max": "더 늘릴 수 없어요", "battle.buy_army": "전장 칸 늘리기",
  "battle.buy_text": "금 %d을 써서 전장을 한 칸 늘릴까요?\n(이번 출정 동안만 유지)",
  "battle.need_unit": "먼저 슬롯을 돌려 병력을 모으세요", "battle.judge": "판정 웨이브!",
@@ -53,8 +53,8 @@ S = {
  "wave.title": "웨이브 %d 승리!", "wave.rice": "남은 돌리기", "wave.castle": "성 체력 회복", "wave.kills": "처치",
  "wave.mvp": "이번 웨이브 활약", "wave.mvp_line": "피해 %s · 처치 %d", "wave.next": "다음 웨이브 %d / %d",
  "wave.next_btn": "준비하기",
- "pause.title": "일시정지", "pause.resume": "계속하기", "pause.settings": "설정", "pause.give_up": "출정 포기",
- "pause.give_up_text": "출정을 포기할까요?\n지금까지 깬 웨이브만큼 보상을 받아요.", "pause.give_up_ok": "포기",
+ "pause.title": "일시정지", "pause.resume": "계속하기", "pause.settings": "설정", "pause.retreat": "퇴각",
+ "pause.retreat_text": "퇴각할까요?\n깬 웨이브와 전장의 유닛은 그대로 남아요.\n다음 출정 때 이 웨이브부터 이어서 해요.", "pause.retreat_ok": "퇴각",
  "result.victory": "승리", "result.defeat": "패배", "result.clear": "스테이지 %s 클리어!",
  "result.fallen": "성이 함락되었다…", "result.waves": "웨이브", "result.kills": "처치", "result.spins": "돌리기",
  "result.jackpots": "대박", "result.mvp": "최고 활약", "result.rewards": "보상", "result.exp": "경험 %d",
@@ -73,19 +73,19 @@ S = {
  "settings.account_text": "계정 연동은 서버 연동 후 열려요.\n이 기기의 저장 데이터를 초기화할까요?",
  "settings.reset": "초기화", "settings.version": "버전 %s", "settings.proto": "내부 시험판 · 캐릭터 그림은 임시(출시 전 교체)",
  # tutorial
- "tut.gate": "주공! 황건적이 성으로 몰려옵니다.\n출정 팻말을 눌러 성을 지키십시오!",
- "tut.spin": "군량 1을 써서 천명 슬롯을 돌립니다.\n레버를 당기십시오!",
+ "tut.gate": "주공! 황건적이 성으로 몰려옵니다.\n아래 출정 버튼을 눌러 성을 지키십시오!",
+ "tut.spin": "군량 2를 써서 천명 슬롯을 돌립니다.\n레버를 당기십시오!",
  "tut.jackpot": "첫 칸이 당첨!\n창병 1명이 전장에 섰습니다. 나머지 두 칸은 꽝입니다.",
- "tut.spin_again": "한 번 더! 한 전투에 열 번까지 돌릴 수 있습니다.",
+ "tut.spin_again": "한 번 더! 군량이 있는 만큼 몇 번이든 돌릴 수 있습니다.",
  "tut.nudge": "세 칸 모두 꽝이군요. 위아래로 살짝 보이는 칸을\n누르면 그 칸을 끌어올 수 있습니다.",
  "tut.nudge_reel": "세 번째 줄 위에 보이는 궁병을 눌러\n가운데로 끌어내리십시오!",
- "tut.nudge_done": "궁병 영입! 재배치는 한 번 돌릴 때 한 번,\n위아래 어느 쪽이든 군량 1이 듭니다.",
+ "tut.nudge_done": "궁병 영입! 꽝 칸이 남아 있으면 몇 번이든\n끌어올 수 있습니다. 한 번에 군량 1.",
  "tut.spin_third": "이번엔 장수가 나오기를 노려 봅시다!",
  "tut.drag": "관우가 도우러 왔습니다!\n당첨된 유닛은 바로 전장에 섭니다.",
  "tut.battle": "준비 완료! 전투 시작을 누르십시오.",
  "tut.wave": "적이 성벽에 닿으면 성 체력이 줄어요. 끝까지 지키십시오!",
  "tut.castle": "성벽이 공격받고 있어요! 병력을 앞쪽에 세우세요.",
- "tut.respawn": "쓰러진 유닛은 왼쪽 원의 시간이 지나면 부활해요.",
+ "tut.respawn": "쓰러진 병사는 부대에서 영영 빠져요. 장수는 원의 시간이 지나면 부활해요.",
  "tut.absorb": "유닛을 다른 유닛 위로 끌어다 놓으면 흡수!\n같은 병종 = 성급 경험, 다른 병종 = 속성 하나를 얻어요.",
  "tut.free": "이제 자유롭게 싸우십시오. 10웨이브를 버티면 승리!",
  # stage
@@ -106,8 +106,8 @@ S = {
  # hero
  "hero.title": "장수 정보", "hero.not_owned": "아직 만나지 못한 장수예요.\n전투 중 슬롯에서 나오면 합류해요.", "troop.not_owned": "아직 없는 병종이에요.\n전투 중 슬롯에서 나오면 합류해요.",
  "dex.heroes": "장수 도감 %d / %d", "dex.items": "아이템 도감 %d / %d",
- "rice.full": "군량이 가득 차 있어요", "rice.title": "군량 채우기", "rice.ask": "금 %s으로 군량을 가득 채울까요?\n(지금 %d / %d · 5분에 1씩 저절로 차요)", "rice.done": "군량을 가득 채웠어요",
- "rice.name": "군량 즉시 충전", "rice.desc": "군량 1 = 금 %d · 지금 %d / %d", "rice.next": "다음 군량까지 %s", "rice.rule": "군량은 5분에 1씩 저절로 차요. 슬롯을 한 번 돌릴 때 1을 쓰고, 한 전투에 열 번까지 돌려요.",
+ "rice.full": "군량이 가득 차 있어요", "rice.title": "군량 채우기", "rice.ask": "금 %s으로 군량을 가득 채울까요?\n(지금 %d / %d · 30분에 1씩 저절로 차요)", "rice.done": "군량을 가득 채웠어요",
+ "rice.name": "군량 즉시 충전", "rice.desc": "군량 1 = 금 %d · 지금 %d / %d", "rice.next": "다음 군량까지 %s", "rice.rule": "군량은 30분에 1씩 저절로 차요. 슬롯을 한 번 돌릴 때 2, 칸을 끌어올 때 1을 써요. 군량이 있는 만큼 돌릴 수 있어요.",
  "hero.tab_up": "성장", "hero.tab_star": "속성", "hero.tab_treasure": "장비",
  "hero.advisor": "책사 기술 · %s", "hero.skill": "필살기 · %s", "hero.bonds": "인연", "hero.no_bond": "인연 없음",
  
@@ -139,7 +139,7 @@ S = {
  # odds
  "odds.title": "확률 정보", "odds.slot_rule": "슬롯 3칸 · 칸마다 당첨 확률 %d%% (전장이 비어 있으면 최소 1칸 당첨)",
  "odds.slot_hero": "당첨 칸의 %d%%는 장수, 나머지는 병사", "odds.slot_grades": "장수 등급 · B %s%% · A %s%% · S %s%% · SS %s%%", "odds.slot_tiers": "병사 · 기본 %s%% · 정예 %s%%",
- "odds.slot_new": "처음 나온 장수와 병종은 그 자리에서 합류해요", "odds.per_win": "당첨 칸 하나에서 나올 확률", "stage.odds": "확률", 
+ "odds.slot_new": "처음 나온 장수와 병종은 그 자리에서 합류해요", "odds.per_win": "당첨 칸 하나에서 나올 확률", "stage.odds": "확률", "stage.foes": "적", 
  
  # shop
  "shop.t_rec": "추천", "shop.t_dia": "금", "shop.t_gold": "군량", "shop.t_pack": "패키지",
@@ -153,14 +153,14 @@ S = {
  "purchase.title": "구매 확인", "purchase.pay": "가상 결제", "purchase.done": "구매 완료!",
  "purchase.mock": "개발용 가상 결제예요. 스토어 결제 연동 전이라 실제 돈은 나가지 않아요.",
  # arena
- "arena.title": "군웅대전", 
+ "arena.title": "쟁패", 
  "arena.desc": "다른 주공과 겨뤄 군공을 모으자!\n하루 무료 5회 · 매일 04:00 초기화",
- "arena.power": "출전 전투력 %s", "arena.entries": "입장권 %d / %d", "arena.refill": "초기화까지 %s", "arena.fight": "도전하기", "arena.no_entry": "입장권이 부족해요", "arena.win": "군웅대전 승리! 군공 +%d", 
+ "arena.power": "출전 전투력 %s", "arena.entries": "입장권 %d / %d", "arena.refill": "초기화까지 %s", "arena.fight": "도전하기", "arena.no_entry": "입장권이 부족해요", "arena.win": "쟁패 승리! 군공 +%d", 
  "arena.buy": "추가 입장", "arena.buy_confirm": "금 %d으로 입장권 1장을 살까요? (오늘 %d / %d)", "arena.buy_limit": "오늘은 더 살 수 없어요",
- "arena.honor": "군공 %s", "arena.shop": "군웅 상점",
- "arena_shop.title": "군웅 상점", "arena_shop.note": "군공으로만 살 수 있어요 · 매주 월요일 04:00 초기화",
+ "arena.honor": "군공 %s", "arena.shop": "쟁패 상점",
+ "arena_shop.title": "쟁패 상점", "arena_shop.note": "군공으로만 살 수 있어요 · 매주 월요일 04:00 초기화",
  "arena_shop.treasure": "영웅 보물",
- "arena_shop.treasure_desc": "영웅 등급 보물 1개", "arena_shop.rice": "군량 10", "arena_shop.rice_desc": "슬롯 열 번",
+ "arena_shop.treasure_desc": "영웅 등급 보물 1개", "arena_shop.rice": "군량 10", "arena_shop.rice_desc": "슬롯 다섯 번",
  "arena_shop.gold": "금 10,000", "arena_shop.gold_desc": "남은 군공 쓰기", "arena_shop.limit": "이번 주 %d / %d",
  "arena_shop.sold_out": "이번 주 구매 완료", "arena_shop.not_owned": "보유한 장수만 고를 수 있어요",
  "arena_shop.max_star": "이미 최고 성급이에요", "arena_shop.no_honor": "군공이 부족해요", "arena_shop.pick": "카드를 살 장수를 고르세요",

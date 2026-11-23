@@ -54,8 +54,9 @@ func test_shift_a_blank_reel_up_or_down() -> void:
 	eq(s.cells(), ["spear", "", "archer"], "down: the cell above came into the row")
 	eq((n["recruits"] as Array).size(), 1, "only the shifted reel recruits")
 	eq(n["recruits"][0]["id"], "archer", "archer")
-	check(not s.can_nudge, "once per spin")
-	check(s.nudge(1, -1).is_empty(), "second shift refused")
+	check(s.can_nudge, "a blank is left: shift again")
+	eq(s.nudge(1, -1)["recruits"][0]["id"], "shield", "second shift on another reel")
+	check(not s.can_nudge, "no blank left")
 	# up: the cell below comes into the row
 	s.forced = {"cells": ["", "", ""], "above": ["", "", ""], "below": ["", "shield", ""]}
 	s.spin(rng)
@@ -71,7 +72,27 @@ func test_shift_onto_a_blank_gives_nothing() -> void:
 	eq(s.nudge_wins(), [], "nothing to bring in")
 	var n := s.nudge(0, 1)
 	eq((n["recruits"] as Array).size(), 0, "a blank came in")
-	check(not s.can_nudge, "the chance is used")
+	check(s.can_nudge, "still blank: the same reel may shift again")
+	s.nudge(0, 1)
+	eq(s.nudges, 2, "shifts are counted")
+	s.spin(rng)
+	eq(s.nudges, 0, "a new spin resets the count")
+
+
+func test_shift_limit_from_rules() -> void:
+	var p := _slot()
+	var s: SlotMachine = p[0]
+	var rng: RandomNumberGenerator = p[1]
+	var old: Variant = DB.rules.get("nudges_per_spin", 0)
+	DB.rules["nudges_per_spin"] = 2
+	s.forced = {"cells": ["", "", ""], "above": ["", "", ""], "below": ["", "", ""]}
+	s.spin(rng)
+	s.nudge(0, 1)
+	check(s.can_nudge, "1 of 2")
+	s.nudge(1, 1)
+	check(not s.can_nudge, "limit 2 reached")
+	check(s.nudge(2, 1).is_empty(), "third shift refused")
+	DB.rules["nudges_per_spin"] = old
 
 
 func test_advisor_respin_rerolls_a_blank() -> void:

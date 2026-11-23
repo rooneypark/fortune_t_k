@@ -36,6 +36,10 @@ static func defaults() -> Dictionary:
 		# 재료: 종류(weapon / armor / charm) -> 등급 -> 개수 (개편 §3.7)
 		"materials": {},
 		"progress": {"cleared": {}, "last": "1-1"},
+		# 퇴각한 전투 (다음 출정 때 이어서): RunState.to_save(), 없으면 {}
+		"suspend": {},
+		# 내 부대 (2026-11-23): 전장에서 뽑은 유닛 [{id, x, y}]. 이겨도 져도 남고, 죽은 병사만 빠진다.
+		"army": [],
 		"missions": {"day": "", "week": "", "daily": {}, "weekly": {}, "total": {}, "claimed": {}},
 		"arena": {"day": "", "used": 0, "bought": 0},
 		"arena_shop": {"week": "", "bought": {}},
@@ -607,11 +611,43 @@ func stars_of(key: String) -> int:
 	return int(data["progress"]["cleared"].get(key, 0))
 
 
-## 스테이지 s의 난이도 d가 열렸는가: 앞 난이도를 깼거나, 보통(1)이면 앞 스테이지의 보통을 깼을 때.
-func is_unlocked(s: int, d: int) -> bool:
-	if d > 1:
-		return stars_of(DB.stage_key(s, d - 1)) > 0
+## 스테이지 s의 난이도 d가 열렸는가: 스테이지가 열려 있으면 보통 · 어려움 · 지옥이 모두 열린다
+## (2026-11-23). 스테이지 N은 N−1의 보통을 깨면 열린다.
+func is_unlocked(s: int, _d: int = 1) -> bool:
 	return s <= 1 or stars_of(DB.stage_key(s - 1, 1)) > 0
+
+
+## 내 부대: [{id, x, y}]. 예전 저장은 퇴각한 전투의 유닛을 부대로 본다.
+func army() -> Array:
+	var a: Array = data.get("army", [])
+	if a.is_empty():
+		return (data.get("suspend", {}) as Dictionary).get("units", [])
+	return a
+
+
+## 전장의 유닛을 부대로 저장한다. 계정에 없는 손님 장수(튜토리얼 관우)는 빼고 저장한다.
+func set_army(units: Array) -> void:
+	var out: Array = []
+	for u in units:
+		if DB.is_hero(u.id) and not owns(u.id):
+			continue
+		out.append({"id": u.id, "x": u.anchor.x, "y": u.anchor.y, "hp": snappedf(u.hp_ratio, 0.01)})
+	data["army"] = out
+	changed.emit()
+
+
+## 퇴각해 둔 전투 (없으면 {}): 다음 출정 때 그 웨이브부터 이어서 한다.
+func suspended() -> Dictionary:
+	return data.get("suspend", {})
+
+
+func suspend_run(save: Dictionary) -> void:
+	data["suspend"] = save
+	changed.emit()
+
+
+func clear_suspend() -> void:
+	data["suspend"] = {}
 
 
 ## 가장 멀리 열린 스테이지.
@@ -652,6 +688,7 @@ func stage_back() -> String:
 func finish_run(s: int, d: int, waves_reached: int, victory: bool, stars: int, run_stats: Dictionary) -> Dictionary:
 	var key := DB.stage_key(s, d)
 	var first := victory and stars_of(key) == 0
+	clear_suspend()
 	var cur_before := current_stage()
 	var gold := MetaRules.run_gold(waves_reached, victory)
 	# 군주 경험은 클리어했을 때만 (개편 §9.3).

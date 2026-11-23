@@ -28,29 +28,30 @@ func _run(seed: int = 1, acc: Profile = null) -> RunState:
 func test_start_values() -> void:
 	var r := _run()
 	eq(r.rice, int(DB.rules["rice_max"]), "군량은 계정의 것: 새 계정은 가득 (30)")
-	eq(r.spins_left(), 10, "한 전투에 10번")
+	eq(r.spins_left(), 15, "군량 30 = 15번 (한 번에 2)")
 	eq(r.castle_hp, 1000, "castle 1000")
 	eq(r.field_cap, 8, "field cap 8")
 	eq(r.heroes.size(), 5, "every hero passed in is on the reels (no lineup cap)")
 	eq(r.wave_count(), 10, "10 waves")
 
 
-func test_spin_costs_one_rice_and_ten_per_battle() -> void:
+func test_spin_costs_two_rice_and_no_limit() -> void:
 	var r := _run()
 	r.recruit("spear")
 	var rice := r.rice
-	eq(r.spin_cost(), 1, "군량 1")
-	for i in 10:
+	eq(r.spin_cost(), 2, "군량 2")
+	for i in 15:
 		r.field.resize(1)
 		r.slot.forced = MISS.duplicate(true)
-		check(not r.spin().is_empty(), "spin %d" % (i + 1))
-		eq(r.spin_cost(), 1, "the price does not grow")
-	eq(r.rice, rice - 10, "paid 10 군량 from the account")
-	eq(r.spins_left(), 0, "none left")
-	eq(r.spin_block_reason(), DB.t("battle.no_spins"), "eleventh spin refused")
+		check(not r.spin().is_empty(), "spin %d (no 10-spin limit)" % (i + 1))
+		eq(r.spin_cost(), 2, "the price does not grow")
+	eq(r.rice, rice - 30, "paid 30 군량 from the account")
+	eq(r.spins_left(), 0, "군량 used up")
+	eq(r.spin_block_reason(), DB.t("battle.no_rice"), "no 군량: spin refused")
 	check(r.spin().is_empty(), "blocked spin returns {}")
-	r.finish_wave()
-	eq(r.spins_left(), 0, "a new wave does not give spins back")
+	r.account.add_rice(3)
+	eq(r.spins_left(), 1, "군량 3 = 1번")
+	eq(r.spin_block_reason(), "", "군량 again: spin allowed")
 
 
 func test_no_rice_blocks_the_lever() -> void:
@@ -123,7 +124,7 @@ func test_empty_field_always_gets_a_unit() -> void:
 	r2.recruit("spear")
 	var blanks := 0
 	for i in 200:
-		r2.account.add_rice(1)
+		r2.account.add_rice(r2.spin_cost())
 		r2.spins = 0
 		r2.field.resize(1)
 		if (r2.spin()["result"]["wins"] as Array).is_empty():
@@ -141,8 +142,8 @@ func test_jackpot_refunds_the_spin() -> void:
 	var refund := false
 	for e: Dictionary in res["events"]:
 		if String(e["type"]) == "refund":
-			refund = int(e["rice"]) == 1
-	check(refund, "refund event of 1")
+			refund = int(e["rice"]) == int(DB.rules["jackpot_refund_rice"])
+	check(refund, "refund event = jackpot_refund_rice")
 
 
 func test_shift_one_blank_reel() -> void:
@@ -154,21 +155,34 @@ func test_shift_one_blank_reel() -> void:
 	var rice := r.rice
 	var res := r.nudge(2, 1)
 	eq(r.rice, rice - 1, "재배치 = 군량 1")
-	eq(r.spins_left(), 9, "재배치는 10번에 안 든다")
+	eq(r.spins, 1, "재배치는 돌리기 횟수에 안 든다")
 	eq(r.field.size(), 2, "spear + archer")
 	eq(r.field[1].id, "archer", "the cell above came down")
 	eq((res["events"] as Array).size(), 1, "only the new unit")
-	check(not r.can_nudge(), "once per spin")
-	check(r.nudge(1, -1).is_empty(), "second shift refused")
+	check(r.can_nudge(), "more shifts while a blank is left")
+	var res2 := r.nudge(1, -1)
+	eq(r.rice, rice - 2 + int(DB.rules["jackpot_refund_rice"]), "second shift = 군량 1 more, jackpot refund back")
+	eq(r.field[2].id, "rider", "the cell below came up")
+	check(bool(res2["result"]["jackpot"]), "three wins by shifts = jackpot")
+	check(not r.can_nudge(), "no blank left")
 
 
-func test_recruit_stands_on_field_until_full() -> void:
+func test_soldiers_have_no_limit() -> void:
+	var r := _run()
+	for i in 20:
+		eq(r.recruit("spear")[0]["type"], "field", "a soldier always stands on the field")
+	eq(r.field.size(), 20, "20 soldiers, over the cap of 8")
+	eq(r.spin_block_reason(), "", "the lever stays open")
+
+
+func test_heroes_stop_at_the_cap() -> void:
 	var r := _run()
 	for i in 8:
-		eq(r.recruit("spear")[0]["type"], "field", "stands on the field")
-	eq(r.field.size(), 8, "field cap 8")
-	eq(r.recruit("archer")[0]["type"], "lost", "no bench: overflow is lost")
-	eq(r.field.size(), 8, "still 8")
+		eq(r.recruit("guanyu")[0]["type"], "field", "hero %d stands" % (i + 1))
+	check(r.heroes_full(), "8 heroes = full")
+	eq(r.recruit("zhangfei")[0]["type"], "lost", "the ninth hero has no place")
+	eq(r.recruit("spear")[0]["type"], "field", "but soldiers still come in")
+	eq(r.spin_block_reason(), "", "spinning is still allowed")
 
 
 func test_no_hero_limit() -> void:
@@ -178,14 +192,52 @@ func test_no_hero_limit() -> void:
 	eq(r.heroes_on_field(), 4, "four heroes on the field (no hero quota)")
 
 
-func test_full_field_locks_lever() -> void:
+func test_army_carries_over_with_hp() -> void:
+	# 내 부대 (2026-11-23): 이겨도 져도 남고, 체력도 이어진다. 계정에 없는 손님 장수는 빠진다.
 	var r := _run()
-	for i in 8:
-		r.recruit("spear")
-	eq(r.spin_block_reason(), DB.t("battle.field_full"), "lever locked when the field is full")
-	check(r.spin().is_empty(), "spin refused")
-	check(not r.absorb_star(r.field[1], r.field[0]).is_empty(), "absorb")
-	eq(r.spin_block_reason(), "", "absorbing makes room")
+	r.recruit("spear")
+	r.recruit("archer")
+	r.field[0].hp_ratio = 0.4
+	r.field[0].anchor = Vector2(300, 800)
+	var guest := UnitState.create("lvbu", 0)
+	r.field.append(guest)
+	r.account.data["heroes"].erase("lvbu")
+	r.account.set_army(r.field)
+	var army := r.account.army()
+	eq(army.size(), 2, "spear + archer (guest hero left out)")
+	eq(float(army[0]["hp"]), 0.4, "hp kept")
+	var r2 := _run(2, r.account)
+	r2.load_units(r.account.army())
+	eq(r2.field.size(), 2, "the army stands on the next field")
+	eq(r2.field[0].hp_ratio, 0.4, "with its hp")
+	eq(r2.field[0].anchor, Vector2(300, 800), "in its place")
+	r.account.finish_run(1, 1, 3, false, 0, {})
+	eq(r.account.army().size(), 2, "a lost run keeps the army")
+	eq(r.account.current_stage(), 1, "and the stage stays")
+
+
+func test_retreat_save_and_restore() -> void:
+	var r := _run()
+	r.recruit("spear")
+	r.recruit("guanyu")
+	r.field[0].anchor = Vector2(300, 700)
+	r.finish_wave()
+	r.finish_wave()
+	r.castle_hp = 640
+	r.buy_field_cap()
+	var save := r.to_save()
+	var r2 := RunState.new(RandomNumberGenerator.new(), ["guanyu"], ["spear"], 1, 1, r.account)
+	r2.restore(save)
+	eq(r2.wave, 2, "two waves won: go on from the third")
+	eq(r2.castle_hp, 640, "castle health kept")
+	eq(r2.field.size(), 2, "units kept")
+	eq(r2.field[1].id, "guanyu", "same units")
+	eq(r2.field[0].anchor, Vector2(300, 700), "same places")
+	eq(r2.field_cap, 9, "bought place kept")
+	r.account.suspend_run(save)
+	check(not r.account.suspended().is_empty(), "stored on the account")
+	r.account.finish_run(1, 1, 10, true, 1, {})
+	check(r.account.suspended().is_empty(), "finishing the run clears it")
 
 
 func test_field_cap_purchase() -> void:
@@ -296,8 +348,10 @@ func test_new_unit_joins_even_when_the_field_is_full() -> void:
 	var r := _run()
 	for i in 8:
 		r.recruit("spear")
+	for i in 8:
+		r.recruit("guanyu")
 	var ev := r.recruit("lvbu")
-	eq(ev[0]["type"], "lost", "no room for the body")
+	eq(ev[0]["type"], "lost", "no hero place for the body")
 	check(bool(ev[0]["new"]) and r.account.owns("lvbu"), "but the hero joined the account")
 
 
@@ -432,4 +486,4 @@ func test_tutorial_flow() -> void:
 	eq(r.field.size(), 4, "spear, archer, spear, guanyu")
 	eq(r.field[3].id, "guanyu", "guanyu stands on the field right away")
 	check(r.account.owns("guanyu"), "and joins the account (모집 화면 없음)")
-	eq(r.spins_left(), 7, "three spins used, the shift does not count")
+	eq(r.spins, 3, "three spins used, the shift does not count")

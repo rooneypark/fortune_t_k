@@ -13,14 +13,17 @@ extends Node
 ## - 금이 넉넉하면 전장 칸을 산다. 장비 · 합성은 쓰지 않는다. 배치는 자동 자리 그대로.
 
 const DT := 0.05
+## 한 판에 쓰는 군량 (2026-11-23): 군량 30분에 1 · 하루 2번 접속 가정 → 한 번에 24 (돌리기 12번).
+const RICE_PER_RUN := 24
+const RUNS_PER_DAY := 2
 const MAX_STEPS := 4000  # 한 웨이브 200초
 
 
 func _ready() -> void:
 	DB.ensure()
 	if OS.get_cmdline_user_args().has("--quick"):
-		print("== 새 계정 하나로 20판: 깬 곳 다음 스테이지 보통으로 올라간다 (성장 누적) ==")
-		_campaign(20, [])
+		print("== 새 계정 하나로 40판 (하루 %d판 · 한 판 군량 %d 가정): 깬 곳 다음 스테이지 보통 (부대 · 성장 누적) ==" % [RUNS_PER_DAY, RICE_PER_RUN])
+		_campaign(40, [])
 		get_tree().quit(0)
 		return
 	if OS.get_cmdline_user_args().has("--tune"):
@@ -77,8 +80,8 @@ func _campaign(n: int, heroes: Array) -> void:
 			for id: String in acc.data["troops"]:
 				stars.append("%s%d" % [DB.troop_name(id).substr(0, 2), int(acc.data["troops"][id]["star"])])
 			var atk := int(MetaRules.soldier_stats(acc.data, "spear")["atk"])
-			print("  판 %2d~%2d: 스테이지 %d, 5판 중 %d승, 군주 Lv.%d, 장수 %d명, 병종 %d종, 창병 %d성 공격 %d, 재료 %d, 번 금 %d" % [
-				i - 3, i + 1, stage, wins, int(acc.data["lord_lv"]), (acc.data["heroes"] as Dictionary).size(), (acc.data["troops"] as Dictionary).size(),
+			print("  판 %2d~%2d (%d일째): 스테이지 %d, 5판 중 %d승, 부대 %d명, 군주 Lv.%d, 장수 %d명, 창병 %d성 공격 %d, 재료 %d, 번 금 %d" % [
+				i - 3, i + 1, (i + RUNS_PER_DAY) / RUNS_PER_DAY, stage, wins, acc.army().size(), int(acc.data["lord_lv"]), (acc.data["heroes"] as Dictionary).size(),
 				int(acc.data["troops"]["spear"]["star"]), atk, _mats(acc), int(acc.data["gold"]) - gold0])
 	var top := 0
 	for s in range(1, DB.stage_count() + 1):
@@ -123,8 +126,9 @@ func _report(rows: Array) -> void:
 func _one(acc: Profile, stage: int, diff: int, seed: int) -> Dictionary:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed
-	acc.data["rice"]["n"] = int(DB.rules["rice_max"])
+	acc.data["rice"]["n"] = RICE_PER_RUN
 	var run := RunState.new(rng, DB.hero_ids(), DB.soldier_ids(), stage, diff, acc)
+	run.load_units(acc.army())        # 내 부대 (이겨도 져도 남는다, 기획서 §18)
 	var bf := BattleField.new()
 	bf.setup(run, acc.data)
 	bf.castle_hit.connect(func(dmg: float) -> void: run.damage_castle(dmg))
@@ -151,6 +155,8 @@ func _one(acc: Profile, stage: int, diff: int, seed: int) -> Dictionary:
 	var why := "" if won else ("성 함락" if run.castle_fallen() else ("전장에 아무도 없음" if run.field.is_empty() else "웨이브가 200초 안에 안 끝남"))
 	var res := {"stage": stage, "diff": diff, "win": won, "why": why, "wave": cleared, "castle": run.castle_ratio() if won else 0.0,
 		"units": run.field.size(), "spins": int(run.stats["spins"])}
+	bf.store_hp()
+	acc.set_army(run.field)
 	acc.finish_run(stage, diff, cleared, won, run.stars_earned(won), run.stats)
 	bf.free()
 	return res
@@ -161,8 +167,8 @@ func _prep(run: RunState) -> void:
 	var guard := 0
 	while guard < 60:
 		guard += 1
-		# 전장이 가득 차면 금이 넉넉할 때 칸을 사고, 아니면 흡수로 자리를 만든다.
-		if run.field_full():
+		# 장수 자리가 가득 차면 금이 넉넉할 때 자리를 사고, 아니면 흡수로 자리를 만든다.
+		if run.heroes_full():
 			var cost := run.field_cap_cost()
 			if cost >= 0 and int(run.account.data["gold"]) >= cost + 5000:
 				run.buy_field_cap()
@@ -171,10 +177,11 @@ func _prep(run: RunState) -> void:
 		if run.spin_block_reason() != "":
 			break
 		run.spin()
-		if run.can_nudge():
+		# 재배치: 끌어올 유닛이 보이는 동안 계속 (군량이 있는 동안)
+		while run.can_nudge():
 			var wins := run.slot.nudge_wins()
-			if not wins.is_empty():
-				run.nudge(int(wins[0][0]), int(wins[0][1]))
+			if wins.is_empty() or run.nudge(int(wins[0][0]), int(wins[0][1])).is_empty():
+				break
 
 
 ## Frees one field slot by absorbing. Returns false when nothing can be absorbed.
@@ -208,13 +215,10 @@ func _tune() -> void:
 	var d0: Dictionary = DB.stages["difficulties"][0]
 	var base_mult := float(d0["mult"])
 	var base_cap := int(DB.rules["field_cap_base"])
-	var base_spins := int(DB.rules["spins_per_battle"])
-	for cfg: Array in [[0.35, 8, 10], [0.25, 8, 10], [0.2, 8, 10], [0.35, 8, 15], [0.35, 8, 20]]:
+	for cfg: Array in [[0.35, 8], [0.25, 8], [0.2, 8], [0.35, 10], [0.35, 12]]:
 		d0["mult"] = cfg[0]
 		DB.rules["field_cap_base"] = cfg[1]
-		DB.rules["spins_per_battle"] = cfg[2]
-		print("적 배율 %.2f · 전장 %d칸 · 전투당 돌리기 %d" % cfg)
+		print("적 배율 %.2f · 전장 %d칸" % cfg)
 		_report(_many(12, 1, 1, false, []))
 	d0["mult"] = base_mult
 	DB.rules["field_cap_base"] = base_cap
-	DB.rules["spins_per_battle"] = base_spins

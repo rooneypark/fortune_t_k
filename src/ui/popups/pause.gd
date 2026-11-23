@@ -34,12 +34,12 @@ func build() -> void:
 	st.pressed.connect(func() -> void: Game.app.popup("settings"))
 	put(st, Rect2(120, y, 600, 110))
 	y += 130
-	var quit := PxButton.colored("red", DB.t("pause.give_up"), Vector2(600, 110), 38)
+	var quit := PxButton.colored("red", DB.t("pause.retreat"), Vector2(600, 110), 38)
 	quit.pressed.connect(func() -> void:
-		var c := Game.app.popup("confirm", {"title": DB.t("pause.give_up"), "text": DB.t("pause.give_up_text"), "ok": DB.t("pause.give_up_ok")})
+		var c := Game.app.popup("confirm", {"title": DB.t("pause.retreat"), "text": DB.t("pause.retreat_text"), "ok": DB.t("pause.retreat_ok")})
 		c.confirmed.connect(func() -> void:
 			var b: Node = Game.app.current
-			if b != null and b.has_method("give_up"):
-				b.give_up()
+			if b != null and b.has_method("retreat"):
+				b.retreat()
 			Game.app.goto("lobby")))
 	put(quit, Rect2(120, y, 600, 110))

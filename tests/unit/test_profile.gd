@@ -101,7 +101,7 @@ func test_slot_join_adds_new_units_only_once() -> void:
 func test_finish_run_rewards_and_unlock() -> void:
 	var p := _p()
 	check(p.is_unlocked(1, 1), "stage 1 보통 open")
-	check(not p.is_unlocked(1, 2), "stage 1 어려움 locked")
+	check(p.is_unlocked(1, 2) and p.is_unlocked(1, 3), "stage 1: 어려움 · 지옥도 처음부터 열림")
 	check(not p.is_unlocked(2, 1), "stage 2 locked")
 	var gold: int = p.data["gold"]
 	var out := p.finish_run(1, 1, 10, true, 3, {"kills": 50, "spins": 10})
@@ -111,7 +111,7 @@ func test_finish_run_rewards_and_unlock() -> void:
 	eq(int(p.data["gold"]) - gold, 3500, "both paid in 금")
 	check(p.is_unlocked(1, 2), "어려움 unlocked")
 	check(p.is_unlocked(2, 1), "stage 2 unlocked")
-	check(not p.is_unlocked(2, 2), "stage 2 어려움 still locked")
+	check(p.is_unlocked(2, 3), "stage 2: 모든 난이도 열림")
 	eq(int(out["lord_exp"]), 200, "첫 클리어 군주 경험 100 x 2")
 	eq(String(p.data["progress"]["last"]), "2-1", "next stage")
 	out = p.finish_run(1, 1, 10, true, 2, {})
@@ -229,7 +229,7 @@ func test_arena_shop_needs_honor() -> void:
 
 
 func test_rice_fills_over_time_and_is_bought_with_gold() -> void:
-	# 개편 §13: 군량은 5분에 1씩 저절로 차고(최대 30), 금으로 바로 채운다.
+	# 개편 §13: 군량은 시간으로 저절로 차고(30분에 1, 최대 30), 금으로 바로 채운다.
 	var p := _p()
 	var clk := {"t": 1795000000}
 	p.clock = func() -> int: return int(clk["t"])
@@ -237,12 +237,14 @@ func test_rice_fills_over_time_and_is_bought_with_gold() -> void:
 	eq(p.rice_now(), cap, "a new account starts full")
 	check(p.spend_rice(10), "spend 10")
 	eq(p.rice_now(), cap - 10, "20 left")
-	eq(p.rice_next_sec(), int(DB.rules["rice_regen_sec"]), "5 minutes to the next one")
-	clk["t"] = int(clk["t"]) + 299
+	var step := int(DB.rules["rice_regen_sec"])
+	eq(step, 1800, "30분에 1 (2026-11-23)")
+	eq(p.rice_next_sec(), step, "one step to the next one")
+	clk["t"] = int(clk["t"]) + step - 1
 	eq(p.rice_now(), cap - 10, "not yet")
 	clk["t"] = int(clk["t"]) + 1
-	eq(p.rice_now(), cap - 9, "+1 after 5 minutes")
-	clk["t"] = int(clk["t"]) + 300 * 3 + 100
+	eq(p.rice_now(), cap - 9, "+1 after one step")
+	clk["t"] = int(clk["t"]) + step * 3 + 100
 	eq(p.rice_now(), cap - 6, "+3 more, the rest of the time is kept")
 	clk["t"] = int(clk["t"]) + 86400
 	eq(p.rice_now(), cap, "stops at the max")

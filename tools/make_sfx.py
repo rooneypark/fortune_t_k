@@ -81,3 +81,11 @@ bass_battle = [45, 45, 57, 45, 45, 45, 57, 45, 43, 43, 55, 43, 43, 43, 55, 43,
                41, 41, 53, 41, 41, 41, 53, 41, 40, 40, 52, 40, 45, 45, 57, 45]
 bgm("bgm_battle", 150, mel_battle, bass_battle)
 print("ok")
+
+# 출정 북 (2026-11-23, 로비 출정 버튼): 낮은 둥 두 번. 난수를 쓰지 않아 다른 소리에 영향이 없다.
+_n = int(SR * 0.335)
+_f = np.linspace(95, 42, _n)
+_body = 4 * np.abs(((np.cumsum(_f) / SR) % 1.0) - 0.5) - 1
+_click = np.sin(np.arange(_n) * 2.3) * np.sin(np.arange(_n) * 0.71) * (np.arange(_n) < SR * 0.015)
+_d1 = 0.7 * (_body + 0.5 * _click) * env(_n, a=0.002, r=0.22)
+save("drum", cat(_d1, np.zeros(int(SR * 0.06)), _d1 * 0.8))

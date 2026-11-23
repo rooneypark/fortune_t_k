@@ -8,8 +8,9 @@ extends RefCounted
 ## in the game that is every hero and troop, owned or not (개편 §13: 캐릭터는
 ## 전투 중 슬롯에서만 얻는다).
 ## The cells just above and below each result cell are real cells and stay visible:
-## after a spin with a blank, one blank reel may be shifted once so that its upper
-## or lower neighbour slides into the result row (재배치, 위아래 둘 다).
+## after a spin with a blank, a blank reel may be shifted so that its upper or
+## lower neighbour slides into the result row (재배치, 위아래 둘 다). Shifts may be
+## repeated while a blank is left, up to nudges_per_spin (0 = no limit).
 ## Pure rules: no nodes; every random number comes from the injected rng.
 
 const REELS := 3
@@ -22,8 +23,10 @@ var soldiers: Array = []
 var strips: Array = []
 ## Index of the result cell on each strip.
 var stops: Array = [0, 0, 0]
-## True while one blank reel may still be shifted (재배치).
+## True while a blank reel may still be shifted (재배치).
 var can_nudge := false
+## Shifts made since the last spin.
+var nudges := 0
 ## Pending scripted result (tutorial / tests): {cells: [id or ""] x3,
 ## above: [id or ""] x3, below: [id or ""] x3} — above / below are optional.
 var forced: Dictionary = {}
@@ -128,20 +131,30 @@ func spin(rng: RandomNumberGenerator, hero_boost := false, lucky := false, min_w
 				_put(r, 1, String(forced["below"][r]))
 		forced = {}
 	var res := evaluate(cells(), [0, 1, 2])
+	nudges = 0
 	can_nudge = (res["wins"] as Array).size() < REELS
 	return res
 
 
 ## 재배치: shifts one blank reel by one cell. [param dir] +1 = down (the cell above
-## slides into the row), -1 = up (the cell below slides in). Allowed once after a
-## spin with a blank. Returns the new result (recruits = that reel only), or {}
-## when not allowed.
+## slides into the row), -1 = up (the cell below slides in). Allowed after a spin
+## with a blank, again and again while a blank is left (up to nudges_per_spin,
+## 0 = no limit). Returns the new result (recruits = that reel only), or {} when
+## not allowed.
 func nudge(reel: int, dir: int) -> Dictionary:
 	if not can_nudge or reel < 0 or reel >= REELS or absi(dir) != 1 or cell(reel) != "":
 		return {}
-	can_nudge = false
 	stops[reel] = posmod(int(stops[reel]) - dir, (strips[reel] as Array).size())
-	return evaluate(cells(), [reel])
+	nudges += 1
+	var res := evaluate(cells(), [reel])
+	var limit := nudge_limit()
+	can_nudge = (res["wins"] as Array).size() < REELS and (limit <= 0 or nudges < limit)
+	return res
+
+
+## Most shifts after one spin (rules.nudges_per_spin), 0 = no limit.
+static func nudge_limit() -> int:
+	return int(DB.rules.get("nudges_per_spin", 0))
 
 
 ## Shifts that would bring a unit into the row now: [[reel, dir]].

@@ -79,9 +79,24 @@ const KINDS := {"blue": "wood", "green": "yellow"}
 static func colored(color: String, label: String, sz: Vector2, fsize := 40) -> PxButton:
 	var kind := String(KINDS.get(color, color))
 	var b := make("tab_" + kind, true, sz)
-	b.text = label
 	b.font_size = mini(fsize, font_for(sz.y))
+	b.set_label(label)
 	return b
+
+
+## Sets the label: a known action / tab label becomes its icon (글자 → 아이콘, 규격 §5),
+## the words stay as the tooltip. Other labels (prices, names) stay text.
+func set_label(label: String) -> void:
+	var ic := Px.icon_for(label)
+	if ic != "" and Px.tex(ic) != null:
+		icon = Px.tex(ic)
+		var h := minf(size.y * 0.62, 96.0)
+		icon_rect = Rect2((size - Vector2(h, h)) * 0.5, Vector2(h, h))
+		text = ""
+		tooltip_text = label
+	else:
+		icon = null
+		text = label
 
 
 static func font_for(h: float) -> int:
@@ -95,7 +110,7 @@ func _ready() -> void:
 	button_up.connect(queue_redraw)
 	pressed.connect(_on_pressed)
 	if size == Vector2.ZERO and not nine:
-		if Px.LINE_UI and LINE_SIZE.has(part):
+		if Px.LINE_UI and LINE_SIZE.has(part) and not Px.has_art(part):
 			size = LINE_SIZE[part]
 		else:
 			var t := Px.tex(part)
@@ -140,7 +155,7 @@ func _draw() -> void:
 	if pulse and not disabled:
 		var a := 0.35 + 0.35 * sin(_t * 6.0)
 		draw_rect(r.grow(6), Color(Px.GOLD, a), false, 6.0)
-	if part != "" and Px.LINE_UI:
+	if part != "" and Px.LINE_UI and (nine or not Px.has_art(part)):
 		var lmod := mod if not is_sunk else Color(1.25, 1.25, 1.25)
 		Px.draw_skin(self, part, r, lmod)
 		if part == "lever":
@@ -169,6 +184,10 @@ func _draw() -> void:
 				draw_texture_rect(t, r, false, mod)
 	if icon != null:
 		var ir := icon_rect
+		if sub != "" and text == "":
+			# 아이콘 버튼 + 값(가격): 아이콘은 위, 값은 아래
+			var h2 := size.y * 0.5
+			ir = Rect2(Vector2((size.x - h2) * 0.5, size.y * 0.05), Vector2(h2, h2))
 		if ir.size == Vector2.ZERO:
 			var h := size.y * 0.6
 			ir = Rect2((size - Vector2(h, h)) * 0.5, Vector2(h, h))

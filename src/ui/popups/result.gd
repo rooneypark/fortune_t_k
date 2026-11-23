@@ -6,6 +6,8 @@ var p: Dictionary
 var victory := false
 var _t := 0.0
 var _out: Dictionary = {}
+## 재료 종류 → 아이콘 (임시 그림)
+const MAT_ICON := {"weapon": "ic_sword", "armor": "ic_shield", "charm": "ic_orb"}
 
 
 func setup(params: Dictionary) -> void:
@@ -23,18 +25,8 @@ func build() -> void:
 	var w := panel_rect.size.x
 	var head := DrawLayer.make(func(ci: Control) -> void:
 		var s := DB.t("result.clear", ["%d %s" % [int(p["stage"]), String(DB.difficulty(int(p["diff"]))["name"])]]) if victory else DB.t("result.fallen")
-		Px.text(ci, s, Rect2(0, 0, ci.size.x, 60), 44, Px.WHITE)
-		if victory:
-			var stars := int(_out.get("stars", 0))
-			for i in 3:
-				var k := clampf((_t - 0.25 * i) / 0.25, 0.0, 1.0)
-				var sz := 96.0 * (1.0 + 0.4 * (1.0 - k)) if k > 0.0 else 0.0
-				var c := Vector2(ci.size.x * 0.5 + (i - 1) * 130, 130)
-				Px.fit(ci, Px.tex("ic_star_off"), Rect2(c - Vector2(48, 48), Vector2(96, 96)))
-				if i < stars and k > 0.0:
-					Px.fit(ci, Px.tex("ic_star"), Rect2(c - Vector2(sz, sz) * 0.5, Vector2(sz, sz)))
-			var rules: Array = DB.stages["star_rules"]
-			Px.text(ci, " · ".join(rules), Rect2(0, 184, ci.size.x, 34), 22, Px.MUTED))
+		# 별(클리어 등급)은 보여 주지 않는다: 깼으면 깬 것이다 (2026-11-23).
+		Px.text(ci, s, Rect2(0, 0, ci.size.x, 60), 44, Px.WHITE))
 	put(head, Rect2(20, 100, w - 40, 220))
 	var st: Dictionary = p["stats"]
 	var cells := [[DB.t("result.waves"), "%d/%d" % [int(p["waves"]), 10]], [DB.t("result.kills"), Px.num(int(st.get("kills", 0)))],
@@ -64,16 +56,21 @@ func build() -> void:
 			items.append(["ic_scroll", DB.t("result.exp", [int(_out.get("lord_exp", 0))])])
 		if int(_out.get("first_gold", 0)) > 0:
 			items.append(["icon_gold", DB.t("result.first", [int(_out["first_gold"])])])
-		var mats: Array = _out.get("materials", [])
-		if not mats.is_empty():
-			items.append(["icon_chest", DB.t("result.mats", [mats.size()])])
+		# 전리품: 재료 하나하나를 종류 아이콘 + 등급 색 테두리로 (무기 · 갑옷 · 장신구)
+		for m: Dictionary in _out.get("materials", []):
+			items.append([MAT_ICON.get(String(m.get("slot", "")), "icon_chest"), DB.t("rarity_t." + String(m.get("rarity", "common"))), DB.rarity_color(String(m.get("rarity", "common")))])
 		if items.is_empty():
 			Px.text(ci, DB.t("result.after"), Rect2(20, 60, ci.size.x - 40, 80), 26, Px.MUTED)
+		var step := minf(205.0, (ci.size.x - 20.0) / maxf(1.0, items.size()))
 		for i in items.size():
 			var it: Array = items[i]
-			var x := 20 + i * 205
-			Px.fit(ci, Px.tex(String(it[0])), Rect2(x + 60, 56, 76, 70))
-			Px.text(ci, String(it[1]), Rect2(x, 130, 196, 40), 24, Px.GOLD))
+			var x := 20 + i * step
+			var ir := Rect2(x + step * 0.5 - 38, 56, 76, 70)
+			if it.size() > 2:
+				ci.draw_rect(ir.grow(6), Color(0, 0, 0, 0.4))
+				ci.draw_rect(ir.grow(6), it[2] as Color, false, 4.0)
+			Px.fit(ci, Px.tex(String(it[0])), ir)
+			Px.text(ci, String(it[1]), Rect2(x, 130, step - 4, 40), 24, (it[2] as Color).lightened(0.3) if it.size() > 2 else Px.GOLD))
 	put(rw, Rect2(30, 610, w - 60, 190))
 	if not victory and bool(p.get("can_continue", false)):
 		var cont := PxButton.colored("purple", DB.t("result.continue"), Vector2(560, 130), 40)

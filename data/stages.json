@@ -1,7 +1,10 @@
 {
  "_source": "스테이지-흡수-합성-개편 §3.1, §4 (스테이지 10 × 난이도 3, 적 배율 1.2^(스테이지-1) × 난이도)",
- "stage_base": 1.2,
+ "stage_base": 1.32,
  "first_clear_gold": 2000,
+ "count_base": 1.0,
+ "count_stage": 0.45,
+ "count_wave": 0.05,
  "gold_per_wave": 100,
  "gold_victory": 500,
  "star_rules": [

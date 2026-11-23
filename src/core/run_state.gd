@@ -1,7 +1,7 @@
 class_name RunState
 extends RefCounted
 ## One run (= one stage on one difficulty, 10 waves): the 천명 slot (군량 is the
-## account's: 1 per spin, at most spins_per_battle spins a run, 개편 §13),
+## account's: spin_rice per spin, no spin limit — spins while 군량 lasts, 2026-11-23),
 ## recruiting straight onto the field, absorb (성급 / 속성), castle health,
 ## respawn times. 스테이지-흡수-합성-개편 §3.2: no lineup, no bench, no hero limit —
 ## every owned troop and hero is on the reels and a recruit stands on the field.
@@ -84,32 +84,27 @@ func nudge_cost() -> int:
 	return int(DB.rules["respin_rice"])
 
 
-func spins_max() -> int:
-	return int(DB.rules["spins_per_battle"])
-
-
+## Spins the account's 군량 still pays for (no per-battle limit).
 func spins_left() -> int:
-	return maxi(0, spins_max() - spins)
+	return maxi(0, rice / maxi(1, spin_cost()))
 
 
-func field_full() -> bool:
-	return field.size() >= field_cap
+## 장수 자리가 다 찼는가: 한도는 장수에게만 있다. 병사는 제한 없이 선다 (2026-11-23,
+## 군량이 돌리기 수를 막는다).
+func heroes_full() -> bool:
+	return heroes_on_field() >= field_cap
 
 
-## Why a spin is not possible now, or "": the run's spins are used up, the field
-## is full (absorb or buy a slot), or the account has no 군량.
+## Why a spin is not possible now, or "": the account has too little 군량.
+## (전장이 차도 돌릴 수 있다: 장수 자리가 차면 새 장수만 못 선다.)
 func spin_block_reason() -> String:
-	if spins_left() <= 0:
-		return DB.t("battle.no_spins")
-	if field_full():
-		return DB.t("battle.field_full")
 	if rice < spin_cost():
 		return DB.t("battle.no_rice")
 	return ""
 
 
 func can_nudge() -> bool:
-	return slot.can_nudge and rice >= nudge_cost() and not field_full()
+	return slot.can_nudge and rice >= nudge_cost()
 
 
 ## 금 for the next field slot (this run only), or -1 at the limit.
@@ -172,7 +167,7 @@ func advisor_ready() -> bool:
 		return false
 	match advisor_type():
 		"respin":
-			return not last_result.is_empty() and slot.first_blank() >= 0 and not field_full()
+			return not last_result.is_empty() and slot.first_blank() >= 0
 		_:
 			return true
 
@@ -222,8 +217,8 @@ func _apply(res: Dictionary) -> Array:
 	return events
 
 
-## Adds one recruited unit to the field, or loses it when the field is full
-## (several winning reels can overflow the last free slots). A hero that is
+## Adds one recruited unit to the field. Soldiers always find room; a hero is lost
+## when the hero places are full (장수만 한도, 2026-11-23). A hero that is
 ## already on the field is not merged: the copy stands beside it (개편 §3.3).
 ## A hero or troop the account does not have yet joins it here, for good (개편 §13:
 ## 캐릭터는 전투 중 슬롯에서만 얻는다) — also when there is no room for the body.
@@ -232,7 +227,7 @@ func recruit(id: String) -> Array:
 	if is_new:
 		stats["new_units"] += 1
 	var u := UnitState.create(id, 0)
-	if field_full():
+	if u.is_hero() and heroes_full():
 		return [{"type": "lost", "unit": u, "new": is_new}]
 	field.append(u)
 	return [{"type": "field", "unit": u, "summon": true, "new": is_new}]
@@ -381,6 +376,48 @@ func revive() -> bool:
 	castle_hp = castle_max / 2
 	changed.emit()
 	return true
+
+
+## 퇴각 (2026-11-23): what is kept to go on later from the start of the current
+## wave — the waves already won, the units on the field, castle health, bought places.
+func to_save() -> Dictionary:
+	var units: Array = []
+	for u in field:
+		units.append({"id": u.id, "x": u.anchor.x, "y": u.anchor.y, "hp": u.hp_ratio})
+	return {"stage": stage, "diff": diff, "wave": wave, "castle": castle_hp, "units": units,
+		"cap": field_cap, "cap_bought": field_cap_bought, "continued": continued,
+		"spins": spins, "stats": stats.duplicate()}
+
+
+## Puts a saved run back (see to_save). The current wave starts from its prep.
+func restore(save: Dictionary) -> void:
+	wave = clampi(int(save.get("wave", 0)), 0, waves.size() - 1)
+	castle_hp = clampi(int(save.get("castle", castle_max)), 1, castle_max)
+	field_cap = int(save.get("cap", field_cap))
+	field_cap_bought = int(save.get("cap_bought", 0))
+	continued = bool(save.get("continued", false))
+	spins = int(save.get("spins", 0))
+	var st: Dictionary = save.get("stats", {})
+	for k in st:
+		if stats.has(k):
+			stats[k] = int(st[k])
+	if save.has("units"):
+		load_units(save["units"])
+	changed.emit()
+
+
+## 부대(또는 저장된 유닛 목록 [{id, x, y}])를 전장에 세운다.
+func load_units(list: Array) -> void:
+	field.clear()
+	for e: Dictionary in list:
+		var id := String(e.get("id", ""))
+		if not DB.is_hero(id) and not DB.soldier_ids().has(id):
+			continue
+		var u := UnitState.create(id, 0)
+		u.anchor = Vector2(float(e.get("x", 0.0)), float(e.get("y", 0.0)))
+		u.hp_ratio = clampf(float(e.get("hp", 1.0)), 0.05, 1.0)
+		field.append(u)
+	changed.emit()
 
 
 ## Stage stars (콘텐츠 §2.3): clear, castle >= 50 %, castle >= 90 %.

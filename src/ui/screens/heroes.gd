@@ -38,7 +38,7 @@ func _rebuild() -> void:
 		var have := {}
 		for it: Dictionary in Game.profile.data["treasures"]:
 			have[String(it["tid"])] = true
-		_put_dex(DB.t("dex.items", [have.size(), (DB.meta["treasure"]["list"] as Array).size()]))
+		_put_dex("%d/%d" % [have.size(), (DB.meta["treasure"]["list"] as Array).size()], "icon_bag")
 	match tab:
 		0:
 			_build_heroes()
@@ -53,7 +53,7 @@ func _rebuild() -> void:
 func _build_heroes() -> void:
 	# 내것만 / 전체 토글
 	var tog := PxButton.make("btn_small", true, Vector2(148, 64))
-	tog.text = DB.t("heroes.mine") if only_owned else DB.t("heroes.all")
+	tog.set_label(DB.t("heroes.mine") if only_owned else DB.t("heroes.all"))
 	tog.font_size = 24
 	tog.highlight = only_owned
 	tog.pressed.connect(func() -> void:
@@ -94,7 +94,7 @@ func _build_heroes() -> void:
 		if ta != tb:
 			return ta > tb
 		return a < b)
-	var area := Rect2(40, 328, 944, 1260)
+	var area := Rect2(40, 328, 944, 1120)
 	var content := W.scroll(self, area, func(sc: Control, r: Rect2) -> void: put(sc, r))
 	var cw := 222.0
 	var chh := 224.0
@@ -144,7 +144,7 @@ func _build_troops() -> void:
 		Px.text(ci, DB.t("heroes.troop_hint"), Rect2(380, 0, ci.size.x - 380, ci.size.y), 22, Px.MUTED, HORIZONTAL_ALIGNMENT_RIGHT))
 	put(head, Rect2(60, 250, 904, 64))
 	var ids: Array = DB.soldier_ids()
-	var area := Rect2(40, 328, 944, 1260)
+	var area := Rect2(40, 328, 944, 1120)
 	var content := W.scroll(self, area, func(sc: Control, r: Rect2) -> void: put(sc, r))
 	var cw := 222.0
 	var chh := 260.0
@@ -197,7 +197,7 @@ func _troop_tile(id: String, sz: Vector2, in_lineup: bool) -> PxButton:
 func _build_treasures() -> void:
 	# 내것만 / 전체 토글
 	var tog := PxButton.make("btn_small", true, Vector2(148, 64))
-	tog.text = DB.t("heroes.mine") if only_owned else DB.t("heroes.all")
+	tog.set_label(DB.t("heroes.mine") if only_owned else DB.t("heroes.all"))
 	tog.font_size = 24
 	tog.highlight = only_owned
 	tog.pressed.connect(func() -> void:
@@ -244,7 +244,7 @@ func _build_treasures() -> void:
 	var cnt := DrawLayer.make(func(ci: Control) -> void:
 		Px.text(ci, "%d/%d" % [(Game.profile.data["treasures"] as Array).size(), int(DB.meta["treasure"]["bag_max"])], Rect2(0, 0, ci.size.x, ci.size.y), 28, Px.GOLD, HORIZONTAL_ALIGNMENT_RIGHT))
 	put(cnt, Rect2(640, 252, 324, 64))
-	var area := Rect2(40, 330, 944, 1040)
+	var area := Rect2(40, 330, 944, 960)   # 아래 재료 줄 · 하단 탭 위에서 끝나게 (2026-11-23)
 	var content := W.scroll(self, area, func(sc: Control, r: Rect2) -> void: put(sc, r))
 	var cs := 176.0
 	var total := owned_items.size() + catalog_missing.size()
@@ -266,22 +266,22 @@ func _build_treasures() -> void:
 	content.custom_minimum_size.y = 8 + ceili(maxi(1, total) / 5.0) * (cs + 12)
 	# 재료 요약 + 합성 (개편 §3.8): 보물은 합성으로만 얻는다
 	var mats := DrawLayer.make(func(ci: Control) -> void:
+		# 글자 없이: 재료 종류 아이콘(M 96) + 개수만
 		Px.draw_skin(ci, "panel_slot", Rect2(Vector2.ZERO, ci.size))
-		Px.fit(ci, Px.tex("icon_chest"), Rect2(26, 20, 110, 100))
 		var mat_slots: Array = DB.meta["treasure"]["slots"]
 		for i in mat_slots.size():
 			var slot := String(mat_slots[i])
 			var n := 0
 			for r: String in DB.meta["treasure"]["rarity_order"]:
 				n += Game.profile.material_count(slot, r)
-			Px.text(ci, DB.t("slot." + slot), Rect2(160 + i * 180, 24, 170, 40), 26, Px.MUTED, HORIZONTAL_ALIGNMENT_LEFT)
-			Px.text(ci, DB.t("synth.summary", [n]), Rect2(160 + i * 180, 68, 170, 48), 30, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT))
-	put(mats, Rect2(60, 1396, 904, 140))
+			Px.fit(ci, Px.tex(String(SLOT_ICON[slot])), Rect2(28 + i * 210, 22, 96, 96))
+			Px.text(ci, "×%d" % n, Rect2(128 + i * 210, 22, 90, 96), 34, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT))
+	put(mats, Rect2(60, 1300, 904, 140))
 	var synth := PxButton.colored("purple", DB.t("synth.open"), Vector2(220, 104), 36)
 	synth.pressed.connect(func() -> void:
 		var p: PxPopup = Game.app.popup("synth", {})
 		p.closed.connect(_rebuild))
-	put(synth, Rect2(724, 1414, 220, 104))
+	put(synth, Rect2(724, 1318, 220, 104))
 
 
 func _treasure_tile(it: Dictionary, sz: Vector2, owned: bool) -> PxButton:
@@ -313,9 +313,13 @@ func _treasure_tile(it: Dictionary, sz: Vector2, owned: bool) -> PxButton:
 
 
 ## 도감 수 (화면 위 오른쪽).
-func _put_dex(text: String) -> void:
+func _put_dex(text: String, ic: String = "") -> void:
 	if text == "":
 		return
 	var d := DrawLayer.make(func(ci: Control) -> void:
-		Px.text(ci, text, Rect2(Vector2.ZERO, ci.size), 24, Px.GOLD, HORIZONTAL_ALIGNMENT_RIGHT))
-	put(d, Rect2(564, 246 if mode != "items" else 150, 400, 34))
+		if ic != "":
+			# 도감: 아이콘 + 숫자만 (글자 최소)
+			var w := Px.text_width(text, 28)
+			Px.fit(ci, Px.tex(ic), Rect2(ci.size.x - w - 44, 0, 34, 34))
+		Px.text(ci, text, Rect2(Vector2.ZERO, ci.size), 28 if ic != "" else 24, Px.GOLD, HORIZONTAL_ALIGNMENT_RIGHT))
+	put(d, Rect2(564, 246 if mode != "items" else 200, 400, 34))

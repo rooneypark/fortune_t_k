@@ -15,15 +15,20 @@ def dump(name, obj):
 # ------------------------------------------------------------------ rules (GDD v5 §3, §7, §10)
 rules = {
     "_source": "GDD v5 §3.2-3.6, §7, §10 / v5_rules.json",
-    # 군량 (개편 §13): 계정의 것. 시간으로 차고(5분에 1), 금으로 바로 채운다. 전투 안에서는 벌지 않는다.
-    # 돌리기 1회 = 군량 1, 한 전투에 최대 10회. 재배치(꽝 줄을 위/아래로 한 칸) = 군량 1, 횟수에 안 든다.
-    "rice_max": 30, "rice_regen_sec": 300, "rice_price": 300,
-    "spin_rice": 1, "respin_rice": 1, "spins_per_battle": 10,
+    # 군량 (개편 §13): 계정의 것. 시간으로 차고(30분에 1, 2026-11-23: 5분 → 30분), 금으로 바로 채운다. 전투 안에서는 벌지 않는다.
+    # 돌리기 1회 = 군량 2, 한 전투의 횟수 제한 없음 (군량이 있는 만큼, 2026-11-23). 재배치(꽝 줄을 위/아래로 한 칸) = 군량 1, 횟수에 안 든다.
+    # 재배치는 꽝 칸이 남아 있는 동안 여러 번 (nudges_per_spin: 한 번 돌릴 때 최대 횟수, 0 = 제한 없음).
+    "rice_max": 30, "rice_regen_sec": 1800, "rice_price": 300,
+    "spin_rice": 2, "respin_rice": 1, "nudges_per_spin": 0,
+    # 로비 치료 (2026-11-23): 부대에 의원이 있으면 로비에서 tick초마다 의원 한 명이 가장 다친 유닛을 amount만큼 치료
+    "army_heal_tick": 2.0, "army_heal_amount": 0.05,
+    # 웨이브 사이 회복 (2026-11-23): 웨이브를 깨면 살아 있는 아군이 최대 체력의 15%를 회복 (성은 10%). 쓰러진 장수는 30%로 일어난다.
+    "wave_heal": 0.15,
     "continue_gold": 3000,
     "stage_back_gold": 500,  # 스테이지 되돌리기 한 번 값 (금)
     # 슬롯 3칸 (개편 §9.9): 칸마다 당첨 1/3, 당첨 칸의 5%는 장수 (2026-11-23: 10% -> 5%). 잭팟(3칸) = 돌린 군량 환급.
     "strip_length": 12, "slot_win_chance": 0.3333, "slot_hero_chance": 0.05,
-    "slot_lucky_chance": 0.5, "slot_boost_hero_chance": 0.5, "jackpot_refund_rice": 1,
+    "slot_lucky_chance": 0.5, "slot_boost_hero_chance": 0.5, "jackpot_refund_rice": 2,
     "respawn_soldier": 5.0, "respawn_hero": 12.0, 
     "castle_hp": 1000, "castle_regen": 0.1, "castle_attack_interval": 1.2,
     # 전장 칸 늘리기는 금으로 (그 전투 동안만)
@@ -330,7 +335,10 @@ difficulties = [
     {"id": 3, "name": "지옥", "mult": 1.3, "count": 1.3},
 ]
 stages = {"_source": "스테이지-흡수-합성-개편 §3.1, §4 (스테이지 10 × 난이도 3, 적 배율 1.2^(스테이지-1) × 난이도)",
-          "stage_base": 1.2, "first_clear_gold": 2000,
+          "stage_base": 1.32, "first_clear_gold": 2000,
+          # 적 수 (2026-11-23): 병사가 무제한이 되어 적도 많이 나온다. 초반은 적게, 스테이지 · 웨이브가 갈수록 늘어난다.
+          # 적 수 배율 = count_base x (1 + count_stage x (스테이지-1)) x (1 + count_wave x 웨이브 번호(0~9)) x 난이도 count
+          "count_base": 1.0, "count_stage": 0.45, "count_wave": 0.05,
           "gold_per_wave": 100, "gold_victory": 500,
           "star_rules": ["클리어", "성 체력 50% 이상", "성 체력 90% 이상"],
           "recommended_power": 8000,
@@ -437,7 +445,7 @@ meta = {
              # 군주 레벨 (개편 §9.3): 클리어해야 경험, 모든 캐릭터 기초 공·방·체 x (1 + 0.05 x (Lv-1)). 새 계정은 Lv.1.
              "stat_per_level": 0.05, "clear_exp": 100, "diff_exp": [1.0, 1.5, 2.2], "first_mult": 2,
              "unlocks": [[1, "로비·출정·장수 목록"], [3, "편성·모집"], [5, "편성 칸 +1 (7명)·보물"], [8, "병영 강화·노병"],
-                         [10, "상점·임무"], [12, "군웅대전"], [15, "도사·편성 칸 +1 (8명)"], [20, "강화 상한 해제"]],
+                         [10, "상점·임무"], [12, "쟁패"], [15, "도사·편성 칸 +1 (8명)"], [20, "강화 상한 해제"]],
              "lineup_slots": [[1, 6], [5, 7], [15, 8]]},
     "power": {"atk": 10, "def": 8, "hp": 1},
     # 콘텐츠-기획-v5 §7, §7.1 / 메타 §3.10 [제안]: 하루 무료 5회(04:00), 군공, 군웅 상점(주간)

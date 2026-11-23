@@ -1,13 +1,36 @@
 extends PxScreen
-## 로비: 상단 HUD(초상·골드/다이아 클릭→상점·설정), 왼쪽 우편/임무, 오른쪽 가방/모집,
-## 성문 앞 출정 팻말 + 군웅대전 버튼(최대 10, 2시간당 +1), 성 안뜰을 거니는 장수들.
+## 로비 (2026-11-23 최종 초안): 배경 한 장(lobby_bg: 하늘 · 성벽 · 가운데 성문 하나, 장식 · 출정 때 열림),
+## 상단 HUD(초상 · 금/군량 · 설정), 왼쪽 우편/임무, 성문 앞에 모인 내 부대(전장에서 뽑아 남은 유닛만),
+## 하단 탭 하나에 버튼 4개: 출정(왼쪽 성문이 열리고 행군) · 쟁패(준비 중) · 장수 · 가방.
 
 var _walkers: Array = []
 var _t := 0.0
 var _sign: PxButton
 var _arena_btn: PxButton
+## 성문 앞 부대 자리 (가운데 정렬, 최대 4줄 x 9명)
+const ARMY_TOP := 1180.0
+const ARMY_ROW := 80.0
+const ARMY_COL := 96.0
+const ARMY_COLS := 9
+const ARMY_MAX := 36
 var _clouds: DrawLayer
 var _rng := RandomNumberGenerator.new()
+var _heal_t := 0.0
+var _tut_guide: Node
+## 하단 탭 버튼 (열린 화면에 맞춰 금테로 표시)
+var _tabs := {}
+var _heal_fx: Array = []
+var _heal_layer: DrawLayer
+## 출정 연출 (2026-11-23): 성문이 열리고(0→1) 부대가 문 안으로 행군한 뒤 다음 화면으로.
+var _door_open := 0.0
+var _marching := false
+## 열리는 성문 번호 (성문은 하나라 늘 0)
+var _march_gate := 0
+var _door_layers: Array = []
+## 배경 그림의 성문 나무 문짝 자리 (tools/cut_lobby_door.py 의 DOORS 와 같게). 성문은 가운데 하나.
+const DOORS := [Rect2(384, 744, 256, 296)]
+const DOOR_ART := ["gate1"]
+const MARCH_TIME := 1.8
 
 
 func build() -> void:
@@ -38,34 +61,60 @@ func build() -> void:
 			p.closed.connect(_refresh_badges))
 		b.set_meta("route", key)
 		put(b, Rect2(36, 232 + i * 152, 120, 128))
-	# 오른쪽: 장수(장수 · 병종 도감) · 아이템(장비 가방 · 도감 · 합성) (딱 2개, 개편 §13)
-	var bag := PxButton.make("btn_bag")
-	bag.tooltip_text = DB.t("lobby.bag")
-	bag.pressed.connect(func() -> void: Game.app.goto("heroes", {"mode": "units"}))
-	put(bag, Rect2(868, 232, 120, 128))
-	var items := PxButton.make("btn_recruit")
-	items.tooltip_text = DB.t("lobby.recruit")
-	items.pressed.connect(func() -> void: Game.app.goto("heroes", {"mode": "items"}))
-	put(items, Rect2(868, 384, 120, 128))
 	# 주공 전투력
 	var info := DrawLayer.make(_draw_info)
 	put(info, Rect2(200, 146, 680, 60))
-	# 성문 두 개 (2026-11-23): 왼쪽 성문 = 출정(스테이지), 오른쪽 성문 = 군웅대전(다른 유저와 대전)
-	_sign = PxButton.new()
-	_sign.size = GATE
-	_sign.sound = "whoosh"
-	_sign.tooltip_text = DB.t("lobby.sortie")
-	_sign.pressed.connect(_on_sign)
-	_sign.overlay = _draw_stage_gate
-	put(_sign, Rect2(92, 800, GATE.x, GATE.y), Pin.MID)
-	_arena_btn = PxButton.new()
-	_arena_btn.size = GATE
-	_arena_btn.tooltip_text = DB.t("lobby.arena")
-	_arena_btn.overlay = _draw_arena_gate
-	_arena_btn.pressed.connect(func() -> void: Game.app.goto("arena"))
-	put(_arena_btn, Rect2(532, 800, GATE.x, GATE.y), Pin.MID)
-	# 성 안뜰을 돌아다니는 랜덤 장수 (최대 4명, 최소 표식: 별 + 레벨만)
+	# 아래 버튼 두 개 (2026-11-23): 출정 · 쟁패(예전 군웅대전). 그림은 아이콘, 이름 · 숫자는 게임이 쓴다.
+	# 성문 (열림 연출용 문짝 두 장 + 문 안쪽 어둠). 닫혀 있을 때는 배경 그림 그대로.
+	for gi in DOORS.size():
+		var g := gi
+		var dl := DrawLayer.make(func(ci: Control) -> void: _draw_door(ci, g))
+		dl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		put(dl, DOORS[gi], Pin.MID)
+		_door_layers.append(dl)
+	# 하단 탭 (2026-11-23 최종): 아래 탭 영역 하나에 버튼 4개 — 출정 · 쟁패 · 장수 · 가방. 오른쪽 위 버튼은 없앴다.
+	var bar := DrawLayer.make(func(ci: Control) -> void:
+		Px.rec(ci, "image", Rect2(Vector2.ZERO, ci.size), "tab_bar")
+		var t := Px.tex("tab_bar")
+		if t != null:
+			ci.draw_texture_rect(t, Rect2(Vector2.ZERO, ci.size), false))
+	put(bar, TAB_BAR, Pin.BOTTOM)
+	var tabs := [
+		["stage", "btn_tab_main", "icon_sword", DB.t("lobby.btn_stage")],   # 출정 = 공격(칼)
+		["arena", "btn_tab", "icon_swords", DB.t("lobby.btn_arena")],
+		["heroes", "btn_tab", "tab_hero", DB.t("lobby.bag")],
+		["items", "btn_tab", "icon_bag", DB.t("lobby.recruit")],
+	]
+	for i in tabs.size():
+		var tb: Array = tabs[i]
+		var b := PxButton.make(String(tb[1]), false, TAB_BTN)
+		_tabs[String(tb[0])] = b
+		b.icon = Px.tex(String(tb[2]))
+		b.icon_rect = Rect2((TAB_BTN.x - 88) * 0.5, 14, 88, 88)
+		b.tooltip_text = String(tb[3])
+		var key := String(tb[0])
+		var label := String(tb[3])
+		b.overlay = func(btn: PxButton, off: Vector2) -> void: _draw_tab_label(btn, off, key, label)
+		put(b, Rect2(TAB_X0 + i * TAB_STEP, TAB_BAR.position.y + 12, TAB_BTN.x, TAB_BTN.y), Pin.BOTTOM)
+		match key:
+			"stage":
+				_sign = b
+				b.sound = "drum"
+				b.pressed.connect(_on_sign)
+			"arena":
+				_arena_btn = b
+				# 쟁패는 아직 준비 중: 알림만
+				b.pressed.connect(func() -> void: toast(DB.t("lobby.arena_soon")))
+			"heroes":
+				b.pressed.connect(func() -> void: Game.app.goto("heroes", {"mode": "units"}))
+			"items":
+				b.pressed.connect(func() -> void: Game.app.goto("heroes", {"mode": "items"}))
+	# 성문 앞에 모인 내 부대 (의원이 있으면 로비에서 조금씩 치료)
 	_spawn_walkers()
+	_heal_layer = DrawLayer.make(_draw_heal_fx)
+	_heal_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_heal_layer.z_index = 500
+	put(_heal_layer, Rect2(0, 0, 1024, 1792), Pin.MID)
 	set_process(true)
 	_daily()
 	if bool(params.get("tutorial", false)) and not Game.tutorial_done():
@@ -74,26 +123,37 @@ func build() -> void:
 
 func _spawn_walkers() -> void:
 	_walkers.clear()
-	# 대표 장수 먼저, 남는 자리는 보유 병종 (장수 없이 시작해도 성 앞이 비지 않게)
-	var picks: Array = Game.lineup()
-	for t: String in Game.sortie_troops():
-		if picks.size() < 4:
-			picks.append(t)
-	var n := mini(4, picks.size())
-	var starts := [Vector2(210, 1430), Vector2(410, 1560), Vector2(630, 1420), Vector2(820, 1550)]
+	# 내 부대만 (전장에서 뽑아 살아남은 유닛, 2026-11-23). 도감에 들어온 병종 · 장수는 보이지 않는다.
+	var picks: Array = []
+	for e: Dictionary in Game.profile.army():
+		picks.append(String(e.get("id", "")))
+	var n := mini(ARMY_MAX, picks.size())
+	var h := 120.0 if n <= 18 else 100.0
 	for i in n:
 		var id := String(picks[i])
-		var pos: Vector2 = starts[i]
-		var u := UnitView.make(id, 150.0)
-		u.flip = i >= 2
+		# 성문 앞에 줄지어 모인다 (가운데부터, 한 줄 9명)
+		var row := i / ARMY_COLS
+		var in_row := mini(ARMY_COLS, n - row * ARMY_COLS)
+		var col := i % ARMY_COLS
+		var pos := Vector2(512.0 + (col - (in_row - 1) * 0.5) * ARMY_COL, ARMY_TOP + row * ARMY_ROW)
+		var u := UnitView.make(id, h)
+		u.flip = false
 		put(u, Rect2(pos.x, pos.y, 0, 0), Pin.MID)
+		var idx := i
 		var tag := DrawLayer.make(func(ci: Control) -> void:
 			if DB.is_hero(id):
 				W.draw_rank(ci, Rect2(Vector2.ZERO, ci.size), Game.profile.star_of(id), 0, 20.0)
 			else:
-				W.draw_rank(ci, Rect2(Vector2.ZERO, ci.size), int(Game.profile.troop(id).get("star", 1)), 0, 20.0))
+				W.draw_rank(ci, Rect2(Vector2.ZERO, ci.size), int(Game.profile.troop(id).get("star", 1)), 0, 20.0)
+			# 다친 유닛은 체력 막대 (부대 체력은 다음 전투로 이어진다)
+			var hp := _army_hp(idx)
+			if hp < 0.999:
+				var br := Rect2(30, 26, 80, 8)
+				ci.draw_rect(br.grow(2), Px.INK)
+				ci.draw_rect(br, Px.BAR_BG)
+				ci.draw_rect(Rect2(br.position, Vector2(br.size.x * hp, br.size.y)), Px.HP_GREEN if hp > 0.5 else Px.HP_RED))
 		tag.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		put(tag, Rect2(pos.x - 70, pos.y + 8, 140, 36), Pin.MID)
+		put(tag, Rect2(pos.x - 70, pos.y + 8, 140, 40), Pin.MID)
 		var hit := Button.new()
 		hit.flat = true
 		hit.focus_mode = Control.FOCUS_NONE
@@ -105,28 +165,16 @@ func _spawn_walkers() -> void:
 				Game.app.goto("heroes", {"tab": 1}))
 		put(hit, Rect2(pos.x - 65, pos.y - 150, 130, 195), Pin.MID)
 		_walkers.append({
-			"id": id, "u": u, "tag": tag, "hit": hit,
-			"pos": pos, "target": _pick_walk_target(pos, -1),
+			"id": id, "u": u, "tag": tag, "hit": hit, "home": pos, "idx": i, "act": 0.0,
+			"pos": pos, "target": pos,
 			"wait": _rng.randf_range(0.4, 2.0), "speed": _rng.randf_range(44.0, 68.0),
 		})
 
 
+## 부대는 제자리 근처에서만 조금씩 움직인다 (성문 앞에 모여 있게).
 func _pick_walk_target(near: Vector2, skip_idx: int) -> Vector2:
-	for _try in 16:
-		var cand := Vector2(
-			clampf(near.x + _rng.randf_range(-240.0, 240.0), 140.0, 884.0),
-			clampf(near.y + _rng.randf_range(-130.0, 130.0), 1350.0, 1660.0))
-		var ok := true
-		for j in _walkers.size():
-			if j == skip_idx:
-				continue
-			var other: Dictionary = _walkers[j]
-			if cand.distance_to(other["pos"]) < 120.0 or cand.distance_to(other["target"]) < 120.0:
-				ok = false
-				break
-		if ok:
-			return cand
-	return Vector2(_rng.randf_range(160.0, 864.0), _rng.randf_range(1360.0, 1650.0))
+	var home: Vector2 = _walkers[skip_idx]["home"] if skip_idx >= 0 and skip_idx < _walkers.size() else near
+	return home + Vector2(_rng.randf_range(-24.0, 24.0), _rng.randf_range(-14.0, 14.0))
 
 
 func _step_walkers(dt: float) -> void:
@@ -140,7 +188,26 @@ func _step_walkers(dt: float) -> void:
 			continue
 		var wait := float(w["wait"])
 		var pos: Vector2 = w["pos"]
-		if wait > 0.0:
+		if _marching:
+			# 출정: 성문 안으로 행군해 들어가 사라진다
+			var door: Rect2 = DOORS[_march_gate]
+			var gate_in := Vector2(door.get_center().x + (float(i % 3) - 1.0) * 26.0, door.end.y - 6.0)
+			var dv := gate_in - pos
+			if dv.length() < 16.0 or _door_open < 0.6:
+				if dv.length() < 16.0:
+					u.visible = false
+					tag.visible = false
+				u.action = "idle" if dv.length() >= 16.0 else u.action
+			else:
+				pos += dv.normalized() * minf(dv.length(), 330.0 * dt)
+				w["pos"] = pos
+				u.action = "walk"
+				u.flip = dv.x < 0.0
+		elif float(w["act"]) > 0.0:
+			# 치료 동작 중 (의원)
+			w["act"] = float(w["act"]) - dt
+			u.action = "attack"
+		elif wait > 0.0:
 			wait -= dt
 			w["wait"] = wait
 			u.action = "idle"
@@ -161,80 +228,155 @@ func _step_walkers(dt: float) -> void:
 					var o: Dictionary = _walkers[j]
 					var away: Vector2 = pos - (o["pos"] as Vector2)
 					var d := away.length()
-					if d > 1.0 and d < 105.0:
+					if d > 1.0 and d < 60.0:
 						dir = (dir + away.normalized() * 0.9).normalized()
 				pos += dir * float(w["speed"]) * dt
-				pos.x = clampf(pos.x, 140.0, 884.0)
-				pos.y = clampf(pos.y, 1350.0, 1660.0)
+				pos.x = clampf(pos.x, 80.0, 944.0)
+				pos.y = clampf(pos.y, ARMY_TOP - 30.0, ARMY_TOP + ARMY_ROW * 3.0 + 30.0)
 				w["pos"] = pos
 				u.action = "walk"
 				if absf(dir.x) > 0.08:
 					u.flip = dir.x < 0.0
 		u.position = Vector2(pos.x + dx(), pos.y + mid_dy)
-		u.z_index = clampi(int(pos.y) - 1300, 0, 400)
+		u.z_index = clampi(int(pos.y) - 1100, 0, 600)
 		tag.position = Vector2(pos.x - 70.0 + dx(), pos.y + 8.0 + mid_dy)
-		tag.z_index = clampi(int(pos.y) - 1300, 0, 400) + 1
+		tag.z_index = clampi(int(pos.y) - 1100, 0, 600) + 1
 		hit.position = Vector2(pos.x - 65.0 + dx(), pos.y - 150.0 + mid_dy)
-		hit.z_index = clampi(int(pos.y) - 1300, 0, 400) + 2
+		hit.z_index = clampi(int(pos.y) - 1100, 0, 600) + 2
 
 
-## 성문 두 개: 같은 모양(돌 문틀 + 나무 문짝 + 깃발 간판), 색과 글자만 다르다. 임시 그림.
-const GATE := Vector2(400, 432)
+## 부대 유닛 i의 체력 비율.
+func _army_hp(i: int) -> float:
+	var a := Game.profile.army()
+	return float((a[i] as Dictionary).get("hp", 1.0)) if i < a.size() else 1.0
 
 
-func _draw_stage_gate(b: PxButton, off: Vector2) -> void:
-	_draw_gate(b, off, DB.t("lobby.gate_stage"), DB.t("lobby.gate_stage_sub", [Game.profile.current_stage()]), Color("#b8322a"), Px.WHITE)
+## 로비 치료 (2026-11-23): 부대에 의원(의원 병사 · 의원 병종 장수)이 있으면 army_heal_tick초마다
+## 의원마다 가장 다친 유닛 하나를 army_heal_amount만큼 치료한다. 의원은 치료 동작, 대상 위에 초록 +.
+func _heal_army(dt: float) -> void:
+	_heal_t += dt
+	if _heal_t < float(DB.rules.get("army_heal_tick", 2.0)):
+		return
+	_heal_t = 0.0
+	var army := Game.profile.army()
+	var amount := float(DB.rules.get("army_heal_amount", 0.05))
+	var healed := false
+	for w: Dictionary in _walkers:
+		if DB.troop_of(String(w["id"])) != "medic":
+			continue
+		var best := -1
+		var low := 0.999
+		for k in mini(army.size(), _walkers.size()):
+			var hp := float((army[k] as Dictionary).get("hp", 1.0))
+			if hp < low:
+				low = hp
+				best = k
+		if best < 0:
+			break
+		(army[best] as Dictionary)["hp"] = snappedf(minf(1.0, low + amount), 0.01)
+		healed = true
+		w["act"] = 0.6
+		var tw: Dictionary = _walkers[best]
+		(w["u"] as UnitView).flip = (tw["pos"] as Vector2).x < (w["pos"] as Vector2).x
+		_heal_fx.append({"pos": tw["pos"], "t": 0.0})
+	if healed:
+		Game.profile.changed.emit()
 
 
-func _draw_arena_gate(b: PxButton, off: Vector2) -> void:
-	var n := int(Game.profile.sync_arena_entries()["entries"])
-	_draw_gate(b, off, DB.t("lobby.gate_arena"), DB.t("lobby.gate_arena_sub", [n]), Color("#2f5fb0"), Px.WHITE if n > 0 else Color("#ff8a80"))
+func _draw_heal_fx(ci: Control) -> void:
+	for f: Dictionary in _heal_fx:
+		var k := float(f["t"]) / 0.9
+		var p: Vector2 = (f["pos"] as Vector2) + Vector2(0, -150.0 - 40.0 * k)
+		var c := Color(0.45, 1.0, 0.5, 1.0 - k)
+		ci.draw_rect(Rect2(p.x - 4, p.y - 14, 8, 28), c)
+		ci.draw_rect(Rect2(p.x - 14, p.y - 4, 28, 8), c)
 
 
-func _draw_gate(b: PxButton, off: Vector2, label: String, sub: String, flag: Color, sub_col: Color) -> void:
-	var r := Rect2(off, b.size)
-	# 돌 문틀
-	b.draw_rect(r, Px.INK)
-	b.draw_rect(r.grow(-5), Color("#857c6c"))
-	var row := 0
-	var y := r.position.y + 8
-	while y < r.end.y - 8:
-		b.draw_rect(Rect2(r.position.x + 5, y + 44, r.size.x - 10, 3), Color(0, 0, 0, 0.16))
-		var x := r.position.x + 5 + (36.0 if row % 2 == 1 else 0.0)
-		while x < r.end.x - 8:
-			b.draw_rect(Rect2(x, y, 3, 44), Color(0, 0, 0, 0.12))
-			x += 72
-		y += 47
-		row += 1
-	# 문 (둥근 윗부분 + 나무 문짝 두 장)
-	var door := Rect2(r.position.x + 56, r.position.y + 150, r.size.x - 112, r.size.y - 150)
-	var cx := door.get_center().x
-	var rad := door.size.x * 0.5
-	b.draw_circle(Vector2(cx, door.position.y + 10), rad + 8, Px.INK)
-	b.draw_rect(Rect2(door.position.x - 8, door.position.y + 10, door.size.x + 16, door.size.y - 10), Px.INK)
-	b.draw_circle(Vector2(cx, door.position.y + 10), rad, Color("#6a4526"))
-	b.draw_rect(Rect2(door.position.x, door.position.y + 10, door.size.x, door.size.y - 10), Color("#6a4526"))
-	var px := door.position.x + 26
-	while px < door.end.x - 6:
-		b.draw_rect(Rect2(px, door.position.y - rad * 0.5, 3, door.size.y + rad * 0.5), Color(0, 0, 0, 0.18))
-		px += 34
-	b.draw_rect(Rect2(cx - 3, door.position.y - rad + 14, 6, door.size.y + rad - 14), Px.INK)
-	for side in [-1.0, 1.0]:
-		b.draw_circle(Vector2(cx + side * 30, door.position.y + door.size.y * 0.55), 12, Px.INK)
-		b.draw_circle(Vector2(cx + side * 30, door.position.y + door.size.y * 0.55), 8, Px.GOLD)
-	# 깃발 간판
-	var sign := Rect2(r.position.x + 40, r.position.y + 18, r.size.x - 80, 104)
-	b.draw_rect(sign, Px.INK)
-	b.draw_rect(sign.grow(-4), flag)
-	b.draw_rect(Rect2(sign.position.x + 4, sign.position.y + 4, sign.size.x - 8, 8), flag.lightened(0.25))
-	Px.text(b, label, Rect2(sign.position.x, sign.position.y + 4, sign.size.x, 58), 44, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 7)
-	Px.text(b, sub, Rect2(sign.position.x, sign.position.y + 60, sign.size.x, 38), 26, sub_col, HORIZONTAL_ALIGNMENT_CENTER, 5)
+## 하단 탭 영역 (그림 tab_bar 1024 x 200) · 탭 버튼 틀 (btn_tab / btn_tab_main 232 x 176): 아이콘 위, 이름 아래.
+const TAB_BAR := Rect2(0, 1592, 1024, 200)
+const TAB_BTN := Vector2(232, 176)
+const TAB_X0 := 19.0
+const TAB_STEP := 251.0
+
+
+## 지금 열린 화면의 탭을 금테로 (장수 · 병사 화면 = 장수, 아이템 화면 = 가방).
+func _mark_tabs() -> void:
+	var on := ""
+	match Game.app.dialog_route:
+		"hero", "troop":
+			on = "heroes"
+		"heroes":
+			on = "items" if Game.app.dialog != null and String(Game.app.dialog.get("mode")) == "items" else "heroes"
+	for k: String in _tabs:
+		var b: PxButton = _tabs[k]
+		if is_instance_valid(b) and b.highlight != (k == on):
+			b.highlight = k == on
+
+
+## 탭 이름 (아래) + 작은 표시 (출정 = 지금 스테이지 · 웨이브, 쟁패 = 준비 중).
+func _draw_tab_label(b: PxButton, off: Vector2, key: String, label: String) -> void:
+	Px.text(b, label, Rect2(off + Vector2(0, 108), Vector2(b.size.x, 52)), 36, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 6)
+	var tag := ""
+	match key:
+		"stage":
+			var sus := Game.profile.suspended()
+			tag = "%d" % Game.profile.current_stage() if sus.is_empty() else "%d-%d" % [int(sus["stage"]), int(sus["wave"]) + 1]
+		"arena":
+			tag = DB.t("lobby.soon")
+	if tag != "":
+		Px.text(b, tag, Rect2(off + Vector2(8, 4), Vector2(b.size.x - 16, 28)), 20, Px.GOLD, HORIZONTAL_ALIGNMENT_RIGHT, 4)
+
+
+## 출정 연출: 성문 [param gate](0 = 왼쪽)이 열리고 부대가 그 문으로 행군한 뒤 [param then]을 부른다. 한 번만.
+func march_out(then: Callable, gate: int = 0) -> void:
+	if _marching:
+		return
+	_marching = true
+	_march_gate = gate
+	_sign.disabled = true
+	_arena_btn.disabled = true
+	Sfx.play("whoosh")
+	var tw := create_tween()
+	tw.tween_property(self, "_door_open", 1.0, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw.tween_interval(MARCH_TIME - 0.5 if not _walkers.is_empty() else 0.4)
+	tw.tween_callback(then)
+
+
+## 성문: 안쪽 어둠 위에 문짝 두 장을 양옆으로 접어 연다 (문짝 그림이 없으면 아무것도 안 그린다).
+func _draw_door(ci: Control, gate: int) -> void:
+	if _door_open <= 0.0 or gate != _march_gate:
+		return
+	var art: String = DOOR_ART[gate]
+	var hole := Px.tex(art + "_hole")
+	var l := Px.tex(art + "_door_l")
+	var r := Px.tex(art + "_door_r")
+	if hole == null or l == null or r == null:
+		return
+	var sz := ci.size
+	ci.draw_texture_rect(hole, Rect2(Vector2.ZERO, sz), false)
+	var half := sz.x * 0.5
+	var w := half * (1.0 - 0.82 * _door_open)
+	# 문짝이 안쪽으로 젖혀지며 어두워진다
+	var k := 1.0 - 0.45 * _door_open
+	ci.draw_texture_rect(l, Rect2(0, 0, w, sz.y), false, Color(k, k, k))
+	ci.draw_texture_rect(r, Rect2(sz.x - w, 0, w, sz.y), false, Color(k, k, k))
 
 
 func _on_sign() -> void:
+	# 튜토리얼 안내(출정 버튼 가리킴)는 누르면 닫는다 (전투 화면까지 남지 않게)
+	if is_instance_valid(_tut_guide):
+		_tut_guide.queue_free()
+	# 장수 · 가방 화면이 열려 있으면 닫고 로비에서 출정한다
+	Game.app.close_dialog(false)
 	if not Game.tutorial_done():
 		Game.next_stage = {"stage": 1, "diff": 1}
 		Game.app.goto("battle", {"stage": 1, "diff": 1, "tutorial": true})
+		return
+	# 퇴각해 둔 전투가 있으면 그 웨이브부터 바로 이어서 한다.
+	var sus := Game.profile.suspended()
+	if not sus.is_empty():
+		Game.next_stage = {"stage": int(sus["stage"]), "diff": int(sus["diff"])}
+		march_out(func() -> void: Game.app.goto("battle", {"stage": int(sus["stage"]), "diff": int(sus["diff"]), "resume": true}))
 		return
 	# 스테이지 목록 없이 지금 스테이지의 난이도 창을 바로 띄운다.
 	Game.app.popup("difficulty", {"stage": Game.profile.current_stage()})
@@ -273,8 +415,8 @@ func _daily() -> void:
 
 
 func _tutorial_gate() -> void:
-	var g := Guide.show_at(Game.app.overlay_layer, Rect2(_sign.position, _sign.size).grow(10), DB.t("tut.gate"))
-	g.advanced.connect(g.queue_free)
+	_tut_guide = Guide.show_at(Game.app.overlay_layer, Rect2(_sign.position, _sign.size).grow(10), DB.t("tut.gate"))
+	_tut_guide.advanced.connect(_tut_guide.queue_free)
 
 
 func _process(delta: float) -> void:
@@ -283,6 +425,13 @@ func _process(delta: float) -> void:
 	if is_instance_valid(_arena_btn):
 		_arena_btn.queue_redraw()
 	_step_walkers(delta)
+	_heal_army(delta)
+	_mark_tabs()
+	for f: Dictionary in _heal_fx:
+		f["t"] = float(f["t"]) + delta
+	_heal_fx = _heal_fx.filter(func(f: Dictionary) -> bool: return float(f["t"]) < 0.9)
+	if is_instance_valid(_heal_layer):
+		_heal_layer.queue_redraw()
 	for c in get_children():
 		if c is DrawLayer and c != _clouds:
 			c.queue_redraw()

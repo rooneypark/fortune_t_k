@@ -118,7 +118,8 @@ func test_run_gold() -> void:
 
 func test_stage_scaling() -> void:
 	near(DB.stage_mult(1, 1), 0.35, 0.001, "stage 1 보통 = 0.35 (처음은 쉽게)")
-	near(DB.stage_mult(3, 1), 0.35 * 1.2 * 1.2, 0.001, "x1.2 per stage")
+	var sb := float(DB.stages["stage_base"])
+	near(DB.stage_mult(3, 1), 0.35 * sb * sb, 0.001, "x stage_base per stage")
 	near(DB.stage_mult(1, 3), 1.3, 0.001, "지옥 1.3")
 	eq(DB.stage_count(), 10, "10 stages")
 	eq(DB.difficulties().size(), 3, "3 difficulties")
@@ -129,3 +130,9 @@ func test_stage_scaling() -> void:
 	eq(waves.size(), 10, "10 waves")
 	eq(String(waves[9]["boss"]), "zhangjiao", "boss on the last wave")
 	check(int(DB.stage_waves(1, 3)[0]["list"][0][1]) > int(waves[0]["list"][0][1]), "지옥 has more enemies")
+	# 적 수: 스테이지 1 첫 웨이브는 틀 그대로(초반은 적게), 스테이지 · 웨이브가 갈수록 늘어난다
+	eq(DB.count_mult(1, 1, 0), 1.0, "stage 1 wave 1 = the template count")
+	check(DB.count_mult(5, 1, 0) > DB.count_mult(1, 1, 0), "later stage: more enemies")
+	check(DB.count_mult(1, 1, 9) > DB.count_mult(1, 1, 0), "later wave: more enemies")
+	check(int(DB.stage_waves(10, 1)[0]["list"][0][1]) > int(waves[0]["list"][0][1]), "stage 10 wave 1 has more than stage 1")
+	check(float(DB.stage_waves(10, 1)[0]["gap_mult"]) < 1.0, "many enemies come closer together")

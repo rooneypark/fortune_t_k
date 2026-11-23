@@ -10,6 +10,8 @@ var uid := 0
 var id := ""
 ## Field anchor in battle px (where the unit stands); Vector2.ZERO = auto.
 var anchor := Vector2.ZERO
+## 체력 비율 (0~1): 부대에 남아 다음 전투로 이어진다 (2026-11-23).
+var hp_ratio := 1.0
 ## Run stats for the MVP card.
 var kills := 0
 var damage := 0.0

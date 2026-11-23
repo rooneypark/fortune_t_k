@@ -284,6 +284,14 @@ static func stage_name(s: int) -> String:
 	return String(stage_def(s).get("name", ""))
 
 
+## Enemy count multiplier (2026-11-23, 적 수 제한 없음 · 병사 무제한에 맞춤): grows with the
+## stage and the wave so the start stays small. count_base x (1 + count_stage x (s-1))
+## x (1 + count_wave x wave) x difficulty count.
+static func count_mult(s: int, d: int, wave: int) -> float:
+	ensure()
+	return float(stages.get("count_base", 1.0)) * (1.0 + float(stages.get("count_stage", 0.0)) * (s - 1)) 		* (1.0 + float(stages.get("count_wave", 0.0)) * wave) * float(difficulty(d)["count"])
+
+
 ## Enemy hp/atk multiplier: stage_base^(stage-1) x difficulty (§4).
 static func stage_mult(s: int, d: int) -> float:
 	ensure()
@@ -296,11 +304,13 @@ static func stage_mult(s: int, d: int) -> float:
 static func stage_waves(s: int, d: int) -> Array:
 	ensure()
 	var tmpl: Array = stages["waves_template"]
-	var grow := float(difficulty(d)["count"])
 	var out: Array = []
 	for w in tmpl.size():
 		var src: Dictionary = tmpl[w]
-		var wave := {"list": [], "flank": [], "boss": "", "judge": bool(src.get("judge", false))}
+		var grow := count_mult(s, d, w)
+		# 적이 많아지면 나오는 간격을 좁힌다 (웨이브가 너무 길어지지 않게)
+		var wave := {"list": [], "flank": [], "boss": "", "judge": bool(src.get("judge", false)),
+			"gap_mult": 1.0 / sqrt(maxf(1.0, grow))}
 		for pair: Array in src.get("list", []):
 			wave["list"].append([String(pair[0]), maxi(1, int(round(float(pair[1]) * grow)))])
 		for pair: Array in src.get("flank", []):

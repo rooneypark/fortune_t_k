@@ -103,8 +103,6 @@ static func gear_tab(scr: PxScreen, id: String, slot: String, pick: Callable, re
 			e.modulate = Color(0.7, 0.7, 0.75)
 			e.pressed.connect(func() -> void: pick.call(s))
 			scr.put(e, Rect2(r.position, Vector2(200, 200)))
-		var lab := DrawLayer.make(func(ci: Control) -> void: Px.text(ci, DB.t("slot." + s), Rect2(0, 0, ci.size.x, ci.size.y), 26, Px.MUTED))
-		scr.put(lab, Rect2(r.position + Vector2(0, 200), Vector2(200, 34)))
 	var auto := PxButton.colored("wood", DB.t("hero.auto_equip"), Vector2(240, 110), 32)
 	auto.pressed.connect(func() -> void:
 		Game.profile.auto_equip(id)
@@ -119,7 +117,8 @@ static func gear_tab(scr: PxScreen, id: String, slot: String, pick: Callable, re
 	scr.put(off, Rect2(724, 950, 240, 90))
 	# 장비 효과 합계 + 보물의 특수 능력
 	var head := DrawLayer.make(func(ci: Control) -> void:
-		Px.text(ci, DB.t("hero.bag_slot", [DB.t("slot." + slot)]), Rect2(0, 0, 300, 44), 28, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
+		# 글자 최소: 고른 칸은 아이콘으로, 합계는 능력치 아이콘 + 숫자
+		Px.fit(ci, Px.tex(String(W.SLOT_ICON[slot])), Rect2(0, 0, 44, 44))
 		if not DB.is_hero(id):
 			Px.text(ci, DB.t("gear.troop_hint"), Rect2(300, 0, ci.size.x - 300, 44), 20, Px.MUTED, HORIZONTAL_ALIGNMENT_RIGHT)
 		var st := MetaRules.unit_stats(p, id)
@@ -136,7 +135,7 @@ static func gear_tab(scr: PxScreen, id: String, slot: String, pick: Callable, re
 			var gd := DB.treasure_def(String(MetaRules.find_treasure(p, int(eq[s2])).get("tid", "")))
 			if String(gd.get("fx_desc", "")) != "":
 				parts.append(String(gd["fx_desc"]))
-		Px.paragraph(ci, DB.t("hero.treasure_sum") + "  " + (" · ".join(parts) if not parts.is_empty() else "-"), Rect2(0, 44, ci.size.x, 60), 22, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT))
+		Px.paragraph(ci, " · ".join(parts) if not parts.is_empty() else "-", Rect2(0, 48, ci.size.x, 56), 22, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT))
 	scr.put(head, Rect2(60, 1068, 904, 104))
 	# 후보 목록: 이 칸에 낄 수 있는 것 전부 (보물 먼저, 그다음 주 능력치 순)
 	var order: Array = DB.meta["treasure"]["rarity_order"]
