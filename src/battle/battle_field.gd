@@ -495,6 +495,25 @@ func _pick_target(f: Fighter, opponents: Array) -> Fighter:
 	return _nearest(f, opponents, 1e9)
 
 
+## 아군 f가 반응해도 되는 적만 고른다: 가운데 선(LINE_X)을 넘어왔거나, 이미 공격을 시작했거나,
+## 너무 오래 선 밖에 머문 적(ENGAGE_WAIT초 — 전투가 멈추지 않게). 한 번 걸리면 계속 걸린 것으로 본다.
+## 선 밖이라도 제자리에서 닿는 적(사거리 안)은 쏠 수 있다.
+const ENGAGE_WAIT := 15.0
+
+
+func _engaged(f: Fighter, opponents: Array) -> Array:
+	var out: Array = []
+	for o: Fighter in opponents:
+		if not o.alive():
+			continue
+		if not bool(o.flags.get("crossed", false)):
+			if o.pos.x <= LINE_X or o.action == "attack" or float(o.flags.get("age", 0.0)) > ENGAGE_WAIT:
+				o.flags["crossed"] = true
+		if bool(o.flags.get("crossed", false)) or f.pos.distance_to(o.pos) <= f.reach:
+			out.append(o)
+	return out
+
+
 const ATTACK_ANIM_LOCK := 0.45
 
 
@@ -524,6 +543,7 @@ func _unit_ai(f: Fighter, opponents: Array, dt: float) -> void:
 						_text(o.pos + Vector2(0, -o.height), "+" + str(int(o.max_hp * ha)), Color("#7cff7c"), 24)
 						_fx.append({"kind": "heal", "pos": o.pos + Vector2(0, -o.height * 0.6), "t": 0.0, "life": 0.5, "color": Color("#7cff7c")})
 	else:
+		f.flags["age"] = float(f.flags.get("age", 0.0)) + dt
 		if f.boss and f.mech != "":
 			_boss_mech(f, dt)
 		if float(f.flags.get("heal", 0.0)) > 0.0:
@@ -534,6 +554,12 @@ func _unit_ai(f: Fighter, opponents: Array, dt: float) -> void:
 					if o.alive() and o != f and o.pos.distance_to(f.pos) < 200.0 and o.hp < o.max_hp:
 						o.hp = minf(o.max_hp, o.hp + float(f.flags["heal"]) * _wave_mult)
 						_fx.append({"kind": "ring", "pos": o.pos, "t": 0.0, "life": 0.4, "color": Color("#7cff7c"), "r": 40.0})
+
+	# 아군은 가운데 선을 넘어온 적에게만 반응한다 (보이자마자 뛰쳐나가지 않는다).
+	if f.side == 0:
+		opponents = _engaged(f, opponents)
+		if f.target != null and not opponents.has(f.target):
+			f.target = null
 
 	# 대상이 없거나 죽었으면 즉시 다음 대상을 찾는다 (후열 노림 · 도발 포함)
 	if f.target == null or not f.target.alive():
