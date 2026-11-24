@@ -1,0 +1,56 @@
+{
+ "difficulty_title": [
+  235,
+  402,
+  575,
+  114
+ ],
+ "difficulty_frame": [
+  113,
+  460,
+  820,
+  732
+ ],
+ "difficulty_btn_close": [
+  832,
+  418,
+  104,
+  96
+ ],
+ "difficulty_slot_foes": [
+  170,
+  527,
+  566,
+  117
+ ],
+ "difficulty_btn_odds": [
+  741,
+  525,
+  134,
+  119
+ ],
+ "difficulty_btn_1": [
+  170,
+  654,
+  705,
+  150
+ ],
+ "difficulty_btn_2": [
+  170,
+  819,
+  705,
+  152
+ ],
+ "difficulty_btn_3": [
+  170,
+  984,
+  705,
+  150
+ ],
+ "difficulty_btn_back": [
+  294,
+  1258,
+  437,
+  145
+ ]
+}

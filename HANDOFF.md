@@ -48,6 +48,7 @@
 |---|---|---|---|
 | 로비 | `로비_UI.webp` · `로비_UI_탭판있음.webp` · `로비_UI_탭아이콘.webp` · `로비_배경.webp` (+ `로비_완성화면.webp` 비교용) | `python tools/import_lobby_ui.py` → `python tools/cut_lobby_door.py` | `assets/ui/lobby_*.png` · `lobby_layout.json` · `assets/bg/lobby_bg.png` · 성문 문짝 `gate1_*` |
 | 전투 | `전투_UI.webp`(위쪽 HUD) · `전투_UI_하단.webp`(릴 · 화살표 · 레버 · 값 칩 · 버튼) · `전투_UI_하단판.webp`(슬롯 판 · 조작 판) · `전투_배경.webp` | `python tools/import_battle_ui.py` | `assets/ui/battle_*.png` · `battle_layout.json` · `assets/bg/battle_field.png` |
+| 난이도 선택 창 | `난이도창_UI.webp`(창 전체) · `난이도창_UI_버튼.webp`(버튼만) · `난이도창_UI_닫기.webp`(바꾼 X 버튼) (+ `난이도창_완성화면.webp` 비교용) | `python tools/import_difficulty_ui.py` | `assets/ui/difficulty_*.png` · `difficulty_layout.json`. 그림의 난이도 줄 4개를 3개로 줄이고 창 높이를 한 줄 잘라 냈다 |
 
 도구를 돌린 뒤에는 `godot --headless --path . --import`. 확인용 그림(게임 실행 아님): `design/art/ui_src/로비_합성확인.png`(왼쪽 완성 화면 · 오른쪽 게임 합성) · `전투_합성확인.png` · `슬롯_움직임확인.png` · `*_부품확인.png`.
 
@@ -55,7 +56,7 @@
 - 슬롯 릴: 릴 그림의 한 마디(`battle_reel_tile`, 크림색 띠 40 + 어두운 칸 92 = 132px)를 이어 붙인 띠가 얼굴 · 무기 아이콘과 함께 통째로 구른다 (`slot_view.gd` 그림 모드).
 - 레버: 받침(`battle_lever_base`)과 손잡이 + 막대(`battle_lever_knob`)로 나눠, 손잡이만 홈 끝까지 내려갔다 올라온다.
 
-**남은 화면** (순서와 요청문은 `design/ux/화면별-요청문.md`): 난이도 선택 창(배치도 · 요청문 준비됨) → 흡수 · 웨이브 승리 · 일시정지 창 → 결과 창 → 장수 · 병사 목록 → 장수 · 병사 상세 → 가방 · 장비 상세 · 합성 → 상점 · 구매 창 → 설정 · 우편 · 임무 · 주공 정보 · 보상 · 확률 · 확인 창 → 인트로.
+**남은 화면** (순서와 요청문은 `design/ux/화면별-요청문.md`): 흡수 · 웨이브 승리 · 일시정지 창 → 결과 창 → 장수 · 병사 목록 → 장수 · 병사 상세 → 가방 · 장비 상세 · 합성 → 상점 · 구매 창 → 설정 · 우편 · 임무 · 주공 정보 · 보상 · 확률 · 확인 창 → 인트로.
 
 ## 그 밖의 그림
 
@@ -81,6 +82,6 @@
 ## 다음 할 일
 
 1. **실행해서 확인**: 전투 화면(슬롯이 구르는 느낌, 레버, 유닛이 길 위에 서는 모양, 적이 성문으로 모이는 움직임, 칩의 숫자 자리)과 로비(탭 이름이 아이콘과 겹치는지, 성문 열림, 부대 자리).
-2. **UI 그림 이어서**: 난이도 선택 창부터 (`design/ux/화면별-요청문.md` §1).
+2. **UI 그림 이어서**: 흡수 · 웨이브 승리 · 일시정지 창부터 (`design/ux/화면별-요청문.md`). 난이도 선택 창도 실행해서 확인.
 3. **난이도**: 전장 규칙이 바뀌었으니 모의 전투를 다시 돌리고, 목표(1주차 스테이지 5 전후, 3주 안팎 스테이지 10)에 맞게 `stage_base` · `count_stage`를 다시 잡는다.
 4. 쟁패 실제 대전은 나중에 (민수 님).
