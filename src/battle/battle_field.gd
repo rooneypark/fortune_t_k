@@ -16,12 +16,15 @@ signal wave_done
 signal soldiers_lost
 signal boss_spawned(f: Fighter)
 
-# 가로 전장 (2026-11-23): 왼쪽에 성벽, 오른쪽에서 적이 온다. 가운데 띠(공터)에서만 싸우고
-# 띠의 위아래는 배경이다. 좌표는 이 노드 안의 px (1024 x 1328).
-const BAND_TOP := 640.0
-const BAND_BOTTOM := 1180.0
-## 성벽 선: 적이 여기까지 오면 성을 친다.
-const WALL_X := 104.0
+# 가로 전장 (2026-11-24, 배경 그림 battle_field에 맞춤): 왼쪽 위에 성문이 있는 성, 오른쪽에서 적이 온다.
+# 싸우는 곳은 성문 앞 길(위층 흙바닥)뿐이고 그 아래 흙 · 풀은 배경이다. 좌표는 이 노드 안의 px (1024 x 1328).
+# 그림의 도트 자리: 풀밭 끝 y 163, 가운데 턱 y 252, 성벽 밑선 (55, 160) → (22, 245), 성문 앞 (46, 207).
+const BAND_TOP := 664.0
+const BAND_BOTTOM := 1000.0
+## 성벽 밑선의 가장 왼쪽 (전장 맨 아래에서). 높이마다의 선은 wall_x(y).
+const WALL_X := 88.0
+## 성문 앞: 아군을 뚫은 적은 여기로 모여들어 성문을 친다.
+const GATE := Vector2(190.0, 832.0)
 ## 아군 자리의 오른쪽 끝 (교전선).
 const LINE_X := 500.0
 ## 적이 나오는 오른쪽 끝.
@@ -214,34 +217,41 @@ func active_synergies() -> Array:
 	return out
 
 
+## 성벽 밑선의 x (배경 그림의 성은 비스듬해서 위쪽일수록 오른쪽으로 나와 있다).
+static func wall_x(y: float) -> float:
+	return lerpf(220.0, WALL_X, clampf((y - BAND_TOP) / (BAND_BOTTOM - BAND_TOP), 0.0, 1.0))
+
+
 ## A free standing spot in the ally zone: melee in front (right, near the line),
 ## ranged behind (left, near the wall). Rows fan out from the middle of the band.
 func free_spot(cls: String) -> Vector2:
 	var front := cls == "inf" or cls == "cav" or cls == "pike"
-	var cols: Array = [430.0, 340.0, 250.0, 170.0] if front else [190.0, 270.0, 350.0, 430.0]
+	var cols: Array = [440.0, 370.0, 300.0, 230.0] if front else [230.0, 300.0, 370.0, 440.0]
 	var mid := (BAND_TOP + BAND_BOTTOM) * 0.5 + 20.0
-	var rows := [mid, mid - 100.0, mid + 100.0, mid - 200.0, mid + 200.0]
+	var rows := [mid, mid - 70.0, mid + 70.0, mid - 140.0, mid + 140.0]
 	for x: float in cols:
 		for y: float in rows:
 			var p := Vector2(x, y)
-			if _spot_free(p):
+			if x >= wall_x(y) + 50.0 and _spot_free(p):
 				return p
-	return Vector2(_rng.randf_range(WALL_X + 60, LINE_X - 40), _rng.randf_range(BAND_TOP + 60, BAND_BOTTOM - 20))
+	var ry := _rng.randf_range(BAND_TOP + 60, BAND_BOTTOM - 20)
+	return Vector2(_rng.randf_range(wall_x(ry) + 60, LINE_X - 40), ry)
 
 
 func _spot_free(p: Vector2) -> bool:
 	for u in run.field:
-		if u.anchor != Vector2.ZERO and u.anchor.distance_to(p) < 80.0:
+		if u.anchor != Vector2.ZERO and u.anchor.distance_to(p) < 64.0:
 			return false
 	return true
 
 
 func clamp_zone(p: Vector2) -> Vector2:
-	return Vector2(clampf(p.x, WALL_X + 50, LINE_X - 20), clampf(p.y, BAND_TOP + 50, BAND_BOTTOM - 10))
+	var y := clampf(p.y, BAND_TOP + 50, BAND_BOTTOM - 10)
+	return Vector2(clampf(p.x, wall_x(y) + 50, LINE_X - 20), y)
 
 
 func in_zone(p: Vector2) -> bool:
-	return p.x >= WALL_X - 20 and p.x <= LINE_X + 30 and p.y > BAND_TOP - 20 and p.y < BAND_BOTTOM + 40
+	return p.x >= wall_x(p.y) - 20 and p.x <= LINE_X + 30 and p.y > BAND_TOP - 20 and p.y < BAND_BOTTOM + 40
 
 
 func fighter_at(p: Vector2) -> Fighter:
@@ -650,8 +660,14 @@ func _unit_ai(f: Fighter, opponents: Array, dt: float) -> void:
 			f.set_action("idle")
 			f.flip = false
 		return
-	if f.pos.x > WALL_X + 30.0 + (f.reach if f.ranged else 0.0) * 0.6:
-		f.pos.x -= f.spd_now() * dt
+	# 성문으로 모여든다 (적마다 성문 앞의 자기 자리 — 한 점에 겹치지 않게)
+	if not f.flags.has("gx"):
+		f.flags["gx"] = _rng.randf_range(0.0, 80.0)
+		f.flags["gy"] = _rng.randf_range(-50.0, 110.0)
+	var goal := GATE + Vector2(float(f.flags["gx"]), float(f.flags["gy"]))
+	var to_gate := goal - f.pos
+	if to_gate.length() > 20.0 + (f.reach if f.ranged else 0.0) * 0.6:
+		f.pos += to_gate.normalized() * minf(to_gate.length(), f.spd_now() * dt)
 		f.pos.y = clampf(f.pos.y, BAND_TOP + 30, BAND_BOTTOM)
 		f.set_action("walk")
 		f.flip = true
@@ -665,7 +681,7 @@ func _unit_ai(f: Fighter, opponents: Array, dt: float) -> void:
 			castle_hit.emit(dmg)
 			if shake_on:
 				shake = minf(1.0, shake + 0.25)
-			_fx.append({"kind": "spark", "pos": Vector2(WALL_X - 10, f.pos.y - f.height * 0.4), "t": 0.0, "life": 0.25, "color": Color("#ff6a3a")})
+			_fx.append({"kind": "spark", "pos": GATE + Vector2(_rng.randf_range(-30.0, 0.0), _rng.randf_range(-90.0, -20.0)), "t": 0.0, "life": 0.25, "color": Color("#ff6a3a")})
 
 
 func _attack(f: Fighter, tg: Fighter) -> void:
@@ -1095,47 +1111,20 @@ func _draw() -> void:
 		off = Vector2(_rng.randf_range(-1, 1), _rng.randf_range(-1, 1)).round() * 10.0 * shake
 	_off = off
 	draw_set_transform(off)
-	# 배경: 화면 맨 위부터 전장 아래까지 그림을 깔고 어둡게 한다. 싸우는 곳은 가운데 띠뿐이다.
+	# 배경: 그림을 1:1로 깐다 (그림의 성 · 길 자리가 곧 전장 좌표다). 화면이 더 길면 위는 하늘색으로 채운다.
 	var top := -position.y
-	Px.cover(self, _bg, Rect2(0, top, size.x, size.y - top))
-	draw_rect(Rect2(0, top, size.x, BAND_TOP - top), Color(0.04, 0.06, 0.1, 0.55))
-	draw_rect(Rect2(0, BAND_BOTTOM + 40, size.x, size.y - BAND_BOTTOM - 40), Color(0.04, 0.06, 0.1, 0.6))
-	# 공터 (가로 띠): 흙바닥 + 위아래 턱
-	var band := Rect2(0, BAND_TOP - 20, size.x, BAND_BOTTOM + 40 - (BAND_TOP - 20))
-	draw_rect(band, Color("#6b5a3e"))
-	for i in 9:
-		var gy := band.position.y + 30 + i * (band.size.y - 40) / 9.0
-		draw_rect(Rect2(0, gy, size.x, 3), Color(0, 0, 0, 0.06))
-	draw_rect(Rect2(0, band.position.y, size.x, 8), Color("#3a2e1e"))
-	draw_rect(Rect2(0, band.position.y + 8, size.x, 4), Color("#8a7654"))
-	draw_rect(Rect2(0, band.end.y - 8, size.x, 8), Color("#3a2e1e"))
-	# 교전선 (세로 점선) + 준비 시간의 아군 자리 표시
+	if _bg != null:
+		if top < 0.0:
+			draw_rect(Rect2(0, top, size.x, -top), Color("#5fb4e8"))
+		draw_texture_rect(_bg, Rect2(0, 0, 1024, 1792), false)
+	# 교전선 (세로 점선) + 준비 시간의 아군 자리 표시 (성벽 밑선을 따라 비스듬하다)
 	var ly := BAND_TOP
-	while ly < BAND_BOTTOM + 20:
-		draw_rect(Rect2(LINE_X, ly, 4, 22), Color(1, 1, 1, 0.3))
+	while ly < BAND_BOTTOM:
+		draw_rect(Rect2(LINE_X, ly, 4, 20), Color(1, 1, 1, 0.3))
 		ly += 40
 	if not fighting:
-		draw_rect(Rect2(WALL_X, BAND_TOP - 10, LINE_X - WALL_X, BAND_BOTTOM + 30 - (BAND_TOP - 10)), Color(1, 1, 1, 0.05))
-	# 성벽 (왼쪽): 돌벽 + 성가퀴
-	var wall := Rect2(0, band.position.y - 60, WALL_X - 14, band.size.y + 60)
-	draw_rect(wall, Px.INK)
-	draw_rect(wall.grow_individual(-4, -4, -4, 0), Color("#7d7566"))
-	var by := wall.position.y + 8
-	var row := 0
-	while by < wall.end.y - 10:
-		draw_rect(Rect2(4, by + 38, wall.size.x - 8, 3), Color(0, 0, 0, 0.18))
-		var bx := 4.0 + (22.0 if row % 2 == 1 else 0.0)
-		while bx < wall.size.x - 6:
-			draw_rect(Rect2(bx, by, 3, 38), Color(0, 0, 0, 0.14))
-			bx += 44
-		by += 41
-		row += 1
-	var cx := 0.0
-	while cx < wall.size.x:
-		draw_rect(Rect2(cx, wall.position.y - 22, 26, 26), Px.INK)
-		draw_rect(Rect2(cx + 3, wall.position.y - 19, 20, 23), Color("#8a8272"))
-		cx += 40
-	draw_rect(Rect2(wall.end.x - 6, wall.position.y, 6, wall.size.y), Color(0, 0, 0, 0.3))
+		draw_colored_polygon(PackedVector2Array([Vector2(wall_x(BAND_TOP), BAND_TOP), Vector2(LINE_X, BAND_TOP),
+			Vector2(LINE_X, BAND_BOTTOM), Vector2(wall_x(BAND_BOTTOM), BAND_BOTTOM)]), Color(1, 1, 1, 0.06))
 	for w: Dictionary in _warns:
 		var k := 1.0 - float(w["t"]) / float(w["life"])
 		var c: Vector2 = w["pos"]

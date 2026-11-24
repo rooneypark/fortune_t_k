@@ -40,10 +40,44 @@ var _thump: Array = [0.0, 0.0, 0.0]
 var _tick_t := 0.0
 static var _weapon: Dictionary = {}
 
+# ---- 그림 슬롯 (2026-11-24): 판 · 릴 · 화살표는 완성 화면에서 떼어 낸 그림 (tools/import_battle_ui.py).
+# 릴은 통째로 구른다: 릴 그림의 한 마디(battle_reel_tile = 크림색 띠 40 + 어두운 칸 92)를 위아래로 이어 붙인
+# 끝없는 띠가, 칸 속의 얼굴 · 무기 아이콘과 함께 위에서 아래로 굴러간다. 보이는 곳은 릴 그림의 자리(147 x 308)뿐이다.
+# 멈추면 가운데 칸이 결과이고, 위아래로 잘린 칸이 조금 보인다 (완성 화면과 같은 모습).
+## 릴 그림 안의 칸 자리 (릴 그림 왼쪽 위 기준 px)
+const HOLE := Rect2(27, 105, 93, 92)
+const HOLE_TOP := Rect2(27, 8, 93, 57)
+const HOLE_BOT := Rect2(27, 237, 93, 62)
+## 칸에서 칸까지의 거리 (가운데 칸 높이 92 + 사이 40)
+const ART_STEP := 132.0
+## 그림이 있으면 true (없으면 예전처럼 선으로 그린다)
+var art := false
+var _reel_at: Array = []       # 릴 그림의 자리 (이 노드 안의 px)
+var _arrow_up: Array = []
+var _arrow_down: Array = []
+static var _art_layout: Dictionary = {}
+
+
+## 전투 UI 부품의 화면 자리 (assets/ui/battle_layout.json).
+static func art_rect(name: String) -> Rect2:
+	if _art_layout.is_empty():
+		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://assets/ui/battle_layout.json"))
+		_art_layout = parsed if parsed is Dictionary else {"_": []}
+	var r: Array = _art_layout.get(name, [])
+	return Rect2(float(r[0]), float(r[1]), float(r[2]), float(r[3])) if r.size() == 4 else Rect2()
+
 
 func _init() -> void:
 	size = Vector2(526, 464)
 	mouse_filter = Control.MOUSE_FILTER_STOP
+	var panel := art_rect("battle_panel_slot")
+	if panel.size != Vector2.ZERO and Px.has_art("battle_panel_slot") and Px.has_art("battle_reel_1"):
+		art = true
+		size = panel.size
+		for i in 3:
+			for pair: Array in [[_reel_at, "battle_reel_%d"], [_arrow_up, "battle_arrow_up_%d"], [_arrow_down, "battle_arrow_down_%d"]]:
+				var r := art_rect(String(pair[1]) % (i + 1))
+				(pair[0] as Array).append(Rect2(r.position - panel.position, r.size))
 
 
 func _ready() -> void:
@@ -198,6 +232,9 @@ func _can_pull(r: int, off: int) -> bool:
 
 
 func _draw() -> void:
+	if art:
+		_draw_art()
+		return
 	Px.draw_skin(self, "panel_slot", Rect2(Vector2.ZERO, size))
 	# recessed reel window: ink rim + light lip so every cell sits fully inside
 	draw_rect(WINDOW.grow(6), Px.INK)
@@ -235,6 +272,126 @@ func _draw() -> void:
 	elif not spinning and wins.is_empty() and _miss_t >= 0.0 and _miss_t < 0.9:
 		var a := 1.0 - _miss_t / 0.9
 		Px.text(self, DB.t("slot.miss"), Rect2(0, 180, size.x, 100), 64, Color(1, 1, 1, a), HORIZONTAL_ALIGNMENT_CENTER, 10)
+
+
+## 그림 슬롯: 판 → 릴 그림 → 칸 속의 얼굴 · 아이콘 → 화살표 → 당첨 표시.
+func _draw_art() -> void:
+	Px.rec(self, "image", Rect2(Vector2.ZERO, size), "battle_panel_slot")
+	draw_texture_rect(Px.tex("battle_panel_slot"), Rect2(Vector2.ZERO, size), false)
+	for r in 3:
+		var rr: Rect2 = _reel_at[r]
+		if slot != null:
+			_draw_reel_art(r)
+		else:
+			draw_texture_rect(Px.tex("battle_reel_%d" % (r + 1)), rr, false)
+		for off: int in [-1, 1]:
+			var hole := _hole(r, off)
+			var ar: Rect2 = _arrow_up[r] if off < 0 else _arrow_down[r]
+			var at := Px.tex(("battle_arrow_up_%d" if off < 0 else "battle_arrow_down_%d") % (r + 1))
+			if slot != null and _can_pull(r, off):
+				# 끌어올 수 있는 칸: 금테가 깜빡이고 화살표가 밝아진다
+				var pulse := 0.55 + 0.45 * sin(_t * 6.0)
+				draw_rect(hole.grow(2), Color(Px.GOLD, 0.5 + 0.4 * pulse), false, 5.0)
+				draw_texture_rect(at, ar.grow(4.0 * pulse), false)
+			else:
+				draw_rect(hole, Color(0, 0, 0, 0.45))
+				draw_texture_rect(at, ar, false, Color(1, 1, 1, 0.4))
+	if slot == null:
+		return
+	if not spinning:
+		_draw_wins()
+	if mode == "respin":
+		_draw_respin()
+	elif not spinning and wins.is_empty() and _miss_t >= 0.0 and _miss_t < 0.9:
+		var a := 1.0 - _miss_t / 0.9
+		var c: Rect2 = cell_rect(1)
+		Px.text(self, DB.t("slot.miss"), Rect2(0, c.position.y, size.x, c.size.y), 64, Color(1, 1, 1, a), HORIZONTAL_ALIGNMENT_CENTER, 10)
+
+
+## 릴 r의 칸: off -1 위의 잘린 칸 · 0 가운데 칸 · +1 아래의 잘린 칸 (이 노드 안의 px).
+func _hole(r: int, off: int) -> Rect2:
+	var h: Rect2 = HOLE_TOP if off < 0 else (HOLE_BOT if off > 0 else HOLE)
+	return Rect2((_reel_at[r] as Rect2).position + h.position, h.size)
+
+
+func _draw_reel_art(r: int) -> void:
+	var strip: Array = slot.strips[r]
+	var n := strip.size()
+	var v: float = view[r]
+	var base := floori(v)
+	var frac := v - base
+	var blur := spinning and float(_speed[r]) > 2.5
+	var dip := roundf(sin(float(_thump[r]) * PI) * 6.0)
+	var rr: Rect2 = _reel_at[r]
+	var mid := _hole(r, 0)
+	var tile := Px.tex("battle_reel_tile")
+	var gap := ART_STEP - HOLE.size.y   # 칸 위의 크림색 띠
+	# 릴 뒤는 어두운 홈 (띠가 지나가며 덮는다)
+	draw_rect(rr, Color("#1c1310"))
+	for j in range(-3, 4):
+		var y := (j - frac) * ART_STEP + dip
+		# 띠 한 마디: 크림색 띠 + 칸
+		var tr := Rect2(rr.position.x, mid.position.y - gap + y, rr.size.x, ART_STEP)
+		if tile != null:
+			_tex_clipped(tile, tr, Rect2(Vector2.ZERO, tile.get_size()), rr, Color.WHITE)
+		# 칸 속의 얼굴 · 아이콘 (띠와 함께 움직인다)
+		var rect := Rect2(mid.position + Vector2(0, y), mid.size)
+		var clip := rect.intersection(rr)
+		if clip.size.x > 0.0 and clip.size.y > 0.0:
+			_draw_cell_art(String(strip[posmod(base + j, n)]), rect, clip, blur)
+	if blur:
+		# 빠르게 돌 때: 밝은 세로 줄이 릴을 타고 흐른다
+		var k := clampf(float(_speed[r]) / 40.0, 0.0, 1.0)
+		draw_rect(rr, Color(1, 1, 1, 0.04 + 0.06 * k))
+		for i in 4:
+			var sy := fposmod(-v * ART_STEP * 0.5 + i * 97.0, rr.size.y + 140.0) - 140.0
+			var seg := Rect2(rr.position.x + 18.0 + i * 34.0, rr.position.y + sy, 4, 60.0 + 100.0 * k).intersection(rr)
+			if seg.size.y > 0.0:
+				draw_rect(seg, Color(1, 1, 1, 0.12 + 0.2 * k))
+	# 릴의 위아래 끝: 둥근 통처럼 어두워진다 + 홈의 테두리
+	for i in 5:
+		var a := 0.42 - i * 0.08
+		draw_rect(Rect2(rr.position.x, rr.position.y + i * 7, rr.size.x, 7), Color(0, 0, 0, a))
+		draw_rect(Rect2(rr.position.x, rr.end.y - (i + 1) * 7, rr.size.x, 7), Color(0, 0, 0, a))
+	draw_rect(rr, Color("#0e0a08"), false, 3.0)
+
+
+## 칸 하나의 내용 (clip = 보이는 부분). 장수 = 세력색 바탕 + 초상, 병사 = 무기 아이콘, 꽝 = 빈 칸.
+func _draw_cell_art(id: String, rect: Rect2, clip: Rect2, blur: bool) -> void:
+	var whole := clip.size.y >= rect.size.y - 1.0
+	if id == "":
+		if whole and not blur:
+			Px.text(self, DB.t("slot.miss"), rect, 34, Color(1, 1, 1, 0.25), HORIZONTAL_ALIGNMENT_CENTER, 0)
+		return
+	var hero := DB.is_hero(id)
+	var mod := Color(1, 1, 1, 0.7) if blur else Color.WHITE
+	if hero:
+		_rect_clipped(rect, clip, DB.fac_color(DB.fac_of(id)).darkened(0.45))
+	var inner := rect.grow(-4)
+	var icon: Texture2D = null if hero else weapon_tex(id)
+	if icon != null:
+		var isz := icon.get_size()
+		var ik := minf(inner.size.x / isz.x, inner.size.y / isz.y)
+		_tex_clipped(icon, Rect2(inner.get_center() - isz * ik * 0.5, isz * ik), Rect2(Vector2.ZERO, isz), clip, mod)
+	else:
+		var a := Art.of_unit(id)
+		var t := Art.hued_portrait(String(a["art"]), float(a["hue"]))
+		if t != null:
+			var ts := t.get_size()
+			var k := maxf(inner.size.x / ts.x, inner.size.y / ts.y)
+			var src_sz := inner.size / k
+			_tex_clipped(t, inner, Rect2(Vector2((ts.x - src_sz.x) * 0.5, (ts.y - src_sz.y) * 0.15), src_sz), clip, mod)
+	if hero:
+		# 등급 색 테두리 (칸 안쪽 3px)
+		var rc := DB.rarity_color(DB.rarity_of(id))
+		for e: Rect2 in [Rect2(rect.position, Vector2(rect.size.x, 3)), Rect2(rect.position + Vector2(0, rect.size.y - 3), Vector2(rect.size.x, 3)),
+				Rect2(rect.position, Vector2(3, rect.size.y)), Rect2(rect.position + Vector2(rect.size.x - 3, 0), Vector2(3, rect.size.y))]:
+			_rect_clipped(e, clip, rc)
+	# 이름 띠 (가운데 칸에 온전히 들어왔을 때만)
+	if whole and not blur:
+		var strip := Rect2(rect.position.x + 3, rect.end.y - 25, rect.size.x - 6, 22)
+		draw_rect(strip, Color(0.05, 0.07, 0.1, 0.8))
+		Px.text(self, DB.unit_name(id), strip, 18, Px.GOLD if hero else Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 3)
 
 
 func _draw_reel(r: int) -> void:
@@ -331,17 +488,24 @@ func _tex_clipped(t: Texture2D, dst: Rect2, src: Rect2, clip: Rect2, mod: Color)
 
 ## Tap area of one whole reel (local px), used by the respin mode.
 func tap_rect(reel: int, _dir: int = 0) -> Rect2:
+	if art:
+		return _reel_at[reel]
 	return Rect2(float(COL_X[reel]), WINDOW.position.y, CELL.x, WINDOW.size.y)
 
 
 ## The result cell box of one reel (local px), exactly as drawn.
 func cell_rect(reel: int, _row: int = 0) -> Rect2:
+	if art:
+		return _hole(reel, 0)
 	return Rect2(float(COL_X[reel]), ROW_Y, CELL.x, CELL.y)
 
 
 ## The visible part of the cell above (off -1) or below (off +1) the result cell:
 ## what is tapped to pull that cell into the row.
 func peek_rect(reel: int, off: int) -> Rect2:
+	if art:
+		# 잘린 칸 + 그 바깥의 화살표까지 누를 수 있다
+		return _hole(reel, off).merge(_arrow_up[reel] if off < 0 else _arrow_down[reel])
 	var x := float(COL_X[reel])
 	if off < 0:
 		return Rect2(x, WINDOW.position.y, CELL.x, ROW_Y - 8 - WINDOW.position.y)

@@ -1,15 +1,17 @@
 extends PxScreen
-## 로비 (2026-11-23 최종 초안): 배경 한 장(lobby_bg: 하늘 · 성벽 · 가운데 성문 하나, 장식 · 출정 때 열림),
-## 상단 HUD(초상 · 금/군량 · 설정), 왼쪽 우편/임무, 성문 앞에 모인 내 부대(전장에서 뽑아 남은 유닛만),
-## 하단 탭 하나에 버튼 4개: 출정(왼쪽 성문이 열리고 행군) · 쟁패(준비 중) · 장수 · 가방.
+## 로비 (2026-11-24, 제미나이 완성 화면 그대로): 배경 한 장(lobby_bg: 하늘 · 성벽 · 가운데 성문 하나, 출정 때 열림),
+## 상단 HUD(초상 · 금/군량 · 설정), 왼쪽 우편/임무, 오른쪽 쟁패(준비 중), 성문 앞에 모인 내 부대,
+## 하단 탭 위 가운데 큰 출정 버튼, 하단 탭 3칸: 장수 · 가방 · 상점.
+## 부품 그림(lobby_*.png)과 자리(assets/ui/lobby_layout.json)는 tools/import_lobby_ui.py 가 마젠타 배경 UI 그림에서 만든다.
+## 그림에 아이콘 · 숫자 칸 · "+"가 들어 있고, 게임은 숫자 · 이름 · 내 장수 얼굴만 그 위에 쓴다.
 
 var _walkers: Array = []
 var _t := 0.0
 var _sign: PxButton
 var _arena_btn: PxButton
 ## 성문 앞 부대 자리 (가운데 정렬, 최대 4줄 x 9명)
-const ARMY_TOP := 1180.0
-const ARMY_ROW := 80.0
+const ARMY_TOP := 1150.0
+const ARMY_ROW := 72.0
 const ARMY_COL := 96.0
 const ARMY_COLS := 9
 const ARMY_MAX := 36
@@ -28,7 +30,7 @@ var _marching := false
 var _march_gate := 0
 var _door_layers: Array = []
 ## 배경 그림의 성문 나무 문짝 자리 (tools/cut_lobby_door.py 의 DOORS 와 같게). 성문은 가운데 하나.
-const DOORS := [Rect2(384, 744, 256, 296)]
+const DOORS := [Rect2(392, 796, 240, 292)]
 const DOOR_ART := ["gate1"]
 const MARCH_TIME := 1.8
 
@@ -39,20 +41,33 @@ func build() -> void:
 	_rng.randomize()
 	_clouds = DrawLayer.make(_draw_clouds)
 	put(_clouds, Rect2(0, 0, 1024, 600))
-	# 상단 HUD
-	var face := W.portrait_frame(String(Game.profile.data["avatar"]), Vector2(148, 188), "Lv.%d" % Game.lord_lv())
+	# 상단 HUD — 전부 완성 화면의 통째 그림. 자리는 그림을 떼어 낸 자리 그대로 (lobby_layout.json).
+	var face := _part("lobby_portrait")
+	var avatar := Art.avatar(String(Art.of_unit(String(Game.profile.data["avatar"]))["art"]))
+	face.overlay = func(btn: PxButton, off: Vector2) -> void:
+		# 액자 속 그림 칸에 내 대표 장수, 아래 어두운 띠에 레벨
+		var pic := Rect2(off + Vector2(btn.size.x * 0.13, btn.size.y * 0.1), Vector2(btn.size.x * 0.74, btn.size.y * 0.64))
+		Px.fit(btn, avatar, pic)
+		Px.text(btn, "Lv.%d" % Game.lord_lv(), Rect2(off + Vector2(btn.size.x * 0.13, btn.size.y * 0.77), Vector2(btn.size.x * 0.74, btn.size.y * 0.15)), 24, Px.GOLD, HORIZONTAL_ALIGNMENT_CENTER, 4)
 	face.pressed.connect(func() -> void: Game.app.popup("profile"))
-	put(face, Rect2(36, 12, 148, 188))
-	put(W.gold_chip(Vector2(320, 96)), Rect2(200, 36, 320, 96))
-	put(W.rice_chip(Vector2(328, 96)), Rect2(536, 36, 328, 96))
-	var gear := PxButton.make("btn_settings")
+	put(face, _rect("lobby_portrait"))
+	# 금 · 군량 칩: 숫자 칸(아이콘과 "+" 사이)에 숫자만 쓴다. 칩을 누르면 상점 / 군량 채우기.
+	var gold := _part("lobby_chip_gold")
+	_chip_text(gold, func() -> String: return Px.num(int(Game.profile.data["gold"])))
+	gold.pressed.connect(func() -> void: Game.app.goto("shop", {"tab": 1}))
+	put(gold, _rect("lobby_chip_gold"))
+	var rice := _part("lobby_chip_rice")
+	_chip_text(rice, func() -> String: return "%d/%d" % [Game.profile.rice_now(), int(DB.rules["rice_max"])])
+	rice.pressed.connect(W.ask_rice)
+	put(rice, _rect("lobby_chip_rice"))
+	var gear := _part("lobby_btn_settings")
 	gear.pressed.connect(func() -> void: Game.app.popup("settings"))
-	put(gear, Rect2(880, 32, 104, 104))
+	put(gear, _rect("lobby_btn_settings"))
 	# 왼쪽: 우편 · 임무
-	var left_side := [["btn_mail", "mail", "lobby.mail"], ["btn_mission", "missions", "lobby.missions"]]
+	var left_side := [["lobby_btn_mail", "mail", "lobby.mail"], ["lobby_btn_mission", "missions", "lobby.missions"]]
 	for i in left_side.size():
 		var it: Array = left_side[i]
-		var b := PxButton.make(String(it[0]))
+		var b := _part(String(it[0]))
 		var key := String(it[1])
 		b.badge = _badge_for(key)
 		b.tooltip_text = DB.t(String(it[2]))
@@ -60,11 +75,17 @@ func build() -> void:
 			var p := Game.app.popup(key)
 			p.closed.connect(_refresh_badges))
 		b.set_meta("route", key)
-		put(b, Rect2(36, 232 + i * 152, 120, 128))
+		put(b, _rect(String(it[0])))
+	# 오른쪽: 쟁패 (준비 중 — 알림만)
+	_arena_btn = _part("lobby_btn_arena")
+	_arena_btn.tooltip_text = DB.t("lobby.btn_arena")
+	_arena_btn.overlay = func(btn: PxButton, off: Vector2) -> void:
+		Px.text(btn, DB.t("lobby.soon"), Rect2(off + Vector2(0, btn.size.y - 42), Vector2(btn.size.x, 30)), 22, Px.GOLD, HORIZONTAL_ALIGNMENT_CENTER, 5)
+	_arena_btn.pressed.connect(func() -> void: toast(DB.t("lobby.arena_soon")))
+	put(_arena_btn, _rect("lobby_btn_arena"))
 	# 주공 전투력
 	var info := DrawLayer.make(_draw_info)
-	put(info, Rect2(200, 146, 680, 60))
-	# 아래 버튼 두 개 (2026-11-23): 출정 · 쟁패(예전 군웅대전). 그림은 아이콘, 이름 · 숫자는 게임이 쓴다.
+	put(info, Rect2(200, 150, 680, 60))
 	# 성문 (열림 연출용 문짝 두 장 + 문 안쪽 어둠). 닫혀 있을 때는 배경 그림 그대로.
 	for gi in DOORS.size():
 		var g := gi
@@ -72,43 +93,47 @@ func build() -> void:
 		dl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		put(dl, DOORS[gi], Pin.MID)
 		_door_layers.append(dl)
-	# 하단 탭 (2026-11-23 최종): 아래 탭 영역 하나에 버튼 4개 — 출정 · 쟁패 · 장수 · 가방. 오른쪽 위 버튼은 없앴다.
+	# 출정: 하단 탭 위 가운데의 큰 버튼 (메뉴가 아니라 행동). 왼쪽 칼 그림은 버튼 그림에 들어 있다.
+	_sign = _part("lobby_btn_stage")
+	_sign.sound = "drum"
+	_sign.tooltip_text = DB.t("lobby.btn_stage")
+	_sign.overlay = _draw_stage_label
+	_sign.pressed.connect(_on_sign)
+	put(_sign, _rect("lobby_btn_stage"), Pin.BOTTOM)
+	# 하단 탭: 메뉴만 3칸 — 장수 · 가방 · 상점. 아이콘은 버튼 위쪽 테두리에 걸쳐 올라온다 (완성 화면 그대로).
 	var bar := DrawLayer.make(func(ci: Control) -> void:
-		Px.rec(ci, "image", Rect2(Vector2.ZERO, ci.size), "tab_bar")
-		var t := Px.tex("tab_bar")
+		Px.rec(ci, "image", Rect2(Vector2.ZERO, ci.size), "lobby_tab_bar")
+		var t := Px.tex("lobby_tab_bar")
 		if t != null:
 			ci.draw_texture_rect(t, Rect2(Vector2.ZERO, ci.size), false))
-	put(bar, TAB_BAR, Pin.BOTTOM)
+	put(bar, _rect("lobby_tab_bar"), Pin.BOTTOM)
 	var tabs := [
-		["stage", "btn_tab_main", "icon_sword", DB.t("lobby.btn_stage")],   # 출정 = 공격(칼)
-		["arena", "btn_tab", "icon_swords", DB.t("lobby.btn_arena")],
-		["heroes", "btn_tab", "tab_hero", DB.t("lobby.bag")],
-		["items", "btn_tab", "icon_bag", DB.t("lobby.recruit")],
+		["heroes", "lobby_tab_1", "lobby_ic_hero", DB.t("lobby.bag")],
+		["items", "lobby_tab_2", "lobby_ic_bag", DB.t("lobby.recruit")],
+		["shop", "lobby_tab_3", "lobby_ic_shop", DB.t("lobby.shop")],
 	]
 	for i in tabs.size():
 		var tb: Array = tabs[i]
-		var b := PxButton.make(String(tb[1]), false, TAB_BTN)
+		var b := _part(String(tb[1]))
 		_tabs[String(tb[0])] = b
-		b.icon = Px.tex(String(tb[2]))
-		b.icon_rect = Rect2((TAB_BTN.x - 88) * 0.5, 14, 88, 88)
+		var it := Px.tex(String(tb[2]))
+		if it != null:
+			# 아이콘 자리도 완성 화면 그대로 (버튼 기준으로 옮긴 값)
+			b.icon = it
+			var ir := _rect(String(tb[2]))
+			b.icon_rect = Rect2(ir.position - _rect(String(tb[1])).position, ir.size)
 		b.tooltip_text = String(tb[3])
 		var key := String(tb[0])
 		var label := String(tb[3])
 		b.overlay = func(btn: PxButton, off: Vector2) -> void: _draw_tab_label(btn, off, key, label)
-		put(b, Rect2(TAB_X0 + i * TAB_STEP, TAB_BAR.position.y + 12, TAB_BTN.x, TAB_BTN.y), Pin.BOTTOM)
+		put(b, _rect(String(tb[1])), Pin.BOTTOM)
 		match key:
-			"stage":
-				_sign = b
-				b.sound = "drum"
-				b.pressed.connect(_on_sign)
-			"arena":
-				_arena_btn = b
-				# 쟁패는 아직 준비 중: 알림만
-				b.pressed.connect(func() -> void: toast(DB.t("lobby.arena_soon")))
 			"heroes":
 				b.pressed.connect(func() -> void: Game.app.goto("heroes", {"mode": "units"}))
 			"items":
 				b.pressed.connect(func() -> void: Game.app.goto("heroes", {"mode": "items"}))
+			"shop":
+				b.pressed.connect(func() -> void: Game.app.goto("shop", {"tab": 0}))
 	# 성문 앞에 모인 내 부대 (의원이 있으면 로비에서 조금씩 치료)
 	_spawn_walkers()
 	_heal_layer = DrawLayer.make(_draw_heal_fx)
@@ -292,11 +317,36 @@ func _draw_heal_fx(ci: Control) -> void:
 		ci.draw_rect(Rect2(p.x - 14, p.y - 4, 28, 8), c)
 
 
-## 하단 탭 영역 (그림 tab_bar 1024 x 200) · 탭 버튼 틀 (btn_tab / btn_tab_main 232 x 176): 아이콘 위, 이름 아래.
-const TAB_BAR := Rect2(0, 1592, 1024, 200)
-const TAB_BTN := Vector2(232, 176)
-const TAB_X0 := 19.0
-const TAB_STEP := 251.0
+## 부품 자리 (화면 px): tools/import_lobby_ui.py 가 그림을 떼어 낸 자리 그대로 적어 둔 것.
+static var _layout: Dictionary = {}
+
+
+func _rect(name: String) -> Rect2:
+	if _layout.is_empty():
+		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://assets/ui/lobby_layout.json"))
+		_layout = parsed if parsed is Dictionary else {}
+	var r: Array = _layout.get(name, [0, 0, 100, 100])
+	return Rect2(float(r[0]), float(r[1]), float(r[2]), float(r[3]))
+
+
+## 통째 그림 부품 하나 (그림 크기 그대로).
+func _part(name: String) -> PxButton:
+	return PxButton.make(name, false, _rect(name).size)
+
+
+## 칩의 숫자: 아이콘과 "+" 사이의 어두운 칸에 쓴다. 계정 값이 바뀌면 같이 바뀐다.
+func _chip_text(chip: PxButton, getter: Callable) -> void:
+	chip.text_rect = Rect2(chip.size.x * 0.29, chip.size.y * 0.2, chip.size.x * 0.5, chip.size.y * 0.56)
+	chip.text_align = HORIZONTAL_ALIGNMENT_CENTER
+	chip.font_size = 30
+	chip.text = str(getter.call())
+	var refresh := func() -> void:
+		if is_instance_valid(chip):
+			chip.text = str(getter.call())
+	Game.profile.changed.connect(refresh)
+	chip.tree_exiting.connect(func() -> void:
+		if Game.profile.changed.is_connected(refresh):
+			Game.profile.changed.disconnect(refresh))
 
 
 ## 지금 열린 화면의 탭을 금테로 (장수 · 병사 화면 = 장수, 아이템 화면 = 가방).
@@ -307,24 +357,27 @@ func _mark_tabs() -> void:
 			on = "heroes"
 		"heroes":
 			on = "items" if Game.app.dialog != null and String(Game.app.dialog.get("mode")) == "items" else "heroes"
+		"shop":
+			on = "shop"
 	for k: String in _tabs:
 		var b: PxButton = _tabs[k]
 		if is_instance_valid(b) and b.highlight != (k == on):
 			b.highlight = k == on
 
 
-## 탭 이름 (아래) + 작은 표시 (출정 = 지금 스테이지 · 웨이브, 쟁패 = 준비 중).
-func _draw_tab_label(b: PxButton, off: Vector2, key: String, label: String) -> void:
-	Px.text(b, label, Rect2(off + Vector2(0, 108), Vector2(b.size.x, 52)), 36, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 6)
-	var tag := ""
-	match key:
-		"stage":
-			var sus := Game.profile.suspended()
-			tag = "%d" % Game.profile.current_stage() if sus.is_empty() else "%d-%d" % [int(sus["stage"]), int(sus["wave"]) + 1]
-		"arena":
-			tag = DB.t("lobby.soon")
-	if tag != "":
-		Px.text(b, tag, Rect2(off + Vector2(8, 4), Vector2(b.size.x - 16, 28)), 20, Px.GOLD, HORIZONTAL_ALIGNMENT_RIGHT, 4)
+## 탭 이름 (아이콘 아래).
+func _draw_tab_label(b: PxButton, off: Vector2, _key: String, label: String) -> void:
+	Px.text(b, label, Rect2(off + Vector2(0, 58), Vector2(b.size.x, 64)), 40, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 6)
+
+
+## 출정 버튼의 글자: 이름 + 지금 스테이지 (퇴각해 둔 전투가 있으면 스테이지-웨이브).
+func _draw_stage_label(b: PxButton, off: Vector2) -> void:
+	var sus := Game.profile.suspended()
+	var tag := DB.t("stage.n", [Game.profile.current_stage()]) if sus.is_empty() else "%d-%d" % [int(sus["stage"]), int(sus["wave"]) + 1]
+	# 왼쪽 1/3은 칼 그림 칸
+	var area := Rect2(off + Vector2(b.size.x * 0.33, b.size.y * 0.16), Vector2(b.size.x * 0.6, b.size.y * 0.62))
+	Px.text(b, DB.t("lobby.btn_stage"), Rect2(area.position, Vector2(area.size.x, area.size.y * 0.62)), 52, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 8)
+	Px.text(b, tag, Rect2(area.position + Vector2(0, area.size.y * 0.6), Vector2(area.size.x, area.size.y * 0.4)), 28, Px.GOLD, HORIZONTAL_ALIGNMENT_CENTER, 5)
 
 
 ## 출정 연출: 성문 [param gate](0 = 왼쪽)이 열리고 부대가 그 문으로 행군한 뒤 [param then]을 부른다. 한 번만.

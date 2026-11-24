@@ -1,0 +1,146 @@
+{
+ "battle_chip_rice": [
+  16,
+  28,
+  218,
+  110
+ ],
+ "battle_chip_army": [
+  235,
+  28,
+  177,
+  110
+ ],
+ "battle_chip_hero": [
+  410,
+  28,
+  181,
+  110
+ ],
+ "battle_chip_wave": [
+  589,
+  28,
+  179,
+  110
+ ],
+ "battle_btn_speed": [
+  768,
+  28,
+  118,
+  116
+ ],
+ "battle_btn_pause": [
+  888,
+  28,
+  116,
+  116
+ ],
+ "battle_bar_castle": [
+  20,
+  142,
+  985,
+  102
+ ],
+ "battle_reel_1": [
+  45,
+  1386,
+  147,
+  308
+ ],
+ "battle_reel_2": [
+  193,
+  1386,
+  147,
+  308
+ ],
+ "battle_reel_3": [
+  347,
+  1386,
+  145,
+  308
+ ],
+ "battle_arrow_up_1": [
+  81,
+  1334,
+  63,
+  51
+ ],
+ "battle_arrow_up_2": [
+  236,
+  1332,
+  63,
+  52
+ ],
+ "battle_arrow_up_3": [
+  392,
+  1332,
+  63,
+  52
+ ],
+ "battle_arrow_down_1": [
+  81,
+  1698,
+  64,
+  49
+ ],
+ "battle_arrow_down_2": [
+  236,
+  1698,
+  63,
+  49
+ ],
+ "battle_arrow_down_3": [
+  392,
+  1698,
+  63,
+  49
+ ],
+ "battle_lever": [
+  591,
+  1318,
+  116,
+  310
+ ],
+ "battle_plate_cost": [
+  571,
+  1640,
+  152,
+  70
+ ],
+ "battle_btn_start": [
+  730,
+  1335,
+  270,
+  198
+ ],
+ "battle_btn_advisor": [
+  730,
+  1552,
+  270,
+  173
+ ],
+ "battle_panel_slot": [
+  0,
+  1274,
+  537,
+  518
+ ],
+ "battle_panel_ctrl": [
+  537,
+  1274,
+  487,
+  518
+ ],
+ "battle_lever_knob": [
+  593,
+  1318,
+  111,
+  199
+ ],
+ "battle_lever_travel": [
+  0,
+  0,
+  0,
+  65
+ ]
+}

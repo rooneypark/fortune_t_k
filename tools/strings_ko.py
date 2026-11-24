@@ -10,7 +10,6 @@ S = {
  "btn.btn_pause": "멈춤", "btn.btn_plus": "+", "btn.btn_battle": "전투 시작", "btn.btn_nudge": "밀기",
  "btn.btn_advisor": "책사", "btn.btn_speed": "배속", "btn.btn_bench": "배치", "btn.lever": "돌리기",
  "common.ok": "확인", "common.cancel": "취소", "common.buy": "구매", "common.no_gold": "금이 부족해요",
- 
  "game.title": "운빨삼국", "game.subtitle": "천명 슬롯 삼국지",
  "intro.tap": "화면을 눌러 시작", "intro.tagline": "레버를 당겨 천하의 장수를 모아라!",
  "intro.proto": "임시 그림 · 내부 시험판",
@@ -20,12 +19,11 @@ S = {
  # tabs
  "tab.heroes": "장수", "tab.items": "아이템", "tab.arena": "쟁패", "tab.shop": "상점",
  # lobby
- "lobby.btn_stage": "출정", "lobby.arena_soon": "쟁패는 준비 중이에요", "lobby.soon": "준비 중", "lobby.btn_arena": "쟁패", "lobby.mail": "우편", "lobby.missions": "임무", "lobby.bag": "장수", "lobby.recruit": "가방", "lobby.arena": "쟁패", 
+ "lobby.btn_stage": "출정", "lobby.shop": "상점", "lobby.arena_soon": "쟁패는 준비 중이에요", "lobby.soon": "준비 중", "lobby.btn_arena": "쟁패", "lobby.mail": "우편", "lobby.missions": "임무", "lobby.bag": "장수", "lobby.recruit": "가방", 
  "lobby.attendance": "출석 %d일차", "lobby.monthly": "월정액 금 +%d",
  # battle
  "battle.no_rice": "군량이 부족해요 · 위의 군량을 눌러 금으로 채울 수 있어요",
  "battle.new_unit": "%s 합류! (도감에 추가)", 
- 
  "battle.wave_n": "웨이브 %d / %d", "battle.start": "전투 시작", 
  "battle.advisor": "책사", 
  "battle.rank": "★%d", "battle.refund": "잭팟! 군량 +%d",
@@ -92,7 +90,6 @@ S = {
  "stage.n": "스테이지 %d", 
  "stage.locked_diff": "앞 난이도를 먼저 깨야 해요",
  "stage.back": "스테이지 되돌리기", "stage.back_ask": "금 %s을 내고 스테이지 %d (%s)로 되돌릴까요?\n다시 깨면 다음 스테이지로 넘어가요.", "stage.back_done": "스테이지 %d로 되돌렸어요", "stage.back_first": "첫 스테이지예요",
- 
  # heroes
  "heroes.tab_heroes": "장수", "heroes.tab_troops": "병사", "heroes.mine": "내것만",
  "heroes.troop_hint": "칸을 누르면 병종 정보 · 가진 병종은 모두 슬롯에 나와요",
@@ -105,15 +102,14 @@ S = {
  "rarity_t.common": "일반", "rarity_t.rare": "희귀", "rarity_t.epic": "영웅", "rarity_t.legend": "전설",
  # hero
  "hero.title": "장수 정보", "hero.not_owned": "아직 만나지 못한 장수예요.\n전투 중 슬롯에서 나오면 합류해요.", "troop.not_owned": "아직 없는 병종이에요.\n전투 중 슬롯에서 나오면 합류해요.",
- "dex.heroes": "장수 도감 %d / %d", "dex.items": "아이템 도감 %d / %d",
+ "dex.heroes": "장수 도감 %d / %d", 
  "rice.full": "군량이 가득 차 있어요", "rice.title": "군량 채우기", "rice.ask": "금 %s으로 군량을 가득 채울까요?\n(지금 %d / %d · 30분에 1씩 저절로 차요)", "rice.done": "군량을 가득 채웠어요",
  "rice.name": "군량 즉시 충전", "rice.desc": "군량 1 = 금 %d · 지금 %d / %d", "rice.next": "다음 군량까지 %s", "rice.rule": "군량은 30분에 1씩 저절로 차요. 슬롯을 한 번 돌릴 때 2, 칸을 끌어올 때 1을 써요. 군량이 있는 만큼 돌릴 수 있어요.",
  "hero.tab_up": "성장", "hero.tab_star": "속성", "hero.tab_treasure": "장비",
  "hero.advisor": "책사 기술 · %s", "hero.skill": "필살기 · %s", "hero.bonds": "인연", "hero.no_bond": "인연 없음",
- 
  "hero.max_star": "최고 성급이에요", "hero.star_step": "★%d → ★%d",
  "hero.star_fx1": "기본 능력치 +%d%%", 
- "hero.auto_equip": "자동 장착", "hero.unequip": "해제", "hero.bag_slot": "가방 · %s", "hero.treasure_sum": "장비 효과 합계",
+ "hero.auto_equip": "자동 장착", "hero.unequip": "해제", 
  # treasure
  "treasure.title": "장비", "treasure.exclusive": "전용 · %s", "treasure.main": "주 능력치", "treasure.subs": "부가 능력치",
  "treasure.unlock_at": "+%d에서 열림", "treasure.worn": "%s 장착 중", "treasure.enhance": "강화",
@@ -128,11 +124,7 @@ S = {
  "synth.fuse_row": "%s %d개 → %s", "synth.have": "보유 %d", "synth.do": "합성",
  "synth.no_mats": "재료가 %d개 있어야 해요", "synth.no_treasures": "장착하지 않은 장비가 %d개 있어야 해요", "synth.top": "전설은 더 합성할 수 없어요",
  "synth.odds": "나오는 장비는 그 종류·등급 안에서 같은 확률이에요", "synth.mat_name": "%s %s 재료",
- "synth.summary": "재료 %d개", "result.mats": "재료 %d개",
  # recruit
- 
- 
- 
  
  
  
@@ -140,7 +132,6 @@ S = {
  "odds.title": "확률 정보", "odds.slot_rule": "슬롯 3칸 · 칸마다 당첨 확률 %d%% (전장이 비어 있으면 최소 1칸 당첨)",
  "odds.slot_hero": "당첨 칸의 %d%%는 장수, 나머지는 병사", "odds.slot_grades": "장수 등급 · B %s%% · A %s%% · S %s%% · SS %s%%", "odds.slot_tiers": "병사 · 기본 %s%% · 정예 %s%%",
  "odds.slot_new": "처음 나온 장수와 병종은 그 자리에서 합류해요", "odds.per_win": "당첨 칸 하나에서 나올 확률", "stage.odds": "확률", "stage.foes": "적", 
- 
  # shop
  "shop.t_rec": "추천", "shop.t_dia": "금", "shop.t_gold": "군량", "shop.t_pack": "패키지",
  "shop.banner": "출정 준비,\n여기서 끝!", "shop.monthly_now": "즉시 금 %s", "shop.monthly_left": "%d일 남음",

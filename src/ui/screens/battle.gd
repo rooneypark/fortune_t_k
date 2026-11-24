@@ -18,6 +18,12 @@ var _hud: Dictionary = {}
 var _castle_flash := 0.0
 var _castle_shake := 0.0
 const LEVER_Y := 1400.0
+## 레버의 기준 y (그림 레버면 그림 자리)
+var _lever_y := LEVER_Y
+## 그림 레버의 손잡이 (받침은 그대로 있고 손잡이 + 막대만 내려간다)
+var _knob: Control
+var _knob_y := 0.0
+var _knob_travel := 0.0
 var _lever: PxButton
 var _lever_pull := 0.0
 var _btn: Dictionary = {}
@@ -82,7 +88,8 @@ func build() -> void:
 	slot_view.bind(run.slot)
 	slot_view.reels_stopped.connect(_on_reels_stopped)
 	slot_view.reel_tapped.connect(_on_reel_tapped)
-	put(slot_view, Rect2(0, 1328, 526, 464), Pin.BOTTOM)
+	var slot_rect := SlotView.art_rect("battle_panel_slot") if slot_view.art else Rect2(0, 1328, 526, 464)
+	put(slot_view, slot_rect, Pin.BOTTOM)
 	_build_controls()
 	_build_hud()
 	_banner = DrawLayer.make(_draw_banner)
@@ -99,12 +106,26 @@ func build() -> void:
 
 # ---------------------------------------------------------------- layout
 
-func _chip(icon: String, r: Rect2) -> PxButton:
-	var b := PxButton.make("panel_small", true, r.size)
-	b.icon = Px.tex(icon)
-	b.icon_rect = Rect2(12, 12, 62, 62)
-	b.text_rect = Rect2(78, 0, r.size.x - 90, r.size.y)
-	b.font_size = 36
+## 위쪽 HUD 부품의 자리 (화면 px): tools/import_battle_ui.py 가 그림을 떼어 낸 자리 그대로 적어 둔 것.
+static var _layout: Dictionary = {}
+
+
+func _hud_rect(name: String) -> Rect2:
+	if _layout.is_empty():
+		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://assets/ui/battle_layout.json"))
+		_layout = parsed if parsed is Dictionary else {}
+	var r: Array = _layout.get(name, [0, 0, 100, 100])
+	return Rect2(float(r[0]), float(r[1]), float(r[2]), float(r[3]))
+
+
+## 위쪽 칩 하나: 완성 화면의 통째 그림 (아이콘 · 숫자 칸이 그림에 들어 있다). 숫자만 숫자 칸에 쓴다.
+func _chip(art: String) -> PxButton:
+	var r := _hud_rect(art)
+	var b := PxButton.make(art, false, r.size)
+	# 숫자 칸 = 칩의 오른쪽 절반 (군량 칩은 조금 더 넓다)
+	var x0 := 0.46 if art == "battle_chip_rice" else 0.5
+	b.text_rect = Rect2(r.size.x * x0, r.size.y * 0.22, r.size.x * (0.93 - x0), r.size.y * 0.54)
+	b.font_size = 32
 	b.static_panel = true
 	put(b, r)
 	return b
@@ -112,37 +133,47 @@ func _chip(icon: String, r: Rect2) -> PxButton:
 
 func _build_hud() -> void:
 	# 군량 칩: 누르면 금으로 가득 채운다 (개편 §13)
-	_hud["rice"] = _chip("icon_rice", Rect2(24, 28, 188, 88))
+	_hud["rice"] = _chip("battle_chip_rice")
 	var rice_chip: PxButton = _hud["rice"]
 	rice_chip.static_panel = false
 	rice_chip.mouse_filter = Control.MOUSE_FILTER_STOP
 	rice_chip.pressed.connect(W.ask_rice)
-	_hud["army"] = _chip("icon_soldier", Rect2(216, 28, 188, 88))
-	_hud["hero"] = _chip("icon_hero", Rect2(408, 28, 188, 88))
-	_hud["wave"] = _chip("icon_flag", Rect2(600, 28, 196, 88))
+	_hud["army"] = _chip("battle_chip_army")
+	_hud["hero"] = _chip("battle_chip_hero")
+	_hud["wave"] = _chip("battle_chip_wave")
 	# 장수 칩: 장수 자리 (지금 / 한도), 누르면 금으로 한 자리 늘린다. 병사 칩은 병사 수만 (한도 없음).
 	var hero_chip: PxButton = _hud["hero"]
 	hero_chip.static_panel = false
 	hero_chip.mouse_filter = Control.MOUSE_FILTER_STOP
 	hero_chip.pressed.connect(_buy_slot)
-	var sp := PxButton.make("btn_small", true, Vector2(96, 88))
-	sp.font_size = 36
+	# 배속: 그림(▶▶) 버튼. 지금 배속은 오른쪽 아래에 작게 쓴다 (버튼의 text는 다른 코드가 "1x"로 바꿔 쓴다).
+	var sr := _hud_rect("battle_btn_speed")
+	var sp := PxButton.make("battle_btn_speed", false, sr.size)
+	sp.font_size = 24
+	sp.text_color = Px.GOLD
+	sp.text_align = HORIZONTAL_ALIGNMENT_RIGHT
+	sp.text_rect = Rect2(8, sr.size.y - 50, sr.size.x - 22, 32)
 	sp.text = "1x"
 	sp.pressed.connect(_cycle_speed)
-	put(sp, Rect2(808, 28, 96, 88))
+	put(sp, sr)
 	_hud["speed"] = sp
-	var pause := PxButton.make("btn_pause")
+	var pr := _hud_rect("battle_btn_pause")
+	var pause := PxButton.make("battle_btn_pause", false, pr.size)
 	pause.pressed.connect(_pause)
-	put(pause, Rect2(912, 28, 88, 88))
+	put(pause, pr)
+	var cr := _hud_rect("battle_bar_castle")
 	var castle := DrawLayer.make(_draw_castle)
-	put(castle, Rect2(26, 126, 968, 92))
+	put(castle, cr)
 	_hud["castle"] = castle
 	var syn := DrawLayer.make(_draw_synergy)
-	put(syn, Rect2(26, 226, 968, 120))
+	put(syn, Rect2(26, cr.end.y + 8, 968, 120))
 	_hud["syn"] = syn
 
 
 func _build_controls() -> void:
+	if Px.has_art("battle_panel_ctrl") and SlotView.art_rect("battle_btn_start").size != Vector2.ZERO:
+		_build_controls_art()
+		return
 	var panel := DrawLayer.make(func(ci: Control) -> void: Px.draw_skin(ci, "panel_ctrl", Rect2(Vector2.ZERO, ci.size)))
 	put(panel, Rect2(526, 1328, 498, 464), Pin.BOTTOM)
 	var plate := DrawLayer.make(func(ci: Control) -> void:
@@ -169,6 +200,51 @@ func _build_controls() -> void:
 		b.pressed.connect(s[3])
 		b.tooltip_text = _ctrl_tip(String(s[0]))
 		put(b, s[2], Pin.BOTTOM)
+		_btn[s[0]] = b
+	# 전투 중에는 남은 적 수를 모서리에 적는다.
+	_btn["battle"].overlay = func(b: PxButton, off: Vector2) -> void:
+		if state != "prep":
+			_num(b, off, str(field.enemies_left()))
+
+
+## 아래쪽 조작부 — 완성 화면에서 떼어 낸 그림 (tools/import_battle_ui.py): 조작 판 · 레버 · 값 칩 · 전투 시작 · 책사.
+## 자리는 그림을 떼어 낸 자리 그대로 (battle_layout.json).
+func _build_controls_art() -> void:
+	var pr := SlotView.art_rect("battle_panel_ctrl")
+	var panel := DrawLayer.make(func(ci: Control) -> void:
+		Px.rec(ci, "image", Rect2(Vector2.ZERO, ci.size), "battle_panel_ctrl")
+		ci.draw_texture_rect(Px.tex("battle_panel_ctrl"), Rect2(Vector2.ZERO, ci.size), false))
+	put(panel, pr, Pin.BOTTOM)
+	# 값 칩: 쌀자루는 그림에 있고, 오른쪽 어두운 칸에 한 번 돌리는 값을 쓴다
+	var plate := DrawLayer.make(func(ci: Control) -> void:
+		ci.draw_texture_rect(Px.tex("battle_plate_cost"), Rect2(Vector2.ZERO, ci.size), false)
+		Px.text(ci, str(run.spin_cost()), Rect2(ci.size.x * 0.42, 0, ci.size.x * 0.52, ci.size.y), 30, Px.WHITE if run.rice >= run.spin_cost() else Color("#ff8a80")))
+	put(plate, SlotView.art_rect("battle_plate_cost"), Pin.BOTTOM)
+	_hud["plate"] = plate
+	var lr := SlotView.art_rect("battle_lever")
+	_lever_y = lr.position.y
+	# 레버: 받침(빈 홈)은 버튼이고, 손잡이 + 막대는 그 위에 따로 얹어 당길 때 아래로 내려간다
+	var split := Px.has_art("battle_lever_base") and Px.has_art("battle_lever_knob")
+	_lever = PxButton.make("battle_lever_base" if split else "battle_lever", false, lr.size)
+	_lever.sound = ""
+	_lever.press_depth = 0.0
+	_lever.overlay = func(b: PxButton, _off: Vector2) -> void: pass
+	_lever.pressed.connect(_spin)
+	put(_lever, lr, Pin.BOTTOM)
+	if split:
+		var kr := SlotView.art_rect("battle_lever_knob")
+		_knob_y = kr.position.y
+		_knob_travel = SlotView.art_rect("battle_lever_travel").size.y
+		_knob = DrawLayer.make(func(ci: Control) -> void:
+			ci.draw_texture_rect(Px.tex("battle_lever_knob"), Rect2(Vector2.ZERO, ci.size), false, Color(0.6, 0.58, 0.56) if _lever.disabled else Color.WHITE))
+		_knob.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		put(_knob, kr, Pin.BOTTOM)
+	for s: Array in [["battle", "battle_btn_start", _start_wave], ["advisor", "battle_btn_advisor", _advisor]]:
+		var r := SlotView.art_rect(String(s[1]))
+		var b := PxButton.make(String(s[1]), false, r.size)
+		b.pressed.connect(s[2])
+		b.tooltip_text = _ctrl_tip(String(s[0]))
+		put(b, r, Pin.BOTTOM)
 		_btn[s[0]] = b
 	# 전투 중에는 남은 적 수를 모서리에 적는다.
 	_btn["battle"].overlay = func(b: PxButton, off: Vector2) -> void:
@@ -217,8 +293,16 @@ func _process(delta: float) -> void:
 	_castle_flash = maxf(0.0, _castle_flash - delta * 2.0)
 	_castle_shake = maxf(0.0, _castle_shake - delta * 3.0)
 	_lever_pull = maxf(0.0, _lever_pull - delta * 3.0)
-	_lever.position.y = LEVER_Y + dy(Pin.BOTTOM) + roundf(sin(_lever_pull * PI) * 40.0)
-	_lever.scale.y = 1.0 - 0.2 * sin(_lever_pull * PI)
+	if slot_view.art:
+		if _knob != null:
+			# 손잡이만 홈의 아래 끝까지 내려갔다가 튕겨 올라온다
+			_knob.position.y = _knob_y + dy(Pin.BOTTOM) + roundf(sin(_lever_pull * PI) * _knob_travel)
+			_knob.queue_redraw()
+		else:
+			_lever.position.y = _lever_y + dy(Pin.BOTTOM) + roundf(sin(_lever_pull * PI) * 10.0)
+	else:
+		_lever.position.y = LEVER_Y + dy(Pin.BOTTOM) + roundf(sin(_lever_pull * PI) * 40.0)
+		_lever.scale.y = 1.0 - 0.2 * sin(_lever_pull * PI)
 	for k in ["castle", "syn"]:
 		_hud[k].queue_redraw()
 	if state == "fight":
@@ -698,11 +782,25 @@ func _open_absorb(food: UnitState, target: UnitState) -> void:
 func _draw_castle(ci: Control) -> void:
 	var off := Vector2(roundf(sin(_t * 60.0) * 6.0 * _castle_shake), 0)
 	var r := Rect2(off, ci.size)
-	Px.draw_skin(ci, "panel_wide", r)
-	Px.fit(ci, Px.tex("icon_castle"), Rect2(off + Vector2(24, 14), Vector2(72, 63)))
 	var ratio := run.castle_ratio()
 	var low := ratio <= 0.3 and int(_t * 4.0) % 2 == 0
 	var col := Px.HP_RED if not low else Color("#ff6a5a")
+	if Px.has_art("battle_bar_castle"):
+		# 성 체력 판 그림: 성 아이콘 · 빈 홈 · 숫자 칸이 들어 있다. 홈 안에 막대만 그린다.
+		Px.rec(ci, "image", r, "battle_bar_castle")
+		ci.draw_texture_rect(Px.tex("battle_bar_castle"), r, false)
+		var groove := Rect2(off + Vector2(ci.size.x * 0.138, ci.size.y * 0.3), Vector2(ci.size.x * 0.7, ci.size.y * 0.4))
+		var w := floorf(groove.size.x * clampf(ratio, 0.0, 1.0))
+		if w > 0.0:
+			ci.draw_rect(Rect2(groove.position, Vector2(w, groove.size.y)), col)
+			ci.draw_rect(Rect2(groove.position, Vector2(w, 8)), col.lightened(0.3))
+			ci.draw_rect(Rect2(groove.position + Vector2(0, groove.size.y - 8), Vector2(w, 8)), col.darkened(0.25))
+		if _castle_flash > 0.0:
+			ci.draw_rect(groove, Color(1, 0.2, 0.2, 0.45 * _castle_flash))
+		Px.text(ci, "%d%%" % int(roundf(ratio * 100.0)), Rect2(off + Vector2(ci.size.x * 0.858, ci.size.y * 0.24), Vector2(ci.size.x * 0.12, ci.size.y * 0.52)), 30)
+		return
+	Px.draw_skin(ci, "panel_wide", r)
+	Px.fit(ci, Px.tex("icon_castle"), Rect2(off + Vector2(24, 14), Vector2(72, 63)))
 	Px.bar(ci, Rect2(off + Vector2(112, 24), Vector2(700, 44)), ratio, col)
 	if _castle_flash > 0.0:
 		ci.draw_rect(Rect2(off + Vector2(112, 24), Vector2(700, 44)), Color(1, 0.2, 0.2, 0.45 * _castle_flash))
@@ -813,6 +911,8 @@ func _guide_at(r: Rect2, text: String, anywhere := false) -> Guide:
 
 
 func _lever_rect() -> Rect2:
+	if slot_view.art:
+		return SlotView.art_rect("battle_lever").merge(SlotView.art_rect("battle_plate_cost")).grow(10) * Transform2D(0.0, Vector2(0, -dy(Pin.BOTTOM)))
 	return Rect2(556, LEVER_Y - 8.0 + dy(Pin.BOTTOM), 154, 312)
 
 

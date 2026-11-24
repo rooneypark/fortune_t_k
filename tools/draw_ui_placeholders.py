@@ -4,7 +4,7 @@
 - 모든 그림은 도트 크기로 그려서 4배(최근접)로 저장한다 (도트 1칸 = 4px).
 - 누끼(투명 배경) 부품은 바깥이 투명이다. 배경은 화면을 꽉 채운다.
 - 배경 · 성 · 성문 임시 그림에는 오른쪽 아래에 "파일 이름 · 크기"를 적어 둔다 (정식 그림에는 글자 없음).
-- 목록과 자리는 design/ux/제미나이-UI-의뢰서.md, 화면별 영역 지도는 tools/zone_maps.py.
+- (2026-11-24) 로비 · 전투는 제미나이 그림으로 바뀌었다: tools/import_lobby_ui.py · import_battle_ui.py.
 
 Usage: python tools/draw_ui_placeholders.py
 """
@@ -53,6 +53,13 @@ GEMINI = os.path.join(ROOT, "design", "art", "gemini")
 def save(im, folder, name):
     """Saves a placeholder, unless real art came in (design/art/gemini/<name>_원본.*)."""
     import glob
+    # 로비 배경 · 성문 조각은 받은 그림(design/art/ui_src, tools/import_lobby_ui.py)을 쓴다: 덮어쓰지 않는다
+    if name == "battle_field" and os.path.exists(os.path.join(ROOT, "design", "art", "ui_src", "전투_배경.webp")):
+        print("  keep real art:", name)
+        return
+    if name in ("lobby_bg", "gate1_door_l", "gate1_door_r", "gate1_hole") and os.path.exists(os.path.join(ROOT, "design", "art", "ui_src", "로비_배경.webp")):
+        print("  keep real art:", name)
+        return
     if glob.glob(os.path.join(GEMINI, name + "_원본.*")):
         print("  keep real art:", name)
         return
@@ -200,77 +207,7 @@ BUTTONS = {
 
 
 # ------------------------------------------------------------------ lobby buttons (2026-11-23: 출정 북 + 쟁패 깃발)
-def tab_bar():
-    """로비 하단 탭 영역 (256 x 50 dots = 1024 x 200 px, 화면 아래 끝에 붙는다): 짙은 판 + 위쪽 밝은 테두리."""
-    w, h = 256, 50
-    im = Image.new("RGBA", (w, h), rgb("#141a22"))
-    d = ImageDraw.Draw(im)
-    d.rectangle([0, 0, w - 1, 1], fill=OUTLINE)
-    d.rectangle([0, 2, w - 1, 3], fill=EDGE)
-    d.rectangle([0, 4, w - 1, 5], fill=rgb("#2a3442"))
-    return up(im)
-
-
-def tab_button(on=False):
-    """하단 탭 버튼 틀 (58 x 44 dots = 232 x 176 px). 아이콘(위 가운데 96 px)과 이름(아래)은 게임이 그린다.
-    on = 출정처럼 강조하는 버튼 (금 테두리)."""
-    w, h = 58, 44
-    edge = GOLD if on else EDGE
-    im, d = plate(w, h, edge, rgb("#1e2733") if not on else rgb("#2c2414"))
-    d.rectangle([2, h - 3, w - 3, h - 2], fill=dark(edge, 0.5))
-    return up(im)
-
-
 # ------------------------------------------------------------------ lobby (한 장, 성문 하나)
-def lobby_bg():
-    """Lobby background in one piece (256 x 448 dots): sky, hills, castle wall across the screen,
-    gate tower, ONE arched wooden gate in the middle (장식, 버튼 아님), empty dirt courtyard.
-    The gate's door sits at DOOR (화면 384, 744, 256 x 296 px = 도트 96, 186, 64 x 74) — tools/cut_lobby_door.py
-    cuts the opening animation pieces from there, lobby.gd DOOR is the same."""
-    w, h = 256, 448
-    im = Image.new("RGBA", (w, h), rgb("#6fb4e8"))
-    d = ImageDraw.Draw(im)
-    for i, c in enumerate(["#82c0ec", "#96cbef"]):
-        d.rectangle([0, 50 + i * 30, w, 80 + i * 30], fill=rgb(c))
-    for x0, y0, r in [(30, 80, 40), (120, 70, 55), (210, 85, 45)]:
-        d.ellipse([x0 - r, y0, x0 + r, y0 + r * 2], fill=rgb("#4e7f5a"))
-    d.rectangle([0, 130, w, 160], fill=rgb("#3f6f48"))
-    # 성벽 (y 150~272 도트), 성가퀴, 성루
-    d.rectangle([0, 160, w, 272], fill=STONE)
-    for x in range(0, w, 14):
-        d.rectangle([x, 150, x + 8, 160], fill=STONE)
-    for y in range(164, 272, 9):
-        off = 0 if (y // 9) % 2 else 7
-        for x in range(off, w, 14):
-            d.rectangle([x, y, x + 12, y + 7], outline=STONE_D)
-    d.rectangle([84, 112, 172, 150], fill=rgb("#8a3a2a"))
-    d.polygon([(74, 116), (128, 92), (182, 116)], fill=rgb("#3a4a6a"))
-    for tx in (60, 196):                                   # 횃불
-        d.rectangle([tx, 140, tx + 3, 150], fill=OUTLINE)
-        d.ellipse([tx - 2, 133, tx + 5, 141], fill=rgb("#ffb030"))
-    # 성문 하나 (2026-11-23 최종): 가운데, 배경 그림의 일부 (버튼 아님, 출정 때 열린다).
-    # 문짝 = 도트 x 96~159, y 186~259 (화면 384~640, 744~1040 px) — lobby.gd DOORS · cut_lobby_door.py DOORS 와 같게
-    d.pieslice([88, 178, 167, 257], 180, 360, fill=STONE_D)
-    d.rectangle([88, 217, 167, 263], fill=STONE_D)
-    d.pieslice([96, 186, 159, 249], 180, 360, fill=rgb("#6a4526"))
-    d.rectangle([96, 217, 159, 259], fill=rgb("#6a4526"))
-    for x in range(102, 159, 7):
-        d.line([(x, 192), (x, 259)], fill=rgb("#55361c"))
-    d.line([(127, 186), (127, 259)], fill=OUTLINE, width=2)
-    for yy in (212, 244):
-        d.rectangle([96, yy, 159, yy + 2], fill=rgb("#3a3a3a"))
-    d.ellipse([120, 226, 124, 230], fill=GOLD)
-    d.ellipse([131, 226, 135, 230], fill=GOLD)
-    # 흙 안뜰 (한 판으로 이어짐)
-    d.rectangle([0, 272, w, h], fill=rgb("#b89a64"))
-    for y in range(276, h, 10):
-        for x in range((y // 10 % 2) * 5, w, 10):
-            d.point((x, y), fill=rgb("#a08452"))
-    d.rectangle([0, 272, 10, h], fill=rgb("#4f8a3a"))
-    d.rectangle([246, 272, w, h], fill=rgb("#4f8a3a"))
-    return label(up(outline(im)), "lobby_bg 1024x1792 (배경 · 성문 하나)")
-
-
 # ------------------------------------------------------------------ other backgrounds
 def plain_bg(name, w, h, top, bottom, note):
     im = Image.new("RGBA", (w, h), rgb(top))
@@ -285,34 +222,17 @@ def plain_bg(name, w, h, top, bottom, note):
     return label(up(im), "%s %dx%d (%s)" % (name, w * 4, h * 4, note))
 
 
-def battle_bg():
-    """Battlefield 1024 x 1328: top scenery, fighting band y 620-1220, bottom ground."""
-    w, h = 256, 332
-    im = Image.new("RGBA", (w, h), rgb("#5d8f55"))
-    d = ImageDraw.Draw(im)
-    d.rectangle([0, 0, w, 90], fill=rgb("#82c0ec"))
-    d.rectangle([0, 90, w, 155], fill=rgb("#4e7f5a"))
-    d.rectangle([0, 155, w, 305], fill=rgb("#b89a64"))   # 공터 띠 (y 620 ~ 1220 px)
-    for y in range(158, 305, 10):
-        for x in range((y // 10 % 2) * 5, w, 10):
-            d.point((x, y), fill=rgb("#a08452"))
-    return label(up(im), "battle_field 1024x1328 (공터 y620~1220)")
-
-
 def main():
     os.makedirs(ICONS, exist_ok=True)
     for name, fn in ICON.items():
         icon(fn).save(os.path.join(ICONS, name + ".png"))
+    # 로비 · 전투의 버튼은 제미나이 그림(tools/import_lobby_ui.py · import_battle_ui.py)을 쓴다. 여기서는 "+"만 만든다.
     for name, (w, h, g, e, f) in BUTTONS.items():
-        save(picture_button(w, h, g, e, f), UI, name)
-    save(lobby_bg(), BG, "lobby_bg")
-    save(tab_bar(), UI, "tab_bar")
-    save(tab_button(), UI, "btn_tab")
-    save(tab_button(True), UI, "btn_tab_main")
+        if name == "btn_plus":
+            save(picture_button(w, h, g, e, f), UI, name)
     save(plain_bg("intro_bg", 256, 448, "#20304a", "#0d1117", "배경"), BG, "intro_bg")
     save(plain_bg("menu_bg", 256, 448, "#2a3a2a", "#141a14", "메뉴 배경"), BG, "menu_bg")
-    save(battle_bg(), BG, "battle_field")
-    print("placeholders: icons %d, buttons %d, lobby 1, bg 3" % (len(ICON), len(BUTTONS)))
+    print("placeholders: icons %d, buttons 1, bg 2" % len(ICON))
 
 
 if __name__ == "__main__":

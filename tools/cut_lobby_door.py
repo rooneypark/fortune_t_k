@@ -13,7 +13,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BG = os.path.join(ROOT, "assets", "bg", "lobby_bg.png")
 UI = os.path.join(ROOT, "assets", "ui")
 # 성문 (2026-11-23 최종: 하나): 이름 -> (x, y, w, h) 화면 px, 4의 배수 — lobby.gd DOORS 와 같게. 아치 반지름 = 너비의 절반.
-DOORS = {"gate1": (384, 744, 256, 296)}
+DOORS = {"gate1": (392, 796, 240, 292)}
 
 
 def cut(name, rect, bg):
