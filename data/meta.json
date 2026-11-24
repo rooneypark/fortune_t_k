@@ -43,11 +43,11 @@
   "xp_troop": 1,
   "trait_slots": [
    1,
-   1,
-   2,
    2,
    3,
-   3
+   4,
+   5,
+   6
   ],
   "trait_max": 3,
   "dup_gold": {

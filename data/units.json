@@ -1025,48 +1025,6 @@
    "hue": 0
   }
  },
- "advisors": {
-  "zhugeliang": {
-   "name": "한 칸 다시",
-   "desc": "꽝 칸 하나를 공짜로 다시 돌린다",
-   "type": "respin"
-  },
-  "zhouyu": {
-   "name": "동남풍",
-   "desc": "다음 돌리기는 칸마다 당첨 확률 50%",
-   "type": "lucky"
-  },
-  "luxun": {
-   "name": "화계",
-   "desc": "꽝 칸 하나를 공짜로 다시 돌린다",
-   "type": "respin"
-  },
-  "diaochan": {
-   "name": "연환계",
-   "desc": "다음 돌리기의 당첨 칸 절반은 장수",
-   "type": "hero_boost"
-  },
-  "zhangjiao_h": {
-   "name": "태평도",
-   "desc": "꽝 칸 하나를 공짜로 다시 돌린다",
-   "type": "respin"
-  },
-  "zuoci": {
-   "name": "둔갑술",
-   "desc": "다음 돌리기의 당첨 칸 절반은 장수",
-   "type": "hero_boost"
-  },
-  "yuji": {
-   "name": "기우",
-   "desc": "다음 돌리기는 칸마다 당첨 확률 50%",
-   "type": "lucky"
-  },
-  "huanggai": {
-   "name": "화선",
-   "desc": "다음 돌리기는 칸마다 당첨 확률 50%",
-   "type": "lucky"
-  }
- },
  "traits": {
   "class": {
    "pike": [

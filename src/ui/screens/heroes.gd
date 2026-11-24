@@ -52,10 +52,7 @@ func _rebuild() -> void:
 
 func _build_heroes() -> void:
 	# 내것만 / 전체 토글
-	var tog := PxButton.make("btn_small", true, Vector2(148, 64))
-	tog.set_label(DB.t("heroes.mine") if only_owned else DB.t("heroes.all"))
-	tog.font_size = 24
-	tog.highlight = only_owned
+	var tog := W.pick_chip(DB.t("heroes.mine") if only_owned else DB.t("heroes.all"), only_owned, Vector2(148, 64))
 	tog.pressed.connect(func() -> void:
 		only_owned = not only_owned
 		_rebuild())
@@ -64,20 +61,18 @@ func _build_heroes() -> void:
 	var fac_list := ["wei", "shu", "wu", "qun"]
 	for i in fac_list.size():
 		var f: String = fac_list[i]
-		var b := PxButton.make("btn_small", true, Vector2(98, 64))
-		b.text = DB.fac_name(f)
-		b.font_size = 24
-		b.highlight = f == fac
+		var b := W.pick_chip(DB.fac_name(f), f == fac, Vector2(98, 64))
+		b.text_rect = Rect2(8, 2, 82, 44)
 		b.overlay = func(btn: PxButton, off: Vector2) -> void:
-			btn.draw_rect(Rect2(off + Vector2(10, btn.size.y - 12), Vector2(btn.size.x - 20, 5)), DB.fac_color(f))
+			# 진영 색 줄: 칩 테두리 안쪽, 글자 아래 (어두운 테두리 1px로 판 위에 또렷하게)
+			var lr := Rect2(off + Vector2(18, btn.size.y - 21), Vector2(btn.size.x - 36, 6))
+			btn.draw_rect(lr.grow(1), Color(0, 0, 0, 0.55))
+			btn.draw_rect(lr, DB.fac_color(f))
 		b.pressed.connect(func() -> void:
 			fac = "" if fac == f else f
 			_rebuild())
 		put(b, Rect2(236 + i * 108, 250, 98, 64))
-	var owned_n := (Game.profile.data["heroes"] as Dictionary).size()
-	var cnt := DrawLayer.make(func(ci: Control) -> void:
-		Px.text(ci, "%d/%d" % [owned_n, DB.hero_ids().size()], Rect2(0, 0, ci.size.x, ci.size.y), 28, Px.GOLD, HORIZONTAL_ALIGNMENT_RIGHT))
-	put(cnt, Rect2(760, 250, 204, 64))
+	# 보유 수는 _put_dex ("장수 도감 n/32") 하나만 (예전에 숫자가 두 번 겹쳐 보였다)
 	# 장수 그리드 (전투력순 정렬 없음, 보유=초상+별+레벨, 미보유=어두운 실루엣, 투명 배경)
 	var ids: Array = []
 	for id: String in DB.hero_ids():
@@ -111,7 +106,7 @@ func _hero_tile(id: String, sz: Vector2) -> PxButton:
 	var b := PxButton.new()
 	b.size = sz
 	# 칸마다 사각 영역(테두리) — 그림·글자는 이 안에만 들어간다
-	b.part = "panel_slot"
+	b.part = W.card_part()
 	b.nine = true
 	b.press_depth = 3.0 if owned else 0.0
 	b.static_panel = not owned
@@ -160,7 +155,7 @@ func _troop_tile(id: String, sz: Vector2, in_lineup: bool) -> PxButton:
 	var b := PxButton.new()
 	b.size = sz
 	# 칸마다 사각 영역(테두리) — 그림·글자는 이 안에만 들어간다
-	b.part = "panel_slot"
+	b.part = W.card_part()
 	b.nine = true
 	b.press_depth = 3.0 if owned else 0.0
 	b.static_panel = not owned
@@ -196,10 +191,7 @@ func _troop_tile(id: String, sz: Vector2, in_lineup: bool) -> PxButton:
 
 func _build_treasures() -> void:
 	# 내것만 / 전체 토글
-	var tog := PxButton.make("btn_small", true, Vector2(148, 64))
-	tog.set_label(DB.t("heroes.mine") if only_owned else DB.t("heroes.all"))
-	tog.font_size = 24
-	tog.highlight = only_owned
+	var tog := W.pick_chip(DB.t("heroes.mine") if only_owned else DB.t("heroes.all"), only_owned, Vector2(148, 64))
 	tog.pressed.connect(func() -> void:
 		only_owned = not only_owned
 		_rebuild())
@@ -210,10 +202,9 @@ func _build_treasures() -> void:
 	for i in slots.size():
 		var s: String = slots[i]
 		var ic: String = icons[i]
-		var b := PxButton.make("btn_small", true, Vector2(84, 64))
+		var b := W.pick_chip("", s == slot_filter, Vector2(84, 64))
 		b.icon = Px.tex(ic)
 		b.icon_rect = Rect2(20, 10, 44, 44)
-		b.highlight = s == slot_filter
 		b.pressed.connect(func() -> void:
 			slot_filter = s
 			_rebuild())
@@ -267,7 +258,7 @@ func _build_treasures() -> void:
 	# 재료 요약 + 합성 (개편 §3.8): 보물은 합성으로만 얻는다
 	var mats := DrawLayer.make(func(ci: Control) -> void:
 		# 글자 없이: 재료 종류 아이콘(M 96) + 개수만
-		Px.draw_skin(ci, "panel_slot", Rect2(Vector2.ZERO, ci.size))
+		Px.nine(ci, W.card_part(), Rect2(Vector2.ZERO, ci.size))
 		var mat_slots: Array = DB.meta["treasure"]["slots"]
 		for i in mat_slots.size():
 			var slot := String(mat_slots[i])
@@ -290,7 +281,7 @@ func _treasure_tile(it: Dictionary, sz: Vector2, owned: bool) -> PxButton:
 	var b := PxButton.new()
 	b.size = sz
 	# 칸마다 사각 영역(테두리) — 그림·글자는 이 안에만 들어간다
-	b.part = "panel_slot"
+	b.part = W.card_part()
 	b.nine = true
 	b.static_panel = not owned
 	b.press_depth = 3.0 if owned else 0.0

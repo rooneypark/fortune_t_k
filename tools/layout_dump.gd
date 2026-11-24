@@ -28,7 +28,6 @@ func _ready() -> void:
 		["06_battle_fight", "battle", {"stage": 1, "diff": 1, "seed": 7}, "", {}, "fight"],
 		["07_pop_absorb", "battle", {"stage": 1, "diff": 1, "seed": 7}, "", {}, "absorb"],
 		["08_pop_wave_clear", "battle", {"stage": 1, "diff": 1, "seed": 7}, "", {}, "wave_clear"],
-		["09_pop_pause", "battle", {"stage": 1, "diff": 1, "seed": 7}, "pause", {}, "prep"],
 		["10_pop_result_win", "lobby", {}, "result", {"victory": true, "stage": 1, "diff": 1, "out": out, "stats": {"kills": 30, "spins": 10, "jackpots": 1}, "mvp": HERO, "castle": 0.8, "waves": 10}, ""],
 		["11_pop_result_lose", "lobby", {}, "result", {"victory": false, "stage": 1, "diff": 2, "stats": {"kills": 3, "spins": 2, "jackpots": 0}, "mvp": "", "castle": 0.0, "waves": 3, "can_continue": true}, ""],
 		["12_units_heroes", "heroes", {"mode": "units", "tab": 0}, "", {}, ""],

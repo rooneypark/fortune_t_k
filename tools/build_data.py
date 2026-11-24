@@ -28,7 +28,7 @@ rules = {
     "stage_back_gold": 500,  # 스테이지 되돌리기 한 번 값 (금)
     # 슬롯 3칸 (개편 §9.9): 칸마다 당첨 1/3, 당첨 칸의 5%는 장수 (2026-11-23: 10% -> 5%). 잭팟(3칸) = 돌린 군량 환급.
     "strip_length": 12, "slot_win_chance": 0.3333, "slot_hero_chance": 0.05,
-    "slot_lucky_chance": 0.5, "slot_boost_hero_chance": 0.5, "jackpot_refund_rice": 2,
+    "jackpot_refund_rice": 2,
     "respawn_soldier": 5.0, "respawn_hero": 12.0, 
     "castle_hp": 1000, "castle_regen": 0.1, "castle_attack_interval": 1.2,
     # 전장 칸 늘리기는 금으로 (그 전투 동안만)
@@ -158,17 +158,6 @@ for (hid, name, fac, rar, troop, skill, art, hue) in roster:
     heroes[hid] = {"name": name, "fac": fac, "rarity": rar, "cls": cls, "troop": troop, "hp": hp, "atk": atk, "def": df,
                    "ctr": soldiers[troop]["ctr"],
                    "range": soldiers[troop].get("range", c["range"]) + (10 if cls in ("inf", "cav", "pike") else 20), "skill": skill, "art": art, "hue": hue}
-# advisor skills (GDD §3.3b, 제안): heroes that can be 책사 (str class) each have a slot skill.
-advisors = {
-    "zhugeliang": {"name": "한 칸 다시", "desc": "꽝 칸 하나를 공짜로 다시 돌린다", "type": "respin"},
-    "zhouyu":     {"name": "동남풍", "desc": "다음 돌리기는 칸마다 당첨 확률 50%", "type": "lucky"},
-    "luxun":      {"name": "화계", "desc": "꽝 칸 하나를 공짜로 다시 돌린다", "type": "respin"},
-    "diaochan":   {"name": "연환계", "desc": "다음 돌리기의 당첨 칸 절반은 장수", "type": "hero_boost"},
-    "zhangjiao_h":{"name": "태평도", "desc": "꽝 칸 하나를 공짜로 다시 돌린다", "type": "respin"},
-    "zuoci":      {"name": "둔갑술", "desc": "다음 돌리기의 당첨 칸 절반은 장수", "type": "hero_boost"},
-    "yuji":       {"name": "기우", "desc": "다음 돌리기는 칸마다 당첨 확률 50%", "type": "lucky"},
-    "huanggai":   {"name": "화선", "desc": "다음 돌리기는 칸마다 당첨 확률 50%", "type": "lucky"},
-}
 # 속성: 분류 공통 2개 + 병종 고유 1개 (먹이 병종 기준). v = 레벨 1/2/3 값, fx = 전투가 읽는 열쇠.
 def T(tid, name, fx, v, desc, **extra):
     d = {"id": tid, "name": name, "fx": fx, "v": v, "descs": [desc % x for x in extra.pop("show", v)]}
@@ -275,7 +264,7 @@ for _bid in bosses:
     bosses[_bid].pop("hue", None)
 units = {"_source": "GDD v5 §3.4b, §3.7 / 장수-명단-v5 / 콘텐츠-기획-v5 §3-5 / slice_units.json",
          "classes": classes, "factions": factions, "rarities": rarities, "soldiers": soldiers, "heroes": heroes,
-         "advisors": advisors, "traits": traits, "synergies": synergies, "bonds": bonds, "enemies": enemies,
+         "traits": traits, "synergies": synergies, "bonds": bonds, "enemies": enemies,
          "bosses": bosses, "enemy_aspd": 0.85,
          "boss_mech": {"lightning": {"every": 6.0, "warn": 1.2, "radius": 90, "dmg": 140, "stun": 1.0},
                        "stomp": {"every": 7.0, "warn": 0.9, "radius": 150, "dmg": 120, "stun": 1.2}}}
@@ -413,7 +402,7 @@ meta = {
                   "soldier_odds": {"basic": 70.0, "elite": 30.0}},
     # 성급 (개편 §9.2): 전투 중 같은 병종을 흡수해 경험을 쌓는다. 복사본(같은 장수) 10, 같은 병종 병사 1.
     "star": {"max": 6, "mult": 1.15, "hero_xp": [10, 20, 30, 50, 80], "troop_xp": [5, 12, 25, 50, 100],
-             "xp_copy": 10, "xp_troop": 1, "trait_slots": [1, 1, 2, 2, 3, 3], "trait_max": 3,
+             "xp_copy": 10, "xp_troop": 1, "trait_slots": [1, 2, 3, 4, 5, 6], "trait_max": 3,  # 속성 칸 = 성급 (2026-11-24 민수 님, A안)
              "dup_gold": {"b": 1000, "a": 3000, "s": 10000, "ss": 30000}, "troop_dup_gold": 500},  # 우편 등으로 이미 가진 것을 받을 때만
     "treasure": {"slots": ["weapon", "armor", "charm"], "slot_names": {"weapon": "무기", "armor": "갑옷", "charm": "장신구"},
                  # 전용 보물을 그 장수가 끼면 주 능력치 +30%

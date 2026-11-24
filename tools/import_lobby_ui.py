@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""로비 UI 그림(마젠타 배경) -> 로비 부품 (assets/ui/lobby_*.png) + 배경 (assets/bg/lobby_bg.png).
+"""[옛 로비 1차 — 지금 로비는 tools/import_lobby2_ui.py. 이 파일은 떼어 내기 함수(load · matte · components · cut · scale_rgba)를
+다른 도구들이 같이 쓴다. main()을 돌리면 옛 로비 부품을 다시 만드니 돌리지 않는다.]
+
+로비 UI 그림(마젠타 배경) -> 로비 부품 (assets/ui/lobby_*.png) + 배경 (assets/bg/lobby_bg.png).
 
 원본 그림: design/art/ui_src/
   로비_UI.webp           마젠타 배경 위에 UI 부품만 (초상 틀 · 금/군량 칩 · 설정 · 우편 · 임무 · 쟁패 · 출정 · 빈 탭 버튼 3개)
@@ -100,111 +103,7 @@ def scale_rgba(im, w, h):
 
 
 def main():
-    a = load("로비_UI.webp")
-    sh, sw = a.shape[:2]
-    kx, ky = CW / sw, CH / sh
-    col, alpha = matte(a)
-    lab, comps = components(alpha)
-    # 자리로 부품을 가려낸다 (원본 px)
-    def pick(cx_lo, cx_hi, cy_lo, cy_hi):
-        hit = [c for c in comps if cx_lo <= (c[1] + c[3]) / 2 / sw < cx_hi and cy_lo <= (c[2] + c[4]) / 2 / sh < cy_hi]
-        assert len(hit) == 1, (cx_lo, cx_hi, cy_lo, cy_hi, hit)
-        return hit[0]
-    names = {
-        "lobby_portrait": pick(0.0, 0.2, 0.0, 0.12), "lobby_chip_gold": pick(0.2, 0.52, 0.0, 0.1), "lobby_chip_rice": pick(0.52, 0.86, 0.0, 0.1),
-        "lobby_btn_settings": pick(0.86, 1.0, 0.0, 0.1), "lobby_btn_mail": pick(0.0, 0.2, 0.12, 0.21), "lobby_btn_mission": pick(0.0, 0.2, 0.21, 0.3),
-        "lobby_btn_arena": pick(0.8, 1.0, 0.12, 0.21), "lobby_btn_stage": pick(0.25, 0.75, 0.75, 0.89),
-        "lobby_tab_1": pick(0.0, 0.34, 0.89, 1.0), "lobby_tab_2": pick(0.34, 0.66, 0.89, 1.0), "lobby_tab_3": pick(0.66, 1.0, 0.89, 1.0),
-    }
-    layout, made = {}, {}
-    for name, comp in names.items():
-        src_name = name
-        if name == "lobby_tab_3":
-            # 세 번째 탭 버튼에는 제미나이 워터마크가 있다: 같은 모양인 두 번째 버튼 그림을 쓴다 (자리는 세 번째 것)
-            im, b2 = cut(col, alpha, lab, names["lobby_tab_2"])
-            _, b1 = cut(col, alpha, lab, names["lobby_tab_1"])
-            box = (b2[0] + (b2[0] - b1[0]), b2[1], b2[2] + (b2[0] - b1[0]), b2[3])
-        else:
-            im, box = cut(col, alpha, lab, comp)
-        x, y = round(box[0] * kx), round(box[1] * ky)
-        w, h = round((box[2] - box[0]) * kx), round((box[3] - box[1]) * ky)
-        out = scale_rgba(im, w, h)
-        out.save(os.path.join(UI, name + ".png"))
-        layout[name] = [x, y, w, h]
-        made[name] = out
-    # 하단 탭 판: 탭판이 있는 그림에서 판만. 버튼이 박혀 있으므로 버튼 사이 칸의 색을 줄마다 가로로 이어 붙인다.
-    b = load("로비_UI_탭판있음.webp")
-    rb = np.minimum(b[..., 0] - b[..., 1], b[..., 2] - b[..., 1])
-    rows = np.where((rb < 60).mean(axis=1) > 0.98)[0]          # 가로 전체가 마젠타가 아닌 줄 = 판
-    top = int(rows.min())
-    gap_x = int(round((names["lobby_tab_1"][3] + names["lobby_tab_2"][1]) / 2))   # 첫 버튼과 둘째 버튼 사이
-    strip = b[top:, gap_x:gap_x + 1, :]
-    bar = Image.fromarray(np.repeat(strip, sw, axis=1).astype(np.uint8)).convert("RGBA")
-    by, bh = round(top * ky), CH - round(top * ky)
-    bar = bar.resize((CW, bh), Image.LANCZOS)
-    bar.save(os.path.join(UI, "lobby_tab_bar.png"))
-    layout["lobby_tab_bar"] = [0, by, CW, bh]
-    made["lobby_tab_bar"] = bar
-    # 탭 아이콘 3개: 완성 화면의 아이콘만 마젠타 위에 남긴 그림에서, 자리까지 그대로 가져온다
-    ic = load("로비_UI_탭아이콘.webp")
-    # 제미나이 워터마크(반짝이)가 주머니 아이콘의 오른쪽 절반에 겹쳐 찍혀 있다 (원본 px: x 465~500, y 921~952).
-    # 주머니는 좌우가 거의 같은 모양이므로, 깨끗한 왼쪽 절반을 뒤집어 오른쪽에 덮는다 (금화가 있는 윗부분은 그대로).
-    WM_AXIS, WM_TOP, WM_BOTTOM, WM_HALF = 473, 921, 960, 34
-    ic[WM_TOP:WM_BOTTOM, WM_AXIS + 1:WM_AXIS + 1 + WM_HALF] = ic[WM_TOP:WM_BOTTOM, WM_AXIS - WM_HALF:WM_AXIS][:, ::-1]
-    icol, ialpha = matte(ic)
-    ilab, icomps = components(ialpha, 300)
-    ih, iw = ic.shape[:2]
-    low = sorted([k for k in icomps if (k[2] + k[4]) / 2 / ih > 0.87], key=lambda k: k[1])
-    assert len(low) == 3, low
-    for name, comp in zip(("lobby_ic_hero", "lobby_ic_bag", "lobby_ic_shop"), low):
-        im, box = cut(icol, ialpha, ilab, comp)
-        x, y = round(box[0] * kx), round(box[1] * ky)
-        w, h = round((box[2] - box[0]) * kx), round((box[3] - box[1]) * ky)
-        out = scale_rgba(im, w, h)
-        out.save(os.path.join(UI, name + ".png"))
-        layout[name] = [x, y, w, h]
-        made[name] = out
-    # 배경
-    bgsrc = np.array(Image.open(os.path.join(SRC, "로비_배경.webp")).convert("RGB"))
-    # 제미나이 워터마크(오른쪽 아래 반짝이, 원본의 82~92% x 89~94% 자리)를 왼쪽 옆의 흙바닥으로 덮는다
-    hh, ww = bgsrc.shape[:2]
-    wx0, wx1, wy0, wy1 = int(ww * 0.79), int(ww * 0.90), int(hh * 0.885), int(hh * 0.945)
-    bgsrc[wy0:wy1, wx0:wx1] = bgsrc[wy0:wy1, wx0 - (wx1 - wx0):wx0][:, ::-1]
-    bgim = Image.fromarray(bgsrc).resize((CW, CH), Image.LANCZOS)
-    bgim.save(os.path.join(BG, "lobby_bg.png"))
-    json.dump(layout, open(os.path.join(UI, "lobby_layout.json"), "w", encoding="utf-8"), indent=1)
-    for k, v in layout.items():
-        print("%-20s %s" % (k, v))
-    # ---- 확인용 1: 부품을 체크무늬(위) · 어두운 바탕(가운데) · 밝은 바탕(아래)에
-    order = [n for n in made if n != "lobby_tab_bar"]
-    Wd = sum(made[n].width + 16 for n in order) + 16
-    Hd = max(made[n].height for n in order)
-    sheet = Image.new("RGBA", (Wd, Hd * 3 + 64), (255, 255, 255, 255))
-    for row, fillc in enumerate(("check", (24, 24, 34, 255), (250, 250, 250, 255))):
-        x = 16
-        for n in order:
-            im = made[n]
-            tile = Image.new("RGBA", im.size, fillc if fillc != "check" else (255, 0, 0, 255))
-            if fillc == "check":
-                t = np.zeros((im.height, im.width, 4), np.uint8)
-                yy, xx = np.mgrid[0:im.height, 0:im.width]
-                t[...] = np.where((((xx // 12) + (yy // 12)) % 2 == 0)[..., None], (60, 200, 90, 255), (40, 150, 230, 255))
-                tile = Image.fromarray(t)
-            tile.alpha_composite(im)
-            sheet.paste(tile, (x, 16 + row * (Hd + 16)))
-            x += im.width + 16
-    sheet.save(os.path.join(SRC, "로비_부품확인.png"))
-    # ---- 확인용 2: 완성 화면 | 게임 합성
-    comp = bgim.convert("RGBA")
-    comp.alpha_composite(made["lobby_tab_bar"], (0, layout["lobby_tab_bar"][1]))
-    for n in order:
-        if n in layout:
-            comp.alpha_composite(made[n], (layout[n][0], layout[n][1]))
-    orig = Image.open(os.path.join(SRC, "로비_완성화면.webp")).convert("RGBA").resize((CW, CH), Image.LANCZOS)
-    both = Image.new("RGBA", (CW * 2 + 16, CH), (0, 0, 0, 255))
-    both.paste(orig, (0, 0))
-    both.paste(comp, (CW + 16, 0))
-    both.resize((both.width // 2, both.height // 2), Image.LANCZOS).save(os.path.join(SRC, "로비_합성확인.png"))
+    raise SystemExit("옛 로비 1차 도구입니다. 지금 로비는 python tools/import_lobby2_ui.py (원본 그림도 지웠다).")
 
 
 if __name__ == "__main__":

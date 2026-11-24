@@ -68,11 +68,9 @@ ICON_DRAW = {
     "medal": lambda d: (d.polygon([(4, 1), (7, 7), (9, 7), (12, 1)], fill=rgb("#d83030")), d.ellipse([3, 6, 12, 15], fill=GOLD), d.point((7, 10), fill=GOLD_D)),
     "scroll": lambda d: (d.rectangle([3, 3, 12, 12], fill=rgb("#f2e6c8")), d.rectangle([2, 2, 13, 3], fill=rgb("#b05030")), d.rectangle([2, 12, 13, 13], fill=rgb("#b05030")), d.line([(5, 6), (10, 6)], fill=rgb("#c83030")), d.line([(5, 9), (10, 9)], fill=rgb("#8a6a4a"))),
     "chest": lambda d: (d.rectangle([2, 6, 13, 13], fill=rgb("#a0602e")), d.pieslice([2, 2, 13, 11], 180, 360, fill=rgb("#c07a3a")), d.rectangle([2, 6, 13, 7], fill=GOLD), d.rectangle([7, 7, 8, 9], fill=GOLD)),
-    "flag": lambda d: (d.line([(4, 1), (4, 14)], fill=rgb("#7a5230"), width=2), d.polygon([(5, 2), (13, 4), (5, 8)], fill=rgb("#d83030"))),
     "swords": lambda d: (d.line([(2, 2), (12, 12)], fill=rgb("#e6edf5"), width=2), d.line([(13, 2), (3, 12)], fill=rgb("#e6edf5"), width=2), d.line([(9, 13), (13, 9)], fill=GOLD, width=2), d.line([(2, 9), (6, 13)], fill=GOLD, width=2)),
     "sword": lambda d: (d.line([(3, 12), (12, 3)], fill=rgb("#e6edf5"), width=2), d.line([(2, 9), (6, 13)], fill=GOLD, width=2)),
     "bag": lambda d: (d.ellipse([2, 5, 13, 14], fill=rgb("#c89a5a")), d.rectangle([5, 2, 10, 6], fill=rgb("#a87a3a")), d.line([(4, 6), (11, 6)], fill=rgb("#d83030"))),
-    "soldier": lambda d: (d.ellipse([3, 2, 12, 11], fill=SKIN), d.pieslice([3, 1, 12, 10], 180, 360, fill=rgb("#9aa4b2")), d.rectangle([4, 11, 11, 14], fill=rgb("#3f6fb0")), d.point((10, 6), fill=OUTLINE)),
     "hero": lambda d: (d.ellipse([3, 2, 12, 11], fill=SKIN), d.pieslice([3, 1, 12, 10], 180, 360, fill=rgb("#d83030")), d.rectangle([4, 11, 11, 14], fill=GOLD), d.point((10, 6), fill=OUTLINE)),
     "lock": lambda d: (d.arc([4, 1, 11, 10], 180, 360, fill=rgb("#b8c2d0"), width=2), d.rectangle([3, 7, 12, 14], fill=GOLD), d.point((7, 10), fill=OUTLINE)),
     "star": lambda d: d.polygon([(7.5, 1), (9.5, 6), (14, 6), (10.5, 9), (12, 14), (7.5, 11), (3, 14), (4.5, 9), (1, 6), (5.5, 6)], fill=GOLD),
@@ -89,7 +87,7 @@ ICON_DRAW = {
 }
 # file name -> drawing key. 쓰는 아이콘만 그린다 (2026-11-23 정리).
 ICON_FILES = {}
-for k in ["gold", "rice", "medal", "chest", "flag", "swords", "sword", "bag", "soldier", "hero", "castle"]:
+for k in ["gold", "rice", "medal", "chest", "swords", "sword", "bag", "hero", "castle"]:
     ICON_FILES["icon_" + k] = k
 for k in ["boss", "heart", "lock", "orb", "scroll", "shield", "star", "star_off", "sword"]:
     ICON_FILES["ic_" + k] = k

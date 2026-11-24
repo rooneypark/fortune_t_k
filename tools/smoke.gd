@@ -60,6 +60,22 @@ func _ready() -> void:
 	for c in Game.app.popup_layer.get_children():
 		c.queue_free()
 	await _wait(0.1)
+	# ---- 출정: 로비 성문 → 난이도 창 → 보통 → (성문 연출) → 전투 화면 (2026-11-24: 창에 묶인 콜백이 사라져 멈추던 문제)
+	_say("sortie: lobby -> difficulty -> battle")
+	Game.app.goto("lobby", {}, false)
+	await _wait(0.4)
+	Game.app.current.call("_on_sign")
+	await _wait(0.4)
+	var dpop: Node = Game.app.top_popup()
+	if dpop != null:
+		for c in dpop.find_children("*", "PxButton", true, false):
+			if String((c as PxButton).part) == "difficulty_btn_1":
+				c.emit_signal("pressed")
+				break
+	await _wait(2.6)
+	if Game.app.route != "battle":
+		push_error("sortie did not reach battle: route=%s" % Game.app.route)
+	_say("sortie: route %s" % Game.app.route)
 	# ---- 전투: 준비 장면, 흡수 창(성급 / 속성), 웨이브, 보스
 	for d in [1, 3]:
 		_say("battle stage 1 diff %d: prep" % d)
@@ -80,7 +96,8 @@ func _ready() -> void:
 			if not pulls.is_empty():
 				b.call("_on_reel_tapped", int(pulls[0][0]), int(pulls[0][1]))
 			await _wait(0.15)
-			b.call("_advisor")
+			b.call("_toggle_pause")
+			b.call("_toggle_pause")
 			b.call("_start_wave")
 			await _wait(0.1)
 			var field: BattleField = b.get("field")

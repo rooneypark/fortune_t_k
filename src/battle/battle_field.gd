@@ -16,17 +16,18 @@ signal wave_done
 signal soldiers_lost
 signal boss_spawned(f: Fighter)
 
-# 가로 전장 (2026-11-24, 배경 그림 battle_field에 맞춤): 왼쪽 위에 성문이 있는 성, 오른쪽에서 적이 온다.
-# 싸우는 곳은 성문 앞 길(위층 흙바닥)뿐이고 그 아래 흙 · 풀은 배경이다. 좌표는 이 노드 안의 px (1024 x 1328).
-# 그림의 도트 자리: 풀밭 끝 y 163, 가운데 턱 y 252, 성벽 밑선 (55, 160) → (22, 245), 성문 앞 (46, 207).
-const BAND_TOP := 664.0
-const BAND_BOTTOM := 1000.0
-## 성벽 밑선의 가장 왼쪽 (전장 맨 아래에서). 높이마다의 선은 wall_x(y).
-const WALL_X := 88.0
+# 가로 전장 (2026-11-24 3차 배경 battle_field에 맞춤): 왼쪽에 비스듬한 성벽(아래쪽에 성문), 오른쪽에서 적이 온다.
+# 싸우는 곳은 흙 전장 전체 (y 620 ~ 1240, 아래 슬롯 판 바로 위까지). 좌표는 이 노드 안의 px = 화면 px.
+# 그림에서 잰 성벽 · 풀 경계: y 600 → x 350, y 1000 → x 257, y 1240 → x 150. 성문 나무 문은 x 100~175, y 830~1265.
+const BAND_TOP := 620.0
+const BAND_BOTTOM := 1240.0
+## 성벽 경계: 전장 맨 위 / 맨 아래에서의 x. 높이마다의 선은 wall_x(y) (둘 사이를 잇는 비스듬한 선).
+const WALL_TOP_X := 350.0
+const WALL_X := 160.0
 ## 성문 앞: 아군을 뚫은 적은 여기로 모여들어 성문을 친다.
-const GATE := Vector2(190.0, 832.0)
+const GATE := Vector2(235.0, 1080.0)
 ## 아군 자리의 오른쪽 끝 (교전선).
-const LINE_X := 500.0
+const LINE_X := 580.0  # 성벽이 위쪽에서 오른쪽으로 나와 있어 아군 자리를 넓힌다 (3차 배경)
 ## 적이 나오는 오른쪽 끝.
 const SPAWN_X := 1030.0
 const LEFT := WALL_X
@@ -112,6 +113,9 @@ func _make_ally(u: UnitState) -> Fighter:
 	f.fac = DB.fac_of(u.id)
 	if u.anchor == Vector2.ZERO:
 		u.anchor = free_spot(f.cls)
+	elif not in_zone(u.anchor):
+		# 저장된 자리가 지금 전장 밖이면 (배경 그림을 바꿔 전장이 옮겨졌을 때) 전장 안으로
+		u.anchor = clamp_zone(u.anchor)
 	f.home = u.anchor
 	f.pos = u.anchor
 	f.pop = 0.25
@@ -219,7 +223,7 @@ func active_synergies() -> Array:
 
 ## 성벽 밑선의 x (배경 그림의 성은 비스듬해서 위쪽일수록 오른쪽으로 나와 있다).
 static func wall_x(y: float) -> float:
-	return lerpf(220.0, WALL_X, clampf((y - BAND_TOP) / (BAND_BOTTOM - BAND_TOP), 0.0, 1.0))
+	return lerpf(WALL_TOP_X, WALL_X, clampf((y - BAND_TOP) / (BAND_BOTTOM - BAND_TOP), 0.0, 1.0))
 
 
 ## A free standing spot in the ally zone: melee in front (right, near the line),

@@ -4,7 +4,7 @@
 - 모든 그림은 도트 크기로 그려서 4배(최근접)로 저장한다 (도트 1칸 = 4px).
 - 누끼(투명 배경) 부품은 바깥이 투명이다. 배경은 화면을 꽉 채운다.
 - 배경 · 성 · 성문 임시 그림에는 오른쪽 아래에 "파일 이름 · 크기"를 적어 둔다 (정식 그림에는 글자 없음).
-- (2026-11-24) 로비 · 전투는 제미나이 그림으로 바뀌었다: tools/import_lobby_ui.py · import_battle_ui.py.
+- (2026-11-24) 로비 · 전투는 제미나이 그림으로 바뀌었다: tools/import_lobby2_ui.py · import_battle3_ui.py.
 
 Usage: python tools/draw_ui_placeholders.py
 """
@@ -128,7 +128,6 @@ ICON = {
     "act_claim_all": lambda d: (gift(d, -2, -1, rgb("#8a4ad8")), gift(d, 2, 2)),
     "act_trash": lambda d: (d.rectangle([3, 4, 12, 14], fill=STEEL), d.rectangle([1, 2, 14, 3], fill=STEEL), d.rectangle([6, 0, 9, 1], fill=STEEL), d.line([(6, 6), (6, 12)], fill=STONE_D), d.line([(9, 6), (9, 12)], fill=STONE_D)),
     "act_done": lambda d: (d.ellipse([1, 1, 14, 14], fill=rgb("#4a5260")), d.line([(4, 8), (7, 11), (12, 4)], fill=WHITE, width=2)),
-    "act_equip": lambda d: (d.rectangle([2, 9, 13, 14], fill=WOOD), d.line([(7, 1), (7, 9)], fill=GREEN, width=3), tri(d, [(3, 5), (7, 10), (12, 5)], GREEN)),
     "act_unequip": lambda d: (d.rectangle([2, 9, 13, 14], fill=WOOD), d.line([(7, 3), (7, 10)], fill=RED, width=3), tri(d, [(3, 5), (7, 0), (12, 5)], RED)),
     "act_auto": lambda d: (d.rectangle([2, 9, 13, 14], fill=WOOD), star(d, GOLD, 0.6, 3, 0)),
     "act_revive": lambda d: (d.ellipse([1, 3, 8, 10], fill=RED), d.ellipse([7, 3, 14, 10], fill=RED), tri(d, [(1, 7), (14, 7), (7.5, 14)], RED), d.line([(7, 5), (7, 11)], fill=WHITE, width=2), d.line([(4, 8), (10, 8)], fill=WHITE, width=2)),
@@ -226,7 +225,7 @@ def main():
     os.makedirs(ICONS, exist_ok=True)
     for name, fn in ICON.items():
         icon(fn).save(os.path.join(ICONS, name + ".png"))
-    # 로비 · 전투의 버튼은 제미나이 그림(tools/import_lobby_ui.py · import_battle_ui.py)을 쓴다. 여기서는 "+"만 만든다.
+    # 로비 · 전투의 버튼은 제미나이 그림(tools/import_lobby2_ui.py · import_battle3_ui.py)을 쓴다. 여기서는 "+"만 만든다.
     for name, (w, h, g, e, f) in BUTTONS.items():
         if name == "btn_plus":
             save(picture_button(w, h, g, e, f), UI, name)

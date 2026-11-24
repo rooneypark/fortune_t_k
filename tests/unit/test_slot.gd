@@ -95,34 +95,13 @@ func test_shift_limit_from_rules() -> void:
 	DB.rules["nudges_per_spin"] = old
 
 
-func test_advisor_respin_rerolls_a_blank() -> void:
-	var p := _slot()
-	var s: SlotMachine = p[0]
-	var rng: RandomNumberGenerator = p[1]
-	s.forced = {"cells": ["spear", "", ""]}
-	s.spin(rng)
-	check(s.respin_reel(0, rng).is_empty(), "a winning reel is not re-spun")
-	check(not s.respin_reel(1, rng).is_empty(), "a blank reel is")
-	check(not s.can_nudge, "ends the shift chance")
-
-
-func test_shift_can_complete_a_jackpot() -> void:
-	var p := _slot()
-	var s: SlotMachine = p[0]
-	var rng: RandomNumberGenerator = p[1]
-	s.forced = {"cells": ["spear", "rider", ""], "above": ["", "", "shield"]}
-	s.spin(rng)
-	check(bool(s.nudge(2, 1)["jackpot"]), "third win by a shift = jackpot")
-
-
-func test_no_respin_after_three_wins() -> void:
+func test_no_nudge_after_three_wins() -> void:
 	var p := _slot()
 	var s: SlotMachine = p[0]
 	var rng: RandomNumberGenerator = p[1]
 	s.forced = {"cells": ["spear", "rider", "archer"]}
 	s.spin(rng)
-	check(not s.can_nudge, "nothing to spin again")
-	eq(s.first_blank(), -1, "no blank")
+	check(not s.can_nudge, "nothing to shift")
 
 
 func test_spin_deterministic_with_seed() -> void:
@@ -175,20 +154,3 @@ func test_no_heroes_means_soldiers_only() -> void:
 			if id != "" and not DB.is_soldier(id):
 				ok = false
 	check(ok, "no hero can appear when none is owned")
-
-
-func test_lucky_and_hero_boost() -> void:
-	var p := _slot(21)
-	var s: SlotMachine = p[0]
-	var rng: RandomNumberGenerator = p[1]
-	var wins := 0
-	var heroes := 0
-	var n := 2000
-	for _i in n:
-		for id: String in s.spin(rng, true, true)["cells"]:
-			if id != "":
-				wins += 1
-				if DB.is_hero(id):
-					heroes += 1
-	near(float(wins) / float(n * 3), float(DB.rules["slot_lucky_chance"]), 0.03, "lucky: 50% per reel")
-	near(float(heroes) / float(wins), float(DB.rules["slot_boost_hero_chance"]), 0.03, "boost: half of the wins are heroes")

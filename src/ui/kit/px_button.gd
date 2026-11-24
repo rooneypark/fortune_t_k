@@ -155,7 +155,7 @@ func _draw() -> void:
 	if pulse and not disabled:
 		var a := 0.35 + 0.35 * sin(_t * 6.0)
 		draw_rect(r.grow(6), Color(Px.GOLD, a), false, 6.0)
-	if part != "" and Px.LINE_UI and (nine or not Px.has_art(part)):
+	if part != "" and Px.LINE_UI and ((nine and not Px.has_nine(part)) or not Px.has_art(part)):
 		var lmod := mod if not is_sunk else Color(1.25, 1.25, 1.25)
 		Px.draw_skin(self, part, r, lmod)
 		if part == "lever":
@@ -173,7 +173,9 @@ func _draw() -> void:
 				Px.text(self, label, lr, clampi(int(minf(size.y * 0.3, size.x / maxf(1.0, label.length()) * 0.95)), 18, 40), Px.WHITE * mod)
 	elif part != "":
 		var use_part := part + "_pressed" if has_pressed else part
-		if nine:
+		if nine and Px.has_nine(use_part):
+			Px.nine(self, use_part, r, mod)
+		elif nine:
 			var sb := Px.skin(use_part)
 			sb.modulate_color = mod
 			draw_style_box(sb, r)

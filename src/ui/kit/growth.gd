@@ -13,7 +13,7 @@ const SIZE := Vector2(904, 480)
 static func star_panel(id: String) -> DrawLayer:
 	var p: Dictionary = Game.profile.data
 	return DrawLayer.make(func(ci: Control) -> void:
-		Px.draw_skin(ci, "panel_slot", Rect2(Vector2.ZERO, ci.size))
+		Px.nine(ci, "dlg_panel", Rect2(Vector2.ZERO, ci.size))  # 공용 내용 판
 		var w := ci.size.x
 		var e := MetaRules.entry(p, id)
 		var star := int(e.get("star", 1))
@@ -43,26 +43,27 @@ static func star_panel(id: String) -> DrawLayer:
 static func trait_panel(id: String) -> DrawLayer:
 	var p: Dictionary = Game.profile.data
 	return DrawLayer.make(func(ci: Control) -> void:
-		Px.draw_skin(ci, "panel_slot", Rect2(Vector2.ZERO, ci.size))
+		Px.nine(ci, "dlg_panel", Rect2(Vector2.ZERO, ci.size))  # 공용 내용 판
 		var w := ci.size.x
 		var star := MetaRules.unit_star(p, id)
 		var slots := MetaRules.trait_slots(star)
 		var traits := MetaRules.unit_traits(p, id)
 		Px.text(ci, DB.t("growth.slots", [traits.size(), slots]), Rect2(30, 16, 400, 44), 32, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
-		for i in 3:
-			var r := Rect2(30, 70 + i * 88, w - 60, 78)
+		# 속성 칸 6개 (칸 = 성급, 2026-11-24): 한 줄씩 얇게
+		for i in 6:
+			var r := Rect2(30, 70 + i * 44, w - 60, 40)
 			ci.draw_rect(r, Px.INK)
 			ci.draw_rect(r.grow(-3), Color("#2a2018") if i < slots else Color("#1a1612"))
 			if i < traits.size():
 				var t: Dictionary = traits[i]
 				var def := DB.trait_def(String(t["id"]))
-				Px.text(ci, String(def.get("name", "")), Rect2(r.position + Vector2(18, 0), Vector2(170, r.size.y)), 32, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
-				Px.text(ci, "Lv.%d" % int(t["lv"]), Rect2(r.position + Vector2(190, 0), Vector2(90, r.size.y)), 28, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
-				Px.text(ci, DB.trait_desc(String(t["id"]), int(t["lv"])), Rect2(r.position + Vector2(290, 0), Vector2(r.size.x - 306, r.size.y)), 24, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
+				Px.text(ci, String(def.get("name", "")), Rect2(r.position + Vector2(16, 0), Vector2(150, r.size.y)), 26, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
+				Px.text(ci, "Lv.%d" % int(t["lv"]), Rect2(r.position + Vector2(170, 0), Vector2(80, r.size.y)), 22, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
+				Px.text(ci, DB.trait_desc(String(t["id"]), int(t["lv"])), Rect2(r.position + Vector2(250, 0), Vector2(r.size.x - 262, r.size.y)), 20, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
 			elif i < slots:
-				Px.text(ci, DB.t("growth.slot_empty"), r, 26, Px.MUTED)
+				Px.text(ci, DB.t("growth.slot_empty"), r, 22, Px.MUTED)
 			else:
-				Px.text(ci, DB.t("growth.slot_locked", [3 if i == 1 else 5]), r, 26, Color("#6a6258"))
+				Px.text(ci, DB.t("growth.slot_locked", [i + 1]), r, 22, Color("#6a6258"))
 		Px.text(ci, DB.t("growth.trait_hint"), Rect2(30, 340, w - 60, 36), 24, Px.GOLD)
 		# 상성 (§9.5)
 		var lists := DB.counter_lists(DB.ctr_of(id))
@@ -96,25 +97,28 @@ static func gear_tab(scr: PxScreen, id: String, slot: String, pick: Callable, re
 			cell.pressed.connect(func() -> void: pick.call(s))
 			scr.put(cell, Rect2(r.position, Vector2(200, 200)))
 		else:
-			var e := PxButton.make("tile", true, Vector2(200, 200))
+			var e := PxButton.make(W.card_part(), true, Vector2(200, 200))
 			e.highlight = s == slot
 			e.icon = Px.tex(String(W.SLOT_ICON[s]))
 			e.icon_rect = Rect2(60, 50, 80, 80)
 			e.modulate = Color(0.7, 0.7, 0.75)
 			e.pressed.connect(func() -> void: pick.call(s))
 			scr.put(e, Rect2(r.position, Vector2(200, 200)))
-	var auto := PxButton.colored("wood", DB.t("hero.auto_equip"), Vector2(240, 110), 32)
+	# 자동 장착 · 모두 해제: 공용 그림 버튼 (btn_auto · btn_unequip, 글자는 툴팁)
+	var auto := PxButton.make("btn_auto", false, Vector2(240, 100)) if Px.has_art("btn_auto") else PxButton.colored("wood", DB.t("hero.auto_equip"), Vector2(240, 110), 32)
+	auto.tooltip_text = DB.t("hero.auto_equip")
 	auto.pressed.connect(func() -> void:
 		Game.profile.auto_equip(id)
 		Sfx.play("pop")
 		rebuild.call())
 	scr.put(auto, Rect2(724, 834, 240, 100))
-	var off := PxButton.colored("red", DB.t("hero.unequip"), Vector2(240, 90), 30)
+	var off := PxButton.make("btn_unequip", false, Vector2(240, 96)) if Px.has_art("btn_unequip") else PxButton.colored("red", DB.t("hero.unequip"), Vector2(240, 90), 30)
+	off.tooltip_text = DB.t("hero.unequip")
 	off.disabled = not eq.has(slot)
 	off.pressed.connect(func() -> void:
 		Game.profile.unequip(id, slot)
 		rebuild.call())
-	scr.put(off, Rect2(724, 950, 240, 90))
+	scr.put(off, Rect2(724, 950, 240, 96))
 	# 장비 효과 합계 + 보물의 특수 능력
 	var head := DrawLayer.make(func(ci: Control) -> void:
 		# 글자 최소: 고른 칸은 아이콘으로, 합계는 능력치 아이콘 + 숫자

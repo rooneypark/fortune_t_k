@@ -11,7 +11,8 @@ signal dialog_changed(route: String)
 const DIALOG_ROUTES := ["heroes", "hero", "troop", "arena", "shop"]
 ## Dialog frame in canvas px; content shows screen coords x 32..992, y 146..1462.
 ## 2026-11-23: 아래 끝을 로비 하단 탭(y 1592) 위에서 멈춘다 — 장수 · 가방 화면에서도 하단 탭이 보이고 눌린다.
-const DIALOG_RECT := Rect2(16, 212, 992, 1364)
+## 2026-11-24: 로비 3차 아래 탭(탭 줄 y 1522)에 맞춰 아래 끝을 1520으로 (출정 탭의 솟은 윗부분만 창 뒤로 간다).
+const DIALOG_RECT := Rect2(16, 212, 992, 1308)
 const DIALOG_INSET := 16.0
 ## Band above the dialog frame for the close X (inside the dialog container).
 const DIALOG_HEAD := 32.0
@@ -320,6 +321,10 @@ func _build_dialog_frame() -> void:
 	var bg := DrawLayer.make(func(ci: Control) -> void:
 		var rr := Rect2(Vector2.ZERO, ci.size)
 		ci.draw_rect(rr.grow(6), Color(0, 0, 0, 0.35))
+		# 공용 다이얼로그 틀 그림 (dlg_frame, 9-slice: 쇠 테두리 · 귀퉁이 징은 그대로, 널빤지 속만 늘어난다)
+		if Px.has_nine("dlg_frame"):
+			Px.nine(ci, "dlg_frame", rr)
+			return
 		Px.draw_skin(ci, "panel_ctrl", rr)
 		var inner := rr.grow(-DIALOG_INSET)
 		if not Px.LINE_UI:

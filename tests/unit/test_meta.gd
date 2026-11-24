@@ -27,8 +27,8 @@ func test_star_xp_tables() -> void:
 	eq(MetaRules.star_xp("spear", "guanyu"), 1, "같은 병종 병사 = 1")
 	eq(MetaRules.star_xp("spear", "spear"), 1, "병사끼리 = 1")
 	eq(MetaRules.trait_slots(1), 1, "1성 1칸")
-	eq(MetaRules.trait_slots(3), 2, "3성 2칸")
-	eq(MetaRules.trait_slots(6), 3, "6성 3칸")
+	eq(MetaRules.trait_slots(3), 3, "3성 3칸 (칸 = 성급)")
+	eq(MetaRules.trait_slots(6), 6, "6성 6칸")
 
 
 func test_clear_exp() -> void:

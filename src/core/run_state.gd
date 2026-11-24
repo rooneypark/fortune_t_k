@@ -19,17 +19,6 @@ var waves: Array = []
 ## Hero ids on the reels (every owned hero).
 var heroes: Array = []
 var soldiers: Array = []
-## Fixed 책사 (tests / tutorial); "" = the first hero on the field with a slot skill.
-var advisor_fixed := ""
-var advisor: String:
-	get:
-		if advisor_fixed != "":
-			return advisor_fixed
-		for u in field:
-			if u.is_hero() and not DB.advisor_skill(u.id).is_empty():
-				return u.id
-		return ""
-
 ## 0-based wave index.
 var wave := 0
 ## Spins made this run (다시 돌리기는 세지 않는다).
@@ -40,10 +29,6 @@ var castle_hp := 0
 var castle_max := 0
 var field: Array[UnitState] = []
 var last_result: Dictionary = {}
-var advisor_used := false
-var hero_boost_next := false
-## 책사 "동남풍": the next spin wins with slot_lucky_chance per reel.
-var lucky_next := false
 var continued := false
 ## Counters for missions / results.
 var stats := {"spins": 0, "jackpots": 0, "absorbs": 0, "traits": 0, "stars": 0, "new_units": 0, "kills": 0, "streak": 0, "best_streak": 0}
@@ -133,9 +118,7 @@ func spin() -> Dictionary:
 	spins += 1
 	stats["spins"] += 1
 	# 전장에 아무도 없으면 최소 1칸은 당첨 (개편 §9.9 보장)
-	last_result = slot.spin(rng, hero_boost_next, lucky_next, 1 if field.is_empty() else 0)
-	hero_boost_next = false
-	lucky_next = false
+	last_result = slot.spin(rng, 1 if field.is_empty() else 0)
 	var events := _apply(last_result)
 	changed.emit()
 	return {"result": last_result, "events": events}
@@ -154,46 +137,6 @@ func nudge(reel: int, dir: int) -> Dictionary:
 	var events := _apply(res)
 	changed.emit()
 	return {"result": res, "events": events}
-
-
-## Advisor skill type of the current advisor ("respin", "lucky", "hero_boost").
-func advisor_type() -> String:
-	return String(DB.advisor_skill(advisor).get("type", "respin"))
-
-
-## True when the advisor button should be lit.
-func advisor_ready() -> bool:
-	if advisor_used or advisor == "" or DB.advisor_skill(advisor).is_empty():
-		return false
-	match advisor_type():
-		"respin":
-			return not last_result.is_empty() and slot.first_blank() >= 0
-		_:
-			return true
-
-
-## Uses the advisor skill (GDD §3.3b), once per wave. [param reel] for respin
-## (a blank reel). Returns {result, events} for respin, {ok: true} for buffs, or {}.
-func use_advisor(reel: int = 0) -> Dictionary:
-	if not advisor_ready():
-		return {}
-	match advisor_type():
-		"respin":
-			var res := slot.respin_reel(reel, rng)
-			if res.is_empty():
-				return {}
-			advisor_used = true
-			last_result = res
-			var events := _apply(res)
-			changed.emit()
-			return {"result": res, "events": events}
-		"lucky":
-			lucky_next = true
-		"hero_boost":
-			hero_boost_next = true
-	advisor_used = true
-	changed.emit()
-	return {"ok": true}
 
 
 ## Turns a slot result into units. Event types:
@@ -350,7 +293,6 @@ func finish_wave() -> Dictionary:
 	var heal := mini(castle_max - castle_hp, int(round(castle_max * float(DB.rules["castle_regen"]))))
 	castle_hp += heal
 	wave += 1
-	advisor_used = false
 	slot.can_nudge = false
 	changed.emit()
 	return {"castle": heal}

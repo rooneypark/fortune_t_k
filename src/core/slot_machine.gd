@@ -103,13 +103,11 @@ func _set_reel(reel: int, id: String, rng: RandomNumberGenerator) -> void:
 	strips[reel][int(stops[reel])] = id
 
 
-## Spins all reels. [param lucky]: win chance slot_lucky_chance for this spin.
-## [param hero_boost]: winning reels show a hero with slot_boost_hero_chance.
-## [param min_wins]: at least this many reels win (RunState asks for 1 while the
+## Spins all reels. [param min_wins]: at least this many reels win (RunState asks for 1 while the
 ## field is empty, so a run can never stall with no unit and no 군량).
-func spin(rng: RandomNumberGenerator, hero_boost := false, lucky := false, min_wins := 0) -> Dictionary:
-	var win_p := float(DB.rules["slot_lucky_chance"]) if lucky else win_chance()
-	var hero_p := float(DB.rules["slot_boost_hero_chance"]) if hero_boost else hero_chance()
+func spin(rng: RandomNumberGenerator, min_wins := 0) -> Dictionary:
+	var win_p := win_chance()
+	var hero_p := hero_chance()
 	for r in REELS:
 		_set_reel(r, _roll(rng, win_p, hero_p), rng)
 	var have := 0
@@ -170,24 +168,6 @@ func nudge_wins() -> Array:
 		if peek(r, 1) != "":
 			out.append([r, -1])
 	return out
-
-
-## Spins one blank reel again (책사 "한 칸 다시"). Ends the 재배치 chance.
-## Returns {} when the reel is not a blank.
-func respin_reel(reel: int, rng: RandomNumberGenerator) -> Dictionary:
-	if reel < 0 or reel >= REELS or cell(reel) != "":
-		return {}
-	can_nudge = false
-	_set_reel(reel, _roll(rng, win_chance(), hero_chance()), rng)
-	return evaluate(cells(), [reel])
-
-
-## First blank reel, or -1.
-func first_blank() -> int:
-	for r in REELS:
-		if cell(r) == "":
-			return r
-	return -1
 
 
 ## Evaluates three cells. [param fresh] = reels that were just spun: only those

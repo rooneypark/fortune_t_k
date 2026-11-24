@@ -199,13 +199,33 @@ static func tabs(labels: Array, selected: int, sz: Vector2, on_pick: Callable, c
 		var b := PxButton.colored("wood_on" if i == selected else "wood", String(labels[i]), Vector2(w, sz.y if i == selected else sz.y - 6), 32)
 		if i != selected:
 			b.text_color = Px.MUTED
-		else:
+		elif not Px.has_nine("dlg_tab_on"):
 			b.highlight = true
+		# 공용 다이얼로그 탭 그림 (고른 탭 금테 · 안 고른 탭 회색, 9-slice)
+		if Px.has_nine("dlg_tab_on"):
+			b.part = "dlg_tab_on" if i == selected else "dlg_tab_off"
 		b.position = Vector2(i * (w + 8.0), 0 if i == selected else 6)
 		var idx := i
 		b.pressed.connect(func() -> void: on_pick.call(idx))
 		root.add_child(b)
 	return root
+
+
+## 공용 다이얼로그 카드 칸 (장수 · 병사 · 장비 칸): 그림(dlg_card, 9-slice)이 있으면 그것, 없으면 선 UI 판.
+static func card_part() -> String:
+	return "dlg_card" if Px.has_nine("dlg_card") else "panel_slot"
+
+
+## 공용 고르기 칩 (진영 · 종류 거르기, 내것만 등): 고른 칩 금테 · 안 고른 칩 회색 (dlg_chip_on/off, 9-slice).
+static func pick_chip(label: String, on: bool, sz: Vector2) -> PxButton:
+	var art := Px.has_nine("dlg_chip_on")
+	var b := PxButton.make(("dlg_chip_on" if on else "dlg_chip_off") if art else "btn_small", true, sz)
+	b.font_size = 24
+	b.set_label(label)
+	b.highlight = on and not art
+	if art and not on:
+		b.text_color = Px.MUTED
+	return b
 
 
 ## Dark rounded section panel with optional title.
@@ -264,12 +284,16 @@ static func draw_rank(ci: CanvasItem, r: Rect2, stars: int, lv: int, size: float
 
 const BTN := Vector2(240, 96)
 const BTN_WIDE := Vector2(560, 110)
-const CLOSE := Vector2(88, 88)
+const CLOSE := Vector2(96, 88)   # 닫기 그림(btn_close) 비율에 맞춤
 const ARROW := Vector2(84, 96)
 
 
-## Red X used by every pop-up and tab dialog.
+## Red X used by every pop-up and tab dialog. 그림(btn_close: 흰 X 붉은 버튼, 2026-11-24)이 있으면 그 그림.
 static func close_button(on_close: Callable) -> PxButton:
+	if Px.has_art("btn_close"):
+		var pic := PxButton.make("btn_close", false, CLOSE)
+		pic.pressed.connect(on_close)
+		return pic
 	var x := PxButton.colored("red", "", CLOSE)
 	x.overlay = func(b: PxButton, off: Vector2) -> void:
 		var c := b.size * 0.5 + off + Vector2(0, -2)
@@ -282,6 +306,12 @@ static func close_button(on_close: Callable) -> PxButton:
 
 ## Wood arrow button (◀ ▶) for prev / next.
 static func arrow_button(side: int, on_tap: Callable, sz := ARROW) -> PxButton:
+	# 공용 화살표 그림 (◀ btn_prev · ▶ btn_next, tools/import_detail_ui.py)
+	var pic := "btn_prev" if side < 0 else "btn_next"
+	if Px.has_art(pic):
+		var a := PxButton.make(pic, false, sz)
+		a.pressed.connect(on_tap)
+		return a
 	var b := PxButton.make("btn_small", true, sz)
 	b.overlay = func(btn: PxButton, off: Vector2) -> void:
 		var c := btn.size * 0.5 + off + Vector2(0, -2)

@@ -4,7 +4,8 @@
 원본: design/art/ui_src/
   난이도창_UI.webp        창 전체 (창 틀 · 제목 띠 · 버튼이 다 있는 것)
   난이도창_UI_버튼.webp   버튼만 (닫기 · 적 정보 칸 · 확률 · 난이도 3개 · 되돌리기)
-  난이도창_UI_닫기.webp   닫기(X) 버튼을 바꿔서 다시 받은 것 — 닫기 버튼만 여기서 가져온다
+  난이도창_UI_닫기.webp   닫기(X) 버튼을 바꿔서 다시 받은 것 (2026-11-24: 흰 X) — 닫기 버튼만 여기서 가져온다.
+                          모든 창이 쓰는 공용 닫기 버튼 assets/ui/btn_close.png 도 여기서 만든다
 
 받은 그림과 게임이 다른 점을 여기서 맞춘다:
 - 창에는 난이도 줄이 4개 그려져 있다 (해골 1개가 두 번). 게임은 3개(보통 · 어려움 · 지옥)다.
@@ -102,7 +103,9 @@ def main():
         made[name] = out
         layout[name] = [round(box[0] * kx), round((box[1] - up) * ky), out.width, out.height]
     for name, im in made.items():
-        im.save(os.path.join(L.UI, name + ".png"))
+        # 닫기(X)는 공용 btn_close 로만 저장한다 (2026-11-24 민수 님: 흰 X 버튼을 모든 창에 쓴다, W.close_button).
+        # 자리는 layout["difficulty_btn_close"] 에 남는다.
+        im.save(os.path.join(L.UI, ("btn_close" if name == "difficulty_btn_close" else name) + ".png"))
         print("%-22s %s" % (name, layout[name]))
     json.dump(layout, open(os.path.join(L.UI, "difficulty_layout.json"), "w", encoding="utf-8"), indent=1)
 

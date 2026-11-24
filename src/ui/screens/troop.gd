@@ -65,7 +65,7 @@ func _build_showcase() -> void:
 	var d := DB.soldier(id)
 	var tier := String(d.get("tier", "basic"))
 	var panel := DrawLayer.make(func(ci: Control) -> void:
-		Px.draw_skin(ci, "panel_slot", Rect2(Vector2.ZERO, ci.size)), Vector2(904, 540))
+		Px.nine(ci, "dlg_info", Rect2(Vector2.ZERO, ci.size)), Vector2(904, 540))  # 공용 정보 판
 	put(panel, Rect2(60, 160, 904, 540))
 	var unit := UnitView.make(id, 300.0)
 	if not owned:
@@ -73,15 +73,14 @@ func _build_showcase() -> void:
 	put(unit, Rect2(270, 560, 0, 0))
 	var info := DrawLayer.make(func(ci: Control) -> void:
 		var st: Dictionary = MetaRules.soldier_stats(Game.profile.data, id)
+		# 등급 띠 (dlg_badge)
 		var rr := Rect2(0, 0, 160, 46)
-		ci.draw_rect(rr, Px.INK)
-		ci.draw_rect(rr.grow(-3), Color("#6f9ad8") if tier == "elite" else Color("#5b6676"))
-		Px.text(ci, DB.t("odds.tier_" + tier), rr, 26)
+		Px.nine(ci, "dlg_badge", rr)
+		Px.text(ci, DB.t("odds.tier_" + tier), rr, 28, Color("#9ec3ff") if tier == "elite" else Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 7)
 		Px.text(ci, DB.troop_name(id), Rect2(0, 54, 420, 80), 68, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT, 8)
 		Px.stars(ci, Vector2(130, 158), int(Game.profile.troop(id).get("star", 0)), 6, 38.0)
 		var cr := Rect2(0, 190, 170, 44)
-		ci.draw_rect(cr, Px.INK)
-		ci.draw_rect(cr.grow(-3), Color("#2a3340"))
+		Px.nine(ci, "dlg_tag", cr)
 		Px.fit(ci, Px.tex(String(DB.units["classes"][DB.cls_of(id)]["icon"])), Rect2(cr.position + Vector2(8, 6), Vector2(32, 32)))
 		Px.text(ci, DB.cls_name(DB.cls_of(id)), Rect2(cr.position + Vector2(44, 0), Vector2(120, 44)), 26)
 		Px.fit(ci, Px.tex("icon_sword"), Rect2(0, 250, 44, 44))
@@ -104,10 +103,10 @@ func _build_showcase() -> void:
 		var pf := W.portrait(h, Vector2(76, 76))
 		if not Game.profile.owns(h):
 			pf.modulate = Color(0.35, 0.35, 0.4)
-		put(pf, Rect2(84 + i * 200, 616, 76, 76))
+		put(pf, Rect2(84 + i * 144, 616, 76, 76))
 		var nm := DrawLayer.make(func(ci: Control) -> void:
 			Px.text(ci, DB.unit_name(h), Rect2(Vector2.ZERO, ci.size), 24, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT), Vector2(110, 76))
-		put(nm, Rect2(166 + i * 200, 616, 110, 76))
+		put(nm, Rect2(164 + i * 144, 616, 62, 76))
 	# 이전/다음 병종
 	var list: Array = DB.soldier_ids()
 	var idx := list.find(id)

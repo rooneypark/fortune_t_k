@@ -14,8 +14,6 @@
  "strip_length": 12,
  "slot_win_chance": 0.3333,
  "slot_hero_chance": 0.05,
- "slot_lucky_chance": 0.5,
- "slot_boost_hero_chance": 0.5,
  "jackpot_refund_rice": 2,
  "respawn_soldier": 5.0,
  "respawn_hero": 12.0,

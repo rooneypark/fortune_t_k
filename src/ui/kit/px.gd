@@ -48,6 +48,9 @@ static var records: Array = []
 
 static var _tex: Dictionary = {}
 static var _skins: Dictionary = {}
+## 9-slice 그림 부품 (assets/ui/nine.json: 이름 -> 가장자리 여백 px) — tools/import_dialog_ui.py
+static var _nine_margin: Dictionary = {}
+static var _nines: Dictionary = {}
 static var _meta: Dictionary = {}
 static var _font: FontFile
 static var _font_thin: FontFile
@@ -109,12 +112,45 @@ static func has_art(name: String) -> bool:
 	return name != "" and (ResourceLoader.exists(UI + name + ".png") or FileAccess.file_exists(UI + name + ".png"))
 
 
+## 9-slice로 쓰는 그림 부품인가 (nine.json에 여백이 있고 그림이 있다).
+static func has_nine(name: String) -> bool:
+	if _nine_margin.is_empty():
+		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(UI + "nine.json")) if FileAccess.file_exists(UI + "nine.json") else null
+		_nine_margin = parsed if parsed is Dictionary else {"_": 0}
+	return _nine_margin.has(name) and has_art(name)
+
+
+## 그림 부품을 9-slice로 그린다: 가장자리(여백)는 그대로, 가운데만 늘어난다. 선 UI 설정과 상관없이 그림으로.
+static func nine(ci: CanvasItem, name: String, r: Rect2, mod: Color = Color.WHITE) -> void:
+	if not has_nine(name):
+		draw_skin(ci, name, r, mod)
+		return
+	if not _nines.has(name):
+		var sb := StyleBoxTexture.new()
+		sb.texture = tex(name)
+		# 여백: 숫자 하나(네 방향 같게) 또는 [왼, 위, 오른, 아래]
+		var m: Variant = _nine_margin[name]
+		if m is Array:
+			sb.texture_margin_left = float(m[0])
+			sb.texture_margin_top = float(m[1])
+			sb.texture_margin_right = float(m[2])
+			sb.texture_margin_bottom = float(m[3])
+		else:
+			sb.set_texture_margin_all(float(m))
+		_nines[name] = sb
+	var st := _nines[name] as StyleBoxTexture
+	rec(ci, "panel", r, name)
+	st.modulate_color = mod
+	ci.draw_style_box(st, r)
+	st.modulate_color = Color.WHITE
+
+
 ## 글자 버튼 → 아이콘 버튼 (design/ux/UI-그림-규격.md §5). 문구 열쇠 -> 아이콘 파일.
 ## 버튼 글자가 이 문구와 같으면 글자 대신 아이콘을 그린다 (글자는 툴팁으로 남는다).
 const ICON_FOR := {
 	"common.ok": "act_ok", "common.cancel": "act_cancel", "common.buy": "act_buy",
-	"absorb.do": "act_absorb", "wave.next_btn": "act_play", "pause.resume": "act_play",
-	"pause.settings": "act_settings", "pause.retreat": "act_retreat", "pause.retreat_ok": "act_retreat",
+	"absorb.do": "act_absorb", "wave.next_btn": "act_play",
+	"pause.retreat": "act_retreat", "pause.retreat_ok": "act_retreat",
 	"treasure.enhance": "act_enhance", "treasure.dismantle": "act_break", "purchase.pay": "act_buy",
 	"mail.get": "act_claim", "mail.get_all": "act_claim_all", "mail.delete": "act_trash", "mail.claimed": "act_done",
 	"missions.go": "act_go", "hero.auto_equip": "act_auto", "hero.unequip": "act_unequip",

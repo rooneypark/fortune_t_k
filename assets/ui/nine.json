@@ -1,0 +1,20 @@
+{
+ "dlg_frame": 52,
+ "dlg_tab_on": 16,
+ "dlg_tab_off": 16,
+ "dlg_chip_on": 14,
+ "dlg_chip_off": 14,
+ "dlg_card": 22,
+ "dlg_info": 20,
+ "dlg_panel": 20,
+ "dlg_badge": 14,
+ "dlg_tag": 12,
+ "dlg_bond": [
+  66,
+  18,
+  18,
+  18
+ ],
+ "battle_panel_slot": 20,
+ "battle_panel_ctrl": 20
+}

@@ -8,8 +8,6 @@ var stage := 1
 ## 그림 창 (2026-11-24): 창 틀 · 제목 띠 · 버튼이 제미나이 완성 화면에서 떼어 낸 그림이다
 ## (tools/import_difficulty_ui.py → assets/ui/difficulty_*.png, 자리 difficulty_layout.json).
 ## 해골 · 주사위 · 화살표 · 금괴는 그림에 들어 있고, 게임은 제목 · 적 아이콘 · 금 값만 쓴다. 그림이 없으면 선 UI로 그린다.
-var _art := false
-static var _layout: Dictionary = {}
 ## 적 분류 → 아이콘 (병종 무기 아이콘으로 구분)
 const FOE_ICON := {"pike": "wp_spear", "inf": "wp_sword", "arc": "wp_archer", "cav": "wp_rider", "str": "wp_fire"}
 
@@ -18,63 +16,12 @@ func setup(p: Dictionary) -> void:
 	stage = int(p.get("stage", 1))
 	title = "%s · %s" % [DB.t("stage.n", [stage]), DB.stage_name(stage)]
 	panel_rect = Rect2(112, 460, 800, 860)
-	_art = Px.has_art("difficulty_frame") and _r("difficulty_frame").size != Vector2.ZERO
+	_art = use_art("difficulty")
+	title_size = 44
 
 
-## 부품의 화면 자리 (px).
-func _r(name: String) -> Rect2:
-	if _layout.is_empty():
-		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://assets/ui/difficulty_layout.json"))
-		_layout = parsed if parsed is Dictionary else {"_": []}
-	var r: Array = _layout.get(name, [])
-	return Rect2(float(r[0]), float(r[1]), float(r[2]), float(r[3])) if r.size() == 4 else Rect2()
-
-
-## 화면 자리 그대로 놓는다 (그림 창).
-func _place(c: Control, name: String) -> Control:
-	var r := _r(name)
-	panel.add_child(c)
-	c.position = r.position
-	c.size = r.size
-	return c
-
-
-func _pic(name: String) -> PxButton:
+func _btn_pic(name: String) -> PxButton:
 	return PxButton.make(name, false, _r(name).size)
-
-
-## 그림 창의 틀: 어두운 막 + 창 틀 그림 + 제목 띠 + 닫기 버튼.
-func _build_frame() -> void:
-	if not _art:
-		super._build_frame()
-		return
-	var dimmer := DrawLayer.make(func(ci: Control) -> void: ci.draw_rect(Rect2(Vector2.ZERO, ci.size), Color(0.03, 0.05, 0.09, 0.72)))
-	dimmer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	dimmer.mouse_filter = Control.MOUSE_FILTER_STOP
-	dimmer.gui_input.connect(func(e: InputEvent) -> void:
-		if dim_closes and e is InputEventMouseButton and e.pressed:
-			close())
-	add_child(dimmer)
-	# 판 = 화면 전체 크기 (부품을 화면 자리 그대로 놓는다). 판 자체는 누름을 받지 않고, 창 틀 그림이 받는다.
-	panel = Control.new()
-	var vp := get_viewport_rect().size
-	panel.position = Vector2(maxf(0.0, (vp.x - Px.CANVAS.x) * 0.5), (vp.y - Px.CANVAS.y) * 0.5)
-	panel.size = Px.CANVAS
-	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(panel)
-	var frame := DrawLayer.make(func(ci: Control) -> void:
-		Px.rec(ci, "image", Rect2(Vector2.ZERO, ci.size), "difficulty_frame")
-		ci.draw_texture_rect(Px.tex("difficulty_frame"), Rect2(Vector2.ZERO, ci.size), false))
-	frame.mouse_filter = Control.MOUSE_FILTER_STOP
-	_place(frame, "difficulty_frame")
-	var head := DrawLayer.make(func(ci: Control) -> void:
-		ci.draw_texture_rect(Px.tex("difficulty_title"), Rect2(Vector2.ZERO, ci.size), false)
-		Px.text(ci, title, Rect2(28, 10, ci.size.x - 56, ci.size.y - 28), 44, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 7))
-	head.mouse_filter = Control.MOUSE_FILTER_STOP
-	_place(head, "difficulty_title")
-	var x := _pic("difficulty_btn_close")
-	x.pressed.connect(close)
-	_place(x, "difficulty_btn_close")
 
 
 func build() -> void:
@@ -119,7 +66,9 @@ func build() -> void:
 				return
 			Game.next_stage = {"stage": stage, "diff": d}
 			# 로비에서 열었으면 성문이 열리고 부대가 출정한 뒤 전투로 (2026-11-23)
-			var go := func() -> void: Game.app.goto("battle", {"stage": stage, "diff": d})
+			# 이 창은 곧 닫힌다: 출정 연출이 끝난 뒤 부를 일은 창이 아니라 Game.app 에 묶는다
+			# (창에 묶인 람다는 창이 사라지면 조용히 불리지 않아 전투로 못 넘어갔다, 2026-11-24)
+			var go := Game.app.goto.bind("battle", {"stage": stage, "diff": d}, true)
 			var cur: Node = Game.app.current
 			close()
 			if cur != null and cur.has_method("march_out"):
@@ -176,7 +125,7 @@ func _build_art() -> void:
 			Px.fit(ci, Px.tex(String(FOE_ICON.get(String(seen[i]), "class_inf"))), Rect2(28 + i * (s + 14), 22, s, s)))
 	foes.tooltip_text = " · ".join(seen.map(func(c: String) -> String: return DB.cls_name(c)))
 	_place(foes, "difficulty_slot_foes")
-	var odds := _pic("difficulty_btn_odds")
+	var odds := _btn_pic("difficulty_btn_odds")
 	odds.tooltip_text = DB.t("stage.odds")
 	odds.pressed.connect(func() -> void: Game.app.popup("odds", {}))
 	_place(odds, "difficulty_btn_odds")
@@ -184,7 +133,7 @@ func _build_art() -> void:
 	for i in mini(3, diffs.size()):
 		var d := i + 1
 		var unlocked := Game.profile.is_unlocked(stage, d)
-		var b := _pic("difficulty_btn_%d" % d)
+		var b := _btn_pic("difficulty_btn_%d" % d)
 		b.sound = "whoosh"
 		b.tooltip_text = String((diffs[i] as Dictionary)["name"])
 		if not unlocked:
@@ -197,7 +146,9 @@ func _build_art() -> void:
 				return
 			Game.next_stage = {"stage": stage, "diff": d}
 			# 로비에서 열었으면 성문이 열리고 부대가 출정한 뒤 전투로
-			var go := func() -> void: Game.app.goto("battle", {"stage": stage, "diff": d})
+			# 이 창은 곧 닫힌다: 출정 연출이 끝난 뒤 부를 일은 창이 아니라 Game.app 에 묶는다
+			# (창에 묶인 람다는 창이 사라지면 조용히 불리지 않아 전투로 못 넘어갔다, 2026-11-24)
+			var go := Game.app.goto.bind("battle", {"stage": stage, "diff": d}, true)
 			var cur: Node = Game.app.current
 			close()
 			if cur != null and cur.has_method("march_out"):
@@ -209,7 +160,7 @@ func _build_art() -> void:
 	var prof := Game.profile
 	if stage > 1 and stage == prof.current_stage():
 		var cost := prof.stage_back_cost()
-		var back := _pic("difficulty_btn_back")
+		var back := _btn_pic("difficulty_btn_back")
 		back.tooltip_text = DB.t("stage.back")
 		back.overlay = func(btn: PxButton, off: Vector2) -> void:
 			Px.text(btn, Px.num(cost), Rect2(off + Vector2(btn.size.x * 0.62, btn.size.y * 0.3), Vector2(btn.size.x * 0.27, btn.size.y * 0.42)), 28, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 5)

@@ -21,7 +21,6 @@ func _run(seed: int = 1, acc: Profile = null) -> RunState:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed
 	var r := RunState.new(rng, HEROES, ["spear", "sword", "archer", "rider", "shield", "halberd"], 1, 1, acc if acc != null else _account())
-	r.advisor_fixed = "zhugeliang"
 	return r
 
 
@@ -414,46 +413,6 @@ func test_only_the_foods_traits_are_offered() -> void:
 
 
 # ---------------------------------------------------------------- 책사
-
-func test_advisor_respin_once_per_wave() -> void:
-	var r := _run(5)
-	check(not r.advisor_ready(), "nothing to spin again before the first spin")
-	r.slot.forced = MISS.duplicate(true)
-	r.spin()
-	check(r.advisor_ready(), "ready after a blank")
-	var rice := r.rice
-	check(not r.use_advisor(1).is_empty(), "used")
-	eq(r.rice, rice, "free")
-	check(not r.advisor_ready(), "once per wave")
-	r.finish_wave()
-	check(not r.advisor_used, "reset next wave")
-
-
-func test_advisor_lucky_and_hero_boost() -> void:
-	var r := _run()
-	r.advisor_fixed = "zhouyu"
-	eq(r.advisor_type(), "lucky", "동남풍")
-	check(not r.use_advisor().is_empty(), "used")
-	check(r.lucky_next, "next spin is lucky")
-	r.spin()
-	check(not r.lucky_next, "one spin only")
-	var r2 := _run()
-	r2.advisor_fixed = "diaochan"
-	r2.use_advisor()
-	check(r2.hero_boost_next, "next spin favours heroes")
-
-
-func test_advisor_is_first_field_hero_with_skill() -> void:
-	var r := _run()
-	r.advisor_fixed = ""
-	eq(r.advisor, "", "no advisor before a 책사 hero is on the field")
-	r.recruit("guanyu")
-	eq(r.advisor, "", "guanyu has no slot skill")
-	r.recruit("zhugeliang")
-	eq(r.advisor, "zhugeliang", "the hero on the field with a slot skill")
-
-
-# ---------------------------------------------------------------- 결과
 
 func test_stars() -> void:
 	var r := _run()

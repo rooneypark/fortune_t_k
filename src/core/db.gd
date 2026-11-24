@@ -230,11 +230,6 @@ static func counter_lists(ctr: String) -> Dictionary:
 	return {"strong": strong, "weak": weak}
 
 
-static func advisor_skill(id: String) -> Dictionary:
-	ensure()
-	return units["advisors"].get(id, {})
-
-
 static func enemy_def(id: String) -> Dictionary:
 	ensure()
 	if units["enemies"].has(id):

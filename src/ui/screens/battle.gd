@@ -3,7 +3,7 @@ extends PxScreen
 ## 가로 전장(왼쪽 성벽, 오른쪽에서 적, 가운데 띠가 공터) · 천명 슬롯 · 조작 판.
 ## 준비 → 전투 시작 → 웨이브 승리 → 준비 ... 10웨이브.
 ## 뽑힌 유닛은 바로 전장에 선다 (대기석 없음). 끌어서 자리 옮기기 / 흡수(준비 중에만),
-## 밀기 · 책사 기술, 보스 경고, 결과, 튜토리얼.
+## 밀기 · 퇴각 · 일시정지, 보스 경고, 결과, 튜토리얼.
 
 var run: RunState
 var field: BattleField
@@ -106,7 +106,7 @@ func build() -> void:
 
 # ---------------------------------------------------------------- layout
 
-## 위쪽 HUD 부품의 자리 (화면 px): tools/import_battle_ui.py 가 그림을 떼어 낸 자리 그대로 적어 둔 것.
+## 위쪽 HUD 부품의 자리 (화면 px): tools/import_battle3_ui.py 가 그림을 떼어 낸 자리 그대로 적어 둔 것.
 static var _layout: Dictionary = {}
 
 
@@ -122,10 +122,12 @@ func _hud_rect(name: String) -> Rect2:
 func _chip(art: String) -> PxButton:
 	var r := _hud_rect(art)
 	var b := PxButton.make(art, false, r.size)
-	# 숫자 칸 = 칩의 오른쪽 절반 (군량 칩은 조금 더 넓다)
-	var x0 := 0.46 if art == "battle_chip_rice" else 0.5
-	b.text_rect = Rect2(r.size.x * x0, r.size.y * 0.22, r.size.x * (0.93 - x0), r.size.y * 0.54)
-	b.font_size = 32
+	# 숫자 칸 (3차 그림): 아이콘 오른쪽. 군량 칩은 오른쪽 끝에 "+" 버튼이 있어 그 앞까지만.
+	var rice := art == "battle_chip_rice"
+	var x0 := 0.34 if rice else 0.42
+	var x1 := 0.7 if rice else 0.92
+	b.text_rect = Rect2(r.size.x * x0, r.size.y * 0.2, r.size.x * (x1 - x0), r.size.y * 0.6)
+	b.font_size = 28
 	b.static_panel = true
 	put(b, r)
 	return b
@@ -159,8 +161,10 @@ func _build_hud() -> void:
 	_hud["speed"] = sp
 	var pr := _hud_rect("battle_btn_pause")
 	var pause := PxButton.make("battle_btn_pause", false, pr.size)
-	pause.pressed.connect(_pause)
+	pause.pressed.connect(_toggle_pause)
+	# 창 없이 토글 (2026-11-24): 멈춘 동안에는 ‖ 대신 ▶ 그림 (battle_btn_resume)
 	put(pause, pr)
+	_hud["pause"] = pause
 	var cr := _hud_rect("battle_bar_castle")
 	var castle := DrawLayer.make(_draw_castle)
 	put(castle, cr)
@@ -189,10 +193,10 @@ func _build_controls() -> void:
 	_lever.overlay = func(b: PxButton, _off: Vector2) -> void: pass
 	_lever.pressed.connect(_spin)
 	put(_lever, Rect2(576, LEVER_Y, 112, 216), Pin.BOTTOM)
-	# 버튼은 둘뿐: 전투 시작 · 책사. 재배치는 릴의 위아래 칸을 직접 누르고, 배속은 위쪽 HUD에 있다.
+	# 버튼은 둘뿐: 전투 시작 · 퇴각. 재배치는 릴의 위아래 칸을 직접 누르고, 배속은 위쪽 HUD에 있다.
 	var specs := [
 		["battle", "btn_battle", Rect2(720, 1400, 256, 152), _start_wave],
-		["advisor", "btn_advisor", Rect2(720, 1584, 256, 128), _advisor],
+		["retreat", "btn_advisor", Rect2(720, 1584, 256, 128), _ask_retreat],
 	]
 	for s: Array in specs:
 		var b := PxButton.make(String(s[1]))
@@ -207,13 +211,16 @@ func _build_controls() -> void:
 			_num(b, off, str(field.enemies_left()))
 
 
-## 아래쪽 조작부 — 완성 화면에서 떼어 낸 그림 (tools/import_battle_ui.py): 조작 판 · 레버 · 값 칩 · 전투 시작 · 책사.
+## 아래쪽 조작부 — 완성 화면에서 떼어 낸 그림 (tools/import_battle3_ui.py): 조작 판 · 레버 · 값 칩 · 전투 시작 · 퇴각.
 ## 자리는 그림을 떼어 낸 자리 그대로 (battle_layout.json).
 func _build_controls_art() -> void:
 	var pr := SlotView.art_rect("battle_panel_ctrl")
 	var panel := DrawLayer.make(func(ci: Control) -> void:
 		Px.rec(ci, "image", Rect2(Vector2.ZERO, ci.size), "battle_panel_ctrl")
-		ci.draw_texture_rect(Px.tex("battle_panel_ctrl"), Rect2(Vector2.ZERO, ci.size), false))
+		if Px.has_nine("battle_panel_ctrl"):
+			Px.nine(ci, "battle_panel_ctrl", Rect2(Vector2.ZERO, ci.size))
+		else:
+			ci.draw_texture_rect(Px.tex("battle_panel_ctrl"), Rect2(Vector2.ZERO, ci.size), false))
 	put(panel, pr, Pin.BOTTOM)
 	# 값 칩: 쌀자루는 그림에 있고, 오른쪽 어두운 칸에 한 번 돌리는 값을 쓴다
 	var plate := DrawLayer.make(func(ci: Control) -> void:
@@ -239,7 +246,7 @@ func _build_controls_art() -> void:
 			ci.draw_texture_rect(Px.tex("battle_lever_knob"), Rect2(Vector2.ZERO, ci.size), false, Color(0.6, 0.58, 0.56) if _lever.disabled else Color.WHITE))
 		_knob.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		put(_knob, kr, Pin.BOTTOM)
-	for s: Array in [["battle", "battle_btn_start", _start_wave], ["advisor", "battle_btn_advisor", _advisor]]:
+	for s: Array in [["battle", "battle_btn_start", _start_wave], ["retreat", "battle_btn_retreat", _ask_retreat]]:
 		var r := SlotView.art_rect(String(s[1]))
 		var b := PxButton.make(String(s[1]), false, r.size)
 		b.pressed.connect(s[2])
@@ -253,7 +260,7 @@ func _build_controls_art() -> void:
 
 
 func _ctrl_tip(k: String) -> String:
-	return DB.t("battle.start") if k == "battle" else DB.t("battle.advisor")
+	return DB.t("battle.start") if k == "battle" else DB.t("pause.retreat")
 
 
 ## Corner number on an icon-only button: outlined text, no plate.
@@ -279,9 +286,7 @@ func _refresh() -> void:
 	_btn["battle"].pulse = state == "prep" and not busy and not run.field.is_empty() and not tutorial
 	# 재배치: 꽝 줄의 위아래 칸을 누를 수 있는 동안 슬롯이 그 칸을 밝힌다
 	slot_view.nudge_ready = run.can_nudge() and not busy
-	_btn["advisor"].disabled = not run.advisor_ready() or busy
-	# 책사 기술을 가진 장수가 전장에 없으면 책사 버튼을 숨긴다 (2026-11-23)
-	_btn["advisor"].visible = run.advisor != ""
+	_btn["retreat"].disabled = state == "over" or state == "done" or tutorial
 	_lever.disabled = busy or state == "over"
 	for k in _btn:
 		_btn[k].queue_redraw()
@@ -398,33 +403,9 @@ func _apply_events(events: Array) -> void:
 		_show_hint(" / ".join(msgs))
 
 
-func _advisor() -> void:
-	if not run.advisor_ready():
-		return
-	match run.advisor_type():
-		"respin":
-			slot_view.mode = "" if slot_view.mode == "respin" else "respin"
-		_:
-			run.use_advisor()
-			_show_hint(String(DB.advisor_skill(run.advisor).get("desc", "")))
-			Sfx.play("skill")
-			_refresh()
-
-
-## A reel was tapped. 책사 "한 칸 다시" (respin mode): the blank reel spins again.
-## Otherwise 재배치: [param dir] +1 = the cell above was tapped and comes down,
+## A reel was tapped. 재배치: [param dir] +1 = the cell above was tapped and comes down,
 ## -1 = the cell below comes up.
 func _on_reel_tapped(reel: int, dir: int) -> void:
-	if slot_view.mode == "respin":
-		var r2 := run.use_advisor(reel)
-		if r2.is_empty():
-			slot_view.mode = ""
-			return
-		_pending_events = r2["events"]
-		slot_view.move_reel(reel, r2["result"], Game.slot_speed(), true)
-		Sfx.play("lever")
-		_refresh()
-		return
 	if tutorial and (tut_step != 32 or reel != 2 or dir != 1):
 		return
 	var r := run.nudge(reel, dir)
@@ -469,7 +450,6 @@ func _start_wave() -> void:
 		return
 	if tutorial and tut_step != 45:
 		return
-	slot_view.mode = ""
 	var w := run.current_wave()
 	if String(w.get("boss", "")) != "":
 		_show_boss(String(w["boss"]))
@@ -580,7 +560,7 @@ func continue_run() -> bool:
 	return true
 
 
-## 퇴각 (일시정지 창): 포기가 아니다. 지금 웨이브의 준비 시간부터 다음 출정 때 이어서 한다.
+## 퇴각 (조작 판의 퇴각 버튼): 포기가 아니다. 지금 웨이브의 준비 시간부터 다음 출정 때 이어서 한다.
 ## 깬 웨이브 · 전장 유닛 · 성 체력이 남는다. 튜토리얼은 저장하지 않는다.
 func retreat() -> void:
 	if state == "done" or state == "over":
@@ -639,20 +619,36 @@ func _show_boss(id: String) -> void:
 	Sfx.play("boss")
 
 
-func _pause() -> void:
-	if state == "over":
+## 일시정지: 창 없이 멈춤 ↔ 계속 (위쪽 ‖ 버튼, 2026-11-24).
+func _toggle_pause() -> void:
+	if state == "over" or state == "done":
 		return
+	_paused = not _paused
+	field.set_process(not _paused)
+	var pb := _hud["pause"] as PxButton
+	pb.part = "battle_btn_resume" if _paused else "battle_btn_pause"
+	pb.queue_redraw()
+	if _paused:
+		_show_hint(DB.t("battle.paused"))
+
+
+## 퇴각 버튼: 확인 창 → 퇴각 → 로비.
+func _ask_retreat() -> void:
+	if state == "over" or state == "done" or tutorial:
+		return
+	# 묻는 동안 전장을 멈춘다
 	field.set_process(false)
-	var p := Game.app.popup("pause", {})
-	p.set_meta("battle", self)
-	p.closed.connect(func() -> void:
-		if is_instance_valid(field):
-			field.set_process(true)
-			field.shake_on = bool(Game.settings().get("shake", true)))
+	var c := Game.app.popup("confirm", {"title": DB.t("pause.retreat"), "text": DB.t("pause.retreat_text"), "ok": DB.t("pause.retreat_ok")})
+	c.closed.connect(func() -> void:
+		if is_instance_valid(field) and state != "done":
+			field.set_process(not _paused))
+	c.confirmed.connect(func() -> void:
+		retreat()
+		Game.app.goto("lobby"))
 
 
 func back() -> bool:
-	_pause()
+	_ask_retreat()
 	return true
 
 
@@ -789,15 +785,19 @@ func _draw_castle(ci: Control) -> void:
 		# 성 체력 판 그림: 성 아이콘 · 빈 홈 · 숫자 칸이 들어 있다. 홈 안에 막대만 그린다.
 		Px.rec(ci, "image", r, "battle_bar_castle")
 		ci.draw_texture_rect(Px.tex("battle_bar_castle"), r, false)
-		var groove := Rect2(off + Vector2(ci.size.x * 0.138, ci.size.y * 0.3), Vector2(ci.size.x * 0.7, ci.size.y * 0.4))
+		# 빈 홈 자리: 그림에서 잰 값 (battle_layout.json castle_groove), 없으면 예전 비율
+		var gr := SlotView.art_rect("castle_groove")
+		var groove := Rect2(off + gr.position, gr.size) if gr.size != Vector2.ZERO else Rect2(off + Vector2(ci.size.x * 0.138, ci.size.y * 0.3), Vector2(ci.size.x * 0.7, ci.size.y * 0.4))
 		var w := floorf(groove.size.x * clampf(ratio, 0.0, 1.0))
 		if w > 0.0:
 			ci.draw_rect(Rect2(groove.position, Vector2(w, groove.size.y)), col)
-			ci.draw_rect(Rect2(groove.position, Vector2(w, 8)), col.lightened(0.3))
-			ci.draw_rect(Rect2(groove.position + Vector2(0, groove.size.y - 8), Vector2(w, 8)), col.darkened(0.25))
+			var band := minf(8.0, groove.size.y * 0.25)
+			ci.draw_rect(Rect2(groove.position, Vector2(w, band)), col.lightened(0.3))
+			ci.draw_rect(Rect2(groove.position + Vector2(0, groove.size.y - band), Vector2(w, band)), col.darkened(0.25))
 		if _castle_flash > 0.0:
 			ci.draw_rect(groove, Color(1, 0.2, 0.2, 0.45 * _castle_flash))
-		Px.text(ci, "%d%%" % int(roundf(ratio * 100.0)), Rect2(off + Vector2(ci.size.x * 0.858, ci.size.y * 0.24), Vector2(ci.size.x * 0.12, ci.size.y * 0.52)), 30)
+		# 숫자: 홈 오른쪽 끝 안에 (3차 그림은 숫자 칸이 따로 없다)
+		Px.text(ci, "%d%%" % int(roundf(ratio * 100.0)), Rect2(groove.end.x - 120, groove.position.y - 6, 110, groove.size.y + 12), 26, Px.WHITE, HORIZONTAL_ALIGNMENT_RIGHT, 6)
 		return
 	Px.draw_skin(ci, "panel_wide", r)
 	Px.fit(ci, Px.tex("icon_castle"), Rect2(off + Vector2(24, 14), Vector2(72, 63)))
