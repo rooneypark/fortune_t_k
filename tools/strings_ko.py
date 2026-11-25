@@ -89,6 +89,7 @@ S = {
  # stage
  "stage.n": "스테이지 %d", 
  "stage.locked_diff": "앞 난이도를 먼저 깨야 해요",
+ "diff.army": "내 병력 %d명 · 레벨 %s", "diff.exp": "경험 ×%s", "diff.rule": "난이도는 지금 내 병력에 맞춰져요",
  "stage.back": "스테이지 되돌리기", "stage.back_ask": "금 %s을 내고 스테이지 %d (%s)로 되돌릴까요?\n다시 깨면 다음 스테이지로 넘어가요.", "stage.back_done": "스테이지 %d로 되돌렸어요", "stage.back_first": "첫 스테이지예요",
  # heroes
  "heroes.tab_heroes": "장수", "heroes.tab_troops": "병사", "heroes.mine": "내것만",

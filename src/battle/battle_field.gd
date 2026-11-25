@@ -291,7 +291,7 @@ func set_ghost(g: Dictionary) -> void:
 
 func start_wave() -> void:
 	var w := run.current_wave()
-	_wave_mult = DB.stage_mult(run.stage, run.diff) * pow(float(DB.rules["wave_scale"]), run.wave)
+	_wave_mult = run.enemy_mult()
 	_queue.clear()
 	var main: Array = []
 	for pair: Array in w["list"]:

@@ -111,7 +111,7 @@ roster = [
  # id, name, fac, grade, troop, skill, art, hue — 32명, 병종마다 3~4명 (2026-11-22 [제안])
  # 촉 7
  ("zhugeliang","제갈량","shu","ss","fire", S("팔진","적 무리를 묶어 느리게 하고 피해","aoe_target",radius=170,mult=1.6,slow=4.0), "",0),
- ("guanyu","관우","shu","s","spear", S("청룡참","앞의 적을 크게 벤다 (3배)","line",length=180,width=120,mult=3.0), "",0),
+ ("guanyu","관우","shu","s","rider", S("청룡참","앞의 적을 크게 벤다 (3배)","line",length=180,width=120,mult=3.0), "",0),
  ("zhaoyun","조운","shu","s","rider", S("단기 돌파","적진을 뚫고 지나가며 2배 피해","line",length=300,width=70,mult=2.0), "",0),
  ("zhangfei","장비","shu","a","halberd", S("장판교 호통","주변 적 2초 기절","stun_aoe",radius=130,mult=1.0,stun=2.0), "",0),
  ("huangzhong","황충","shu","a","archer", S("백발백중","가장 강한 적 저격 (4배)","snipe",mult=4.0), "",0),
@@ -314,23 +314,24 @@ stage_list = [
     {"id": 9, "name": "북벌", "enemy": "위군 정예", "hue": 0.7, "boss": "simayi_b"},
     {"id": 10, "name": "천하통일", "enemy": "연합군", "hue": 0.5, "boss": "caocao_b"},
 ]
-# 난이도 (스테이지-흡수-합성-개편 §3.1, §4): 적 세기 · 적 수 배율.
-# 2026-11-23 모의 전투(tools/sim.gd)로 잡은 값: 보통 1.0이면 새 계정이 스테이지 1을 한 번도 못 깼다
-# (런 안의 등급 배율 1.6 / 2.5가 없어졌기 때문). 처음은 쉽게: 보통 0.35, 전장 8칸, 스테이지마다 x1.2.
-# 밸런스는 나중에 다시 잡는다 (민수 님).
+# 난이도 (2026-11-25 민수 님): 스테이지가 아니라 **지금 내 병력**을 기준으로 잡는다.
+#   내 병력 = 인원수(부대 + 이번 전투에서 새로 뽑을 몫 fresh) x 레벨(유닛마다 sqrt(공격 배율 x 체력 배율)의 평균, 새 계정 기본 병사 = 1).
+#   적 수 배율  = (인원수 / fresh) ^ count_pow  (count_max 까지)  x  난이도 count  x  웨이브가 갈수록 조금씩
+#   적 세기 배율 = base x 레벨 x (인원수 배율에서 적 수로 못 옮긴 몫) x 난이도 mult x stage_step ^ (스테이지 - 1)
+# 그래서 부대가 크고 강해지면 적도 같이 많아지고 세진다. 쉬움 · 보통 · 어려움은 그 기준에서 얼마나 세게 나오는가다.
+# stage_step 은 스테이지가 올라갈 때 조금씩 더 세지는 몫 (부대와 상관없이). 값은 모의 전투(tools/sim.gd --army)로 잡는다.
 difficulties = [
-    {"id": 1, "name": "보통", "mult": 0.35, "count": 1.0},
-    {"id": 2, "name": "어려움", "mult": 0.7, "count": 1.15},
-    {"id": 3, "name": "지옥", "mult": 1.3, "count": 1.3},
+    {"id": 1, "name": "쉬움", "mult": 0.85, "count": 0.9},
+    {"id": 2, "name": "보통", "mult": 1.0, "count": 1.0},
+    {"id": 3, "name": "어려움", "mult": 1.1, "count": 1.25},
 ]
-stages = {"_source": "스테이지-흡수-합성-개편 §3.1, §4 (스테이지 10 × 난이도 3, 적 배율 1.2^(스테이지-1) × 난이도)",
-          "stage_base": 1.32, "first_clear_gold": 2000,
-          # 적 수 (2026-11-23): 병사가 무제한이 되어 적도 많이 나온다. 초반은 적게, 스테이지 · 웨이브가 갈수록 늘어난다.
-          # 적 수 배율 = count_base x (1 + count_stage x (스테이지-1)) x (1 + count_wave x 웨이브 번호(0~9)) x 난이도 count
-          "count_base": 1.0, "count_stage": 0.45, "count_wave": 0.05,
+stages = {"_source": "난이도 = 내 병력 기준 (2026-11-25). 스테이지 10 x 난이도 3 (쉬움 · 보통 · 어려움)",
+          "army": {"base": 0.27, "fresh": 6, "count_pow": 0.6, "count_max": 3.0, "stage_step": 1.02},
+          "first_clear_gold": 2000,
+          # 적 수: 웨이브가 갈수록 조금씩 늘어난다 (1 + count_wave x 웨이브 번호 0~9)
+          "count_wave": 0.05,
           "gold_per_wave": 100, "gold_victory": 500,
           "star_rules": ["클리어", "성 체력 50% 이상", "성 체력 90% 이상"],
-          "recommended_power": 8000,
           "waves_template": waves_template, "stages": stage_list, "difficulties": difficulties}
 dump("stages.json", stages)
 

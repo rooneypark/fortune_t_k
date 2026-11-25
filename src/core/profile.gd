@@ -614,7 +614,13 @@ func stars_of(key: String) -> int:
 ## 스테이지 s의 난이도 d가 열렸는가: 스테이지가 열려 있으면 보통 · 어려움 · 지옥이 모두 열린다
 ## (2026-11-23). 스테이지 N은 N−1의 보통을 깨면 열린다.
 func is_unlocked(s: int, _d: int = 1) -> bool:
-	return s <= 1 or stars_of(DB.stage_key(s - 1, 1)) > 0
+	# 앞 스테이지를 어느 난이도로든 깼으면 열린다 (2026-11-25: 난이도는 쉬움 · 보통 · 어려움, 고르는 것은 보상의 차이)
+	if s <= 1:
+		return true
+	for d in range(1, DB.difficulties().size() + 1):
+		if stars_of(DB.stage_key(s - 1, d)) > 0:
+			return true
+	return false
 
 
 ## 내 부대: [{id, x, y}]. 예전 저장은 퇴각한 전투의 유닛을 부대로 본다.
@@ -713,13 +719,13 @@ func finish_run(s: int, d: int, waves_reached: int, victory: bool, stars: int, r
 		data["stats"]["victories"] = int(data["stats"]["victories"]) + 1
 		data["stats"]["best_stage"] = maxi(int(data["stats"]["best_stage"]), s)
 		track("clears", 1)
-		if first and s == 1 and d == 1:
+		if first and s == 1:
 			track("chapter1", 1)
-		# 다음에 열어 줄 곳: 보통을 깼으면 다음 스테이지, 아니면 같은 자리.
-		var ns := mini(s + 1, DB.stage_count()) if d == 1 else s
-		data["progress"]["last"] = DB.stage_key(ns, 1 if d == 1 else d)
-		# 지금 스테이지의 보통을 깨면 다음 스테이지로 넘어간다 (되돌린 뒤 다시 깰 때도 같다).
-		if d == 1 and s == cur_before:
+		# 다음에 열어 줄 곳: 어느 난이도로든 깼으면 다음 스테이지.
+		var ns := mini(s + 1, DB.stage_count())
+		data["progress"]["last"] = DB.stage_key(ns, d)
+		# 지금 스테이지를 깨면 다음 스테이지로 넘어간다 (되돌린 뒤 다시 깰 때도 같다).
+		if s == cur_before:
 			data["progress"]["cur"] = ns
 	data["stats"]["runs"] = int(data["stats"]["runs"]) + 1
 	data["stats"]["kills"] = int(data["stats"]["kills"]) + int(run_stats.get("kills", 0))

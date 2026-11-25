@@ -26,18 +26,26 @@ func _ready() -> void:
 		_campaign(40, [])
 		get_tree().quit(0)
 		return
+	if OS.get_cmdline_user_args().has("--army"):
+		_army_check(6, [0, 4, 10, 18])
+		get_tree().quit(0)
+		return
+	if OS.get_cmdline_user_args().has("--army-long"):
+		_army_check(5, [18, 30])
+		get_tree().quit(0)
+		return
 	if OS.get_cmdline_user_args().has("--tune"):
 		_tune()
 		get_tree().quit(0)
 		return
 	print("== 새 계정 (장수 0, 병종 4, 군주 Lv.%d) 스테이지 1 보통 20판, 판마다 새 계정 ==" % int(Profile.new().data["lord_lv"]))
-	_report(_many(20, 1, 1, false, []))
+	_report(_many(20, 1, 2, false, []))
 	print("== 같은 계정으로 이어서 40판: 깬 곳 다음 스테이지 보통으로 올라간다 (성장 누적) ==")
 	_campaign(40, [])
 	print("== 장수 3명(관우 · 장비 · 황충)을 가진 계정으로 이어서 40판 ==")
 	_campaign(40, ["guanyu", "zhangfei", "huangzhong"])
-	print("== 새 계정 스테이지 1 어려움 / 지옥 각 10판 ==")
-	_report(_many(10, 1, 2, false, []))
+	print("== 새 계정 스테이지 1 쉬움 / 어려움 각 10판 ==")
+	_report(_many(10, 1, 1, false, []))
 	_report(_many(10, 1, 3, false, []))
 	get_tree().quit(0)
 
@@ -70,7 +78,7 @@ func _campaign(n: int, heroes: Array) -> void:
 		for s in range(1, DB.stage_count() + 1):
 			if acc.is_unlocked(s, 1):
 				stage = s
-		var r := _one(acc, stage, 1, 2000 + i)
+		var r := _one(acc, stage, 2, 2000 + i)
 		rows.append(r)
 		if i % 5 == 4:
 			var wins := 0
@@ -85,7 +93,7 @@ func _campaign(n: int, heroes: Array) -> void:
 				int(acc.data["troops"]["spear"]["star"]), atk, _mats(acc), int(acc.data["gold"]) - gold0])
 	var top := 0
 	for s in range(1, DB.stage_count() + 1):
-		if acc.stars_of(DB.stage_key(s, 1)) > 0:
+		if acc.is_unlocked(s + 1) or (s == DB.stage_count() and (acc.stars_of(DB.stage_key(s, 1)) > 0 or acc.stars_of(DB.stage_key(s, 2)) > 0 or acc.stars_of(DB.stage_key(s, 3)) > 0)):
 			top = s
 	print("  결과: %d판 뒤 보통 클리어 %d스테이지까지" % [n, top])
 
@@ -160,6 +168,30 @@ func _one(acc: Profile, stage: int, diff: int, seed: int) -> Dictionary:
 	acc.finish_run(stage, diff, cleared, won, run.stars_earned(won), run.stats)
 	bf.free()
 	return res
+
+
+## --army: 병력 기준 난이도 점검 (2026-11-25). 한 계정을 보통으로 키워 가며, 정해 둔 판 수마다 그때의 병력 그대로
+## 쉬움 · 보통 · 어려움을 k판씩 해 본다 (그 결과는 버리고 계정은 보통으로 계속 큰다).
+## 볼 것: 병력이 작든 크든 쉬움 > 보통 > 어려움 순으로 승률이 벌어지고, 그 차이가 비슷하게 유지되는가.
+func _army_check(k: int, marks: Array) -> void:
+	var acc := _account([], 7)
+	var played := 0
+	for mark: int in marks:
+		while played < mark:
+			_one(acc, acc.current_stage(), 2, 3000 + played)
+			played += 1
+		var sc := MetaRules.army_scale(acc.data, acc.army())
+		print("== %d판 뒤: 스테이지 %d, 부대 %d명, 레벨 %.2f, 적 수 x%.2f, 적 세기 몫 x%.2f, 장수 %d명, 군주 Lv.%d ==" % [
+			played, acc.current_stage(), int(sc["n"]), float(sc["level"]), float(sc["count"]), float(sc["mult"]),
+			(acc.data["heroes"] as Dictionary).size(), int(acc.data["lord_lv"])])
+		var snap: Dictionary = acc.data.duplicate(true)
+		for d in [1, 2, 3]:
+			var rows: Array = []
+			for i in k:
+				var c := _account([], 500 + i)
+				c.data = snap.duplicate(true)
+				rows.append(_one(c, c.current_stage(), d, 4000 + d * 100 + i))
+			_report(rows)
 
 
 ## The simulated player's preparation: spin while possible, absorb to make room.

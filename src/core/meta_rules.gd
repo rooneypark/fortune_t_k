@@ -264,6 +264,69 @@ static func unit_stats(profile: Dictionary, id: String) -> Dictionary:
 	return hero_stats(profile, id) if DB.is_hero(id) else soldier_stats(profile, id)
 
 
+static var _unit_base := {}
+
+
+## 새 계정 기본 병사의 평균 공격 · 체력 (레벨 1의 기준).
+static func unit_base() -> Dictionary:
+	if _unit_base.is_empty():
+		var fresh: Dictionary = Profile.new().data
+		var atk := 0.0
+		var hp := 0.0
+		var ids: Array = DB.rules["soldiers_base"]
+		for id: String in ids:
+			var st := soldier_stats(fresh, id)
+			atk += float(st["atk"])
+			hp += float(st["hp"])
+		var n := maxf(1.0, ids.size())
+		_unit_base = {"atk": maxf(1.0, atk / n), "hp": maxf(1.0, hp / n), "k": 1.0}
+		# 기본 병사들의 레벨 평균이 딱 1이 되게 맞춘다
+		var sum := 0.0
+		for id: String in ids:
+			var st := soldier_stats(fresh, id)
+			sum += sqrt((float(st["atk"]) / float(_unit_base["atk"])) * (float(st["hp"]) / float(_unit_base["hp"])))
+		_unit_base["k"] = n / maxf(0.001, sum)
+	return _unit_base
+
+
+## 유닛 하나의 레벨 = sqrt(공격 배율 x 체력 배율), 새 계정 기본 병사 = 1.
+## 전투력(체력 비중이 큼)이 아니라 공격과 체력을 같은 무게로 본다: 적의 체력은 내 공격에, 적의 공격은 내 체력에 맞서기 때문.
+static func unit_level(profile: Dictionary, id: String) -> float:
+	var b := unit_base()
+	var st := unit_stats(profile, id)
+	return float(b["k"]) * sqrt((float(st["atk"]) / float(b["atk"])) * (float(st["hp"]) / float(b["hp"])))
+
+
+## 내 병력의 크기 (2026-11-25 민수 님: 난이도는 지금 내 병력 기준). [param army] = 부대 [{id, ...}].
+##   n      인원수 (부대)
+##   level  레벨 = 유닛 레벨의 평균 (부대 + 이번 전투에서 새로 뽑을 몫)
+##   count  적 수 배율 몫   = ((n + fresh) / fresh) ^ count_pow, count_max 까지
+##   mult   적 세기 배율 몫 = base x 레벨 x (인원수 몫에서 적 수로 못 옮긴 나머지)
+## 이번 전투에서 새로 뽑을 몫(fresh 명, 내가 가진 병종의 평균 레벨)을 더해 센다 — 부대가 없어도 0 이 되지 않게.
+static func army_scale(profile: Dictionary, army: Array) -> Dictionary:
+	var cfg: Dictionary = DB.stages["army"]
+	# 새로 뽑을 병사의 레벨: 가진 병종의 평균
+	var acc_sum := 0.0
+	var acc_n := 0
+	for id: String in profile.get("troops", {}):
+		acc_sum += unit_level(profile, id)
+		acc_n += 1
+	var acc_level := acc_sum / acc_n if acc_n > 0 else 1.0
+	var sum := 0.0
+	var n := 0
+	for e: Dictionary in army:
+		var id := String(e.get("id", ""))
+		if DB.is_hero(id) or DB.soldier_ids().has(id):
+			sum += unit_level(profile, id)
+			n += 1
+	var fresh := float(cfg["fresh"])
+	var total := float(n) + fresh
+	var level := (sum + fresh * acc_level) / total
+	var crowd := total / fresh                                    # 인원수 몫 (새 계정 = 1)
+	var count := minf(float(cfg["count_max"]), pow(crowd, float(cfg["count_pow"])))
+	return {"n": n, "level": level, "count": count, "mult": float(cfg["base"]) * level * crowd / count}
+
+
 ## 전투력 = atk x 10 + def x 8 + hp (§4.7).
 static func power_of(stats: Dictionary) -> int:
 	var p: Dictionary = _m()["power"]

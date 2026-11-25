@@ -1,0 +1,32 @@
+IMAGE 1 is a STYLE SAMPLE: four finished characters of my 2D pixel art game (set in China's Three Kingdoms era). Do NOT draw those four characters again. Draw a NEW sheet of different characters in EXACTLY the same style as IMAGE 1:
+- the same pixel size and the same dark outlines,
+- the same proportions (a big head, about two and a half heads tall, chunky and cute),
+- the same detailed faces: eyes with eyebrows, moustaches and beards, a clear expression — every face is fully visible,
+- the same level of detail on clothes and armor,
+- the same view: the character faces the viewer, turned slightly to the right.
+Do not simplify the faces to dots. Do not change the style.
+
+Draw exactly these 8 characters, 2 rows of 4, in this order (left to right, top to bottom). Each one must be recognisable by the features listed. Draw only the characters in this list: no other character may be added or swapped in, and none of the four characters of IMAGE 1 may appear.
+1. Huang Zhong — old general with a white beard and white eyebrows, plate armor, a big bow. Signature colors: orange-gold and brown. Faction accent green: only a small touch (belt, ribbon or trim) — the signature colors stay dominant.
+2. Guan Ping — young man, no beard, headcloth, leather armor over a tunic, broad-blade polearm. Signature colors: light green and brown. Faction accent green: only a small touch (belt, ribbon or trim) — the signature colors stay dominant.
+3. Yu Ji — old healer: white robe, long white beard, a medicine gourd and a paper talisman.
+4. Xiahou Dun — black eyepatch over his left eye, heavy armor, spear. Signature colors: dark navy and grey. Faction accent blue: only a small touch (belt, ribbon or trim) — the signature colors stay dominant.
+5. Xiahou Yuan — lean archer in light armor and a light helmet, crossbow. Signature colors: teal and light blue. Faction accent blue: only a small touch (belt, ribbon or trim) — the signature colors stay dominant.
+6. Xu Chu — huge bald strongman, bare arms, big two-handed axe. Signature colors: brown leather with a blue belt. Faction accent blue: only a small touch (belt, ribbon or trim) — the signature colors stay dominant.
+7. Cao Ren — heavy plate armor, full helmet, big tower shield and a short sword. Signature colors: steel grey-blue. Faction accent blue: only a small touch (belt, ribbon or trim) — the signature colors stay dominant.
+8. Zhang He — elegant armor with a long scarf, very long pike. Signature colors: violet and silver. Faction accent blue: only a small touch (belt, ribbon or trim) — the signature colors stay dominant.
+
+Colors: every character has its own colors, given in the list. Use them as the main colors of that character's clothes and armor, so the characters are easy to tell apart. Do not paint them all in one color.
+
+Pose: every character stands on the ground on their own two feet, standing still in a relaxed pose, the whole body visible from head to feet, the weapon held upright in the hand and fully visible. Nothing is cut off and nothing hides the face.
+There are NO horses and no other animals anywhere in this image.
+
+Layout:
+- Flat magenta (#FF00FF) background. One figure per cell. Do not draw the cell lines.
+- All figures are the same size and stand on the same line in each row.
+- Use the whole image: the figures are as big as the cells allow, with a clear magenta gap around every figure. Figures never touch or overlap.
+
+Rules:
+- Every figure has a closed dark outline. No ground shadow, no dust, no glow, no effects.
+- Nothing but the figures on the magenta background: no frames, no text, no labels, no numbers.
+- No sparkles, no watermark. Wide landscape image, 16:9.

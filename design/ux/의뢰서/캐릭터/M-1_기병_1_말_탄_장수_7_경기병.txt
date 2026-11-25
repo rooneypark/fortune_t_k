@@ -1,0 +1,33 @@
+IMAGE 1 is a STYLE SAMPLE: four finished characters of my 2D pixel art game (set in China's Three Kingdoms era). Do NOT draw those four characters again. Draw a NEW sheet of different characters in EXACTLY the same style as IMAGE 1:
+- the same pixel size and the same dark outlines,
+- the same proportions (a big head, about two and a half heads tall, chunky and cute),
+- the same detailed faces: eyes with eyebrows, moustaches and beards, a clear expression — every face is fully visible,
+- the same level of detail on clothes and armor,
+- the same view: the character faces the viewer, turned slightly to the right.
+Do not simplify the faces to dots. Do not change the style.
+
+Draw exactly these 8 characters, 2 rows of 4, in this order (left to right, top to bottom). Each one must be recognisable by the features listed. Draw only the characters in this list: no other character may be added or swapped in, and none of the four characters of IMAGE 1 may appear.
+1. Guan Yu — green headcloth, green robe over gold-trimmed armor, red-brown face, very long black beard, crescent-blade polearm, MOUNTED — sitting in the saddle on top of a red-brown horse (rider and horse are one figure, the horse seen from the side and facing right). Signature colors: deep green and gold. Faction accent green: only a small touch (belt, ribbon or trim) — the signature colors stay dominant.
+2. Zhao Yun — young hero: silver-white armor, long blue scarf, long spear, MOUNTED — sitting in the saddle on top of a white horse (rider and horse are one figure, the horse seen from the side and facing right). Signature colors: silver-white and sky blue. Faction accent green: only a small touch (belt, ribbon or trim) — the signature colors stay dominant.
+3. Cao Cao — lord: gold crown, short black beard, long robe over armor, sword, MOUNTED — sitting in the saddle on top of a black horse (rider and horse are one figure, the horse seen from the side and facing right). Signature colors: deep indigo-purple and gold. Faction accent blue: only a small touch (belt, ribbon or trim) — the signature colors stay dominant.
+4. Sima Yi — cunning strategist: tall black hat, thin moustache, long robe, black feather fan, MOUNTED — sitting in the saddle on top of a grey horse (rider and horse are one figure, the horse seen from the side and facing right). Signature colors: purple and black. Faction accent blue: only a small touch (belt, ribbon or trim) — the signature colors stay dominant.
+5. Zhang Liao — plate armor, helmet with a plume, a halberd in each hand, MOUNTED — sitting in the saddle on top of a brown horse (rider and horse are one figure, the horse seen from the side and facing right). Signature colors: blue and white. Faction accent blue: only a small touch (belt, ribbon or trim) — the signature colors stay dominant.
+6. Sun Ce — young conqueror: armor, short cape, bright smile, spear, MOUNTED — sitting in the saddle on top of a brown horse (rider and horse are one figure, the horse seen from the side and facing right). Signature colors: red and white. Faction accent red: only a small touch (belt, ribbon or trim) — the signature colors stay dominant.
+7. Taishi Ci — sturdy warrior in armor, bow in hand and quiver on his back, MOUNTED — sitting in the saddle on top of a brown horse (rider and horse are one figure, the horse seen from the side and facing right). Signature colors: dark red-brown and black. Faction accent red: only a small touch (belt, ribbon or trim) — the signature colors stay dominant.
+8. Light cavalry — iron helmet, grey tunic, spear, MOUNTED — sitting in the saddle on top of a brown horse (rider and horse are one figure, the horse seen from the side and facing right).
+
+Colors: every character has its own colors, given in the list. Use them as the main colors of that character's clothes and armor, so the characters are easy to tell apart. Do not paint them all in one color.
+
+Pose: EVERY figure in this image is a RIDER ON HORSEBACK. The rider sits in the saddle on the horse's back with one leg hanging down each side of the horse; the rider's feet do not touch the ground. The horse is drawn in full from the side — head, four legs and tail — and faces right. The rider's face is turned to the viewer and fully visible, and the weapon is held upright.
+Rider and horse are one single figure. Never draw a person standing on the ground with a horse behind or beside them. Never draw a person without a horse.
+The horses are drawn in the same chunky pixel style: short legs, a big head, about as long as the rider is tall.
+
+Layout:
+- Flat magenta (#FF00FF) background. One figure per cell. Do not draw the cell lines.
+- All figures are the same size and stand on the same line in each row.
+- Use the whole image: the figures are as big as the cells allow, with a clear magenta gap around every figure. Figures never touch or overlap.
+
+Rules:
+- Every figure has a closed dark outline. No ground shadow, no dust, no glow, no effects.
+- Nothing but the figures on the magenta background: no frames, no text, no labels, no numbers.
+- No sparkles, no watermark. Wide landscape image, 16:9.

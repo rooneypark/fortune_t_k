@@ -1,7 +1,7 @@
 extends PxPopup
 ## 난이도 창: 로비의 출정 성문을 누르면 지금 스테이지로 바로 뜬다. 맨 아래는 스테이지 되돌리기(금).
-## 예전 설명: 스테이지를 누르면 뜬다. 보통 · 어려움 · 지옥 버튼 셋뿐이고,
-## 누르면 편성 없이 바로 전투에 들어간다. 스테이지가 열려 있으면 세 난이도 모두 열려 있다.
+## 난이도 버튼 셋(쉬움 · 보통 · 어려움, 해골 1 · 2 · 3개): 누르면 편성 없이 바로 전투에 들어간다.
+## 난이도는 스테이지가 아니라 지금 내 병력(인원수 · 레벨) 기준이다 (2026-11-25, MetaRules.army_scale). 어느 난이도로 깨도 다음 스테이지가 열린다.
 ## 별(클리어 등급)은 보여 주지 않는다 (2026-11-23).
 
 var stage := 1
@@ -118,12 +118,16 @@ func _foe_classes() -> Array:
 func _build_art() -> void:
 	# 적 정보 칸: 어두운 칸 그림 안에 적 분류 아이콘 (이름은 툴팁)
 	var seen := _foe_classes()
+	var army := MetaRules.army_scale(Game.profile.data, Game.profile.army())
 	var foes := DrawLayer.make(func(ci: Control) -> void:
 		ci.draw_texture_rect(Px.tex("difficulty_slot_foes"), Rect2(Vector2.ZERO, ci.size), false)
 		var s := ci.size.y - 44.0
 		for i in seen.size():
-			Px.fit(ci, Px.tex(String(FOE_ICON.get(String(seen[i]), "class_inf"))), Rect2(28 + i * (s + 14), 22, s, s)))
-	foes.tooltip_text = " · ".join(seen.map(func(c: String) -> String: return DB.cls_name(c)))
+			Px.fit(ci, Px.tex(String(FOE_ICON.get(String(seen[i]), "class_inf"))), Rect2(28 + i * (s + 14), 22, s, s))
+		# 난이도의 기준: 지금 내 병력 (인원수 · 레벨). 쉬움 · 보통 · 어려움은 이 병력에 맞춘 적이 얼마나 세게 나오는가다.
+		Px.text(ci, DB.t("diff.army", [int(army["n"]), "%.1f" % float(army["level"])]), Rect2(ci.size.x - 292, 0, 270, ci.size.y), 22, Px.GOLD, HORIZONTAL_ALIGNMENT_RIGHT, 5))
+	foes.tooltip_text = "%s
+%s" % [" · ".join(seen.map(func(c: String) -> String: return DB.cls_name(c))), DB.t("diff.rule")]
 	_place(foes, "difficulty_slot_foes")
 	var odds := _btn_pic("difficulty_btn_odds")
 	odds.tooltip_text = DB.t("stage.odds")
@@ -135,9 +139,14 @@ func _build_art() -> void:
 		var unlocked := Game.profile.is_unlocked(stage, d)
 		var b := _btn_pic("difficulty_btn_%d" % d)
 		b.sound = "whoosh"
-		b.tooltip_text = String((diffs[i] as Dictionary)["name"])
-		if not unlocked:
-			b.overlay = func(btn: PxButton, off: Vector2) -> void:
+		var dname := String((diffs[i] as Dictionary)["name"])
+		var exp_mult: float = float((DB.meta["lord"]["diff_exp"] as Array)[i])
+		b.tooltip_text = dname
+		b.overlay = func(btn: PxButton, off: Vector2) -> void:
+			# 해골은 그림에 있다: 왼쪽에 난이도 이름, 오른쪽에 군주 경험 배율
+			Px.text(btn, dname, Rect2(off + Vector2(28, 0), Vector2(170, btn.size.y)), 32, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT, 6)
+			Px.text(btn, DB.t("diff.exp", ["%.1f" % exp_mult]), Rect2(off + Vector2(btn.size.x - 198, 0), Vector2(170, btn.size.y)), 24, Px.GOLD, HORIZONTAL_ALIGNMENT_RIGHT, 5)
+			if not unlocked:
 				btn.draw_rect(Rect2(off, btn.size), Color(0, 0, 0, 0.5))
 				Px.fit(btn, Px.tex("ic_lock"), Rect2(off + Vector2(btn.size.x - 110, btn.size.y * 0.5 - 30), Vector2(60, 60)))
 		b.pressed.connect(func() -> void:

@@ -259,7 +259,7 @@ static func stage_count() -> int:
 	return stage_list().size()
 
 
-## 난이도: [{id, name, mult, count}] (보통 · 어려움 · 지옥).
+## 난이도: [{id, name, mult, count}] (쉬움 · 보통 · 어려움) — 내 병력 기준에서 얼마나 세게 나오는가.
 static func difficulties() -> Array:
 	ensure()
 	return stages["difficulties"]
@@ -279,30 +279,32 @@ static func stage_name(s: int) -> String:
 	return String(stage_def(s).get("name", ""))
 
 
-## Enemy count multiplier (2026-11-23, 적 수 제한 없음 · 병사 무제한에 맞춤): grows with the
-## stage and the wave so the start stays small. count_base x (1 + count_stage x (s-1))
-## x (1 + count_wave x wave) x difficulty count.
-static func count_mult(s: int, d: int, wave: int) -> float:
+## 적 수 배율 (2026-11-25): 내 병력의 인원수 몫 [param army_count] x 난이도 count x 웨이브가 갈수록 조금씩.
+## army_count 는 MetaRules.army_scale()["count"] — 새 계정이면 1.0.
+static func count_mult(d: int, wave: int, army_count: float = 1.0) -> float:
 	ensure()
-	return float(stages.get("count_base", 1.0)) * (1.0 + float(stages.get("count_stage", 0.0)) * (s - 1)) 		* (1.0 + float(stages.get("count_wave", 0.0)) * wave) * float(difficulty(d)["count"])
+	return army_count * (1.0 + float(stages.get("count_wave", 0.0)) * wave) * float(difficulty(d)["count"])
 
 
-## Enemy hp/atk multiplier: stage_base^(stage-1) x difficulty (§4).
-static func stage_mult(s: int, d: int) -> float:
+## 적 체력 · 공격 배율 (2026-11-25): 내 병력의 레벨 몫 [param army_mult] x 난이도 mult x stage_step^(스테이지-1).
+## army_mult 는 MetaRules.army_scale()["mult"] — 새 계정이면 army.base.
+static func stage_mult(s: int, d: int, army_mult: float = -1.0) -> float:
 	ensure()
-	return pow(float(stages["stage_base"]), s - 1) * float(difficulty(d)["mult"])
+	var a: Dictionary = stages["army"]
+	var m := army_mult if army_mult >= 0.0 else float(a["base"])
+	return m * pow(float(a["stage_step"]), s - 1) * float(difficulty(d)["mult"])
 
 
-## The 10 waves of stage s on difficulty d: the template with the difficulty's
-## enemy count and the stage boss on the last wave.
+## The 10 waves of stage s on difficulty d: the template with the enemy count for
+## this army ([param army_count]) and the stage boss on the last wave.
 ## Each wave: {list: [[enemy, n]], flank: [...], boss: id or "", judge: bool}
-static func stage_waves(s: int, d: int) -> Array:
+static func stage_waves(s: int, d: int, army_count: float = 1.0) -> Array:
 	ensure()
 	var tmpl: Array = stages["waves_template"]
 	var out: Array = []
 	for w in tmpl.size():
 		var src: Dictionary = tmpl[w]
-		var grow := count_mult(s, d, w)
+		var grow := count_mult(d, w, army_count)
 		# 적이 많아지면 나오는 간격을 좁힌다 (웨이브가 너무 길어지지 않게)
 		var wave := {"list": [], "flank": [], "boss": "", "judge": bool(src.get("judge", false)),
 			"gap_mult": 1.0 / sqrt(maxf(1.0, grow))}
@@ -318,11 +320,6 @@ static func stage_waves(s: int, d: int) -> Array:
 
 static func stage_boss(s: int) -> String:
 	return String(stage_def(s).get("boss", ""))
-
-
-static func recommended_power(s: int, d: int) -> int:
-	ensure()
-	return int(round(float(stages["recommended_power"]) * stage_mult(s, d) / 100.0)) * 100
 
 
 # ---------------------------------------------------------------- treasures

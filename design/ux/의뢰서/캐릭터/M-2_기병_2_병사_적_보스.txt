@@ -1,0 +1,29 @@
+IMAGE 1 is a STYLE SAMPLE: four finished characters of my 2D pixel art game (set in China's Three Kingdoms era). Do NOT draw those four characters again. Draw a NEW sheet of different characters in EXACTLY the same style as IMAGE 1:
+- the same pixel size and the same dark outlines,
+- the same proportions (a big head, about two and a half heads tall, chunky and cute),
+- the same detailed faces: eyes with eyebrows, moustaches and beards, a clear expression — every face is fully visible,
+- the same level of detail on clothes and armor,
+- the same view: the character faces the viewer, turned slightly to the right.
+Do not simplify the faces to dots. Do not change the style.
+
+Draw exactly these 4 characters, 2 rows of 2, in this order (left to right, top to bottom). Each one must be recognisable by the features listed. Draw only the characters in this list: no other character may be added or swapped in, and none of the four characters of IMAGE 1 may appear.
+1. Heavy cavalry — full iron armor, lance, MOUNTED — sitting in the saddle on top of a armored grey horse (rider and horse are one figure, the horse seen from the side and facing right).
+2. Horse archer — fur cap, bow, MOUNTED — sitting in the saddle on top of a light-brown horse (rider and horse are one figure, the horse seen from the side and facing right).
+3. Yellow Turban rider — yellow headcloth, sabre, MOUNTED — sitting in the saddle on top of a thin dark horse (rider and horse are one figure, the horse seen from the side and facing right).
+4. Yan Liang and Wen Chou — TWO generals side by side on two horses, drawn as one group: gold-and-yellow armor, one with a great blade, one with a spear.
+
+Colors: every character has its own colors, given in the list. Use them as the main colors of that character's clothes and armor, so the characters are easy to tell apart. Do not paint them all in one color.
+
+Pose: EVERY figure in this image is a RIDER ON HORSEBACK. The rider sits in the saddle on the horse's back with one leg hanging down each side of the horse; the rider's feet do not touch the ground. The horse is drawn in full from the side — head, four legs and tail — and faces right. The rider's face is turned to the viewer and fully visible, and the weapon is held upright.
+Rider and horse are one single figure. Never draw a person standing on the ground with a horse behind or beside them. Never draw a person without a horse.
+The horses are drawn in the same chunky pixel style: short legs, a big head, about as long as the rider is tall.
+
+Layout:
+- Flat magenta (#FF00FF) background. One figure per cell. Do not draw the cell lines.
+- All figures are the same size and stand on the same line in each row.
+- Use the whole image: the figures are as big as the cells allow, with a clear magenta gap around every figure. Figures never touch or overlap.
+
+Rules:
+- Every figure has a closed dark outline. No ground shadow, no dust, no glow, no effects.
+- Nothing but the figures on the magenta background: no frames, no text, no labels, no numbers.
+- No sparkles, no watermark. Wide landscape image, 16:9.

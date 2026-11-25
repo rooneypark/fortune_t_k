@@ -20,7 +20,7 @@ func test_roster_32_by_troop() -> void:
 		var n := DB.heroes_of_troop(t).size()
 		check(n >= 1 and n <= 4, "1-4 heroes in " + t)
 		check((DB.units["classes"] as Dictionary).has(DB.cls_of(t)), "valid class for " + t)
-	eq(DB.troop_of("guanyu"), "spear", "관우 = 창병")
+	eq(DB.troop_of("guanyu"), "rider", "관우 = 경기병 (2026-11-25: 관우 · 조운은 기마병)")
 
 
 func test_every_hero_has_art() -> void:

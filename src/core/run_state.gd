@@ -16,6 +16,8 @@ var slot := SlotMachine.new()
 var stage := 1
 var diff := 1
 var waves: Array = []
+## 이 전투의 적 배율 몫 (MetaRules.army_scale): {n, level, count, mult}. 퇴각해도 저장해 두고 그대로 쓴다.
+var scale := {}
 ## Hero ids on the reels (every owned hero).
 var heroes: Array = []
 var soldiers: Array = []
@@ -41,7 +43,9 @@ func _init(random: RandomNumberGenerator, hero_ids: Array = [], soldier_ids: Arr
 	account = acc if acc != null else Profile.new()
 	stage = s
 	diff = d
-	waves = DB.stage_waves(s, d)
+	# 난이도는 이 전투를 시작할 때의 내 병력 기준 (도중에 병력이 늘어도 바뀌지 않는다)
+	scale = MetaRules.army_scale(account.data, account.army())
+	waves = DB.stage_waves(s, d, float(scale["count"]))
 	var r := DB.rules
 	heroes = hero_ids.duplicate()
 	soldiers = soldier_ids if not soldier_ids.is_empty() else r["soldiers_base"]
@@ -298,6 +302,11 @@ func finish_wave() -> Dictionary:
 	return {"castle": heal}
 
 
+## 지금 웨이브의 적 체력 · 공격 배율 (웨이브가 갈수록 wave_scale 씩).
+func enemy_mult() -> float:
+	return DB.stage_mult(stage, diff, float(scale.get("mult", -1.0))) * pow(float(DB.rules["wave_scale"]), wave)
+
+
 func wave_count() -> int:
 	return waves.size()
 
@@ -328,11 +337,16 @@ func to_save() -> Dictionary:
 		units.append({"id": u.id, "x": u.anchor.x, "y": u.anchor.y, "hp": u.hp_ratio})
 	return {"stage": stage, "diff": diff, "wave": wave, "castle": castle_hp, "units": units,
 		"cap": field_cap, "cap_bought": field_cap_bought, "continued": continued,
-		"spins": spins, "stats": stats.duplicate()}
+		"spins": spins, "stats": stats.duplicate(), "scale": scale.duplicate()}
 
 
 ## Puts a saved run back (see to_save). The current wave starts from its prep.
 func restore(save: Dictionary) -> void:
+	# 퇴각해 둔 전투는 시작할 때 정한 적 배율을 그대로 쓴다
+	var sc: Dictionary = save.get("scale", {})
+	if sc.has("count") and sc.has("mult"):
+		scale = sc.duplicate()
+		waves = DB.stage_waves(stage, diff, float(scale["count"]))
 	wave = clampi(int(save.get("wave", 0)), 0, waves.size() - 1)
 	castle_hp = clampi(int(save.get("castle", castle_max)), 1, castle_max)
 	field_cap = int(save.get("cap", field_cap))

@@ -272,9 +272,9 @@ func test_duplicate_hero_stands_beside_and_feeds_star() -> void:
 func test_soldier_feeds_hero_of_the_same_troop() -> void:
 	var r := _run()
 	r.recruit("guanyu")
-	r.recruit("spear")
+	r.recruit("rider")
 	var chk := r.absorb_check(r.field[1], r.field[0])
-	eq(chk["mode"], "star", "창병 -> 관우 (창병 장수)")
+	eq(chk["mode"], "star", "경기병 -> 관우 (경기병 장수)")
 	eq(int(chk["xp"]), 1, "a soldier = 1")
 	var res := r.absorb_star(r.field[1], r.field[0])
 	eq(int(res["gained"]), 0, "not enough yet")

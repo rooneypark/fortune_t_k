@@ -24,7 +24,7 @@ func test_star_xp_tables() -> void:
 	eq(MetaRules.star_need("guanyu", 6), -1, "max 6")
 	eq(MetaRules.star_need("spear", 1), 5, "병종 1->2성 = 5")
 	eq(MetaRules.star_xp("guanyu", "guanyu"), 10, "같은 장수 복사본 = 10")
-	eq(MetaRules.star_xp("spear", "guanyu"), 1, "같은 병종 병사 = 1")
+	eq(MetaRules.star_xp("rider", "guanyu"), 1, "같은 병종 병사 = 1")
 	eq(MetaRules.star_xp("spear", "spear"), 1, "병사끼리 = 1")
 	eq(MetaRules.trait_slots(1), 1, "1성 1칸")
 	eq(MetaRules.trait_slots(3), 3, "3성 3칸 (칸 = 성급)")
@@ -48,7 +48,7 @@ func test_counters() -> void:
 	near(DB.counter("fire", "cav"), 0.8, 0.001, "화공은 기병에 약하다")
 	near(DB.counter("thunder", "cav"), 1.3, 0.001, "뇌공은 기병에 강하다")
 	near(DB.counter("medic", "inf"), 1.0, 0.001, "의원은 상성이 없다")
-	eq(DB.ctr_of("guanyu"), "pike", "관우 = 창병 줄")
+	eq(DB.ctr_of("guanyu"), "cav", "관우 = 기병 줄")
 	eq(DB.ctr_of("zhugeliang"), "fire", "제갈량 = 화공 줄")
 	eq(DB.counter_lists("pike")["strong"], ["cav"], "list for the screen")
 
@@ -117,10 +117,11 @@ func test_run_gold() -> void:
 
 
 func test_stage_scaling() -> void:
-	near(DB.stage_mult(1, 1), 0.35, 0.001, "stage 1 보통 = 0.35 (처음은 쉽게)")
-	var sb := float(DB.stages["stage_base"])
-	near(DB.stage_mult(3, 1), 0.35 * sb * sb, 0.001, "x stage_base per stage")
-	near(DB.stage_mult(1, 3), 1.3, 0.001, "지옥 1.3")
+	var a: Dictionary = DB.stages["army"]
+	near(DB.stage_mult(1, 2), float(a["base"]), 0.001, "새 계정 스테이지 1 보통 = army.base")
+	near(DB.stage_mult(3, 2), float(a["base"]) * pow(float(a["stage_step"]), 2), 0.001, "x stage_step per stage")
+	check(DB.stage_mult(1, 1) < DB.stage_mult(1, 2) and DB.stage_mult(1, 2) < DB.stage_mult(1, 3), "쉬움 < 보통 < 어려움")
+	near(DB.stage_mult(1, 2, 2.0), 2.0, 0.001, "내 병력 몫이 그대로 곱해진다")
 	eq(DB.stage_count(), 10, "10 stages")
 	eq(DB.difficulties().size(), 3, "3 difficulties")
 	eq(DB.stage_boss(1), "zhangjiao", "stage 1 boss 장각")
@@ -129,10 +130,31 @@ func test_stage_scaling() -> void:
 	var waves := DB.stage_waves(1, 1)
 	eq(waves.size(), 10, "10 waves")
 	eq(String(waves[9]["boss"]), "zhangjiao", "boss on the last wave")
-	check(int(DB.stage_waves(1, 3)[0]["list"][0][1]) > int(waves[0]["list"][0][1]), "지옥 has more enemies")
-	# 적 수: 스테이지 1 첫 웨이브는 틀 그대로(초반은 적게), 스테이지 · 웨이브가 갈수록 늘어난다
-	eq(DB.count_mult(1, 1, 0), 1.0, "stage 1 wave 1 = the template count")
-	check(DB.count_mult(5, 1, 0) > DB.count_mult(1, 1, 0), "later stage: more enemies")
-	check(DB.count_mult(1, 1, 9) > DB.count_mult(1, 1, 0), "later wave: more enemies")
-	check(int(DB.stage_waves(10, 1)[0]["list"][0][1]) > int(waves[0]["list"][0][1]), "stage 10 wave 1 has more than stage 1")
-	check(float(DB.stage_waves(10, 1)[0]["gap_mult"]) < 1.0, "many enemies come closer together")
+	check(int(DB.stage_waves(1, 3)[1]["list"][0][1]) > int(DB.stage_waves(1, 1)[1]["list"][0][1]), "어려움 has more enemies than 쉬움")
+	# 적 수: 보통 첫 웨이브는 틀 그대로, 웨이브가 갈수록 · 내 병력이 많을수록 늘어난다
+	eq(DB.count_mult(2, 0), 1.0, "보통 wave 1 = the template count")
+	check(DB.count_mult(2, 9) > DB.count_mult(2, 0), "later wave: more enemies")
+	check(int(DB.stage_waves(1, 2, 2.5)[0]["list"][0][1]) > int(DB.stage_waves(1, 2)[0]["list"][0][1]), "bigger army: more enemies")
+	check(float(DB.stage_waves(1, 2, 2.5)[0]["gap_mult"]) < 1.0, "many enemies come closer together")
+
+
+func test_army_scale() -> void:
+	var p := Profile.new()
+	var a: Dictionary = DB.stages["army"]
+	var s0 := MetaRules.army_scale(p.data, [])
+	near(float(s0["level"]), 1.0, 0.001, "새 계정: 레벨 1")
+	near(float(s0["count"]), 1.0, 0.001, "새 계정: 적 수 그대로")
+	near(float(s0["mult"]), float(a["base"]), 0.001, "새 계정: 적 세기 = base")
+	var army: Array = []
+	for i in 16:
+		army.append({"id": "spear"})
+	var s1 := MetaRules.army_scale(p.data, army)
+	eq(int(s1["n"]), 16, "인원수")
+	check(float(s1["count"]) > float(s0["count"]), "부대가 크면 적이 많다")
+	check(float(s1["count"]) <= float(a["count_max"]), "적 수 배율은 count_max 까지")
+	check(float(s1["mult"]) > float(s0["mult"]), "적 수로 못 옮긴 몫은 적 세기로")
+	p.add_star_xp("spear", 99)
+	check(float(MetaRules.army_scale(p.data, army)["level"]) > float(s1["level"]), "유닛이 강해지면 레벨이 오른다")
+	var run := RunState.new(RandomNumberGenerator.new(), [], [], 1, 2, p)
+	near(run.enemy_mult(), DB.stage_mult(1, 2, float(run.scale["mult"])), 0.001, "전투는 시작할 때의 병력 몫을 쓴다")
+	check(run.to_save().has("scale"), "퇴각 저장에 적 배율이 들어 있다")

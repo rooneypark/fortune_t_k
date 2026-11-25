@@ -1,0 +1,32 @@
+IMAGE 1 is a STYLE SAMPLE: four finished characters of my 2D pixel art game (set in China's Three Kingdoms era). Do NOT draw those four characters again. Draw a NEW sheet of different characters in EXACTLY the same style as IMAGE 1:
+- the same pixel size and the same dark outlines,
+- the same proportions (a big head, about two and a half heads tall, chunky and cute),
+- the same detailed faces: eyes with eyebrows, moustaches and beards, a clear expression — every face is fully visible,
+- the same level of detail on clothes and armor,
+- the same view: the character faces the viewer, turned slightly to the right.
+Do not simplify the faces to dots. Do not change the style.
+
+Draw exactly these 8 characters, 2 rows of 4, in this order (left to right, top to bottom). Each one must be recognisable by the features listed. Draw only the characters in this list: no other character may be added or swapped in, and none of the four characters of IMAGE 1 may appear.
+1. Yuan Shao — proud noble: gold armor, yellow cape, ornate helmet, pointing forward with a command baton.
+2. Zhang Jiao — yellow turban, long grey hair and beard, yellow robe, wooden staff with a talisman.
+3. Meng Huo — tribal king: beast-skull helmet with horns, fur cloak, tan skin, woven vine shield and a big club.
+4. Hua Man — tribal girl: flower in her hair, fur-trimmed outfit, tan skin, crossbow.
+5. Zuo Ci — old hermit: ragged grey-blue robe, messy white hair, wooden staff with a gourd.
+6. Cheng Yuanzhi — Yellow Turban general: yellow turban, heavy brown armor, big broad blade.
+7. Ji Ling — general in gold-and-brown armor, helmet with a gold crest, a three-pointed trident.
+8. Spearman — plain iron helmet, grey tunic with a brown belt, simple spear.
+
+Colors: every character has its own colors, given in the list. Use them as the main colors of that character's clothes and armor, so the characters are easy to tell apart. Do not paint them all in one color.
+
+Pose: every character stands on the ground on their own two feet, standing still in a relaxed pose, the whole body visible from head to feet, the weapon held upright in the hand and fully visible. Nothing is cut off and nothing hides the face.
+There are NO horses and no other animals anywhere in this image.
+
+Layout:
+- Flat magenta (#FF00FF) background. One figure per cell. Do not draw the cell lines.
+- All figures are the same size and stand on the same line in each row.
+- Use the whole image: the figures are as big as the cells allow, with a clear magenta gap around every figure. Figures never touch or overlap.
+
+Rules:
+- Every figure has a closed dark outline. No ground shadow, no dust, no glow, no effects.
+- Nothing but the figures on the magenta background: no frames, no text, no labels, no numbers.
+- No sparkles, no watermark. Wide landscape image, 16:9.
