@@ -1,0 +1,17 @@
+IMAGE 1 is a finished screen of my 2D pixel art game (set in China's Three Kingdoms era). Draw one more screen of the same game: the mailbox window. Keep it simple and clean, in exactly the same style as IMAGE 1: same pixel size, same dark outlines, same flat brown panels with a thin dark outline and a thin lighter inner line, same dark-brown empty slots for numbers, same icon style. Flat: no bevels, no gloss, no gradients, no drop shadows.
+
+If another window of this game is attached as an extra image, use exactly the same window frame, title bar and close button as in it.
+
+Behind the window: the lobby screen of IMAGE 1, darkened as if covered by a 70% black veil.
+
+The window:
+- Window frame: a tall brown panel. Title bar across the top edge: an empty tan strip with an envelope icon at its left end. Close button at the top right corner: a small red square with a white X.
+- A list of five mail rows, all the same: each row is a wide dark-brown box with an envelope icon at the left, an empty area for two lines of text in the middle, and a small button with a check mark icon at the right.
+- Two buttons side by side at the bottom, each with one small icon at its left end and empty otherwise: a bright red eye-catching one with an open treasure chest icon, and a dark-brown one with a trash can icon.
+
+Rules:
+- Every icon listed above must already be drawn. No blank placeholders where an icon is listed.
+- Places described as "empty" stay empty: the game writes the text, numbers and faces there.
+- No text, letters or numbers anywhere. No characters.
+- Every piece is opaque and has a closed dark outline. Pieces do not overlap and do not touch each other.
+- No sparkles, no watermark. Tall portrait image, 9:16.

@@ -2,7 +2,7 @@ extends PxPopup
 ## 웨이브 승리: 제목 리본, 군량·성 체력·처치, 활약 장수, 다음 웨이브 적, 다음 웨이브 버튼.
 
 var p: Dictionary
-## 그림 창 (2026-11-24): 제미나이 그림에서 떼어 낸 부품 (tools/import_wave_ui.py → assets/ui/wave_*.png,
+## 그림 창 (2026-11-24): 제미나이 그림에서 떼어 낸 부품 (tools/import_popups8_ui.py → assets/ui/wave_*.png,
 ## 자리 wave_layout.json). 그림이 없으면 선 UI로 그린다.
 
 

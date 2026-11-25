@@ -16,18 +16,19 @@ signal wave_done
 signal soldiers_lost
 signal boss_spawned(f: Fighter)
 
-# 가로 전장 (2026-11-24 3차 배경 battle_field에 맞춤): 왼쪽에 비스듬한 성벽(아래쪽에 성문), 오른쪽에서 적이 온다.
+# 가로 전장 (2026-11-25 7차 배경 battle_field에 맞춤): 왼쪽 위에 비스듬한 성벽(성문은 성벽 면에), 오른쪽에서 적이 온다.
 # 싸우는 곳은 흙 전장 전체 (y 620 ~ 1240, 아래 슬롯 판 바로 위까지). 좌표는 이 노드 안의 px = 화면 px.
-# 그림에서 잰 성벽 · 풀 경계: y 600 → x 350, y 1000 → x 257, y 1240 → x 150. 성문 나무 문은 x 100~175, y 830~1265.
+# 그림에서 잰 성벽 밑선: y 600 → x 191, y 850 → x 0 (그 아래는 화면 밖). 성문 나무 문은 x 55~105, y 450~750.
 const BAND_TOP := 620.0
 const BAND_BOTTOM := 1240.0
-## 성벽 경계: 전장 맨 위 / 맨 아래에서의 x. 높이마다의 선은 wall_x(y) (둘 사이를 잇는 비스듬한 선).
-const WALL_TOP_X := 350.0
-const WALL_X := 160.0
+## 성벽 경계: 전장 맨 위에서의 x, 한 줄 내려갈 때 왼쪽으로 물러나는 양, 맨 아래에서의 x. 높이마다의 선은 wall_x(y).
+const WALL_TOP_X := 176.0
+const WALL_SLOPE := 0.764
+const WALL_X := 0.0
 ## 성문 앞: 아군을 뚫은 적은 여기로 모여들어 성문을 친다.
-const GATE := Vector2(235.0, 1080.0)
+const GATE := Vector2(150.0, 780.0)
 ## 아군 자리의 오른쪽 끝 (교전선).
-const LINE_X := 580.0  # 성벽이 위쪽에서 오른쪽으로 나와 있어 아군 자리를 넓힌다 (3차 배경)
+const LINE_X := 520.0
 ## 적이 나오는 오른쪽 끝.
 const SPAWN_X := 1030.0
 const LEFT := WALL_X
@@ -223,7 +224,7 @@ func active_synergies() -> Array:
 
 ## 성벽 밑선의 x (배경 그림의 성은 비스듬해서 위쪽일수록 오른쪽으로 나와 있다).
 static func wall_x(y: float) -> float:
-	return lerpf(WALL_TOP_X, WALL_X, clampf((y - BAND_TOP) / (BAND_BOTTOM - BAND_TOP), 0.0, 1.0))
+	return maxf(WALL_X, WALL_TOP_X - (y - BAND_TOP) * WALL_SLOPE)
 
 
 ## A free standing spot in the ally zone: melee in front (right, near the line),
@@ -1127,8 +1128,9 @@ func _draw() -> void:
 		draw_rect(Rect2(LINE_X, ly, 4, 20), Color(1, 1, 1, 0.3))
 		ly += 40
 	if not fighting:
+		var knee := BAND_TOP + (WALL_TOP_X - WALL_X) / WALL_SLOPE   # 성벽 밑선이 화면 왼쪽 끝에 닿는 높이
 		draw_colored_polygon(PackedVector2Array([Vector2(wall_x(BAND_TOP), BAND_TOP), Vector2(LINE_X, BAND_TOP),
-			Vector2(LINE_X, BAND_BOTTOM), Vector2(wall_x(BAND_BOTTOM), BAND_BOTTOM)]), Color(1, 1, 1, 0.06))
+			Vector2(LINE_X, BAND_BOTTOM), Vector2(WALL_X, BAND_BOTTOM), Vector2(WALL_X, knee)]), Color(1, 1, 1, 0.06))
 	for w: Dictionary in _warns:
 		var k := 1.0 - float(w["t"]) / float(w["life"])
 		var c: Vector2 = w["pos"]

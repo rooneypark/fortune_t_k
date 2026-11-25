@@ -7,6 +7,6 @@
 - 화면을 바꾸면 창 없는 점검을 돌린다: `tools/check_scripts.tscn` → 테스트 → `tools/smoke.tscn`. 자리 값이 필요하면 `tools/layout_dump.tscn` + `python tools/ui_spec.py`.
 - 게임 창은 사용자가 직접 띄워서 본다. 스크린샷은 꼭 필요할 때만 최소한으로 (`--position 10000,10000`, `--route=<화면> --shot=<png> --shot_window=256x448`).
 - 테스트: `godot --headless --path . -s res://tests/run_tests.gd` (모두 통과 유지).
-- 그림: 로비 · 전투 UI는 제미나이 그림(`design/art/ui_src/` → `tools/import_lobby2_ui.py` · `import_battle3_ui.py`, 창 · 목록은 `import_*_ui.py`), 나머지는 임시(캐릭터 `tools/draw_units24.py`, 아이콘 `tools/draw_art.py`). 게임 창은 사용자가 직접 띄운다 — 확인은 창 없는 검사와 합성 그림으로. 다른 게임에서 뽑은 그림·리소스는 절대 넣지 않는다.
+- 그림: 로비 · 전투 UI는 제미나이 그림(`design/art/ui_src/` → `tools/import_lobby4_ui.py` · `import_battle7_ui.py` · `import_popups8_ui.py` · `import_kit8_ui.py` · `import_icons8_ui.py`), 나머지는 임시(캐릭터 `tools/draw_units24.py`, 아이콘 `tools/draw_art.py`). 게임 창은 사용자가 직접 띄운다 — 확인은 창 없는 검사와 합성 그림으로. 다른 게임에서 뽑은 그림·리소스는 절대 넣지 않는다.
 - 최신 기획: `design/gdd/스테이지-흡수-합성-개편.md`가 다른 기획서보다 우선. 옛 기획서는 `design/_archive/`.
 - 현재 상태와 다음 할 일: `HANDOFF.md`.

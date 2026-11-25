@@ -4,9 +4,19 @@ extends PxPopup
 ## "당첨 칸 하나에서 나올 확률"을 전부 적는다.
 
 
+## 틀은 우편함과 같은 큰 창(kit_frame2), 위는 규칙 칸 · 아래는 목록 칸 (금테 어두운 칸).
+const FRAME := Rect2(85, 363, 853, 1042)
+const TITLE := Rect2(249, 362, 526, 98)
+const CLOSE := Rect2(817, 379, 90, 87)
+const RULES := Rect2(152, 480, 720, 262)
+const LIST := Rect2(152, 754, 720, 608)
+
+
 func setup(_p: Dictionary) -> void:
 	title = DB.t("odds.title")
+	title_size = 40
 	panel_rect = Rect2(60, 230, 904, 1360)
+	use_kit(FRAME, TITLE, CLOSE, "kit_frame2")
 
 
 func build() -> void:
@@ -21,10 +31,15 @@ func build() -> void:
 			DB.t("odds.slot_tiers", [str(so["basic"]), str(so["elite"])]),
 			DB.t("odds.slot_new"),
 		]
+		Px.nine(ci, "kit_box", Rect2(Vector2.ZERO, ci.size))
 		for i in lines.size():
-			Px.text(ci, "· " + String(lines[i]), Rect2(0, i * 42, ci.size.x, 40), 24, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
-		Px.text(ci, DB.t("odds.per_win"), Rect2(0, 222, ci.size.x, 40), 26, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT), Vector2(800, 270))
-	put(head, Rect2(52, 100, 800, 270))
+			Px.text(ci, "· " + String(lines[i]), Rect2(22, 14 + i * 38, ci.size.x - 44, 36), 20, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
+		Px.text(ci, DB.t("odds.per_win"), Rect2(22, 212, ci.size.x - 44, 36), 22, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT))
+	head.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_place(head, RULES)
+	var back := DrawLayer.make(func(ci: Control) -> void: Px.nine(ci, "kit_box", Rect2(Vector2.ZERO, ci.size)))
+	back.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_place(back, LIST)
 	# 목록: 장수(등급 높은 순) 다음 병종
 	var rows: Array = []
 	for r: String in ["ss", "s", "a", "b"]:
@@ -33,7 +48,8 @@ func build() -> void:
 	for id: String in DB.soldier_ids():
 		var tier := String(DB.soldier(id).get("tier", "basic"))
 		rows.append([id, DB.t("odds.tier_" + tier), Color("#8a9aa8"), (1.0 - hero_p) * Gacha.soldier_chance(id)])
-	var content := W.scroll(panel, Rect2(52, 380 + HEAD, 800, 940), func(sc: Control, r: Rect2) -> void:
+	var area := LIST.grow(-16)
+	var content := W.scroll(panel, area, func(sc: Control, r: Rect2) -> void:
 		sc.position = r.position
 		sc.size = r.size
 		panel.add_child(sc))
@@ -42,12 +58,12 @@ func build() -> void:
 		var id := String(row[0])
 		var line := DrawLayer.make(func(ci: Control) -> void:
 			ci.draw_rect(Rect2(Vector2.ZERO, ci.size), Color(0, 0, 0, 0.22 if i % 2 == 0 else 0.1))
-			Px.text(ci, DB.unit_name(id), Rect2(16, 0, 280, ci.size.y), 26, Px.WHITE if _has(id) else Px.MUTED, HORIZONTAL_ALIGNMENT_LEFT)
-			Px.text(ci, String(row[1]), Rect2(300, 0, 200, ci.size.y), 24, (row[2] as Color).lightened(0.2), HORIZONTAL_ALIGNMENT_LEFT)
-			Px.text(ci, "%.2f%%" % float(row[3]), Rect2(520, 0, ci.size.x - 536, ci.size.y), 26, Px.GOLD, HORIZONTAL_ALIGNMENT_RIGHT), Vector2(800, 52))
-		line.position = Vector2(0, i * 54)
+			Px.text(ci, DB.unit_name(id), Rect2(16, 0, 260, ci.size.y), 24, Px.WHITE if _has(id) else Px.MUTED, HORIZONTAL_ALIGNMENT_LEFT)
+			Px.text(ci, String(row[1]), Rect2(280, 0, 180, ci.size.y), 22, (row[2] as Color).lightened(0.2), HORIZONTAL_ALIGNMENT_LEFT)
+			Px.text(ci, "%.2f%%" % float(row[3]), Rect2(470, 0, ci.size.x - 486, ci.size.y), 24, Px.GOLD, HORIZONTAL_ALIGNMENT_RIGHT), Vector2(688, 46))
+		line.position = Vector2(0, i * 48)
 		content.add_child(line)
-	content.custom_minimum_size.y = rows.size() * 54
+	content.custom_minimum_size.y = rows.size() * 48
 
 
 func _has(id: String) -> bool:

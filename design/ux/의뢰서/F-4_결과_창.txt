@@ -1,0 +1,26 @@
+IMAGE 1 is a finished screen of my 2D pixel art game (set in China's Three Kingdoms era). Draw one more screen of the same game: the result window (victory). Keep it simple and clean, in exactly the same style as IMAGE 1: same pixel size, same dark outlines, same flat brown panels with a thin dark outline and a thin lighter inner line, same dark-brown empty slots for numbers, same icon style. Flat: no bevels, no gloss, no gradients, no drop shadows.
+
+IMAGE 2 (grey boxes with numbers) only shows WHERE things go. Follow its positions and sizes, but do not copy the grey, the numbers or any letters.
+
+If another window of this game is attached as an extra image, use exactly the same window frame, title bar and close button as in it.
+
+Behind the window: the battle screen of IMAGE 1, darkened as if covered by a 70% black veil.
+
+The window (numbers of IMAGE 2):
+1. Window frame: a tall brown panel. Under the title there is an empty area for one line of text.
+2. Title bar across the top edge: an empty GOLD strip with a small flag icon at each end.
+3. Four record boxes: empty dark-brown slots, all the same.
+4. One square portrait frame with a gold border and an empty dark inside.
+5. Next to it, a wide empty dark-brown slot.
+6. Reward box: a big wide empty dark-brown box.
+7. A wide PURPLE button with a gold bar icon at the left; the rest of the button is empty.
+8. A wide empty button (dark-brown inside, gold border). No icon.
+9. A button of the same size and shape as button 8, but bright RED inside, the most eye-catching piece of the window. No icon.
+No close button on this window.
+
+Rules:
+- Every icon listed above must already be drawn. No blank placeholders where an icon is listed.
+- Places described as "empty" stay empty: the game writes the text, numbers and faces there.
+- No text, letters or numbers anywhere. No characters.
+- Every piece is opaque and has a closed dark outline. Pieces do not overlap and do not touch each other.
+- No sparkles, no watermark. Tall portrait image, 9:16.

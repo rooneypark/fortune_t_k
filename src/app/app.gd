@@ -12,8 +12,11 @@ const DIALOG_ROUTES := ["heroes", "hero", "troop", "arena", "shop"]
 ## Dialog frame in canvas px; content shows screen coords x 32..992, y 146..1462.
 ## 2026-11-23: 아래 끝을 로비 하단 탭(y 1592) 위에서 멈춘다 — 장수 · 가방 화면에서도 하단 탭이 보이고 눌린다.
 ## 2026-11-24: 로비 3차 아래 탭(탭 줄 y 1522)에 맞춰 아래 끝을 1520으로 (출정 탭의 솟은 윗부분만 창 뒤로 간다).
-const DIALOG_RECT := Rect2(16, 212, 992, 1308)
-const DIALOG_INSET := 16.0
+## 큰 창 틀 (2026-11-25 8차 시안 그대로): 바깥 틀 x 83~941 · y 325~1495, 안쪽 판은 탭 줄 아래 y 447 부터.
+const DIALOG_RECT := Rect2(83, 325, 858, 1170)
+const DIALOG_INSET := 14.0
+## 탭 줄 높이 (틀 위 끝 ~ 안쪽 판 위 끝)
+const DIALOG_TABS := 122.0
 ## Band above the dialog frame for the close X (inside the dialog container).
 const DIALOG_HEAD := 32.0
 const DIALOG_ORIGIN := Vector2(32, 146)
@@ -260,10 +263,17 @@ func open_dialog(name: String, params: Dictionary = {}) -> void:
 	dialog = scene.instantiate()
 	dialog.dialog = true
 	dialog.set_anchors_preset(Control.PRESET_TOP_LEFT)
-	dialog.position = -DIALOG_ORIGIN
 	dialog.size = Px.CANVAS
 	dialog_route = name
 	var clip: Control = _dialog_frame.get_meta("clip")
+	if dialog.has_method("native8"):
+		# 8차 시안 좌표로 짠 화면: 화면 좌표 그대로 놓는다 (창 틀 안쪽만 보인다)
+		dialog.position = -(DIALOG_RECT.position + Vector2(DIALOG_INSET, DIALOG_INSET))
+	else:
+		# 옛 배치(가로 960, 화면 y 146~1422)로 짠 화면은 새 틀 안쪽에 맞게 줄여 넣는다 (시안 좌표로 옮기기 전까지)
+		var s := minf(clip.size.x / 960.0, (clip.size.y - DIALOG_TABS + 30.0) / 1276.0)
+		dialog.scale = Vector2(s, s)
+		dialog.position = -DIALOG_ORIGIN * s + Vector2((clip.size.x - 960.0 * s) * 0.5, 0)
 	clip.add_child(dialog)
 	dialog.enter(params)
 	clip.modulate.a = 0.0
@@ -307,7 +317,7 @@ func _layout_dialog_frame(f: Control) -> void:
 	f.pivot_offset = f.size * 0.5
 	(f.get_meta("bg") as Control).size = r.size
 	(f.get_meta("clip") as Control).size = r.size - Vector2(DIALOG_INSET, DIALOG_INSET) * 2.0
-	(f.get_meta("close") as Control).position = Vector2(r.size.x - W.CLOSE.x - 4, DIALOG_HEAD - 24)
+	(f.get_meta("close") as Control).position = Vector2(r.size.x - W.CLOSE.x - 13, DIALOG_HEAD + 8)
 
 
 func _build_dialog_frame() -> void:
@@ -324,6 +334,9 @@ func _build_dialog_frame() -> void:
 		# 공용 다이얼로그 틀 그림 (dlg_frame, 9-slice: 쇠 테두리 · 귀퉁이 징은 그대로, 널빤지 속만 늘어난다)
 		if Px.has_nine("dlg_frame"):
 			Px.nine(ci, "dlg_frame", rr)
+			# 안쪽 판: 탭 줄 아래부터 (탭은 화면이 그 위에 그린다)
+			if Px.has_nine("dlg_inner"):
+				Px.nine(ci, "dlg_inner", Rect2(DIALOG_INSET, DIALOG_TABS, rr.size.x - DIALOG_INSET * 2.0, rr.size.y - DIALOG_TABS - DIALOG_INSET))
 			return
 		Px.draw_skin(ci, "panel_ctrl", rr)
 		var inner := rr.grow(-DIALOG_INSET)
@@ -343,7 +356,7 @@ func _build_dialog_frame() -> void:
 	var x := W.close_button(func() -> void:
 		if dialog != null:
 			dialog.back())
-	x.position = Vector2(r.size.x - W.CLOSE.x - 4, DIALOG_HEAD - 24)
+	x.position = Vector2(r.size.x - W.CLOSE.x - 13, DIALOG_HEAD + 8)
 	f.add_child(x)
 	f.set_meta("close", x)
 	_dialog_frame = f

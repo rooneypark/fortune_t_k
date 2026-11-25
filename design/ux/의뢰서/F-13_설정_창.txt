@@ -1,0 +1,20 @@
+IMAGE 1 is a finished screen of my 2D pixel art game (set in China's Three Kingdoms era). Draw one more screen of the same game: the settings window. Keep it simple and clean, in exactly the same style as IMAGE 1: same pixel size, same dark outlines, same flat brown panels with a thin dark outline and a thin lighter inner line, same dark-brown empty slots for numbers, same icon style. Flat: no bevels, no gloss, no gradients, no drop shadows.
+
+If another window of this game is attached as an extra image, use exactly the same window frame, title bar and close button as in it.
+
+Behind the window: the lobby screen of IMAGE 1, darkened as if covered by a 70% black veil.
+
+The window:
+- Window frame: a tall brown panel. Title bar across the top edge: an empty tan strip with a gear icon at its left end. Close button at the top right corner: a small red square with a white X.
+- Section 1: two slider rows. Each row: an icon at the left (a music note; a speaker), then a long dark groove with a small square knob on it.
+- Section 2: one row with a slot machine reel icon and three small choice buttons side by side (empty; the first one selected, brighter).
+- Section 3: three toggle rows. Each row: an empty area for text at the left and an on/off switch at the right (two of them on = green, one off = grey).
+- Section 4: three low wide buttons, one under another, each empty with a small right-pointing arrow at its right end.
+Each section sits on its own dark-brown box.
+
+Rules:
+- Every icon listed above must already be drawn. No blank placeholders where an icon is listed.
+- Places described as "empty" stay empty: the game writes the text, numbers and faces there.
+- No text, letters or numbers anywhere. No characters.
+- Every piece is opaque and has a closed dark outline. Pieces do not overlap and do not touch each other.
+- No sparkles, no watermark. Tall portrait image, 9:16.

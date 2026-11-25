@@ -9,11 +9,11 @@
    "h": 112,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 128,
    "x": 760,
-   "y": 600
+   "y": 698
   },
   {
    "extra": {
@@ -26,22 +26,22 @@
    "h": 20,
    "kind": "text",
    "label": "1성",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 34,
    "x": 754,
-   "y": 578
+   "y": 676
   },
   {
    "extra": {},
    "h": 96,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 96,
    "x": 776,
-   "y": 686
+   "y": 784
   },
   {
    "extra": {
@@ -54,22 +54,22 @@
    "h": 20,
    "kind": "text",
    "label": "2성",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 34,
    "x": 754,
-   "y": 664
+   "y": 762
   },
   {
    "extra": {},
    "h": 96,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 96,
    "x": 566,
-   "y": 686
+   "y": 784
   },
   {
    "extra": {
@@ -82,22 +82,22 @@
    "h": 20,
    "kind": "text",
    "label": "1성",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 34,
    "x": 544,
-   "y": 664
+   "y": 762
   },
   {
    "extra": {},
    "h": 96,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 96,
    "x": 706,
-   "y": 686
+   "y": 784
   },
   {
    "extra": {
@@ -110,22 +110,22 @@
    "h": 20,
    "kind": "text",
    "label": "2성",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 34,
    "x": 684,
-   "y": 664
+   "y": 762
   },
   {
    "extra": {},
    "h": 96,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 96,
    "x": 776,
-   "y": 756
+   "y": 854
   },
   {
    "extra": {
@@ -138,22 +138,22 @@
    "h": 20,
    "kind": "text",
    "label": "2성",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 34,
    "x": 754,
-   "y": 734
+   "y": 832
   },
   {
    "extra": {},
    "h": 96,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 96,
    "x": 566,
-   "y": 756
+   "y": 854
   },
   {
    "extra": {
@@ -166,22 +166,22 @@
    "h": 20,
    "kind": "text",
    "label": "1성",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 34,
    "x": 544,
-   "y": 734
+   "y": 832
   },
   {
    "extra": {},
    "h": 96,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 96,
    "x": 706,
-   "y": 756
+   "y": 854
   },
   {
    "extra": {
@@ -194,22 +194,22 @@
    "h": 20,
    "kind": "text",
    "label": "1성",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 34,
    "x": 684,
-   "y": 734
+   "y": 832
   },
   {
    "extra": {},
    "h": 96,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 96,
    "x": 776,
-   "y": 826
+   "y": 924
   },
   {
    "extra": {
@@ -222,22 +222,22 @@
    "h": 20,
    "kind": "text",
    "label": "1성",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 34,
    "x": 754,
-   "y": 804
+   "y": 902
   },
   {
    "extra": {},
    "h": 96,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 96,
    "x": 776,
-   "y": 896
+   "y": 994
   },
   {
    "extra": {
@@ -250,55 +250,55 @@
    "h": 20,
    "kind": "text",
    "label": "1성",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "sx": 1.0,
    "w": 34,
    "x": 754,
-   "y": 874
+   "y": 972
   },
   {
    "extra": {},
-   "h": 518,
+   "h": 517,
    "kind": "image",
    "label": "battle_panel_slot",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
+   "node": "/root/Main/screen_layer/Battle/@Control@94",
    "sx": 1.0,
-   "w": 537,
-   "x": 384,
-   "y": 1274
+   "w": 526,
+   "x": 396,
+   "y": 1248
   },
   {
    "extra": {},
-   "h": 65,
+   "h": 97,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
+   "node": "/root/Main/screen_layer/Battle/@Control@94",
    "sx": 1.0,
-   "w": 147,
-   "x": 429,
-   "y": 1386
+   "w": 120,
+   "x": 443,
+   "y": 1350
   },
   {
    "extra": {},
-   "h": 132,
+   "h": 112,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
+   "node": "/root/Main/screen_layer/Battle/@Control@94",
    "sx": 1.0,
-   "w": 147,
-   "x": 429,
-   "y": 1451
+   "w": 120,
+   "x": 443,
+   "y": 1447
   },
   {
    "extra": {},
-   "h": 84,
+   "h": 92,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
+   "node": "/root/Main/screen_layer/Battle/@Control@94",
    "sx": 1.0,
-   "w": 85,
-   "x": 460,
-   "y": 1495
+   "w": 92,
+   "x": 457,
+   "y": 1463
   },
   {
    "extra": {
@@ -311,55 +311,55 @@
    "h": 22,
    "kind": "text",
    "label": "하후돈",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
+   "node": "/root/Main/screen_layer/Battle/@Control@94",
    "sx": 1.0,
-   "w": 87,
-   "x": 459,
-   "y": 1558
+   "w": 94,
+   "x": 456,
+   "y": 1534
   },
   {
    "extra": {},
-   "h": 111,
+   "h": 109,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
+   "node": "/root/Main/screen_layer/Battle/@Control@94",
    "sx": 1.0,
-   "w": 147,
-   "x": 429,
-   "y": 1583
+   "w": 120,
+   "x": 443,
+   "y": 1559
   },
   {
    "extra": {},
-   "h": 67,
+   "h": 92,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
+   "node": "/root/Main/screen_layer/Battle/@Control@94",
    "sx": 1.0,
-   "w": 84,
-   "x": 461,
-   "y": 1627
+   "w": 92,
+   "x": 457,
+   "y": 1575
   },
   {
    "extra": {},
-   "h": 65,
+   "h": 97,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
+   "node": "/root/Main/screen_layer/Battle/@Control@94",
    "sx": 1.0,
-   "w": 147,
-   "x": 577,
-   "y": 1386
+   "w": 120,
+   "x": 603,
+   "y": 1350
   },
   {
    "extra": {},
-   "h": 132,
+   "h": 112,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
+   "node": "/root/Main/screen_layer/Battle/@Control@94",
    "sx": 1.0,
-   "w": 147,
-   "x": 577,
-   "y": 1451
+   "w": 120,
+   "x": 603,
+   "y": 1447
   },
   {
    "extra": {
@@ -369,58 +369,58 @@
     "th": 40.0,
     "tw": 34.0
    },
-   "h": 92,
+   "h": 100,
    "kind": "text",
    "label": "꽝",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
+   "node": "/root/Main/screen_layer/Battle/@Control@94",
    "sx": 1.0,
-   "w": 93,
-   "x": 604,
-   "y": 1491
+   "w": 100,
+   "x": 613,
+   "y": 1459
   },
   {
    "extra": {},
-   "h": 111,
+   "h": 109,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
+   "node": "/root/Main/screen_layer/Battle/@Control@94",
    "sx": 1.0,
-   "w": 147,
-   "x": 577,
-   "y": 1583
+   "w": 120,
+   "x": 603,
+   "y": 1559
   },
   {
    "extra": {},
-   "h": 65,
+   "h": 97,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
+   "node": "/root/Main/screen_layer/Battle/@Control@94",
    "sx": 1.0,
-   "w": 145,
-   "x": 731,
-   "y": 1386
-  },
-  {
-   "extra": {},
-   "h": 132,
-   "kind": "image",
-   "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
-   "sx": 1.0,
-   "w": 145,
-   "x": 731,
-   "y": 1451
-  },
-  {
-   "extra": {},
-   "h": 84,
-   "kind": "image",
-   "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
-   "sx": 1.0,
-   "w": 84,
+   "w": 120,
    "x": 763,
-   "y": 1495
+   "y": 1350
+  },
+  {
+   "extra": {},
+   "h": 112,
+   "kind": "image",
+   "label": "reel_cell",
+   "node": "/root/Main/screen_layer/Battle/@Control@94",
+   "sx": 1.0,
+   "w": 120,
+   "x": 763,
+   "y": 1447
+  },
+  {
+   "extra": {},
+   "h": 92,
+   "kind": "image",
+   "label": "reel_cell",
+   "node": "/root/Main/screen_layer/Battle/@Control@94",
+   "sx": 1.0,
+   "w": 92,
+   "x": 777,
+   "y": 1463
   },
   {
    "extra": {
@@ -433,33 +433,33 @@
    "h": 22,
    "kind": "text",
    "label": "창병",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
-   "sx": 1.0,
-   "w": 87,
-   "x": 761,
-   "y": 1558
-  },
-  {
-   "extra": {},
-   "h": 111,
-   "kind": "image",
-   "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
-   "sx": 1.0,
-   "w": 145,
-   "x": 731,
-   "y": 1583
-  },
-  {
-   "extra": {},
-   "h": 518,
-   "kind": "image",
-   "label": "battle_panel_ctrl",
    "node": "/root/Main/screen_layer/Battle/@Control@94",
    "sx": 1.0,
-   "w": 487,
-   "x": 921,
-   "y": 1274
+   "w": 94,
+   "x": 776,
+   "y": 1534
+  },
+  {
+   "extra": {},
+   "h": 109,
+   "kind": "image",
+   "label": "reel_cell",
+   "node": "/root/Main/screen_layer/Battle/@Control@94",
+   "sx": 1.0,
+   "w": 120,
+   "x": 763,
+   "y": 1559
+  },
+  {
+   "extra": {},
+   "h": 517,
+   "kind": "image",
+   "label": "battle_panel_ctrl",
+   "node": "/root/Main/screen_layer/Battle/@Control@95",
+   "sx": 1.0,
+   "w": 469,
+   "x": 929,
+   "y": 1248
   },
   {
    "extra": {
@@ -469,136 +469,181 @@
     "th": 35.0,
     "tw": 20.0
    },
-   "h": 70,
+   "h": 110,
    "kind": "text",
    "label": "2",
-   "node": "/root/Main/screen_layer/Battle/@Control@95",
+   "node": "/root/Main/screen_layer/Battle/@Control@96",
    "sx": 1.0,
-   "w": 79,
-   "x": 1019,
-   "y": 1640
+   "w": 73,
+   "x": 1034,
+   "y": 1600
   },
   {
    "extra": {},
-   "h": 310,
+   "h": 283,
    "kind": "button",
    "label": "battle_lever_base",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@96",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@97",
    "sx": 1.0,
-   "w": 116,
-   "x": 975,
-   "y": 1318
+   "w": 96,
+   "x": 981,
+   "y": 1287
   },
   {
    "extra": {},
-   "h": 198,
+   "h": 195,
    "kind": "button",
    "label": "battle_btn_start",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@98",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@99",
    "sx": 1.0,
-   "w": 270,
-   "x": 1114,
-   "y": 1335
+   "w": 232,
+   "x": 1134,
+   "y": 1287
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 115.0
+   },
+   "h": 39,
+   "kind": "text",
+   "label": "전투 시작",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@99",
+   "sx": 1.0,
+   "w": 176,
+   "x": 1162,
+   "y": 1424
   },
   {
    "extra": {},
-   "h": 110,
+   "h": 233,
+   "kind": "button",
+   "label": "battle_btn_retreat",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@100",
+   "sx": 1.0,
+   "w": 234,
+   "x": 1134,
+   "y": 1504
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 33,
+   "kind": "text",
+   "label": "퇴각",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@100",
+   "sx": 1.0,
+   "w": 176,
+   "x": 1164,
+   "y": 1682
+  },
+  {
+   "extra": {},
+   "h": 97,
    "kind": "button",
    "label": "40/30",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@100",
-   "sx": 1.0,
-   "w": 218,
-   "x": 400,
-   "y": 28
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 30,
-    "req": 32,
-    "th": 35.0,
-    "tw": 98.0
-   },
-   "h": 59,
-   "kind": "text",
-   "label": "40/30",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@100",
-   "sx": 1.0,
-   "w": 102,
-   "x": 500,
-   "y": 52
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 32,
-    "req": 32,
-    "th": 38.0,
-    "tw": 21.0
-   },
-   "h": 59,
-   "kind": "text",
-   "label": "6",
    "node": "/root/Main/screen_layer/Battle/@BaseButton@101",
    "sx": 1.0,
-   "w": 76,
-   "x": 708,
-   "y": 52
+   "w": 197,
+   "x": 419,
+   "y": 31
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 91.0
+   },
+   "h": 58,
+   "kind": "text",
+   "label": "40/30",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@101",
+   "sx": 1.0,
+   "w": 95,
+   "x": 510,
+   "y": 50
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 19.0
+   },
+   "h": 58,
+   "kind": "text",
+   "label": "6",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@102",
+   "sx": 1.0,
+   "w": 96,
+   "x": 714,
+   "y": 50
   },
   {
    "extra": {},
-   "h": 110,
+   "h": 97,
    "kind": "button",
    "label": "3/8",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@102",
-   "sx": 1.0,
-   "w": 181,
-   "x": 794,
-   "y": 28
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 32,
-    "req": 32,
-    "th": 38.0,
-    "tw": 61.0
-   },
-   "h": 59,
-   "kind": "text",
-   "label": "3/8",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@102",
-   "sx": 1.0,
-   "w": 78,
-   "x": 885,
-   "y": 52
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 32,
-    "req": 32,
-    "th": 38.0,
-    "tw": 67.0
-   },
-   "h": 59,
-   "kind": "text",
-   "label": "1/10",
    "node": "/root/Main/screen_layer/Battle/@BaseButton@103",
    "sx": 1.0,
-   "w": 77,
-   "x": 1063,
-   "y": 52
+   "w": 198,
+   "x": 828,
+   "y": 31
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 54.0
+   },
+   "h": 58,
+   "kind": "text",
+   "label": "3/8",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@103",
+   "sx": 1.0,
+   "w": 95,
+   "x": 919,
+   "y": 50
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 58.0
+   },
+   "h": 58,
+   "kind": "text",
+   "label": "1/10",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@104",
+   "sx": 1.0,
+   "w": 81,
+   "x": 1109,
+   "y": 50
   },
   {
    "extra": {},
-   "h": 116,
+   "h": 103,
    "kind": "button",
    "label": "1x",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@104",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@105",
    "sx": 1.0,
-   "w": 118,
-   "x": 1152,
+   "w": 90,
+   "x": 1207,
    "y": 28
   },
   {
@@ -612,61 +657,61 @@
    "h": 32,
    "kind": "text",
    "label": "1x",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@104",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@105",
    "sx": 1.0,
-   "w": 96,
-   "x": 1160,
-   "y": 94
+   "w": 68,
+   "x": 1215,
+   "y": 81
   },
   {
    "extra": {},
-   "h": 116,
+   "h": 103,
    "kind": "button",
    "label": "battle_btn_pause",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@105",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@106",
    "sx": 1.0,
-   "w": 116,
-   "x": 1272,
+   "w": 89,
+   "x": 1302,
    "y": 28
   },
   {
    "extra": {},
-   "h": 102,
+   "h": 88,
    "kind": "image",
    "label": "battle_bar_castle",
-   "node": "/root/Main/screen_layer/Battle/@Control@106",
+   "node": "/root/Main/screen_layer/Battle/@Control@107",
    "sx": 1.0,
-   "w": 985,
-   "x": 404,
-   "y": 142
+   "w": 967,
+   "x": 418,
+   "y": 139
   },
   {
    "extra": {
-    "align": 1,
-    "fs": 30,
-    "req": 30,
-    "th": 35.0,
-    "tw": 83.0
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 71.0
    },
-   "h": 53,
+   "h": 55,
    "kind": "text",
    "label": "100%",
-   "node": "/root/Main/screen_layer/Battle/@Control@106",
+   "node": "/root/Main/screen_layer/Battle/@Control@107",
    "sx": 1.0,
-   "w": 118,
-   "x": 1249,
-   "y": 166
+   "w": 110,
+   "x": 1243,
+   "y": 155
   },
   {
    "extra": {},
    "h": 40,
    "kind": "panel",
-   "label": "panel_chip",
-   "node": "/root/Main/screen_layer/Battle/@Control@107",
+   "label": "kit_box",
+   "node": "/root/Main/screen_layer/Battle/@Control@108",
    "sx": 1.0,
    "w": 74,
    "x": 410,
-   "y": 252
+   "y": 235
   },
   {
    "extra": {
@@ -679,22 +724,22 @@
    "h": 40,
    "kind": "text",
    "label": "창병",
-   "node": "/root/Main/screen_layer/Battle/@Control@107",
+   "node": "/root/Main/screen_layer/Battle/@Control@108",
    "sx": 1.0,
    "w": 66,
    "x": 414,
-   "y": 252
+   "y": 235
   },
   {
    "extra": {},
    "h": 40,
    "kind": "panel",
-   "label": "panel_chip",
-   "node": "/root/Main/screen_layer/Battle/@Control@107",
+   "label": "kit_box",
+   "node": "/root/Main/screen_layer/Battle/@Control@108",
    "sx": 1.0,
    "w": 52,
    "x": 492,
-   "y": 252
+   "y": 235
   },
   {
    "extra": {
@@ -707,11 +752,11 @@
    "h": 40,
    "kind": "text",
    "label": "촉",
-   "node": "/root/Main/screen_layer/Battle/@Control@107",
+   "node": "/root/Main/screen_layer/Battle/@Control@108",
    "sx": 1.0,
    "w": 44,
    "x": 496,
-   "y": 252
+   "y": 235
   },
   {
    "extra": {
@@ -724,7 +769,7 @@
    "h": 84,
    "kind": "text",
    "label": "하후돈 합류!",
-   "node": "/root/Main/screen_layer/Battle/@Control@108",
+   "node": "/root/Main/screen_layer/Battle/@Control@109",
    "sx": 1.0,
    "w": 1024,
    "x": 384,
@@ -741,7 +786,7 @@
    "h": 44,
    "kind": "text",
    "label": "장수가 나왔다!",
-   "node": "/root/Main/screen_layer/Battle/@Control@108",
+   "node": "/root/Main/screen_layer/Battle/@Control@109",
    "sx": 1.0,
    "w": 1024,
    "x": 384,
@@ -768,7 +813,7 @@
    "h": 1328,
    "kind": "area",
    "label": "battle_field",
-   "node": "/root/Main/screen_layer/Battle/@Control@91",
+   "node": "/root/Main/screen_layer/Battle/@Control@92",
    "w": 1024,
    "x": 384,
    "y": 0
@@ -781,7 +826,7 @@
    "h": 340,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Battle/@Control@92",
+   "node": "/root/Main/screen_layer/Battle/@Control@93",
    "w": 140,
    "x": 1268,
    "y": 356
@@ -791,78 +836,26 @@
     "clip": false,
     "parent_clip": false
    },
-   "h": 518,
+   "h": 517,
    "kind": "area",
    "label": "slot_view",
-   "node": "/root/Main/screen_layer/Battle/@Control@93",
-   "w": 537,
-   "x": 384,
-   "y": 1274
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 518,
-   "kind": "area",
-   "label": "draw_layer",
    "node": "/root/Main/screen_layer/Battle/@Control@94",
-   "w": 487,
-   "x": 921,
-   "y": 1274
+   "w": 526,
+   "x": 396,
+   "y": 1248
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 70,
+   "h": 517,
    "kind": "area",
    "label": "draw_layer",
    "node": "/root/Main/screen_layer/Battle/@Control@95",
-   "w": 152,
-   "x": 955,
-   "y": 1640
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 310,
-   "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@96",
-   "w": 116,
-   "x": 975,
-   "y": 1318
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 199,
-   "kind": "area",
-   "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Battle/@Control@97",
-   "w": 111,
-   "x": 977,
-   "y": 1318
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 198,
-   "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@98",
-   "w": 270,
-   "x": 1114,
-   "y": 1335
+   "w": 469,
+   "x": 929,
+   "y": 1248
   },
   {
    "extra": {
@@ -870,76 +863,128 @@
     "parent_clip": false
    },
    "h": 110,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/screen_layer/Battle/@Control@96",
+   "w": 174,
+   "x": 944,
+   "y": 1600
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 283,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@97",
+   "w": 96,
+   "x": 981,
+   "y": 1287
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 249,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/screen_layer/Battle/@Control@98",
+   "w": 84,
+   "x": 987,
+   "y": 1287
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 195,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@99",
+   "w": 232,
+   "x": 1134,
+   "y": 1287
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 233,
    "kind": "area",
    "label": "px_button",
    "node": "/root/Main/screen_layer/Battle/@BaseButton@100",
-   "w": 218,
-   "x": 400,
-   "y": 28
+   "w": 234,
+   "x": 1134,
+   "y": 1504
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 110,
+   "h": 97,
    "kind": "area",
    "label": "px_button",
    "node": "/root/Main/screen_layer/Battle/@BaseButton@101",
-   "w": 177,
-   "x": 619,
-   "y": 28
+   "w": 197,
+   "x": 419,
+   "y": 31
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 110,
+   "h": 97,
    "kind": "area",
    "label": "px_button",
    "node": "/root/Main/screen_layer/Battle/@BaseButton@102",
-   "w": 181,
-   "x": 794,
-   "y": 28
+   "w": 201,
+   "x": 622,
+   "y": 31
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 110,
+   "h": 97,
    "kind": "area",
    "label": "px_button",
    "node": "/root/Main/screen_layer/Battle/@BaseButton@103",
-   "w": 179,
-   "x": 973,
-   "y": 28
+   "w": 198,
+   "x": 828,
+   "y": 31
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 116,
+   "h": 97,
    "kind": "area",
    "label": "px_button",
    "node": "/root/Main/screen_layer/Battle/@BaseButton@104",
-   "w": 118,
-   "x": 1152,
-   "y": 28
+   "w": 169,
+   "x": 1031,
+   "y": 31
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 116,
+   "h": 103,
    "kind": "area",
    "label": "px_button",
    "node": "/root/Main/screen_layer/Battle/@BaseButton@105",
-   "w": 116,
-   "x": 1272,
+   "w": 90,
+   "x": 1207,
    "y": 28
   },
   {
@@ -947,13 +992,26 @@
     "clip": false,
     "parent_clip": false
    },
-   "h": 102,
+   "h": 103,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@106",
+   "w": 89,
+   "x": 1302,
+   "y": 28
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 88,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Battle/@Control@106",
-   "w": 985,
-   "x": 404,
-   "y": 142
+   "node": "/root/Main/screen_layer/Battle/@Control@107",
+   "w": 967,
+   "x": 418,
+   "y": 139
   },
   {
    "extra": {
@@ -963,10 +1021,10 @@
    "h": 120,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Battle/@Control@107",
+   "node": "/root/Main/screen_layer/Battle/@Control@108",
    "w": 968,
    "x": 410,
-   "y": 252
+   "y": 235
   },
   {
    "extra": {
@@ -976,7 +1034,7 @@
    "h": 220,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Battle/@Control@108",
+   "node": "/root/Main/screen_layer/Battle/@Control@109",
    "w": 1024,
    "x": 384,
    "y": 560
@@ -989,7 +1047,7 @@
    "h": 120,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Battle/@Control@109",
+   "node": "/root/Main/screen_layer/Battle/@Control@110",
    "w": 944,
    "x": 424,
    "y": 300

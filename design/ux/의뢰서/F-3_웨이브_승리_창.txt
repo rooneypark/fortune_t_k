@@ -1,0 +1,24 @@
+IMAGE 1 is a finished screen of my 2D pixel art game (set in China's Three Kingdoms era). Draw one more screen of the same game: the wave clear window. Keep it simple and clean, in exactly the same style as IMAGE 1: same pixel size, same dark outlines, same flat brown panels with a thin dark outline and a thin lighter inner line, same dark-brown empty slots for numbers, same icon style. Flat: no bevels, no gloss, no gradients, no drop shadows.
+
+IMAGE 2 (grey boxes with numbers) only shows WHERE things go. Follow its positions and sizes, but do not copy the grey, the numbers or any letters.
+
+If another window of this game is attached as an extra image, use exactly the same window frame, title bar and close button as in it.
+
+Behind the window: the battle screen of IMAGE 1, darkened as if covered by a 70% black veil.
+
+The window (numbers of IMAGE 2):
+1. Window frame: a brown panel.
+2. Title bar across the top edge: an empty GREEN strip (victory).
+3. Close button at the top right corner: a small red square button with a white X.
+4. Three record rows, one under another: wide low empty dark-brown slots, all the same.
+5. One square portrait frame with a gold border and an empty dark inside.
+6. Next to it, a wide empty dark-brown slot.
+7. A wide low empty dark-brown box (the game shows the next enemies there), with a small red flag icon at its top left corner.
+8. One wide empty button at the bottom centre (dark-brown inside, gold border). No icon.
+
+Rules:
+- Every icon listed above must already be drawn. No blank placeholders where an icon is listed.
+- Places described as "empty" stay empty: the game writes the text, numbers and faces there.
+- No text, letters or numbers anywhere. No characters.
+- Every piece is opaque and has a closed dark outline. Pieces do not overlap and do not touch each other.
+- No sparkles, no watermark. Tall portrait image, 9:16.

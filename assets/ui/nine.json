@@ -1,20 +1,61 @@
 {
- "dlg_frame": 52,
- "dlg_tab_on": 16,
- "dlg_tab_off": 16,
- "dlg_chip_on": 14,
- "dlg_chip_off": 14,
- "dlg_card": 22,
- "dlg_info": 20,
- "dlg_panel": 20,
- "dlg_badge": 14,
- "dlg_tag": 12,
+ "dlg_frame": 20,
+ "dlg_tab_on": [
+  24,
+  16,
+  24,
+  6
+ ],
+ "dlg_tab_off": [
+  24,
+  16,
+  24,
+  6
+ ],
+ "dlg_chip_on": 16,
+ "dlg_chip_off": 16,
+ "dlg_card": [
+  18,
+  18,
+  18,
+  62
+ ],
  "dlg_bond": [
-  66,
+  84,
   18,
   18,
   18
  ],
- "battle_panel_slot": 20,
- "battle_panel_ctrl": 20
+ "kit_frame": 22,
+ "kit_title": [
+  40,
+  22,
+  40,
+  22
+ ],
+ "kit_box": 18,
+ "kit_btn_red": 16,
+ "kit_btn_yellow": 14,
+ "kit_btn_purple": 16,
+ "kit_title_gold": [
+  40,
+  22,
+  40,
+  22
+ ],
+ "kit_btn_blue": 14,
+ "kit_tab_on": [
+  24,
+  16,
+  24,
+  6
+ ],
+ "kit_tab_off": [
+  24,
+  16,
+  24,
+  6
+ ],
+ "dlg_inner": 18,
+ "kit_frame2": 60
 }

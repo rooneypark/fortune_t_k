@@ -7,7 +7,7 @@ class Slide extends Control:
 	signal changed(v: float)
 	var value := 0.5
 	var _drag := false
-	## 그림 막대 (공용, tools/import_pause_ui.py → ctl_track · ctl_track_fill · ctl_knob): 그림이 있으면 저절로 쓴다.
+	## 그림 막대 (공용, tools/import_kit8_ui.py → ctl_track · ctl_track_fill · ctl_knob): 그림이 있으면 저절로 쓴다.
 	## 없으면 선 UI로 그린다.
 	var track_tex: Texture2D
 	var fill_tex: Texture2D
@@ -81,13 +81,15 @@ class Toggle extends Control:
 			queue_redraw()
 
 	func _draw() -> void:
-		var r := Rect2(Vector2.ZERO, size)
+		# 8차 시안: 띠(켜짐 초록 · 꺼짐 어두운 갈색) + 노란 네모 손잡이. 글자는 쓰지 않는다.
+		var r := Rect2(0, 5, size.x, size.y - 10)
 		draw_rect(r, Px.INK)
-		draw_rect(r.grow(-4), Px.GREEN if on else Color("#3a4656"))
-		var kw := size.y - 8
-		var kx := size.x - kw - 4 if on else 4.0
-		Px.draw_skin(self, "btn_small", Rect2(kx, 4, kw, kw))
-		Px.text(self, "ON" if on else "OFF", Rect2(8 if on else size.x * 0.45, 0, size.x * 0.5, size.y), 24)
+		draw_rect(r.grow(-4), Color("#3f9a3c") if on else Color("#4a3a2c"))
+		var kw := size.y
+		var k := Rect2(size.x - kw if on else 0.0, 0, kw, kw)
+		draw_rect(k, Px.INK)
+		draw_rect(k.grow(-4), Color("#f4b93a"))
+		draw_rect(Rect2(k.position + Vector2(4, 4), Vector2(kw - 8, 5)), Color("#ffd874"))
 
 
 class Seg extends Control:

@@ -6,7 +6,7 @@ extends PxPopup
 
 var stage := 1
 ## 그림 창 (2026-11-24): 창 틀 · 제목 띠 · 버튼이 제미나이 완성 화면에서 떼어 낸 그림이다
-## (tools/import_difficulty_ui.py → assets/ui/difficulty_*.png, 자리 difficulty_layout.json).
+## (tools/import_popups8_ui.py → assets/ui/difficulty_*.png, 자리 difficulty_layout.json).
 ## 해골 · 주사위 · 화살표 · 금괴는 그림에 들어 있고, 게임은 제목 · 적 아이콘 · 금 값만 쓴다. 그림이 없으면 선 UI로 그린다.
 ## 적 분류 → 아이콘 (병종 무기 아이콘으로 구분)
 const FOE_ICON := {"pike": "wp_spear", "inf": "wp_sword", "arc": "wp_archer", "cav": "wp_rider", "str": "wp_fire"}

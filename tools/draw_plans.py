@@ -243,6 +243,93 @@ def lobby5():
     print("saved 로비5")
 
 
+def lobby6():
+    """로비 6차 도면 (2026-11-25 민수 님: 기준 화면에 얽매이지 않고 도면만 주고 새로 뽑는다).
+    자리는 지금 게임 그대로 (assets/ui/lobby_layout.json, 성문 = lobby.gd DOORS). 번호만 적는다 — 뜻은 요청문에."""
+    import json
+    L = json.load(open(os.path.join(ROOT, "assets", "ui", "lobby_layout.json"), encoding="utf-8"))
+    im = Image.new("RGB", (W, H), (235, 235, 235))
+    d = ImageDraw.Draw(im)
+    f = ImageFont.truetype(FONT, 40)
+    fs = ImageFont.truetype(FONT, 30)
+
+    def box(r, fill, num="", dark=False, ellipse=False, font=f):
+        x, y, w, h = [int(v) for v in r]
+        (d.ellipse if ellipse else d.rectangle)([x, y, x + w - 1, y + h - 1], fill=fill, outline=(20, 20, 20), width=4)
+        if num:
+            d.text((x + w // 2, y + h // 2), num, font=font, fill=(255, 255, 255) if dark else (30, 30, 30), anchor="mm")
+
+    # 배경 구역 (옅은 회색 띠 + 알파벳)
+    for (y0, y1, fill, tag) in ((0, 470, (226, 230, 236), "A"), (470, 880, (196, 196, 196), "B"), (880, 1525, (222, 214, 200), "C")):
+        d.rectangle([0, y0, W, y1], fill=fill)
+        d.text((60, y1 - 50), tag, font=f, fill=(90, 90, 90), anchor="mm")
+    box((300, 250, 424, 200), (170, 170, 170), "D")                 # 성루
+    box((377, 565, 271, 315), (140, 140, 140), "E")                 # 성문
+    box(L["lobby_plaque"], (95, 80, 60), "7", True, font=fs)        # 현판
+    box(L["lobby_portrait"], (90, 90, 90), "1", True)
+    box(L["lobby_chip_gold"], (110, 110, 110), "2", True)
+    box(L["lobby_chip_rice"], (110, 110, 110), "3", True)
+    box(L["lobby_btn_settings"], (90, 90, 90), "4", True, True)
+    box(L["lobby_btn_mail"], (90, 90, 90), "5", True, True)
+    box(L["lobby_btn_mission"], (90, 90, 90), "6", True, True)
+    box(L["lobby_tab_bar"], (70, 70, 70), "", True)
+    band = int(L["tab_band"][3])
+    for key, num in (("lobby_tab_hero", "8"), ("lobby_tab_bag", "9"), ("lobby_tab_arena", "11"), ("lobby_tab_shop", "12")):
+        x, y, w, h = [int(v) for v in L[key]]
+        # 아이콘 자리에 밝은 네모를 그리면 제미나이가 빈 네모를 그대로 그린다: 번호만 적는다
+        box((x + 6, y + 10, w - 12, h - 20), (110, 110, 110), "", True)
+        d.text((x + w // 2, y + 85), num, font=f, fill=(255, 255, 255), anchor="mm")
+        box((x + 16, y + int(L["tab_band"][1]), w - 32, band), (60, 60, 60), "", True)
+    x, y, w, h = [int(v) for v in L["lobby_tab_stage"]]
+    box((x, y, w, h), (150, 50, 45), "", True)
+    d.text((x + w // 2, y + 100), "10", font=f, fill=(255, 255, 255), anchor="mm")
+    box((x + 18, y + int(L["tab_band_stage"][1]), w - 36, int(L["tab_band_stage"][3])), (90, 30, 28), "", True)
+    os.makedirs(OUT, exist_ok=True)
+    im.save(os.path.join(OUT, "로비_도면6.png"))
+    print("saved 로비6")
+
+
+def lobby7():
+    """로비 7차 도면 (2026-11-25 민수 님): 형식을 정하지 않고 UI 구역만 정해 준다.
+    흰 바탕 = 그림은 자유. 회색 = UI가 들어갈 구역 (자리 · 크기는 지금 게임 그대로). 구역 번호만 적는다."""
+    import json
+    L = json.load(open(os.path.join(ROOT, "assets", "ui", "lobby_layout.json"), encoding="utf-8"))
+    im = Image.new("RGB", (W, H), (250, 250, 250))
+    d = ImageDraw.Draw(im)
+    f = ImageFont.truetype(FONT, 56)
+    g, line = (150, 150, 150), (40, 40, 40)
+
+    def area(r, num=""):
+        x, y, w, h = [int(v) for v in r]
+        d.rectangle([x, y, x + w - 1, y + h - 1], fill=g, outline=line, width=5)
+        if num:
+            d.text((x + w // 2, y + h // 2), num, font=f, fill=(255, 255, 255), anchor="mm")
+
+    # 1 위쪽 띠: 초상 + 칩 2개
+    area(L["lobby_portrait"])
+    area(L["lobby_chip_gold"], "1")
+    area(L["lobby_chip_rice"])
+    # 2 오른쪽 둥근 버튼 3개
+    for k, n in (("lobby_btn_settings", ""), ("lobby_btn_mail", "2"), ("lobby_btn_mission", "")):
+        x, y, w, h = [int(v) for v in L[k]]
+        d.ellipse([x, y, x + w - 1, y + h - 1], fill=g, outline=line, width=5)
+        if n:
+            d.text((x + w // 2, y + h // 2), n, font=f, fill=(255, 255, 255), anchor="mm")
+    # 3 현판
+    area(L["lobby_plaque"], "")
+    px, py, pw, ph = [int(v) for v in L["lobby_plaque"]]
+    d.text((px + pw + 44, py + ph // 2), "3", font=f, fill=(90, 90, 90), anchor="mm")
+    # 4 아래 탭 5칸 (가운데가 크다)
+    for k in ("lobby_tab_hero", "lobby_tab_bag", "lobby_tab_arena", "lobby_tab_shop"):
+        x, y, w, h = [int(v) for v in L[k]]
+        area((x + 4, y + 8, w - 8, H - y - 16))
+    x, y, w, h = [int(v) for v in L["lobby_tab_stage"]]
+    area((x, y, w, H - y - 8), "4")
+    os.makedirs(OUT, exist_ok=True)
+    im.save(os.path.join(OUT, "로비_도면7_구역.png"))
+    print("saved 로비7")
+
+
 def battle2():
     """전투 화면 2차 (2026-11-24 민수 님: 로비 2차와 같은 스타일). 번호만 (설명 글자는 제미나이가 따라 쓴다).
     1 배경: 위 하늘, 왼쪽에 긴 성벽 + 성문(아래 판 바로 위까지), 오른쪽은 넓은 흙 전장. 2~8 위 HUD, 9~16 아래 슬롯 · 조작 판."""
@@ -293,6 +380,70 @@ def battle2():
     print("saved 전투2")
 
 
+def battle3():
+    """전투 3차 도면 (2026-11-25 민수 님): 로비 7차와 같은 방식 — UI 구역만. 흰 바탕 = 그림 자유, 회색 = UI 구역.
+    옅은 띠 A = 성벽(왼쪽), B = 전장(비움). 번호 1~4 = UI."""
+    im = Image.new("RGB", (W, H), (250, 250, 250))
+    d = ImageDraw.Draw(im)
+    f = ImageFont.truetype(FONT, 56)
+    g, line = (150, 150, 150), (40, 40, 40)
+
+    def area(r, num="", fill=g, ellipse=False, ink=(255, 255, 255)):
+        x, y, w, h = [int(v) for v in r]
+        (d.ellipse if ellipse else d.rectangle)([x, y, x + w - 1, y + h - 1], fill=fill, outline=line, width=5)
+        if num:
+            d.text((x + w // 2, y + h // 2), num, font=f, fill=ink, anchor="mm")
+
+    # 그림 자리 (UI 아님): A 성벽, B 전장
+    area((0, 250, 190, 1020), "A", (228, 228, 228), ink=(110, 110, 110))
+    d.text((600, 760), "B", font=f, fill=(170, 170, 170), anchor="mm")
+    # 1 위: 값 칩 4개 + 둥근 버튼 2개
+    for i, x in enumerate((14, 222, 430, 638)):
+        area((x, 24, 200, 92), "1" if i == 1 else "")
+    area((846, 22, 80, 96), "", ellipse=True)
+    area((932, 22, 80, 96), "", ellipse=True)
+    # 2 성 체력 막대
+    area((14, 130, 996, 84), "2")
+    # 3 아래 왼쪽 판: 슬롯 (릴 3칸)
+    area((0, 1270, 540, 522))
+    d.text((60, 1310), "3", font=f, fill=(255, 255, 255), anchor="mm")
+    for i in range(3):
+        area((44 + i * 156, 1380, 144, 290), "", (205, 205, 205))
+    # 4 아래 오른쪽 판: 레버 + 버튼 2개
+    area((544, 1270, 480, 522))
+    d.text((604, 1310), "4", font=f, fill=(255, 255, 255), anchor="mm")
+    area((580, 1350, 120, 330), "", (205, 205, 205))
+    area((724, 1340, 276, 170), "", (205, 205, 205))
+    area((724, 1530, 276, 170), "", (205, 205, 205))
+    os.makedirs(OUT, exist_ok=True)
+    im.save(os.path.join(OUT, "전투_도면3_구역.png"))
+    print("saved 전투3")
+
+
+def char_ref():
+    """제미나이에 첨부할 캐릭터 기준 그림: 우리 캐릭터의 비율 · 선 · 명암에 화면 그림을 맞추게 한다 (화면에 그리라는 뜻이 아니다)."""
+    units = os.path.join(ROOT, "assets", "units")
+    names = ["liubei", "guanyu", "caocao", "sword", "spear", "archer", "shield", "enemy_sword", "boss_lvbu_b"]
+    k = 4
+    ims = []
+    for n in names:
+        f = os.path.join(units, n, "idle", "000.png")
+        if not os.path.exists(f):
+            continue
+        im = Image.open(f).convert("RGBA")
+        im = im.crop(im.getbbox())
+        ims.append(im.resize((im.width * k, im.height * k), Image.NEAREST))
+    gap = 40
+    w = sum(i.width for i in ims) + gap * (len(ims) + 1)
+    h = max(i.height for i in ims) + gap * 2
+    c = Image.new("RGBA", (w, h), (203, 190, 160, 255))
+    x = gap
+    for im in ims:
+        c.alpha_composite(im, (x, h - gap - im.height))
+        x += im.width + gap
+    c.convert("RGB").save(os.path.join(os.path.dirname(OUT), "기준_캐릭터.png"))
+
+
 if __name__ == "__main__":
     # 지금 쓰는 배치도만 (2026-11-24 정리). 옛 배치(1차 장수 목록 · 상세, 로비 2~4차, 1차 전투, 일시정지 창)는 지웠다.
     absorb()
@@ -301,4 +452,8 @@ if __name__ == "__main__":
     heroes2()
     detail2()
     lobby5()
+    lobby6()
+    lobby7()
     battle2()
+    battle3()
+    char_ref()

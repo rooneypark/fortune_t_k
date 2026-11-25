@@ -1,0 +1,23 @@
+IMAGE 1 is a finished screen of my 2D pixel art game (set in China's Three Kingdoms era). Draw one more screen of the same game: the shop window with a purchase window on top. Keep it simple and clean, in exactly the same style as IMAGE 1: same pixel size, same dark outlines, same flat brown panels with a thin dark outline and a thin lighter inner line, same dark-brown empty slots for numbers, same icon style. Flat: no bevels, no gloss, no gradients, no drop shadows.
+
+If another window of this game is attached as an extra image, use exactly the same window frame, title bar and close button as in it.
+
+This is a big window that covers the middle of the lobby screen of IMAGE 1. Keep the top UI of IMAGE 1 (portrait frame, two chips, round buttons) and its five bottom tabs exactly as they are; the window fills the area between them.
+
+The shop window:
+- Window frame: a big brown panel, with a small red square close button (white X) at the top right corner.
+- Four tabs at the top: a star icon, a gold bar icon, a rice sack icon, a gift box icon. The first one is selected (brighter).
+- A wide banner box under the tabs: empty, dark-brown, with a thin gold border.
+- Below it a grid of product cards, 3 per row, 2 rows, all the same: each card has an empty square for a picture at the top, and an empty price button at the bottom.
+
+On top of it, in the middle of the screen, a small purchase window:
+- Its own brown frame and an empty tan title strip.
+- One square picture frame with a gold border, empty; under it two empty text strips.
+- Two empty buttons side by side at the bottom: a dark-brown one, and a bright red eye-catching one. No icons.
+
+Rules:
+- Every icon listed above must already be drawn. No blank placeholders where an icon is listed.
+- Places described as "empty" stay empty: the game writes the text, numbers and faces there.
+- No text, letters or numbers anywhere. No characters.
+- Every piece is opaque and has a closed dark outline. Pieces do not overlap and do not touch each other.
+- No sparkles, no watermark. Tall portrait image, 9:16.

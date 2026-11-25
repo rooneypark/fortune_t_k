@@ -4,7 +4,7 @@ Godot 4.7 세로형(1024 × 1792) 모바일 게임. 스테이지마다 군량으
 병사와 장수를 얻고, 가로 전장에서 10웨이브 동안 성을 지킨다. 전투 중 흡수로 성급 · 속성을 올리면 계정에 남는다.
 전투 밖은 장수 · 병사 도감, 장비(무기 · 갑옷 · 장신구) 합성, 군웅대전, 상점. 재화는 금 하나.
 
-> **그림 안내** — 로비와 전투 화면의 배경 · 버튼 · 판은 제미나이로 받은 그림이다 (원본 `design/art/ui_src/`, 넣는 도구 `tools/import_lobby_ui.py` · `tools/import_battle_ui.py`).
+> **그림 안내** — 로비와 전투 화면의 배경 · 버튼 · 판은 제미나이로 받은 그림이다 (원본 `design/art/ui_src/`, 넣는 도구 `tools/import_lobby4_ui.py` · `import_battle7_ui.py` · `import_popups8_ui.py` · `import_kit8_ui.py` · `import_icons8_ui.py`).
 > 캐릭터 · 초상(`tools/draw_units24.py`, 24도트 규격)과 그 밖의 화면(창 · 장수 · 가방 · 상점)은 아직 코드로 그린 **임시 그림 / 선 UI**(`Px.LINE_UI`)다.
 > 화면마다 완성 화면을 받아 부품을 떼어 넣는다 — 순서와 요청문은 `design/ux/화면별-요청문.md`.
 

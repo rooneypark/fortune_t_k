@@ -1,16 +1,16 @@
 extends PxScreen
-## 로비 (2026-11-24 2차, 민수 님 확정 그림): 배경 한 장(lobby_bg: 하늘 · 삼국지 성루 · 성벽 · 빈 현판 · 성문, 출정 때 열림),
+## 로비 (2026-11-25 4차, 민수 님 확정 그림 — 완성 화면에서 직접 떼어 낸 부품): 배경 한 장(lobby_bg: 하늘 · 삼국지 성루 · 성벽 · 빈 현판 · 성문, 출정 때 열림),
 ## 상단 HUD(초상 · 금/군량 · 설정), 오른쪽 아래로 편지 · 임무(동그란 버튼), 성문 위 현판에 스테이지 이름,
 ## 광장에 모인 내 부대, 아래 탭 5칸(아이콘만): 장수 · 가방 · [출정: 가운데 금빛, 위로 솟음] · 쟁패 · 상점.
-## 부품 그림(lobby_*.png)과 자리(assets/ui/lobby_layout.json)는 tools/import_lobby2_ui.py 가 만든다.
+## 부품 그림(lobby_*.png)과 자리(assets/ui/lobby_layout.json)는 tools/import_lobby4_ui.py 가 만든다.
 ## 탭 줄은 9-slice(nine.json). 탭은 위에 아이콘, 아래 글자 띠에 이름 (2026-11-24 3차: 글자가 없으니 밋밋해서 다시 넣음).
 
 var _walkers: Array = []
 var _t := 0.0
 var _sign: PxButton
 var _arena_btn: PxButton
-## 성문 앞 부대 자리 (가운데 정렬, 최대 4줄 x 9명) — 광장(성문 아래 y 875 ~ 출정 탭 위 1520)
-const ARMY_TOP := 1080.0
+## 성문 앞 부대 자리 (가운데 정렬, 최대 4줄 x 9명) — 광장(성문 아래 y 1055 ~ 출정 탭 위 1560)
+const ARMY_TOP := 1190.0
 const ARMY_ROW := 72.0
 const ARMY_COL := 96.0
 const ARMY_COLS := 9
@@ -28,8 +28,8 @@ var _marching := false
 ## 열리는 성문 번호 (성문은 하나라 늘 0)
 var _march_gate := 0
 var _door_layers: Array = []
-## 배경 그림의 성문 나무 문짝 자리 (tools/import_lobby2_ui.py 의 GATE 와 같게). 성문은 가운데 하나.
-const DOORS := [Rect2(377, 565, 271, 309)]
+## 배경 그림의 성문 나무 문짝 자리 (tools/import_lobby4_ui.py 가 잰 값, lobby_layout.json 의 gate 와 같게). 성문은 가운데 하나.
+const DOORS := [Rect2(386, 800, 252, 253)]
 const DOOR_ART := ["gate1"]
 const MARCH_TIME := 1.8
 
@@ -42,10 +42,10 @@ func build() -> void:
 	var face := _part("lobby_portrait")
 	var avatar := Art.avatar(String(Art.of_unit(String(Game.profile.data["avatar"]))["art"]))
 	face.overlay = func(btn: PxButton, off: Vector2) -> void:
-		# 액자 속 그림 칸에 내 대표 장수, 아래 어두운 띠에 레벨
-		var pic := Rect2(off + Vector2(btn.size.x * 0.13, btn.size.y * 0.1), Vector2(btn.size.x * 0.74, btn.size.y * 0.64))
+		# 액자 속 그림 칸에 내 대표 장수, 그 아래쪽에 레벨
+		var pic := Rect2(off + Vector2(btn.size.x * 0.19, btn.size.y * 0.17), Vector2(btn.size.x * 0.62, btn.size.y * 0.5))
 		Px.fit(btn, avatar, pic)
-		Px.text(btn, "Lv.%d" % Game.lord_lv(), Rect2(off + Vector2(btn.size.x * 0.13, btn.size.y * 0.77), Vector2(btn.size.x * 0.74, btn.size.y * 0.15)), 24, Px.GOLD, HORIZONTAL_ALIGNMENT_CENTER, 4)
+		Px.text(btn, "Lv.%d" % Game.lord_lv(), Rect2(off + Vector2(btn.size.x * 0.19, btn.size.y * 0.67), Vector2(btn.size.x * 0.62, btn.size.y * 0.15)), 22, Px.GOLD, HORIZONTAL_ALIGNMENT_CENTER, 4)
 	face.pressed.connect(func() -> void: Game.app.popup("profile"))
 	put(face, _rect("lobby_portrait"))
 	# 금 · 군량 칩: 숫자 칸(아이콘과 "+" 사이)에 숫자만 쓴다. 칩을 누르면 상점 / 군량 채우기.
@@ -79,7 +79,7 @@ func build() -> void:
 	put(plaque, _rect("lobby_plaque"), Pin.MID)
 	# 주공 전투력
 	var info := DrawLayer.make(_draw_info)
-	put(info, Rect2(200, 150, 680, 60))
+	put(info, Rect2(184, 126, 680, 60))
 	# 성문 (열림 연출용 문짝 두 장 + 문 안쪽 어둠). 닫혀 있을 때는 배경 그림 그대로.
 	for gi in DOORS.size():
 		var g := gi
@@ -108,7 +108,7 @@ func build() -> void:
 		var bd := _rect("tab_band_stage" if big else "tab_band")
 		var band := Rect2(bd.position.x, bd.position.y, r.size.x - bd.position.x * 2, bd.size.y)
 		b.overlay = func(btn: PxButton, off: Vector2) -> void:
-			Px.text(btn, label, Rect2(band.position + off, band.size), 32 if big else 28, Px.GOLD if big else Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 5)
+			Px.text(btn, label, Rect2(band.position + off, band.size), 30 if big else 28, Px.GOLD if big else Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 5)
 		b.tooltip_text = label
 		put(b, r, Pin.BOTTOM)
 		match key:
@@ -315,7 +315,7 @@ func _draw_heal_fx(ci: Control) -> void:
 		ci.draw_rect(Rect2(p.x - 14, p.y - 4, 28, 8), c)
 
 
-## 부품 자리 (화면 px): tools/import_lobby_ui.py 가 그림을 떼어 낸 자리 그대로 적어 둔 것.
+## 부품 자리 (화면 px): tools/import_lobby4_ui.py 가 그림을 떼어 낸 자리 그대로 적어 둔 것.
 static var _layout: Dictionary = {}
 
 
@@ -334,9 +334,9 @@ func _part(name: String) -> PxButton:
 
 ## 칩의 숫자: 아이콘과 "+" 사이의 어두운 칸에 쓴다. 계정 값이 바뀌면 같이 바뀐다.
 func _chip_text(chip: PxButton, getter: Callable) -> void:
-	chip.text_rect = Rect2(chip.size.x * 0.29, chip.size.y * 0.2, chip.size.x * 0.5, chip.size.y * 0.56)
+	chip.text_rect = Rect2(chip.size.x * 0.29, chip.size.y * 0.2, chip.size.x * 0.48, chip.size.y * 0.6)
 	chip.text_align = HORIZONTAL_ALIGNMENT_CENTER
-	chip.font_size = 30
+	chip.font_size = 28
 	chip.text = str(getter.call())
 	var refresh := func() -> void:
 		if is_instance_valid(chip):
@@ -370,7 +370,7 @@ func _draw_plaque(ci: Control) -> void:
 	var s := "%s · %s" % [DB.t("stage.n", [st]), DB.stage_name(st)]
 	if not sus.is_empty():
 		s = "%d-%d · %s" % [st, int(sus["wave"]) + 1, DB.stage_name(st)]
-	Px.text(ci, s, Rect2(Vector2.ZERO, ci.size), 30, Px.GOLD, HORIZONTAL_ALIGNMENT_CENTER, 6)
+	Px.text(ci, s, Rect2(Vector2.ZERO, ci.size), 26, Px.GOLD, HORIZONTAL_ALIGNMENT_CENTER, 5)
 
 
 ## 출정 연출: 성문 [param gate](0 = 왼쪽)이 열리고 부대가 그 문으로 행군한 뒤 [param then]을 부른다. 한 번만.

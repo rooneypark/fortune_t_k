@@ -1,0 +1,11 @@
+IMAGE 1 is a finished screen of my 2D pixel art game (set in China's Three Kingdoms era). Draw one more screen of the same game: the title screen. Keep it simple and clean, in exactly the same style as IMAGE 1: same pixel size, same dark outlines, same flat brown panels with a thin dark outline and a thin lighter inner line, same dark-brown empty slots for numbers, same icon style. Flat: no bevels, no gloss, no gradients, no drop shadows.
+
+No UI on this screen. Draw only the scene:
+- The same city gate, tower and wall as in IMAGE 1, seen from the front, at sunset: warm orange sky, long shadows, a few clouds.
+- The gate stands in the lower half of the image. An empty sand road leads from the bottom of the image to the gate.
+- In the upper third of the image, in the sky, one big empty signboard with a gold border and a dark inside (the game puts its logo there).
+- A few flower petals drifting in the air.
+
+Rules:
+- No text, letters or numbers anywhere. No characters.
+- No sparkles, no watermark. Tall portrait image, 9:16.

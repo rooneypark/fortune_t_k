@@ -40,6 +40,16 @@ const LINE_STYLE := {
 	"tile": ["#0d111799", "#3a4452", 2], "frame_portrait": ["#0d1117", "#d5dce5", 3],
 }
 const LINE_DEFAULT := ["#141a22", "#cfd6df", 3]
+## 공용 그림 부품 (2026-11-25, tools/import_kit8_ui.py): 선 UI의 부품 이름 -> 9-slice 그림.
+## 그림(assets/ui/kit_*.png)과 여백(nine.json)이 있으면 선 대신 그림으로 그린다. 표에 없는 이름은 금테 어두운 칸(kit_box).
+## 창 틀 = kit_frame, 제목 띠 = kit_title, 칸 · 어두운 버튼 = kit_box, 색 버튼 = kit_btn_*, 큰 창의 탭 = kit_tab_*.
+const KIT := {
+	"panel_ctrl": "kit_frame", "panel_wide": "kit_frame",
+	"plate_title": "kit_title", "plate_lever": "kit_title",
+	"tab_yellow": "kit_btn_yellow", "tab_red": "kit_btn_red", "tab_purple": "kit_btn_purple", "tab_blue": "kit_btn_blue",
+	"tab_wood": "kit_tab_off", "tab_wood_on": "kit_tab_on",
+	"tile": "",
+}
 
 ## 배치 지도(점검): true인 동안 그려지는 글자·그림·버튼·판 자리를 화면 좌표로 모은다.
 ## tools/layout_dump.gd 가 켜고 끈다 (design/ux/규격/).
@@ -48,7 +58,7 @@ static var records: Array = []
 
 static var _tex: Dictionary = {}
 static var _skins: Dictionary = {}
-## 9-slice 그림 부품 (assets/ui/nine.json: 이름 -> 가장자리 여백 px) — tools/import_dialog_ui.py
+## 9-slice 그림 부품 (assets/ui/nine.json: 이름 -> 가장자리 여백 px) — tools/import_kit8_ui.py
 static var _nine_margin: Dictionary = {}
 static var _nines: Dictionary = {}
 static var _meta: Dictionary = {}
@@ -125,20 +135,7 @@ static func nine(ci: CanvasItem, name: String, r: Rect2, mod: Color = Color.WHIT
 	if not has_nine(name):
 		draw_skin(ci, name, r, mod)
 		return
-	if not _nines.has(name):
-		var sb := StyleBoxTexture.new()
-		sb.texture = tex(name)
-		# 여백: 숫자 하나(네 방향 같게) 또는 [왼, 위, 오른, 아래]
-		var m: Variant = _nine_margin[name]
-		if m is Array:
-			sb.texture_margin_left = float(m[0])
-			sb.texture_margin_top = float(m[1])
-			sb.texture_margin_right = float(m[2])
-			sb.texture_margin_bottom = float(m[3])
-		else:
-			sb.set_texture_margin_all(float(m))
-		_nines[name] = sb
-	var st := _nines[name] as StyleBoxTexture
+	var st := nine_box(name)
 	rec(ci, "panel", r, name)
 	st.modulate_color = mod
 	ci.draw_style_box(st, r)
@@ -183,6 +180,30 @@ static func _cut_meta() -> Dictionary:
 	return _meta
 
 
+## 부품 [param name]을 그릴 공용 그림 이름 (없으면 "" — 선으로 그린다).
+static func kit_art(name: String) -> String:
+	var k := String(KIT.get(name.trim_suffix("_pressed"), "kit_box"))
+	return k if k != "" and has_nine(k) else ""
+
+
+## 9-slice 그림 부품의 StyleBox (여백은 nine.json).
+static func nine_box(name: String) -> StyleBoxTexture:
+	if not _nines.has(name):
+		var sb := StyleBoxTexture.new()
+		sb.texture = tex(name)
+		# 여백: 숫자 하나(네 방향 같게) 또는 [왼, 위, 오른, 아래]
+		var m: Variant = _nine_margin[name]
+		if m is Array:
+			sb.texture_margin_left = float(m[0])
+			sb.texture_margin_top = float(m[1])
+			sb.texture_margin_right = float(m[2])
+			sb.texture_margin_bottom = float(m[3])
+		else:
+			sb.set_texture_margin_all(float(m))
+		_nines[name] = sb
+	return _nines[name] as StyleBoxTexture
+
+
 ## [fill, line, width] of a part in line mode.
 static func line_style(name: String) -> Array:
 	var st: Array = LINE_STYLE.get(name.trim_suffix("_pressed"), LINE_DEFAULT)
@@ -191,6 +212,10 @@ static func line_style(name: String) -> Array:
 
 ## Draws part [param name] as a frame. Line mode: fill + pixel border; else 9-slice art.
 static func draw_skin(ci: CanvasItem, name: String, r: Rect2, mod: Color = Color.WHITE) -> void:
+	var kit := kit_art(name)
+	if kit != "":
+		nine(ci, kit, r, mod)
+		return
 	rec(ci, "panel", r, name)
 	if LINE_UI:
 		var st := line_style(name)
@@ -206,6 +231,9 @@ static func draw_skin(ci: CanvasItem, name: String, r: Rect2, mod: Color = Color
 
 ## 9-slice style box of a framed part (margin from cuts.json). Line mode: flat box.
 static func skin(name: String, margin: float = -1.0) -> StyleBox:
+	var kit := kit_art(name)
+	if kit != "":
+		return nine_box(kit)
 	var key := "%s:%d" % [name, int(margin)]
 	if _skins.has(key):
 		return _skins[key]

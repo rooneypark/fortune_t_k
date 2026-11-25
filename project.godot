@@ -23,8 +23,8 @@ Game="*res://src/autoload/game.gd"
 
 window/size/viewport_width=1024
 window/size/viewport_height=1792
-window/size/window_width_override=512
-window/size/window_height_override=896
+window/size/window_width_override=256
+window/size/window_height_override=448
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=1

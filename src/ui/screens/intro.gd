@@ -9,6 +9,9 @@ var _petal_data: Array = []
 var _march: Array = []
 var _leaving := false
 var _bg_zoom := 1.0
+## 배경 그림의 배율과, 로고 판 가운데가 놓인 화면 자리 (_draw 가 적는다)
+var _bg_k := 1.0
+var _board := Vector2(512, 297)
 
 
 func build() -> void:
@@ -27,7 +30,8 @@ func build() -> void:
 	_petals = DrawLayer.make(_draw_petals)
 	put(_petals, Rect2(0, 0, 1024, 1792))
 	_logo = DrawLayer.make(_draw_logo)
-	put(_logo, Rect2(0, 230, 1024, 520), Pin.MID)
+	# 로고 판(배경 그림, x 145~880 · y 210~385) 위에 게임 이름
+	put(_logo, Rect2(0, 190, 1024, 520))
 	_tap = DrawLayer.make(_draw_tap)
 	put(_tap, Rect2(0, 1340, 1024, 120), Pin.BOTTOM)
 	var foot := DrawLayer.make(func(ci: Control) -> void:
@@ -38,7 +42,8 @@ func build() -> void:
 
 func _process(delta: float) -> void:
 	_t += delta
-	_bg_zoom = 1.0 + 0.04 * sin(_t * 0.25)
+	# 8차 배경에는 로고 판이 그려져 있다: 배경이 움직이면 로고가 판에서 벗어나므로 크기를 고정한다
+	_bg_zoom = 1.0
 	for i in _march.size():
 		var u: UnitView = _march[i]
 		u.position.x += delta * 70.0
@@ -56,9 +61,12 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
+	# 배경은 화면을 덮게 같은 비율로 키워 가운데에 놓는다. 로고 판(그림의 512, 297)이 화면 어디에 오는지 적어 둔다.
 	var t := Px.tex("intro_bg")
-	var sz := size * _bg_zoom
-	Px.cover(self, t, Rect2((size - sz) * 0.5, sz))
+	_bg_k = maxf(size.x / 1024.0, size.y / 1792.0) * _bg_zoom
+	var r := Rect2((size - Vector2(1024, 1792) * _bg_k) * 0.5, Vector2(1024, 1792) * _bg_k)
+	draw_texture_rect(t, r, false)
+	_board = r.position + Vector2(512, 297) * _bg_k
 	# soft dark gradient top & bottom for legibility
 	for i in 12:
 		draw_rect(Rect2(0, i * 20, size.x, 20), Color(0.05, 0.03, 0.1, 0.35 - i * 0.028))
@@ -77,22 +85,23 @@ func _draw_logo(ci: Control) -> void:
 	var bob := roundf(sin(_t * 1.6) * 6.0)
 	var f := Px.font()
 	var title := DB.t("game.title")
-	var sz := 168
+	var sz := int(round(118.0 * _bg_k))
 	var w := f.get_string_size(title, HORIZONTAL_ALIGNMENT_LEFT, -1, sz).x
-	var p := Vector2((1024 - w) * 0.5, 210 + bob).round()
+	# 이름은 로고 판 가운데에 가만히 (판이 움직이지 않으므로), 부제 · 한 줄 소개는 판 아래에서 살짝 떠다닌다
+	var c := _board - ci.position
+	var p := Vector2(c.x - w * 0.5, c.y + sz * 0.36).round()
 	Px.rec(ci, "text", Rect2(p.x, p.y - f.get_ascent(sz), f.get_string_size(title, HORIZONTAL_ALIGNMENT_LEFT, -1, sz).x, f.get_height(sz)), title)
-	ci.draw_string_outline(f, p + Vector2(0, 14), title, HORIZONTAL_ALIGNMENT_LEFT, -1, sz, 36, Color(0, 0, 0, 0.45))
-	ci.draw_string_outline(f, p, title, HORIZONTAL_ALIGNMENT_LEFT, -1, sz, 36, Px.INK)
-	ci.draw_string_outline(f, p, title, HORIZONTAL_ALIGNMENT_LEFT, -1, sz, 20, Color("#a8241f"))
+	ci.draw_string_outline(f, p, title, HORIZONTAL_ALIGNMENT_LEFT, -1, sz, 22, Px.INK)
+	ci.draw_string_outline(f, p, title, HORIZONTAL_ALIGNMENT_LEFT, -1, sz, 12, Color("#a8241f"))
 	ci.draw_string_outline(f, p, title, HORIZONTAL_ALIGNMENT_LEFT, -1, sz, 8, Color("#7a4a10"))
 	ci.draw_string(f, p, title, HORIZONTAL_ALIGNMENT_LEFT, -1, sz, Px.GOLD)
 	ci.draw_string(f, p + Vector2(0, -6), title, HORIZONTAL_ALIGNMENT_LEFT, -1, sz, Color("#fff3b0", 0.55))
 	# shine sweep
 	var sx := fmod(_t * 380.0, 1800.0) - 400.0
 	for k in 3:
-		ci.draw_rect(Rect2(sx + k * 18, p.y - 140, 10, 170), Color(1, 1, 1, 0.12))
-	Px.ribbon(ci, Rect2(232, 270 + bob, 560, 110), DB.t("game.subtitle"), 44)
-	Px.text(ci, DB.t("intro.tagline"), Rect2(0, 410 + bob, 1024, 60), 34, Color("#fff3d6"), HORIZONTAL_ALIGNMENT_CENTER, 6)
+		ci.draw_rect(Rect2(sx + k * 18, c.y - 70 * _bg_k, 10, 140 * _bg_k).intersection(Rect2(c.x - 350 * _bg_k, c.y - 76 * _bg_k, 700 * _bg_k, 152 * _bg_k)), Color(1, 1, 1, 0.12))
+	Px.ribbon(ci, Rect2(c.x - 250, c.y + 112 * _bg_k + bob, 500, 96), DB.t("game.subtitle"), 38)
+	Px.text(ci, DB.t("intro.tagline"), Rect2(c.x - 512, c.y + 222 * _bg_k + bob, 1024, 60), 32, Color("#fff3d6"), HORIZONTAL_ALIGNMENT_CENTER, 6)
 
 
 func _draw_tap(ci: Control) -> void:

@@ -188,23 +188,24 @@ static func scroll(screen: Control, r: Rect2, put_fn: Callable = Callable()) -> 
 	return content
 
 
-## Tab strip (segmented chunky tabs). [param on_pick] gets the index.
-static func tabs(labels: Array, selected: int, sz: Vector2, on_pick: Callable, colors: Array = []) -> Control:
+## 큰 창의 아이콘 탭 (8차 시안): 탭이 틈 없이 붙어 있고, 고른 탭이 밝고 2px 높다. 탭마다 아이콘 하나.
+## [param icons] = 아이콘 이름들, [param w] = 탭 하나의 너비. 높이는 101 (틀 위 끝에서 안쪽 판까지).
+static func icon_tabs(icons: Array, selected: int, w: float, on_pick: Callable, tips: Array = []) -> Control:
 	var root := Control.new()
-	root.size = sz
+	root.size = Vector2(w * icons.size(), 101)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var n := labels.size()
-	var w := (sz.x - (n - 1) * 8.0) / n
-	for i in n:
-		var b := PxButton.colored("wood_on" if i == selected else "wood", String(labels[i]), Vector2(w, sz.y if i == selected else sz.y - 6), 32)
-		if i != selected:
-			b.text_color = Px.MUTED
-		elif not Px.has_nine("dlg_tab_on"):
-			b.highlight = true
-		# 공용 다이얼로그 탭 그림 (고른 탭 금테 · 안 고른 탭 회색, 9-slice)
-		if Px.has_nine("dlg_tab_on"):
-			b.part = "dlg_tab_on" if i == selected else "dlg_tab_off"
-		b.position = Vector2(i * (w + 8.0), 0 if i == selected else 6)
+	for i in icons.size():
+		var on := i == selected
+		var b := PxButton.make("dlg_tab_on" if on else "dlg_tab_off", true, Vector2(w, 101 if on else 99))
+		b.position = Vector2(i * w, 0 if on else 2)
+		b.press_depth = 0.0
+		b.icon = Px.tex(String(icons[i]))
+		var ih := 80.0
+		b.icon_rect = Rect2((w - ih) * 0.5, 10, ih, ih)
+		if not on:
+			b.modulate = Color(0.86, 0.86, 0.86)
+		if i < tips.size():
+			b.tooltip_text = String(tips[i])
 		var idx := i
 		b.pressed.connect(func() -> void: on_pick.call(idx))
 		root.add_child(b)
@@ -228,15 +229,6 @@ static func pick_chip(label: String, on: bool, sz: Vector2) -> PxButton:
 	return b
 
 
-## Dark rounded section panel with optional title.
-static func section(sz: Vector2, title: String = "") -> DrawLayer:
-	return DrawLayer.make(func(ci: Control) -> void:
-		var r := Rect2(Vector2.ZERO, ci.size)
-		Px.draw_skin(ci, "panel_slot", r)
-		if title != "":
-			Px.text(ci, title, Rect2(24, 12, ci.size.x - 48, 44), 30, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT), sz)
-
-
 ## Treasure tile: slot icon on rarity colour, +level, wearer face.
 static func treasure_cell(it: Dictionary, sz: Vector2) -> PxButton:
 	var d := DB.treasure_def(String(it["tid"]))
@@ -245,14 +237,16 @@ static func treasure_cell(it: Dictionary, sz: Vector2) -> PxButton:
 	b.size = sz
 	var owner := MetaRules.treasure_owner(Game.profile.data, int(it["uid"]))
 	b.overlay = func(btn: PxButton, off: Vector2) -> void:
+		# 금테 어두운 칸 (kit_box) + 등급 색 빛 + 아이콘 (8차)
 		var r := Rect2(off, btn.size)
-		btn.draw_rect(r, Px.INK)
-		btn.draw_rect(r.grow(-4), rc)
-		btn.draw_rect(r.grow(-10), rc.darkened(0.55))
-		btn.draw_rect(Rect2(r.position + Vector2(10, 10), Vector2(r.size.x - 20, r.size.y * 0.4)), rc.darkened(0.4))
-		Px.fit(btn, Px.tex(String(W.SLOT_ICON[String(d["slot"])])), Rect2(r.position + r.size * 0.22, r.size * 0.56))
-		Px.text(btn, "+%d" % int(it["lv"]), Rect2(r.position + Vector2(10, 8), Vector2(r.size.x - 20, 36)), 26, Px.WHITE, HORIZONTAL_ALIGNMENT_RIGHT)
-		Px.text(btn, String(d["name"]), Rect2(r.position + Vector2(6, r.size.y - 40), Vector2(r.size.x - 12, 34)), 20, Px.WHITE)
+		Px.nine(btn, "kit_box", r)
+		var side := minf(r.size.x, r.size.y) * 0.6
+		var ir := Rect2(r.get_center() - Vector2(side, side) * 0.5 - Vector2(0, 6), Vector2(side, side))
+		var tex := Px.tex(String(W.SLOT_ICON[String(d["slot"])]))
+		Px.fit(btn, tex, ir.grow(4.0), Color(rc, 0.55))
+		Px.fit(btn, tex, ir)
+		Px.text(btn, "+%d" % int(it["lv"]), Rect2(r.position + Vector2(12, 8), Vector2(r.size.x - 24, 30)), 24, rc.lightened(0.25), HORIZONTAL_ALIGNMENT_RIGHT)
+		Px.text(btn, String(d["name"]), Rect2(r.position + Vector2(10, r.size.y - 36), Vector2(r.size.x - 20, 28)), 18, Px.WHITE)
 		if owner != "":
 			var fr := Rect2(r.position + Vector2(10, 10), Vector2(50, 50))
 			btn.draw_rect(fr, Px.INK)
@@ -284,7 +278,7 @@ static func draw_rank(ci: CanvasItem, r: Rect2, stars: int, lv: int, size: float
 
 const BTN := Vector2(240, 96)
 const BTN_WIDE := Vector2(560, 110)
-const CLOSE := Vector2(96, 88)   # 닫기 그림(btn_close) 비율에 맞춤
+const CLOSE := Vector2(89, 86)   # 닫기 그림(btn_close, 8차) 크기 그대로
 const ARROW := Vector2(84, 96)
 
 
@@ -306,7 +300,7 @@ static func close_button(on_close: Callable) -> PxButton:
 
 ## Wood arrow button (◀ ▶) for prev / next.
 static func arrow_button(side: int, on_tap: Callable, sz := ARROW) -> PxButton:
-	# 공용 화살표 그림 (◀ btn_prev · ▶ btn_next, tools/import_detail_ui.py)
+	# 공용 화살표 그림 (◀ btn_prev · ▶ btn_next, tools/import_kit8_ui.py)
 	var pic := "btn_prev" if side < 0 else "btn_next"
 	if Px.has_art(pic):
 		var a := PxButton.make(pic, false, sz)
@@ -320,19 +314,6 @@ static func arrow_button(side: int, on_tap: Callable, sz := ARROW) -> PxButton:
 		btn.draw_colored_polygon(o, Px.INK)
 		btn.draw_colored_polygon(pts, Px.WHITE)
 	b.pressed.connect(on_tap)
-	return b
-
-
-## Player portrait frame: wood frame, clean avatar bust, outlined label (no plate).
-static func portrait_frame(id: String, sz: Vector2, label := "") -> PxButton:
-	var b := PxButton.make("frame_portrait", true, sz)
-	var a := Art.of_unit(id)
-	var tex := Art.avatar(String(a["art"]))
-	b.overlay = func(btn: PxButton, off: Vector2) -> void:
-		var inner := Rect2(off + Vector2(12, 12), btn.size - Vector2(24, 24))
-		Px.fit(btn, tex, Rect2(inner.position, Vector2(inner.size.x, inner.size.x)))
-		if label != "":
-			Px.text(btn, label, Rect2(off + Vector2(0, btn.size.y - 52), Vector2(btn.size.x, 40)), 30, Px.GOLD)
 	return b
 
 

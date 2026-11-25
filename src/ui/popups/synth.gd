@@ -1,15 +1,28 @@
 extends PxPopup
 ## 합성 창 (개편 §3.8). 골드는 들지 않는다.
-## 위: 재료 합성 — 종류(무기·갑옷·보패) × 등급 칸, 같은 칸 재료 3개 → 그 종류·등급 보물 1개.
-## 아래: 보물 합성 — 같은 등급 보물 3개(장착 안 한 것, 강화 낮은 것부터) → 한 단계 위 보물 1개.
-## 나오는 보물은 그 종류·등급 안에서 같은 확률이다 (창에 적는다).
+## 위: 재료 합성 — 종류(무기 · 갑옷 · 보패) x 등급 칸, 같은 칸 재료 n개 → 그 종류 · 등급 장비 1개. 칸을 누르면 합성한다.
+## 아래: 장비 합성 — 같은 등급 장비 n개(장착 안 한 것, 강화 낮은 것부터) → 한 단계 위 장비 1개. 왼쪽 칸을 누르면 등급이 바뀐다.
+## 자리는 8차 시안(design/art/ui_src/합성8_완성화면.png)에서 잰 화면 px 그대로. 틀 · 칸 · 버튼은 공용 부품.
 
-const CELL := Vector2(168, 100)
+const FRAME := Rect2(124, 470, 775, 912)
+const TITLE := Rect2(249, 432, 526, 99)
+const CLOSE := Rect2(817, 450, 89, 86)
+const ICON := Rect2(165, 553, 143, 121)        # 줄 머리(종류 아이콘). 줄 간격 130
+const CELL := Rect2(315, 553, 133, 121)        # 첫 칸. 칸 간격 139
+const HINT := Rect2(159, 948, 706, 105)
+const FUSE_IN := Rect2(162, 1107, 129, 129)    # 첫 칸. 칸 간격 138
+const ARROW := Rect2(586, 1139, 85, 72)
+const FUSE_OUT := Rect2(686, 1097, 174, 153)
+const GO := Rect2(146, 1257, 731, 109)
+
+var _fuse_r := ""
 
 
 func setup(_p: Dictionary) -> void:
 	title = DB.t("synth.title")
+	title_size = 40
 	panel_rect = Rect2(60, 300, 904, 1180)
+	use_kit(FRAME, TITLE, CLOSE)
 
 
 func build() -> void:
@@ -21,57 +34,73 @@ func build() -> void:
 	var fuse_need := int(cfg["fuse"])
 	var rarities: Array = DB.meta["treasure"]["rarity_order"]
 	var slots: Array = DB.meta["treasure"]["slots"]
-	# ---- 재료 합성
-	var head := DrawLayer.make(func(ci: Control) -> void:
-		Px.text(ci, DB.t("synth.mats", [need]), Rect2(0, 0, ci.size.x, 40), 26, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
-		for i in rarities.size():
-			var r := String(rarities[i])
-			Px.text(ci, DB.t("rarity_t." + r), Rect2(140 + i * 178, 46, CELL.x, 36), 26, DB.rarity_color(r).lightened(0.3)))
-	_body(head, Rect2(30, 96, 844, 84))
+	# ---- 재료 합성: 종류 3줄 x 등급 칸
 	for row in slots.size():
 		var slot := String(slots[row])
-		var label := DrawLayer.make(func(ci: Control) -> void:
-			Px.text(ci, DB.t("slot." + slot), Rect2(Vector2.ZERO, ci.size), 30, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT))
-		_body(label, Rect2(30, 186 + row * 110, 130, CELL.y))
-		for col in rarities.size():
+		var head := DrawLayer.make(func(ci: Control) -> void:
+			Px.nine(ci, "dlg_chip_on", Rect2(Vector2.ZERO, ci.size))
+			Px.fit(ci, Px.tex(String(W.SLOT_ICON[slot])), Rect2(Vector2(26, 16), Vector2(ci.size.x - 52, ci.size.y - 32))))
+		head.tooltip_text = DB.t("slot." + slot)
+		_body(head, Rect2(ICON.position + Vector2(0, row * 130), ICON.size))
+		for col in mini(4, rarities.size()):
 			var rarity := String(rarities[col])
 			var have := Game.profile.material_count(slot, rarity)
-			var b := PxButton.make("panel_small", true, CELL)
+			var b := PxButton.make("kit_box", true, CELL.size)
 			b.disabled = have < need
 			b.pulse = have >= need
+			b.tooltip_text = DB.t("rarity_t." + rarity)
 			b.overlay = func(btn: PxButton, off: Vector2) -> void:
-				btn.draw_rect(Rect2(off + Vector2(8, btn.size.y - 14), Vector2(btn.size.x - 16, 6)), DB.rarity_color(rarity))
-				Px.text(btn, "%d / %d" % [have, need], Rect2(off, Vector2(btn.size.x, btn.size.y - 10)), 32, Px.WHITE if have >= need else Px.MUTED)
+				btn.draw_rect(Rect2(off + Vector2(18, btn.size.y - 26), Vector2(btn.size.x - 36, 6)), DB.rarity_color(rarity))
+				Px.text(btn, "%d / %d" % [have, need], Rect2(off + Vector2(0, 6), Vector2(btn.size.x, btn.size.y - 34)), 30, Px.WHITE if have >= need else Px.MUTED)
 			b.pressed.connect(func() -> void: _done(Game.profile.craft(slot, rarity)))
-			_body(b, Rect2(170 + col * 178, 186 + row * 110, CELL.x, CELL.y))
-	# ---- 보물 합성
-	var head2 := DrawLayer.make(func(ci: Control) -> void:
-		Px.text(ci, DB.t("synth.fuse", [fuse_need]), Rect2(0, 0, ci.size.x, 40), 26, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
-		Px.text(ci, DB.t("synth.fuse_hint"), Rect2(0, 40, ci.size.x, 34), 22, Px.MUTED, HORIZONTAL_ALIGNMENT_LEFT))
-	_body(head2, Rect2(30, 540, 844, 76))
-	var row_i := 0
+			_body(b, Rect2(CELL.position + Vector2(col * 139, row * 130), CELL.size))
+	var hint := DrawLayer.make(func(ci: Control) -> void:
+		Px.nine(ci, "kit_box", Rect2(Vector2.ZERO, ci.size))
+		Px.fit(ci, Px.tex("act_synth"), Rect2(28, 22, 72, 60))
+		Px.text(ci, DB.t("synth.mats", [need]), Rect2(118, 10, ci.size.x - 140, 44), 24, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT)
+		Px.text(ci, DB.t("synth.odds"), Rect2(118, 54, ci.size.x - 140, 36), 18, Px.MUTED, HORIZONTAL_ALIGNMENT_LEFT))
+	_body(hint, HINT)
+	var line := DrawLayer.make(func(ci: Control) -> void: ci.draw_rect(Rect2(0, 0, ci.size.x, 4), Color(0.72, 0.56, 0.3)))
+	_body(line, Rect2(156, 1073, 712, 4))
+	# ---- 장비 합성: 같은 등급 n개 → 한 단계 위 1개
+	var fusable: Array = []
 	for r: String in rarities:
-		var up := DB.next_rarity(r)
-		if up == "":
-			continue
-		var have := Game.profile.fuse_candidates(r).size()
-		var line := DrawLayer.make(func(ci: Control) -> void:
-			Px.draw_skin(ci, "panel_small", Rect2(Vector2.ZERO, ci.size))
-			ci.draw_rect(Rect2(12, 12, 10, ci.size.y - 24), DB.rarity_color(r))
-			Px.text(ci, DB.t("synth.fuse_row", [DB.t("rarity_t." + r), fuse_need, DB.t("rarity_t." + up)]), Rect2(36, 0, 400, ci.size.y), 30, Px.WHITE, HORIZONTAL_ALIGNMENT_LEFT)
-			Px.text(ci, DB.t("synth.have", [have]), Rect2(440, 0, 160, ci.size.y), 26, Px.GOLD if have >= fuse_need else Px.MUTED, HORIZONTAL_ALIGNMENT_LEFT))
-		_body(line, Rect2(30, 626 + row_i * 112, 844, 100))
-		var go := PxButton.colored("purple" if have >= fuse_need else "blue", DB.t("synth.do"), Vector2(200, 80), 32)
-		go.disabled = have < fuse_need
-		go.pressed.connect(func() -> void: _done(Game.profile.fuse(r)))
-		_body(go, Rect2(660, 636 + row_i * 112, 200, 80))
-		row_i += 1
-	var foot := DrawLayer.make(func(ci: Control) -> void:
-		Px.text(ci, DB.t("synth.odds"), Rect2(Vector2.ZERO, ci.size), 22, Px.MUTED))
-	_body(foot, Rect2(30, 980, 844, 40))
-	var ok := PxButton.colored("yellow", DB.t("common.ok"), Vector2(360, 110), 40)
-	ok.pressed.connect(close)
-	_body(ok, Rect2(272, 1040, 360, 110))
+		if DB.next_rarity(r) != "":
+			fusable.append(r)
+	if not fusable.has(_fuse_r):
+		_fuse_r = String(fusable[0])
+		for r: String in fusable:
+			if Game.profile.fuse_candidates(r).size() >= fuse_need:
+				_fuse_r = r
+				break
+	var have_f := Game.profile.fuse_candidates(_fuse_r).size()
+	var up := DB.next_rarity(_fuse_r)
+	for i in 3:
+		var cellb := PxButton.make("kit_box", true, FUSE_IN.size)
+		cellb.tooltip_text = DB.t("synth.fuse_hint")
+		var filled := i < have_f
+		cellb.overlay = func(btn: PxButton, off: Vector2) -> void:
+			var rc := DB.rarity_color(_fuse_r)
+			btn.draw_rect(Rect2(off + Vector2(18, btn.size.y - 26), Vector2(btn.size.x - 36, 6)), rc)
+			Px.fit(btn, Px.tex("icon_bag"), Rect2(off + Vector2(32, 22), Vector2(btn.size.x - 64, btn.size.y - 60)), Color(1, 1, 1, 1.0 if filled else 0.25))
+		cellb.pressed.connect(func() -> void:
+			_fuse_r = String(fusable[(fusable.find(_fuse_r) + 1) % fusable.size()])
+			build())
+		_body(cellb, Rect2(FUSE_IN.position + Vector2(i * 138, 0), FUSE_IN.size))
+	_body(_pic("absorb_arrow"), ARROW)
+	var outc := DrawLayer.make(func(ci: Control) -> void:
+		Px.nine(ci, "kit_box", Rect2(Vector2.ZERO, ci.size))
+		ci.draw_rect(Rect2(22, ci.size.y - 30, ci.size.x - 44, 6), DB.rarity_color(up))
+		Px.text(ci, DB.t("rarity_t." + up), Rect2(0, 18, ci.size.x, 50), 30, DB.rarity_color(up).lightened(0.3))
+		Px.text(ci, DB.t("synth.have", [have_f]), Rect2(0, 68, ci.size.x, 40), 22, Px.GOLD if have_f >= fuse_need else Px.MUTED))
+	_body(outc, FUSE_OUT)
+	var go := PxButton.make("kit_btn_red", true, GO.size)
+	go.disabled = have_f < fuse_need
+	go.overlay = func(btn: PxButton, off: Vector2) -> void:
+		Px.fit(btn, Px.tex("act_synth"), Rect2(off + Vector2(30, 24), Vector2(72, 60)))
+		Px.text(btn, DB.t("synth.fuse_row", [DB.t("rarity_t." + _fuse_r), fuse_need, DB.t("rarity_t." + up)]), Rect2(off + Vector2(120, 0), Vector2(btn.size.x - 150, btn.size.y)), 30, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 6)
+	go.pressed.connect(func() -> void: _done(Game.profile.fuse(_fuse_r)))
+	_body(go, GO)
 
 
 ## Shows what a 합성 made (or why it failed) and redraws the counts.
@@ -87,4 +116,7 @@ func _done(res: Dictionary) -> void:
 
 func _body(c: Control, r: Rect2) -> void:
 	c.set_meta("body", true)
-	put(c, r)
+	if _art:
+		_place(c, r)
+	else:
+		put(c, r)

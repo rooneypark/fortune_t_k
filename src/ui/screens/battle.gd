@@ -106,7 +106,7 @@ func build() -> void:
 
 # ---------------------------------------------------------------- layout
 
-## 위쪽 HUD 부품의 자리 (화면 px): tools/import_battle3_ui.py 가 그림을 떼어 낸 자리 그대로 적어 둔 것.
+## 위쪽 HUD 부품의 자리 (화면 px): tools/import_battle7_ui.py 가 그림을 떼어 낸 자리 그대로 적어 둔 것.
 static var _layout: Dictionary = {}
 
 
@@ -123,9 +123,9 @@ func _chip(art: String) -> PxButton:
 	var r := _hud_rect(art)
 	var b := PxButton.make(art, false, r.size)
 	# 숫자 칸 (3차 그림): 아이콘 오른쪽. 군량 칩은 오른쪽 끝에 "+" 버튼이 있어 그 앞까지만.
-	var rice := art == "battle_chip_rice"
-	var x0 := 0.34 if rice else 0.42
-	var x1 := 0.7 if rice else 0.92
+	# 7차 그림: 숫자 칸은 아이콘 오른쪽의 어두운 칸 (칩 4개가 같다)
+	var x0 := 0.46
+	var x1 := 0.94
 	b.text_rect = Rect2(r.size.x * x0, r.size.y * 0.2, r.size.x * (x1 - x0), r.size.y * 0.6)
 	b.font_size = 28
 	b.static_panel = true
@@ -211,7 +211,7 @@ func _build_controls() -> void:
 			_num(b, off, str(field.enemies_left()))
 
 
-## 아래쪽 조작부 — 완성 화면에서 떼어 낸 그림 (tools/import_battle3_ui.py): 조작 판 · 레버 · 값 칩 · 전투 시작 · 퇴각.
+## 아래쪽 조작부 — 완성 화면에서 떼어 낸 그림 (tools/import_battle7_ui.py): 조작 판 · 레버 · 값 칩 · 전투 시작 · 퇴각.
 ## 자리는 그림을 떼어 낸 자리 그대로 (battle_layout.json).
 func _build_controls_art() -> void:
 	var pr := SlotView.art_rect("battle_panel_ctrl")
@@ -225,7 +225,7 @@ func _build_controls_art() -> void:
 	# 값 칩: 쌀자루는 그림에 있고, 오른쪽 어두운 칸에 한 번 돌리는 값을 쓴다
 	var plate := DrawLayer.make(func(ci: Control) -> void:
 		ci.draw_texture_rect(Px.tex("battle_plate_cost"), Rect2(Vector2.ZERO, ci.size), false)
-		Px.text(ci, str(run.spin_cost()), Rect2(ci.size.x * 0.42, 0, ci.size.x * 0.52, ci.size.y), 30, Px.WHITE if run.rice >= run.spin_cost() else Color("#ff8a80")))
+		Px.text(ci, str(run.spin_cost()), Rect2(ci.size.x * 0.52, 0, ci.size.x * 0.42, ci.size.y), 30, Px.WHITE if run.rice >= run.spin_cost() else Color("#ff8a80")))
 	put(plate, SlotView.art_rect("battle_plate_cost"), Pin.BOTTOM)
 	_hud["plate"] = plate
 	var lr := SlotView.art_rect("battle_lever")
@@ -254,9 +254,13 @@ func _build_controls_art() -> void:
 		put(b, r, Pin.BOTTOM)
 		_btn[s[0]] = b
 	# 전투 중에는 남은 적 수를 모서리에 적는다.
+	# 글자 띠(버튼 그림 아래쪽의 빈 띠)에 이름. 전투 중에는 전투 시작 버튼의 띠에 남은 적 수를 쓴다.
 	_btn["battle"].overlay = func(b: PxButton, off: Vector2) -> void:
-		if state != "prep":
-			_num(b, off, str(field.enemies_left()))
+		var band := Rect2(off + Vector2(b.size.x * 0.12, b.size.y * 0.7), Vector2(b.size.x * 0.76, b.size.y * 0.2))
+		Px.text(b, DB.t("battle.start") if state == "prep" else str(field.enemies_left()), band, 26, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 5)
+	_btn["retreat"].overlay = func(b: PxButton, off: Vector2) -> void:
+		var band := Rect2(off + Vector2(b.size.x * 0.13, b.size.y * 0.765), Vector2(b.size.x * 0.75, b.size.y * 0.14))
+		Px.text(b, DB.t("pause.retreat"), band, 26, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 5)
 
 
 func _ctrl_tip(k: String) -> String:

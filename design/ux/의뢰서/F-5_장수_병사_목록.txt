@@ -1,0 +1,22 @@
+IMAGE 1 is a finished screen of my 2D pixel art game (set in China's Three Kingdoms era). Draw one more screen of the same game: the hero list window. Keep it simple and clean, in exactly the same style as IMAGE 1: same pixel size, same dark outlines, same flat brown panels with a thin dark outline and a thin lighter inner line, same dark-brown empty slots for numbers, same icon style. Flat: no bevels, no gloss, no gradients, no drop shadows.
+
+IMAGE 2 (grey boxes with numbers) only shows WHERE things go. Follow its positions and sizes, but do not copy the grey, the numbers or any letters.
+
+If another window of this game is attached as an extra image, use exactly the same window frame, title bar and close button as in it.
+
+This is a big window that covers the middle of the lobby screen of IMAGE 1. Keep the top UI of IMAGE 1 (portrait frame, two chips, round buttons) and its five bottom tabs exactly as they are; the window fills the area between them.
+
+The window (numbers of IMAGE 2):
+1. Window frame: a big brown panel.
+2. Close button at the top right corner: a small red square button with a white X.
+3. Selected tab at the top left: brighter, with a general's helmeted head icon.
+4. Unselected tab next to it: darker, with a soldier's helmet icon.
+5. One selected filter chip (brighter) and 6. four unselected filter chips (darker) in one row: small low empty chips.
+7. A grid of cards, 4 per row, several rows, all the same: each card is one empty dark-brown box with a thin gold border. Leave every card empty.
+
+Rules:
+- Every icon listed above must already be drawn. No blank placeholders where an icon is listed.
+- Places described as "empty" stay empty: the game writes the text, numbers and faces there.
+- No text, letters or numbers anywhere. No characters.
+- Every piece is opaque and has a closed dark outline. Pieces do not overlap and do not touch each other.
+- No sparkles, no watermark. Tall portrait image, 9:16.

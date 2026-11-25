@@ -17,142 +17,25 @@
   },
   {
    "extra": {},
-   "h": 212,
+   "h": 154,
    "kind": "button",
    "label": "lobby_portrait",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@244",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@218",
    "sx": 1.0,
-   "w": 181,
-   "x": 397,
-   "y": 7
+   "w": 150,
+   "x": 406,
+   "y": 18
   },
   {
    "extra": {},
-   "h": 136,
+   "h": 77,
    "kind": "image",
    "label": "guanyu_head",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@244",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@218",
    "sx": 1.0,
-   "w": 134,
-   "x": 421,
-   "y": 28
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 24,
-    "req": 24,
-    "th": 28.0,
-    "tw": 52.0
-   },
-   "h": 32,
-   "kind": "text",
-   "label": "Lv.2",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@244",
-   "sx": 1.0,
-   "w": 134,
-   "x": 421,
-   "y": 170
-  },
-  {
-   "extra": {},
-   "h": 108,
-   "kind": "button",
-   "label": "133,956",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@245",
-   "sx": 1.0,
-   "w": 340,
-   "x": 577,
-   "y": 30
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 30,
-    "req": 30,
-    "th": 35.0,
-    "tw": 125.0
-   },
-   "h": 60,
-   "kind": "text",
-   "label": "133,956",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@245",
-   "sx": 1.0,
-   "w": 170,
-   "x": 676,
-   "y": 52
-  },
-  {
-   "extra": {},
-   "h": 108,
-   "kind": "button",
-   "label": "80/30",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@246",
-   "sx": 1.0,
-   "w": 347,
-   "x": 921,
-   "y": 30
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 30,
-    "req": 30,
-    "th": 35.0,
-    "tw": 98.0
-   },
-   "h": 60,
-   "kind": "text",
-   "label": "80/30",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@246",
-   "sx": 1.0,
-   "w": 174,
-   "x": 1022,
-   "y": 52
-  },
-  {
-   "extra": {},
-   "h": 114,
-   "kind": "button",
-   "label": "lobby_btn_settings",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@247",
-   "sx": 1.0,
-   "w": 115,
-   "x": 1274,
-   "y": 30
-  },
-  {
-   "extra": {},
-   "h": 138,
-   "kind": "button",
-   "label": "lobby_btn_mail",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@248",
-   "sx": 1.0,
-   "w": 140,
-   "x": 407,
-   "y": 224
-  },
-  {
-   "extra": {},
-   "h": 140,
-   "kind": "button",
-   "label": "lobby_btn_mission",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@249",
-   "sx": 1.0,
-   "w": 140,
-   "x": 407,
-   "y": 376
-  },
-  {
-   "extra": {},
-   "h": 138,
-   "kind": "button",
-   "label": "lobby_btn_arena",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@250",
-   "sx": 1.0,
-   "w": 140,
-   "x": 1254,
-   "y": 224
+   "w": 93,
+   "x": 435,
+   "y": 44
   },
   {
    "extra": {
@@ -160,27 +43,133 @@
     "fs": 22,
     "req": 22,
     "th": 26.0,
-    "tw": 75.0
+    "tw": 48.0
    },
-   "h": 30,
+   "h": 23,
    "kind": "text",
-   "label": "준비 중",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@250",
+   "label": "Lv.2",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@218",
    "sx": 1.0,
-   "w": 140,
-   "x": 1254,
-   "y": 320
+   "w": 93,
+   "x": 435,
+   "y": 121
+  },
+  {
+   "extra": {},
+   "h": 85,
+   "kind": "button",
+   "label": "133,956",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@219",
+   "sx": 1.0,
+   "w": 323,
+   "x": 565,
+   "y": 34
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 117.0
+   },
+   "h": 51,
+   "kind": "text",
+   "label": "133,956",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@219",
+   "sx": 1.0,
+   "w": 155,
+   "x": 659,
+   "y": 51
+  },
+  {
+   "extra": {},
+   "h": 85,
+   "kind": "button",
+   "label": "70/30",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@220",
+   "sx": 1.0,
+   "w": 365,
+   "x": 894,
+   "y": 34
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 91.0
+   },
+   "h": 51,
+   "kind": "text",
+   "label": "70/30",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@220",
+   "sx": 1.0,
+   "w": 175,
+   "x": 1000,
+   "y": 51
+  },
+  {
+   "extra": {},
+   "h": 111,
+   "kind": "button",
+   "label": "lobby_btn_settings",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@221",
+   "sx": 1.0,
+   "w": 108,
+   "x": 1276,
+   "y": 23
+  },
+  {
+   "extra": {},
+   "h": 108,
+   "kind": "button",
+   "label": "lobby_btn_mail",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@222",
+   "sx": 1.0,
+   "w": 108,
+   "x": 1276,
+   "y": 144
+  },
+  {
+   "extra": {},
+   "h": 111,
+   "kind": "button",
+   "label": "lobby_btn_mission",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@223",
+   "sx": 1.0,
+   "w": 108,
+   "x": 1276,
+   "y": 260
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 18,
+    "req": 26,
+    "th": 21.0,
+    "tw": 213.0
+   },
+   "h": 50,
+   "kind": "text",
+   "label": "스테이지 2 · 반동탁 연합",
+   "node": "/root/Main/screen_layer/Lobby/@Control@224",
+   "sx": 1.0,
+   "w": 234,
+   "x": 780,
+   "y": 702
   },
   {
    "extra": {},
    "h": 36,
    "kind": "image",
    "label": "icon_sword",
-   "node": "/root/Main/screen_layer/Lobby/@Control@251",
+   "node": "/root/Main/screen_layer/Lobby/@Control@225",
    "sx": 1.0,
    "w": 36,
-   "x": 584,
-   "y": 162
+   "x": 568,
+   "y": 138
   },
   {
    "extra": {
@@ -193,39 +182,22 @@
    "h": 60,
    "kind": "text",
    "label": "10,582",
-   "node": "/root/Main/screen_layer/Lobby/@Control@251",
+   "node": "/root/Main/screen_layer/Lobby/@Control@225",
    "sx": 1.0,
    "w": 300,
-   "x": 628,
-   "y": 150
+   "x": 612,
+   "y": 126
   },
   {
    "extra": {},
-   "h": 175,
+   "h": 183,
    "kind": "button",
-   "label": "lobby_btn_stage",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@253",
+   "label": "lobby_tab_hero",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@228",
    "sx": 1.0,
-   "w": 437,
-   "x": 678,
-   "y": 1395
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 52,
-    "req": 52,
-    "th": 61.0,
-    "tw": 104.0
-   },
-   "h": 67,
-   "kind": "text",
-   "label": "출정",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@253",
-   "sx": 1.0,
-   "w": 262,
-   "x": 822,
-   "y": 1423
+   "w": 190,
+   "x": 398,
+   "y": 1583
   },
   {
    "extra": {
@@ -233,414 +205,442 @@
     "fs": 28,
     "req": 28,
     "th": 33.0,
-    "tw": 142.0
+    "tw": 56.0
    },
-   "h": 43,
-   "kind": "text",
-   "label": "스테이지 2",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@253",
-   "sx": 1.0,
-   "w": 262,
-   "x": 822,
-   "y": 1488
-  },
-  {
-   "extra": {},
-   "h": 200,
-   "kind": "image",
-   "label": "lobby_tab_bar",
-   "node": "/root/Main/screen_layer/Lobby/@Control@254",
-   "sx": 1.0,
-   "w": 1024,
-   "x": 384,
-   "y": 1592
-  },
-  {
-   "extra": {},
-   "h": 152,
-   "kind": "button",
-   "label": "lobby_tab_1",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@255",
-   "sx": 1.0,
-   "w": 322,
-   "x": 400,
-   "y": 1620
-  },
-  {
-   "extra": {},
-   "h": 98,
-   "kind": "image",
-   "label": "lobby_ic_hero",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@255",
-   "sx": 1.0,
-   "w": 81,
-   "x": 520,
-   "y": 1584
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 40,
-    "req": 40,
-    "th": 47.0,
-    "tw": 80.0
-   },
-   "h": 64,
+   "h": 46,
    "kind": "text",
    "label": "장수",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@255",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@228",
    "sx": 1.0,
-   "w": 322,
-   "x": 400,
-   "y": 1678
+   "w": 154,
+   "x": 416,
+   "y": 1700
   },
   {
    "extra": {},
-   "h": 152,
+   "h": 183,
    "kind": "button",
-   "label": "lobby_tab_2",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@256",
+   "label": "lobby_tab_bag",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@229",
    "sx": 1.0,
-   "w": 322,
-   "x": 735,
-   "y": 1620
-  },
-  {
-   "extra": {},
-   "h": 82,
-   "kind": "image",
-   "label": "lobby_ic_bag",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@256",
-   "sx": 1.0,
-   "w": 88,
-   "x": 851,
-   "y": 1598
+   "w": 201,
+   "x": 588,
+   "y": 1583
   },
   {
    "extra": {
     "align": 1,
-    "fs": 40,
-    "req": 40,
-    "th": 47.0,
-    "tw": 80.0
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 56.0
    },
-   "h": 64,
+   "h": 46,
    "kind": "text",
    "label": "가방",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@256",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@229",
    "sx": 1.0,
-   "w": 322,
-   "x": 735,
-   "y": 1678
+   "w": 165,
+   "x": 606,
+   "y": 1700
   },
   {
    "extra": {},
-   "h": 152,
+   "h": 205,
    "kind": "button",
-   "label": "lobby_tab_3",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@257",
+   "label": "lobby_tab_stage",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@230",
    "sx": 1.0,
-   "w": 322,
-   "x": 1070,
-   "y": 1620
-  },
-  {
-   "extra": {},
-   "h": 86,
-   "kind": "image",
-   "label": "lobby_ic_shop",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@257",
-   "sx": 1.0,
-   "w": 81,
-   "x": 1191,
-   "y": 1594
+   "w": 213,
+   "x": 789,
+   "y": 1562
   },
   {
    "extra": {
     "align": 1,
-    "fs": 40,
-    "req": 40,
-    "th": 47.0,
-    "tw": 80.0
+    "fs": 30,
+    "req": 30,
+    "th": 35.0,
+    "tw": 60.0
    },
-   "h": 64,
+   "h": 46,
+   "kind": "text",
+   "label": "출정",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@230",
+   "sx": 1.0,
+   "w": 177,
+   "x": 807,
+   "y": 1700
+  },
+  {
+   "extra": {},
+   "h": 183,
+   "kind": "button",
+   "label": "lobby_tab_arena",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@231",
+   "sx": 1.0,
+   "w": 201,
+   "x": 1002,
+   "y": 1583
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 56.0
+   },
+   "h": 46,
+   "kind": "text",
+   "label": "쟁패",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@231",
+   "sx": 1.0,
+   "w": 165,
+   "x": 1020,
+   "y": 1700
+  },
+  {
+   "extra": {},
+   "h": 183,
+   "kind": "button",
+   "label": "lobby_tab_shop",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@232",
+   "sx": 1.0,
+   "w": 192,
+   "x": 1203,
+   "y": 1583
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 56.0
+   },
+   "h": 46,
    "kind": "text",
    "label": "상점",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@257",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@232",
    "sx": 1.0,
-   "w": 322,
-   "x": 1070,
-   "y": 1678
+   "w": 156,
+   "x": 1221,
+   "y": 1700
   },
   {
    "extra": {},
-   "h": 1260,
+   "h": 858,
    "kind": "panel",
-   "label": "panel_ctrl",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@262",
+   "label": "kit_frame",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@237",
    "sx": 1.0,
-   "w": 920,
-   "x": 436,
-   "y": 300
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 46,
-    "req": 46,
-    "th": 54.0,
-    "tw": 92.0
-   },
-   "h": 72,
-   "kind": "text",
-   "label": "승리",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@263",
-   "sx": 1.0,
-   "w": 528,
-   "x": 632,
-   "y": 268
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 44,
-    "req": 44,
-    "th": 52.0,
-    "tw": 488.0
-   },
-   "h": 60,
-   "kind": "text",
-   "label": "스테이지 1 보통 클리어!",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@264",
-   "sx": 1.0,
-   "w": 880,
-   "x": 456,
-   "y": 400
+   "w": 792,
+   "x": 500,
+   "y": 426
   },
   {
    "extra": {},
-   "h": 116,
+   "h": 100,
    "kind": "panel",
-   "label": "panel_slot",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@265",
+   "label": "kit_title_gold",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@238",
    "sx": 1.0,
-   "w": 200,
-   "x": 466,
-   "y": 630
+   "w": 536,
+   "x": 628,
+   "y": 384
   },
   {
    "extra": {
     "align": 1,
-    "fs": 24,
-    "req": 24,
-    "th": 28.0,
-    "tw": 72.0
-   },
-   "h": 36,
-   "kind": "text",
-   "label": "웨이브",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@265",
-   "sx": 1.0,
-   "w": 200,
-   "x": 466,
-   "y": 640
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 40,
-    "req": 40,
-    "th": 47.0,
-    "tw": 110.0
-   },
-   "h": 56,
-   "kind": "text",
-   "label": "10/10",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@265",
-   "sx": 1.0,
-   "w": 200,
-   "x": 466,
-   "y": 678
-  },
-  {
-   "extra": {},
-   "h": 116,
-   "kind": "panel",
-   "label": "panel_slot",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@266",
-   "sx": 1.0,
-   "w": 200,
-   "x": 681,
-   "y": 630
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 24,
-    "req": 24,
-    "th": 28.0,
-    "tw": 48.0
-   },
-   "h": 36,
-   "kind": "text",
-   "label": "처치",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@266",
-   "sx": 1.0,
-   "w": 200,
-   "x": 681,
-   "y": 640
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 40,
-    "req": 40,
-    "th": 47.0,
-    "tw": 53.0
-   },
-   "h": 56,
-   "kind": "text",
-   "label": "30",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@266",
-   "sx": 1.0,
-   "w": 200,
-   "x": 681,
-   "y": 678
-  },
-  {
-   "extra": {},
-   "h": 116,
-   "kind": "panel",
-   "label": "panel_slot",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@267",
-   "sx": 1.0,
-   "w": 200,
-   "x": 896,
-   "y": 630
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 24,
-    "req": 24,
-    "th": 28.0,
-    "tw": 72.0
-   },
-   "h": 36,
-   "kind": "text",
-   "label": "돌리기",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@267",
-   "sx": 1.0,
-   "w": 200,
-   "x": 896,
-   "y": 640
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 40,
-    "req": 40,
-    "th": 47.0,
-    "tw": 43.0
-   },
-   "h": 56,
-   "kind": "text",
-   "label": "10",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@267",
-   "sx": 1.0,
-   "w": 200,
-   "x": 896,
-   "y": 678
-  },
-  {
-   "extra": {},
-   "h": 116,
-   "kind": "panel",
-   "label": "panel_slot",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@268",
-   "sx": 1.0,
-   "w": 200,
-   "x": 1111,
-   "y": 630
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 24,
-    "req": 24,
-    "th": 28.0,
-    "tw": 48.0
-   },
-   "h": 36,
-   "kind": "text",
-   "label": "대박",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@268",
-   "sx": 1.0,
-   "w": 200,
-   "x": 1111,
-   "y": 640
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 40,
-    "req": 40,
-    "th": 47.0,
-    "tw": 17.0
-   },
-   "h": 56,
-   "kind": "text",
-   "label": "1",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@268",
-   "sx": 1.0,
-   "w": 200,
-   "x": 1111,
-   "y": 678
-  },
-  {
-   "extra": {},
-   "h": 108,
-   "kind": "image",
-   "label": "guanyu",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@272/@Control@270",
-   "sx": 1.0,
-   "w": 108,
-   "x": 482,
-   "y": 776
-  },
-  {
-   "extra": {
-    "align": 0,
-    "fs": 26,
-    "req": 26,
-    "th": 31.0,
-    "tw": 115.0
-   },
-   "h": 40,
-   "kind": "text",
-   "label": "최고 활약",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@273",
-   "sx": 1.0,
-   "w": 400,
-   "x": 616,
-   "y": 776
-  },
-  {
-   "extra": {
-    "align": 0,
     "fs": 42,
     "req": 42,
     "th": 49.0,
     "tw": 84.0
    },
+   "h": 72,
+   "kind": "text",
+   "label": "승리",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@238",
+   "sx": 1.0,
+   "w": 480,
+   "x": 656,
+   "y": 394
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 38,
+    "req": 38,
+    "th": 45.0,
+    "tw": 422.0
+   },
+   "h": 90,
+   "kind": "text",
+   "label": "스테이지 1 보통 클리어!",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@239",
+   "sx": 1.0,
+   "w": 728,
+   "x": 532,
+   "y": 512
+  },
+  {
+   "extra": {},
+   "h": 121,
+   "kind": "panel",
+   "label": "kit_box",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@240",
+   "sx": 1.0,
+   "w": 175,
+   "x": 532,
+   "y": 625
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 22,
+    "req": 22,
+    "th": 26.0,
+    "tw": 66.0
+   },
+   "h": 34,
+   "kind": "text",
+   "label": "웨이브",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@240",
+   "sx": 1.0,
+   "w": 175,
+   "x": 532,
+   "y": 641
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 36,
+    "req": 36,
+    "th": 42.0,
+    "tw": 99.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "10/10",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@240",
+   "sx": 1.0,
+   "w": 175,
+   "x": 532,
+   "y": 677
+  },
+  {
+   "extra": {},
+   "h": 121,
+   "kind": "panel",
+   "label": "kit_box",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@241",
+   "sx": 1.0,
+   "w": 175,
+   "x": 716,
+   "y": 625
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 22,
+    "req": 22,
+    "th": 26.0,
+    "tw": 44.0
+   },
+   "h": 34,
+   "kind": "text",
+   "label": "처치",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@241",
+   "sx": 1.0,
+   "w": 175,
+   "x": 716,
+   "y": 641
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 36,
+    "req": 36,
+    "th": 42.0,
+    "tw": 48.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "30",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@241",
+   "sx": 1.0,
+   "w": 175,
+   "x": 716,
+   "y": 677
+  },
+  {
+   "extra": {},
+   "h": 121,
+   "kind": "panel",
+   "label": "kit_box",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@242",
+   "sx": 1.0,
+   "w": 175,
+   "x": 901,
+   "y": 625
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 22,
+    "req": 22,
+    "th": 26.0,
+    "tw": 66.0
+   },
+   "h": 34,
+   "kind": "text",
+   "label": "돌리기",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@242",
+   "sx": 1.0,
+   "w": 175,
+   "x": 901,
+   "y": 641
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 36,
+    "req": 36,
+    "th": 42.0,
+    "tw": 39.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "10",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@242",
+   "sx": 1.0,
+   "w": 175,
+   "x": 901,
+   "y": 677
+  },
+  {
+   "extra": {},
+   "h": 121,
+   "kind": "panel",
+   "label": "kit_box",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@243",
+   "sx": 1.0,
+   "w": 175,
+   "x": 1085,
+   "y": 625
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 22,
+    "req": 22,
+    "th": 26.0,
+    "tw": 44.0
+   },
+   "h": 34,
+   "kind": "text",
+   "label": "대박",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@243",
+   "sx": 1.0,
+   "w": 175,
+   "x": 1085,
+   "y": 641
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 36,
+    "req": 36,
+    "th": 42.0,
+    "tw": 15.0
+   },
+   "h": 52,
+   "kind": "text",
+   "label": "1",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@243",
+   "sx": 1.0,
+   "w": 175,
+   "x": 1085,
+   "y": 677
+  },
+  {
+   "extra": {},
+   "h": 137,
+   "kind": "panel",
+   "label": "kit_box",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@244",
+   "sx": 1.0,
+   "w": 143,
+   "x": 538,
+   "y": 763
+  },
+  {
+   "extra": {},
+   "h": 93,
+   "kind": "image",
+   "label": "guanyu",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@248/@Control@246",
+   "sx": 1.0,
+   "w": 99,
+   "x": 560,
+   "y": 785
+  },
+  {
+   "extra": {},
+   "h": 137,
+   "kind": "panel",
+   "label": "kit_box",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@249",
+   "sx": 1.0,
+   "w": 561,
+   "x": 693,
+   "y": 763
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 24,
+    "req": 24,
+    "th": 28.0,
+    "tw": 106.0
+   },
+   "h": 36,
+   "kind": "text",
+   "label": "최고 활약",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@249",
+   "sx": 1.0,
+   "w": 505,
+   "x": 721,
+   "y": 781
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 40,
+    "req": 40,
+    "th": 47.0,
+    "tw": 80.0
+   },
    "h": 56,
    "kind": "text",
    "label": "관우",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@273",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@249",
    "sx": 1.0,
-   "w": 500,
-   "x": 616,
-   "y": 818
+   "w": 505,
+   "x": 721,
+   "y": 821
+  },
+  {
+   "extra": {},
+   "h": 185,
+   "kind": "panel",
+   "label": "kit_box",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@250",
+   "sx": 1.0,
+   "w": 728,
+   "x": 532,
+   "y": 916
   },
   {
    "extra": {
@@ -653,22 +653,22 @@
    "h": 50,
    "kind": "text",
    "label": "보상",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@274",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@250",
    "sx": 1.0,
    "w": 160,
-   "x": 486,
-   "y": 910
+   "x": 552,
+   "y": 916
   },
   {
    "extra": {},
    "h": 70,
    "kind": "image",
    "label": "icon_gold",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@274",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@250",
    "sx": 1.0,
    "w": 76,
-   "x": 518,
-   "y": 966
+   "x": 573,
+   "y": 972
   },
   {
    "extra": {
@@ -681,22 +681,22 @@
    "h": 40,
    "kind": "text",
    "label": "3,500",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@274",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@250",
    "sx": 1.0,
-   "w": 136,
-   "x": 486,
-   "y": 1040
+   "w": 114,
+   "x": 552,
+   "y": 1046
   },
   {
    "extra": {},
    "h": 70,
    "kind": "image",
    "label": "ic_scroll",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@274",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@250",
    "sx": 1.0,
    "w": 76,
-   "x": 658,
-   "y": 966
+   "x": 691,
+   "y": 972
   },
   {
    "extra": {
@@ -709,50 +709,50 @@
    "h": 40,
    "kind": "text",
    "label": "경험 200",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@274",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@250",
    "sx": 1.0,
-   "w": 136,
-   "x": 626,
-   "y": 1040
+   "w": 114,
+   "x": 670,
+   "y": 1046
   },
   {
    "extra": {},
    "h": 70,
    "kind": "image",
    "label": "icon_gold",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@274",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@250",
    "sx": 1.0,
    "w": 76,
-   "x": 798,
-   "y": 966
+   "x": 809,
+   "y": 972
   },
   {
    "extra": {
     "align": 1,
-    "fs": 18,
+    "fs": 14,
     "req": 24,
-    "th": 21.0,
-    "tw": 136.0
+    "th": 17.0,
+    "tw": 105.0
    },
    "h": 40,
    "kind": "text",
    "label": "첫 클리어 2000",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@274",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@250",
    "sx": 1.0,
-   "w": 136,
-   "x": 766,
-   "y": 1040
+   "w": 114,
+   "x": 788,
+   "y": 1046
   },
   {
    "extra": {},
    "h": 70,
    "kind": "image",
    "label": "ic_orb",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@274",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@250",
    "sx": 1.0,
    "w": 76,
-   "x": 938,
-   "y": 966
+   "x": 927,
+   "y": 972
   },
   {
    "extra": {
@@ -765,22 +765,22 @@
    "h": 40,
    "kind": "text",
    "label": "일반",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@274",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@250",
    "sx": 1.0,
-   "w": 136,
+   "w": 114,
    "x": 906,
-   "y": 1040
+   "y": 1046
   },
   {
    "extra": {},
    "h": 70,
    "kind": "image",
-   "label": "ic_sword",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@274",
+   "label": "ic_shield",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@250",
    "sx": 1.0,
    "w": 76,
-   "x": 1078,
-   "y": 966
+   "x": 1045,
+   "y": 972
   },
   {
    "extra": {
@@ -792,23 +792,23 @@
    },
    "h": 40,
    "kind": "text",
-   "label": "영웅",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@274",
+   "label": "일반",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@250",
    "sx": 1.0,
-   "w": 136,
-   "x": 1046,
-   "y": 1040
+   "w": 114,
+   "x": 1024,
+   "y": 1046
   },
   {
    "extra": {},
    "h": 70,
    "kind": "image",
-   "label": "ic_orb",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@274",
+   "label": "ic_sword",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@250",
    "sx": 1.0,
    "w": 76,
-   "x": 1218,
-   "y": 966
+   "x": 1163,
+   "y": 972
   },
   {
    "extra": {
@@ -821,77 +821,89 @@
    "h": 40,
    "kind": "text",
    "label": "희귀",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@274",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@250",
    "sx": 1.0,
-   "w": 136,
-   "x": 1186,
-   "y": 1040
+   "w": 114,
+   "x": 1142,
+   "y": 1046
   },
   {
    "extra": {},
-   "h": 130,
+   "h": 110,
    "kind": "button",
-   "label": "tab_wood",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@BaseButton@275",
+   "label": "로비로",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@BaseButton@251",
    "sx": 1.0,
-   "w": 380,
-   "x": 496,
-   "y": 1300
+   "w": 354,
+   "x": 532,
+   "y": 1123
   },
   {
    "extra": {},
-   "h": 130,
+   "h": 110,
    "kind": "panel",
-   "label": "tab_wood",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@BaseButton@275",
+   "label": "kit_box",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@BaseButton@251",
    "sx": 1.0,
-   "w": 380,
-   "x": 496,
-   "y": 1300
+   "w": 354,
+   "x": 532,
+   "y": 1123
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 34,
+    "req": 34,
+    "th": 40.0,
+    "tw": 102.0
+   },
+   "h": 110,
+   "kind": "text",
+   "label": "로비로",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@BaseButton@251",
+   "sx": 1.0,
+   "w": 338,
+   "x": 540,
+   "y": 1123
   },
   {
    "extra": {},
-   "h": 81,
-   "kind": "image",
-   "label": "act_home",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@BaseButton@275",
-   "sx": 1.0,
-   "w": 81,
-   "x": 646,
-   "y": 1325
-  },
-  {
-   "extra": {},
-   "h": 130,
+   "h": 110,
    "kind": "button",
-   "label": "tab_yellow",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@BaseButton@276",
+   "label": "다음 스테이지",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@BaseButton@252",
    "sx": 1.0,
-   "w": 380,
-   "x": 916,
-   "y": 1300
+   "w": 354,
+   "x": 906,
+   "y": 1123
   },
   {
    "extra": {},
-   "h": 130,
+   "h": 110,
    "kind": "panel",
-   "label": "tab_yellow",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@BaseButton@276",
+   "label": "kit_btn_red",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@BaseButton@252",
    "sx": 1.0,
-   "w": 380,
-   "x": 916,
-   "y": 1300
+   "w": 354,
+   "x": 906,
+   "y": 1123
   },
   {
-   "extra": {},
-   "h": 81,
-   "kind": "image",
-   "label": "act_next",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@BaseButton@276",
+   "extra": {
+    "align": 1,
+    "fs": 34,
+    "req": 34,
+    "th": 40.0,
+    "tw": 218.0
+   },
+   "h": 110,
+   "kind": "text",
+   "label": "다음 스테이지",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@BaseButton@252",
    "sx": 1.0,
-   "w": 81,
-   "x": 1066,
-   "y": 1325
+   "w": 338,
+   "x": 914,
+   "y": 1123
   },
   {
    "extra": {
@@ -911,104 +923,91 @@
     "clip": false,
     "parent_clip": false
    },
-   "h": 600,
+   "h": 154,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@218",
+   "w": 150,
+   "x": 406,
+   "y": 18
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 85,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@219",
+   "w": 323,
+   "x": 565,
+   "y": 34
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 85,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@220",
+   "w": 365,
+   "x": 894,
+   "y": 34
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 111,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@221",
+   "w": 108,
+   "x": 1276,
+   "y": 23
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 108,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@222",
+   "w": 108,
+   "x": 1276,
+   "y": 144
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 111,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@223",
+   "w": 108,
+   "x": 1276,
+   "y": 260
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 50,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Lobby/@Control@243",
-   "w": 1024,
-   "x": 384,
-   "y": 0
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 212,
-   "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@244",
-   "w": 181,
-   "x": 397,
-   "y": 7
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 108,
-   "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@245",
-   "w": 340,
-   "x": 577,
-   "y": 30
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 108,
-   "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@246",
-   "w": 347,
-   "x": 921,
-   "y": 30
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 114,
-   "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@247",
-   "w": 115,
-   "x": 1274,
-   "y": 30
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 138,
-   "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@248",
-   "w": 140,
-   "x": 407,
-   "y": 224
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 140,
-   "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@249",
-   "w": 140,
-   "x": 407,
-   "y": 376
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 138,
-   "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@250",
-   "w": 140,
-   "x": 1254,
-   "y": 224
+   "node": "/root/Main/screen_layer/Lobby/@Control@224",
+   "w": 234,
+   "x": 780,
+   "y": 702
   },
   {
    "extra": {
@@ -1018,88 +1017,101 @@
    "h": 60,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Lobby/@Control@251",
+   "node": "/root/Main/screen_layer/Lobby/@Control@225",
    "w": 680,
-   "x": 584,
-   "y": 150
+   "x": 568,
+   "y": 126
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 292,
+   "h": 253,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Lobby/@Control@252",
-   "w": 240,
-   "x": 776,
-   "y": 796
+   "node": "/root/Main/screen_layer/Lobby/@Control@226",
+   "w": 252,
+   "x": 770,
+   "y": 800
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 175,
-   "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@253",
-   "w": 437,
-   "x": 678,
-   "y": 1395
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 200,
+   "h": 210,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Lobby/@Control@254",
+   "node": "/root/Main/screen_layer/Lobby/@Control@227",
    "w": 1024,
    "x": 384,
-   "y": 1592
+   "y": 1582
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 152,
+   "h": 183,
    "kind": "area",
    "label": "px_button",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@255",
-   "w": 322,
-   "x": 400,
-   "y": 1620
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@228",
+   "w": 190,
+   "x": 398,
+   "y": 1583
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 152,
+   "h": 183,
    "kind": "area",
    "label": "px_button",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@256",
-   "w": 322,
-   "x": 735,
-   "y": 1620
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@229",
+   "w": 201,
+   "x": 588,
+   "y": 1583
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 152,
+   "h": 205,
    "kind": "area",
    "label": "px_button",
-   "node": "/root/Main/screen_layer/Lobby/@BaseButton@257",
-   "w": 322,
-   "x": 1070,
-   "y": 1620
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@230",
+   "w": 213,
+   "x": 789,
+   "y": 1562
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 183,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@231",
+   "w": 201,
+   "x": 1002,
+   "y": 1583
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 183,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Lobby/@BaseButton@232",
+   "w": 192,
+   "x": 1203,
+   "y": 1583
   },
   {
    "extra": {
@@ -1109,7 +1121,7 @@
    "h": 1792,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Lobby/@Control@258",
+   "node": "/root/Main/screen_layer/Lobby/@Control@233",
    "w": 1024,
    "x": 384,
    "y": 0
@@ -1122,7 +1134,7 @@
    "h": 1792,
    "kind": "area",
    "label": "result",
-   "node": "/root/Main/popup_layer/@Control@259",
+   "node": "/root/Main/popup_layer/@Control@234",
    "w": 1792,
    "x": 0,
    "y": 0
@@ -1135,7 +1147,7 @@
    "h": 1792,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@260",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@235",
    "w": 1792,
    "x": 0,
    "y": 0
@@ -1145,195 +1157,208 @@
     "clip": false,
     "parent_clip": false
    },
-   "h": 1324,
+   "h": 1792,
    "kind": "area",
    "label": "Control",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261",
-   "w": 920,
-   "x": 436,
-   "y": 236
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236",
+   "w": 1024,
+   "x": 384,
+   "y": 0
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 1260,
+   "h": 858,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@262",
-   "w": 920,
-   "x": 436,
-   "y": 300
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@237",
+   "w": 792,
+   "x": 500,
+   "y": 426
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 124,
+   "h": 100,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@263",
-   "w": 560,
-   "x": 616,
-   "y": 242
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@238",
+   "w": 536,
+   "x": 628,
+   "y": 384
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 220,
+   "h": 90,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@264",
-   "w": 880,
-   "x": 456,
-   "y": 400
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@239",
+   "w": 728,
+   "x": 532,
+   "y": 512
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 116,
+   "h": 121,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@265",
-   "w": 200,
-   "x": 466,
-   "y": 630
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@240",
+   "w": 175,
+   "x": 532,
+   "y": 625
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 116,
+   "h": 121,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@266",
-   "w": 200,
-   "x": 681,
-   "y": 630
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@241",
+   "w": 175,
+   "x": 716,
+   "y": 625
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 116,
+   "h": 121,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@267",
-   "w": 200,
-   "x": 896,
-   "y": 630
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@242",
+   "w": 175,
+   "x": 901,
+   "y": 625
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 116,
+   "h": 121,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@268",
-   "w": 200,
-   "x": 1111,
-   "y": 630
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@243",
+   "w": 175,
+   "x": 1085,
+   "y": 625
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 120,
+   "h": 137,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@244",
+   "w": 143,
+   "x": 538,
+   "y": 763
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 105,
    "kind": "area",
    "label": "Control",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@272",
-   "w": 120,
-   "x": 476,
-   "y": 770
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@248",
+   "w": 111,
+   "x": 554,
+   "y": 779
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 120,
+   "h": 105,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@272/@Control@269",
-   "w": 120,
-   "x": 476,
-   "y": 770
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@248/@Control@245",
+   "w": 111,
+   "x": 554,
+   "y": 779
   },
   {
    "extra": {
     "clip": true,
     "parent_clip": false
    },
-   "h": 108,
+   "h": 93,
    "kind": "area",
    "label": "art_rect",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@272/@Control@270",
-   "w": 108,
-   "x": 482,
-   "y": 776
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@248/@Control@246",
+   "w": 99,
+   "x": 560,
+   "y": 785
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 120,
+   "h": 137,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@273",
-   "w": 600,
-   "x": 616,
-   "y": 770
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@249",
+   "w": 561,
+   "x": 693,
+   "y": 763
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 190,
+   "h": 185,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@Control@274",
-   "w": 860,
-   "x": 466,
-   "y": 910
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@Control@250",
+   "w": 728,
+   "x": 532,
+   "y": 916
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 130,
+   "h": 110,
    "kind": "area",
    "label": "px_button",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@BaseButton@275",
-   "w": 380,
-   "x": 496,
-   "y": 1300
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@BaseButton@251",
+   "w": 354,
+   "x": 532,
+   "y": 1123
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 130,
+   "h": 110,
    "kind": "area",
    "label": "px_button",
-   "node": "/root/Main/popup_layer/@Control@259/@Control@261/@BaseButton@276",
-   "w": 380,
-   "x": 916,
-   "y": 1300
+   "node": "/root/Main/popup_layer/@Control@234/@Control@236/@BaseButton@252",
+   "w": 354,
+   "x": 906,
+   "y": 1123
   },
   {
    "extra": {

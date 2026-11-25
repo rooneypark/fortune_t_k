@@ -18,7 +18,7 @@ var _repl_btns: Array = []
 ## 속성 칸은 최대 6개 (칸 = 성급, 2026-11-24). 3개씩 두 줄.
 const SLOTS := 6
 var _ok: PxButton
-## 그림 창 (2026-11-24): 제미나이 완성 화면에서 떼어 낸 부품 (tools/import_absorb_ui.py → assets/ui/absorb_*.png,
+## 그림 창 (2026-11-24): 제미나이 완성 화면에서 떼어 낸 부품 (tools/import_popups8_ui.py → assets/ui/absorb_*.png,
 ## 자리 absorb_layout.json). 그림이 없으면 선 UI로 그린다.
 
 

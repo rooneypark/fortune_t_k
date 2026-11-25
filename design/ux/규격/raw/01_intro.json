@@ -6,17 +6,6 @@
  "items": [
   {
    "extra": {},
-   "h": 1801,
-   "kind": "image",
-   "label": "intro_bg",
-   "node": "/root/Main/screen_layer/@Control@26",
-   "sx": 1.0,
-   "w": 1801,
-   "x": -5,
-   "y": -5
-  },
-  {
-   "extra": {},
    "h": 170,
    "kind": "image",
    "label": "000",
@@ -105,39 +94,39 @@
   },
   {
    "extra": {},
-   "h": 196,
+   "h": 242,
    "kind": "text",
    "label": "운빨삼국",
    "node": "/root/Main/screen_layer/@Control@26/@Control@36",
    "sx": 1.0,
-   "w": 672,
-   "x": 560,
-   "y": 276
+   "w": 828,
+   "x": 482,
+   "y": -285
   },
   {
    "extra": {
     "align": 1,
-    "fs": 44,
-    "req": 44,
-    "th": 52.0,
-    "tw": 344.0
+    "fs": 38,
+    "req": 38,
+    "th": 45.0,
+    "tw": 298.0
    },
-   "h": 72,
+   "h": 64,
    "kind": "text",
    "label": "천명 슬롯 삼국지",
    "node": "/root/Main/screen_layer/@Control@26/@Control@36",
    "sx": 1.0,
-   "w": 528,
-   "x": 632,
-   "y": 523
+   "w": 468,
+   "x": 662,
+   "y": 64
   },
   {
    "extra": {
     "align": 1,
-    "fs": 34,
-    "req": 34,
-    "th": 40.0,
-    "tw": 546.0
+    "fs": 32,
+    "req": 32,
+    "th": 38.0,
+    "tw": 514.0
    },
    "h": 60,
    "kind": "text",
@@ -146,7 +135,7 @@
    "sx": 1.0,
    "w": 1024,
    "x": 384,
-   "y": 644
+   "y": 240
   },
   {
    "extra": {
@@ -307,7 +296,7 @@
    "node": "/root/Main/screen_layer/@Control@26/@Control@36",
    "w": 1024,
    "x": 384,
-   "y": 230
+   "y": 190
   },
   {
    "extra": {

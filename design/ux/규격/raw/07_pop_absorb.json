@@ -9,11 +9,11 @@
    "h": 112,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 128,
    "x": 760,
-   "y": 600
+   "y": 698
   },
   {
    "extra": {
@@ -26,22 +26,22 @@
    "h": 20,
    "kind": "text",
    "label": "1성",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 34,
    "x": 754,
-   "y": 578
+   "y": 676
   },
   {
    "extra": {},
    "h": 96,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 96,
    "x": 776,
-   "y": 686
+   "y": 784
   },
   {
    "extra": {
@@ -54,22 +54,22 @@
    "h": 20,
    "kind": "text",
    "label": "2성",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 34,
    "x": 754,
-   "y": 664
+   "y": 762
   },
   {
    "extra": {},
    "h": 96,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 96,
    "x": 566,
-   "y": 686
+   "y": 784
   },
   {
    "extra": {
@@ -82,22 +82,22 @@
    "h": 20,
    "kind": "text",
    "label": "1성",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 34,
    "x": 544,
-   "y": 664
+   "y": 762
   },
   {
    "extra": {},
    "h": 96,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 96,
    "x": 706,
-   "y": 686
+   "y": 784
   },
   {
    "extra": {
@@ -110,22 +110,22 @@
    "h": 20,
    "kind": "text",
    "label": "2성",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 34,
    "x": 684,
-   "y": 664
+   "y": 762
   },
   {
    "extra": {},
    "h": 96,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 96,
    "x": 776,
-   "y": 756
+   "y": 854
   },
   {
    "extra": {
@@ -138,22 +138,22 @@
    "h": 20,
    "kind": "text",
    "label": "2성",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 34,
    "x": 754,
-   "y": 734
+   "y": 832
   },
   {
    "extra": {},
    "h": 96,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 96,
    "x": 566,
-   "y": 756
+   "y": 854
   },
   {
    "extra": {
@@ -166,22 +166,22 @@
    "h": 20,
    "kind": "text",
    "label": "1성",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 34,
    "x": 544,
-   "y": 734
+   "y": 832
   },
   {
    "extra": {},
    "h": 96,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 96,
    "x": 706,
-   "y": 756
+   "y": 854
   },
   {
    "extra": {
@@ -194,22 +194,22 @@
    "h": 20,
    "kind": "text",
    "label": "1성",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 34,
    "x": 684,
-   "y": 734
+   "y": 832
   },
   {
    "extra": {},
    "h": 96,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 96,
    "x": 776,
-   "y": 826
+   "y": 924
   },
   {
    "extra": {
@@ -222,22 +222,22 @@
    "h": 20,
    "kind": "text",
    "label": "1성",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 34,
    "x": 754,
-   "y": 804
+   "y": 902
   },
   {
    "extra": {},
    "h": 96,
    "kind": "image",
    "label": "001",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 96,
    "x": 776,
-   "y": 896
+   "y": 994
   },
   {
    "extra": {
@@ -250,55 +250,55 @@
    "h": 20,
    "kind": "text",
    "label": "1성",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "sx": 1.0,
    "w": 34,
    "x": 754,
-   "y": 874
+   "y": 972
   },
   {
    "extra": {},
-   "h": 518,
+   "h": 517,
    "kind": "image",
    "label": "battle_panel_slot",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
+   "node": "/root/Main/screen_layer/Battle/@Control@133",
    "sx": 1.0,
-   "w": 537,
-   "x": 384,
-   "y": 1274
+   "w": 526,
+   "x": 396,
+   "y": 1248
   },
   {
    "extra": {},
-   "h": 65,
+   "h": 97,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
+   "node": "/root/Main/screen_layer/Battle/@Control@133",
    "sx": 1.0,
-   "w": 147,
-   "x": 429,
-   "y": 1386
+   "w": 120,
+   "x": 443,
+   "y": 1350
   },
   {
    "extra": {},
-   "h": 132,
+   "h": 112,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
+   "node": "/root/Main/screen_layer/Battle/@Control@133",
    "sx": 1.0,
-   "w": 147,
-   "x": 429,
-   "y": 1451
+   "w": 120,
+   "x": 443,
+   "y": 1447
   },
   {
    "extra": {},
-   "h": 84,
+   "h": 92,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
+   "node": "/root/Main/screen_layer/Battle/@Control@133",
    "sx": 1.0,
-   "w": 85,
-   "x": 460,
-   "y": 1495
+   "w": 92,
+   "x": 457,
+   "y": 1463
   },
   {
    "extra": {
@@ -311,55 +311,55 @@
    "h": 22,
    "kind": "text",
    "label": "하후돈",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
+   "node": "/root/Main/screen_layer/Battle/@Control@133",
    "sx": 1.0,
-   "w": 87,
-   "x": 459,
-   "y": 1558
+   "w": 94,
+   "x": 456,
+   "y": 1534
   },
   {
    "extra": {},
-   "h": 111,
+   "h": 109,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
+   "node": "/root/Main/screen_layer/Battle/@Control@133",
    "sx": 1.0,
-   "w": 147,
-   "x": 429,
-   "y": 1583
+   "w": 120,
+   "x": 443,
+   "y": 1559
   },
   {
    "extra": {},
-   "h": 67,
+   "h": 92,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
+   "node": "/root/Main/screen_layer/Battle/@Control@133",
    "sx": 1.0,
-   "w": 84,
-   "x": 461,
-   "y": 1627
+   "w": 92,
+   "x": 457,
+   "y": 1575
   },
   {
    "extra": {},
-   "h": 65,
+   "h": 97,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
+   "node": "/root/Main/screen_layer/Battle/@Control@133",
    "sx": 1.0,
-   "w": 147,
-   "x": 577,
-   "y": 1386
+   "w": 120,
+   "x": 603,
+   "y": 1350
   },
   {
    "extra": {},
-   "h": 132,
+   "h": 112,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
+   "node": "/root/Main/screen_layer/Battle/@Control@133",
    "sx": 1.0,
-   "w": 147,
-   "x": 577,
-   "y": 1451
+   "w": 120,
+   "x": 603,
+   "y": 1447
   },
   {
    "extra": {
@@ -369,58 +369,58 @@
     "th": 40.0,
     "tw": 34.0
    },
-   "h": 92,
+   "h": 100,
    "kind": "text",
    "label": "꽝",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
+   "node": "/root/Main/screen_layer/Battle/@Control@133",
    "sx": 1.0,
-   "w": 93,
-   "x": 604,
-   "y": 1491
+   "w": 100,
+   "x": 613,
+   "y": 1459
   },
   {
    "extra": {},
-   "h": 111,
+   "h": 109,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
+   "node": "/root/Main/screen_layer/Battle/@Control@133",
    "sx": 1.0,
-   "w": 147,
-   "x": 577,
-   "y": 1583
+   "w": 120,
+   "x": 603,
+   "y": 1559
   },
   {
    "extra": {},
-   "h": 65,
+   "h": 97,
    "kind": "image",
    "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
+   "node": "/root/Main/screen_layer/Battle/@Control@133",
    "sx": 1.0,
-   "w": 145,
-   "x": 731,
-   "y": 1386
-  },
-  {
-   "extra": {},
-   "h": 132,
-   "kind": "image",
-   "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
-   "sx": 1.0,
-   "w": 145,
-   "x": 731,
-   "y": 1451
-  },
-  {
-   "extra": {},
-   "h": 84,
-   "kind": "image",
-   "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
-   "sx": 1.0,
-   "w": 84,
+   "w": 120,
    "x": 763,
-   "y": 1495
+   "y": 1350
+  },
+  {
+   "extra": {},
+   "h": 112,
+   "kind": "image",
+   "label": "reel_cell",
+   "node": "/root/Main/screen_layer/Battle/@Control@133",
+   "sx": 1.0,
+   "w": 120,
+   "x": 763,
+   "y": 1447
+  },
+  {
+   "extra": {},
+   "h": 92,
+   "kind": "image",
+   "label": "reel_cell",
+   "node": "/root/Main/screen_layer/Battle/@Control@133",
+   "sx": 1.0,
+   "w": 92,
+   "x": 777,
+   "y": 1463
   },
   {
    "extra": {
@@ -433,33 +433,33 @@
    "h": 22,
    "kind": "text",
    "label": "창병",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
-   "sx": 1.0,
-   "w": 87,
-   "x": 761,
-   "y": 1558
-  },
-  {
-   "extra": {},
-   "h": 111,
-   "kind": "image",
-   "label": "reel_cell",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
-   "sx": 1.0,
-   "w": 145,
-   "x": 731,
-   "y": 1583
-  },
-  {
-   "extra": {},
-   "h": 518,
-   "kind": "image",
-   "label": "battle_panel_ctrl",
    "node": "/root/Main/screen_layer/Battle/@Control@133",
    "sx": 1.0,
-   "w": 487,
-   "x": 921,
-   "y": 1274
+   "w": 94,
+   "x": 776,
+   "y": 1534
+  },
+  {
+   "extra": {},
+   "h": 109,
+   "kind": "image",
+   "label": "reel_cell",
+   "node": "/root/Main/screen_layer/Battle/@Control@133",
+   "sx": 1.0,
+   "w": 120,
+   "x": 763,
+   "y": 1559
+  },
+  {
+   "extra": {},
+   "h": 517,
+   "kind": "image",
+   "label": "battle_panel_ctrl",
+   "node": "/root/Main/screen_layer/Battle/@Control@134",
+   "sx": 1.0,
+   "w": 469,
+   "x": 929,
+   "y": 1248
   },
   {
    "extra": {
@@ -469,136 +469,181 @@
     "th": 35.0,
     "tw": 20.0
    },
-   "h": 70,
+   "h": 110,
    "kind": "text",
    "label": "2",
-   "node": "/root/Main/screen_layer/Battle/@Control@134",
+   "node": "/root/Main/screen_layer/Battle/@Control@135",
    "sx": 1.0,
-   "w": 79,
-   "x": 1019,
-   "y": 1640
+   "w": 73,
+   "x": 1034,
+   "y": 1600
   },
   {
    "extra": {},
-   "h": 310,
+   "h": 283,
    "kind": "button",
    "label": "battle_lever_base",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@135",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@136",
    "sx": 1.0,
-   "w": 116,
-   "x": 975,
-   "y": 1318
+   "w": 96,
+   "x": 981,
+   "y": 1287
   },
   {
    "extra": {},
-   "h": 198,
+   "h": 195,
    "kind": "button",
    "label": "battle_btn_start",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@137",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@138",
    "sx": 1.0,
-   "w": 270,
-   "x": 1114,
-   "y": 1335
+   "w": 232,
+   "x": 1134,
+   "y": 1287
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 115.0
+   },
+   "h": 39,
+   "kind": "text",
+   "label": "전투 시작",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@138",
+   "sx": 1.0,
+   "w": 176,
+   "x": 1162,
+   "y": 1424
   },
   {
    "extra": {},
-   "h": 110,
+   "h": 233,
+   "kind": "button",
+   "label": "battle_btn_retreat",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@139",
+   "sx": 1.0,
+   "w": 234,
+   "x": 1134,
+   "y": 1504
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 52.0
+   },
+   "h": 33,
+   "kind": "text",
+   "label": "퇴각",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@139",
+   "sx": 1.0,
+   "w": 176,
+   "x": 1164,
+   "y": 1682
+  },
+  {
+   "extra": {},
+   "h": 97,
    "kind": "button",
    "label": "60/30",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@139",
-   "sx": 1.0,
-   "w": 218,
-   "x": 400,
-   "y": 28
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 30,
-    "req": 32,
-    "th": 35.0,
-    "tw": 98.0
-   },
-   "h": 59,
-   "kind": "text",
-   "label": "60/30",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@139",
-   "sx": 1.0,
-   "w": 102,
-   "x": 500,
-   "y": 52
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 32,
-    "req": 32,
-    "th": 38.0,
-    "tw": 21.0
-   },
-   "h": 59,
-   "kind": "text",
-   "label": "6",
    "node": "/root/Main/screen_layer/Battle/@BaseButton@140",
    "sx": 1.0,
-   "w": 76,
-   "x": 708,
-   "y": 52
+   "w": 197,
+   "x": 419,
+   "y": 31
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 91.0
+   },
+   "h": 58,
+   "kind": "text",
+   "label": "60/30",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@140",
+   "sx": 1.0,
+   "w": 95,
+   "x": 510,
+   "y": 50
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 19.0
+   },
+   "h": 58,
+   "kind": "text",
+   "label": "6",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@141",
+   "sx": 1.0,
+   "w": 96,
+   "x": 714,
+   "y": 50
   },
   {
    "extra": {},
-   "h": 110,
+   "h": 97,
    "kind": "button",
    "label": "3/8",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@141",
-   "sx": 1.0,
-   "w": 181,
-   "x": 794,
-   "y": 28
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 32,
-    "req": 32,
-    "th": 38.0,
-    "tw": 61.0
-   },
-   "h": 59,
-   "kind": "text",
-   "label": "3/8",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@141",
-   "sx": 1.0,
-   "w": 78,
-   "x": 885,
-   "y": 52
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 32,
-    "req": 32,
-    "th": 38.0,
-    "tw": 67.0
-   },
-   "h": 59,
-   "kind": "text",
-   "label": "1/10",
    "node": "/root/Main/screen_layer/Battle/@BaseButton@142",
    "sx": 1.0,
-   "w": 77,
-   "x": 1063,
-   "y": 52
+   "w": 198,
+   "x": 828,
+   "y": 31
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 54.0
+   },
+   "h": 58,
+   "kind": "text",
+   "label": "3/8",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@142",
+   "sx": 1.0,
+   "w": 95,
+   "x": 919,
+   "y": 50
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 58.0
+   },
+   "h": 58,
+   "kind": "text",
+   "label": "1/10",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@143",
+   "sx": 1.0,
+   "w": 81,
+   "x": 1109,
+   "y": 50
   },
   {
    "extra": {},
-   "h": 116,
+   "h": 103,
    "kind": "button",
    "label": "1x",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@143",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@144",
    "sx": 1.0,
-   "w": 118,
-   "x": 1152,
+   "w": 90,
+   "x": 1207,
    "y": 28
   },
   {
@@ -612,61 +657,61 @@
    "h": 32,
    "kind": "text",
    "label": "1x",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@143",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@144",
    "sx": 1.0,
-   "w": 96,
-   "x": 1160,
-   "y": 94
+   "w": 68,
+   "x": 1215,
+   "y": 81
   },
   {
    "extra": {},
-   "h": 116,
+   "h": 103,
    "kind": "button",
    "label": "battle_btn_pause",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@144",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@145",
    "sx": 1.0,
-   "w": 116,
-   "x": 1272,
+   "w": 89,
+   "x": 1302,
    "y": 28
   },
   {
    "extra": {},
-   "h": 102,
+   "h": 88,
    "kind": "image",
    "label": "battle_bar_castle",
-   "node": "/root/Main/screen_layer/Battle/@Control@145",
+   "node": "/root/Main/screen_layer/Battle/@Control@146",
    "sx": 1.0,
-   "w": 985,
-   "x": 404,
-   "y": 142
+   "w": 967,
+   "x": 418,
+   "y": 139
   },
   {
    "extra": {
-    "align": 1,
-    "fs": 30,
-    "req": 30,
-    "th": 35.0,
-    "tw": 83.0
+    "align": 2,
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 71.0
    },
-   "h": 53,
+   "h": 55,
    "kind": "text",
    "label": "100%",
-   "node": "/root/Main/screen_layer/Battle/@Control@145",
+   "node": "/root/Main/screen_layer/Battle/@Control@146",
    "sx": 1.0,
-   "w": 118,
-   "x": 1249,
-   "y": 166
+   "w": 110,
+   "x": 1243,
+   "y": 155
   },
   {
    "extra": {},
    "h": 40,
    "kind": "panel",
-   "label": "panel_chip",
-   "node": "/root/Main/screen_layer/Battle/@Control@146",
+   "label": "kit_box",
+   "node": "/root/Main/screen_layer/Battle/@Control@147",
    "sx": 1.0,
    "w": 74,
    "x": 410,
-   "y": 252
+   "y": 235
   },
   {
    "extra": {
@@ -679,22 +724,22 @@
    "h": 40,
    "kind": "text",
    "label": "창병",
-   "node": "/root/Main/screen_layer/Battle/@Control@146",
+   "node": "/root/Main/screen_layer/Battle/@Control@147",
    "sx": 1.0,
    "w": 66,
    "x": 414,
-   "y": 252
+   "y": 235
   },
   {
    "extra": {},
    "h": 40,
    "kind": "panel",
-   "label": "panel_chip",
-   "node": "/root/Main/screen_layer/Battle/@Control@146",
+   "label": "kit_box",
+   "node": "/root/Main/screen_layer/Battle/@Control@147",
    "sx": 1.0,
    "w": 52,
    "x": 492,
-   "y": 252
+   "y": 235
   },
   {
    "extra": {
@@ -707,11 +752,11 @@
    "h": 40,
    "kind": "text",
    "label": "촉",
-   "node": "/root/Main/screen_layer/Battle/@Control@146",
+   "node": "/root/Main/screen_layer/Battle/@Control@147",
    "sx": 1.0,
    "w": 44,
    "x": 496,
-   "y": 252
+   "y": 235
   },
   {
    "extra": {
@@ -724,7 +769,7 @@
    "h": 84,
    "kind": "text",
    "label": "하후돈 합류!",
-   "node": "/root/Main/screen_layer/Battle/@Control@147",
+   "node": "/root/Main/screen_layer/Battle/@Control@148",
    "sx": 1.0,
    "w": 1024,
    "x": 384,
@@ -741,22 +786,11 @@
    "h": 44,
    "kind": "text",
    "label": "장수가 나왔다!",
-   "node": "/root/Main/screen_layer/Battle/@Control@147",
+   "node": "/root/Main/screen_layer/Battle/@Control@148",
    "sx": 1.0,
    "w": 1024,
    "x": 384,
    "y": 686
-  },
-  {
-   "extra": {},
-   "h": 1040,
-   "kind": "panel",
-   "label": "panel_ctrl",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@152",
-   "sx": 1.0,
-   "w": 920,
-   "x": 436,
-   "y": 380
   },
   {
    "extra": {
@@ -766,58 +800,64 @@
     "th": 54.0,
     "tw": 92.0
    },
-   "h": 72,
+   "h": 69,
    "kind": "text",
    "label": "흡수",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@153",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@154",
    "sx": 1.0,
-   "w": 528,
-   "x": 632,
-   "y": 348
+   "w": 471,
+   "x": 660,
+   "y": 396
   },
   {
    "extra": {},
-   "h": 88,
+   "h": 86,
    "kind": "button",
-   "label": "tab_red",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@154",
+   "label": "btn_close",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@155",
    "sx": 1.0,
-   "w": 88,
-   "x": 1264,
-   "y": 350
+   "w": 89,
+   "x": 1202,
+   "y": 403
   },
   {
    "extra": {},
-   "h": 88,
-   "kind": "panel",
-   "label": "tab_red",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@154",
-   "sx": 1.0,
-   "w": 88,
-   "x": 1264,
-   "y": 350
-  },
-  {
-   "extra": {},
-   "h": 158,
+   "h": 111,
    "kind": "image",
    "label": "archer",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@158/@Control@156",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@160/@Control@158",
    "sx": 1.0,
-   "w": 158,
-   "x": 602,
-   "y": 486
+   "w": 120,
+   "x": 647,
+   "y": 533
+  },
+  {
+   "extra": {
+    "align": 1,
+    "fs": 30,
+    "req": 30,
+    "th": 35.0,
+    "tw": 60.0
+   },
+   "h": 40,
+   "kind": "text",
+   "label": "궁병",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@161",
+   "sx": 1.0,
+   "w": 239,
+   "x": 588,
+   "y": 676
   },
   {
    "extra": {},
-   "h": 158,
+   "h": 112,
    "kind": "image",
    "label": "guanyu",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@162/@Control@160",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@166/@Control@164",
    "sx": 1.0,
-   "w": 158,
-   "x": 1032,
-   "y": 486
+   "w": 119,
+   "x": 1027,
+   "y": 533
   },
   {
    "extra": {
@@ -830,11 +870,11 @@
    "h": 36,
    "kind": "text",
    "label": "★2",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@162/@Control@161",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@166/@Control@165",
    "sx": 1.0,
-   "w": 170,
-   "x": 1026,
-   "y": 610
+   "w": 131,
+   "x": 1021,
+   "y": 611
   },
   {
    "extra": {
@@ -844,284 +884,228 @@
     "th": 35.0,
     "tw": 60.0
    },
-   "h": 44,
-   "kind": "text",
-   "label": "궁병",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@164",
-   "sx": 1.0,
-   "w": 230,
-   "x": 566,
-   "y": 656
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 30,
-    "req": 30,
-    "th": 35.0,
-    "tw": 60.0
-   },
-   "h": 44,
+   "h": 40,
    "kind": "text",
    "label": "관우",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@164",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@167",
    "sx": 1.0,
-   "w": 230,
-   "x": 996,
-   "y": 656
+   "w": 237,
+   "x": 968,
+   "y": 676
   },
   {
    "extra": {
     "align": 1,
-    "fs": 32,
-    "req": 32,
-    "th": 38.0,
-    "tw": 423.0
-   },
-   "h": 44,
-   "kind": "text",
-   "label": "궁병의 속성 하나를 고르세요",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@165",
-   "sx": 1.0,
-   "w": 880,
-   "x": 456,
-   "y": 710
-  },
-  {
-   "extra": {
-    "align": 1,
-    "fs": 24,
-    "req": 24,
-    "th": 28.0,
-    "tw": 146.0
+    "fs": 26,
+    "req": 26,
+    "th": 31.0,
+    "tw": 543.0
    },
    "h": 36,
    "kind": "text",
-   "label": "속성 칸 1 / 1",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@165",
+   "label": "궁병의 속성 하나를 고르세요 · 속성 칸 1 / 2",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@169",
    "sx": 1.0,
-   "w": 880,
-   "x": 456,
-   "y": 754
+   "w": 718,
+   "x": 538,
+   "y": 716
   },
   {
    "extra": {},
-   "h": 250,
+   "h": 245,
    "kind": "button",
-   "label": "panel_small",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@166",
+   "label": "absorb_card_0",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@170",
    "sx": 1.0,
-   "w": 270,
-   "x": 466,
-   "y": 800
-  },
-  {
-   "extra": {},
-   "h": 250,
-   "kind": "panel",
-   "label": "panel_small",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@166",
-   "sx": 1.0,
-   "w": 270,
-   "x": 466,
-   "y": 800
+   "w": 232,
+   "x": 538,
+   "y": 692
   },
   {
    "extra": {
     "align": 1,
-    "fs": 36,
-    "req": 36,
-    "th": 42.0,
-    "tw": 72.0
+    "fs": 30,
+    "req": 30,
+    "th": 35.0,
+    "tw": 60.0
    },
-   "h": 50,
+   "h": 40,
    "kind": "text",
    "label": "장궁",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@166",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@170",
    "sx": 1.0,
-   "w": 250,
-   "x": 476,
-   "y": 814
+   "w": 167,
+   "x": 570,
+   "y": 747
   },
   {
    "extra": {
     "align": 1,
-    "fs": 26,
-    "req": 26,
-    "th": 31.0,
-    "tw": 89.0
+    "fs": 22,
+    "req": 22,
+    "th": 26.0,
+    "tw": 75.0
    },
-   "h": 36,
+   "h": 30,
    "kind": "text",
    "label": "새 속성",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@166",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@170",
    "sx": 1.0,
-   "w": 250,
-   "x": 476,
-   "y": 866
+   "w": 167,
+   "x": 570,
+   "y": 789
   },
   {
    "extra": {
-    "fs": 24,
+    "fs": 20,
     "lines": 1,
-    "need_h": 32.4,
+    "need_h": 27.0,
     "para": true,
-    "req": 24
+    "req": 20
    },
-   "h": 124,
+   "h": 57,
    "kind": "text",
    "label": "사거리 +30",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@166",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@170",
    "sx": 1.0,
-   "w": 238,
-   "x": 482,
-   "y": 912
+   "w": 159,
+   "x": 574,
+   "y": 827
   },
   {
    "extra": {},
-   "h": 250,
+   "h": 245,
    "kind": "button",
-   "label": "panel_small",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@167",
+   "label": "absorb_card_1",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@171",
    "sx": 1.0,
-   "w": 270,
-   "x": 756,
-   "y": 800
-  },
-  {
-   "extra": {},
-   "h": 250,
-   "kind": "panel",
-   "label": "panel_small",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@167",
-   "sx": 1.0,
-   "w": 270,
-   "x": 756,
-   "y": 800
+   "w": 233,
+   "x": 781,
+   "y": 692
   },
   {
    "extra": {
     "align": 1,
-    "fs": 36,
-    "req": 36,
-    "th": 42.0,
-    "tw": 72.0
+    "fs": 30,
+    "req": 30,
+    "th": 35.0,
+    "tw": 60.0
    },
-   "h": 50,
+   "h": 40,
    "kind": "text",
    "label": "속사",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@167",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@171",
    "sx": 1.0,
-   "w": 250,
-   "x": 766,
-   "y": 814
+   "w": 168,
+   "x": 814,
+   "y": 747
   },
   {
    "extra": {
     "align": 1,
-    "fs": 26,
-    "req": 26,
-    "th": 31.0,
-    "tw": 154.0
+    "fs": 22,
+    "req": 22,
+    "th": 26.0,
+    "tw": 97.0
    },
-   "h": 36,
+   "h": 30,
    "kind": "text",
-   "label": "Lv.1 → Lv.2",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@167",
+   "label": "Lv.1 → 2",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@171",
    "sx": 1.0,
-   "w": 250,
-   "x": 766,
-   "y": 866
+   "w": 168,
+   "x": 814,
+   "y": 789
   },
   {
    "extra": {
-    "fs": 24,
+    "fs": 20,
     "lines": 1,
-    "need_h": 32.4,
+    "need_h": 27.0,
     "para": true,
-    "req": 24
+    "req": 20
    },
-   "h": 124,
+   "h": 57,
    "kind": "text",
    "label": "공격 속도 +17%",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@167",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@171",
    "sx": 1.0,
-   "w": 238,
-   "x": 772,
-   "y": 912
+   "w": 160,
+   "x": 818,
+   "y": 827
   },
   {
    "extra": {},
-   "h": 250,
+   "h": 245,
    "kind": "button",
-   "label": "panel_small",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@168",
+   "label": "absorb_card_2",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@172",
    "sx": 1.0,
-   "w": 270,
-   "x": 1046,
-   "y": 800
-  },
-  {
-   "extra": {},
-   "h": 250,
-   "kind": "panel",
-   "label": "panel_small",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@168",
-   "sx": 1.0,
-   "w": 270,
-   "x": 1046,
-   "y": 800
+   "w": 232,
+   "x": 1024,
+   "y": 692
   },
   {
    "extra": {
     "align": 1,
-    "fs": 36,
-    "req": 36,
-    "th": 42.0,
-    "tw": 108.0
+    "fs": 30,
+    "req": 30,
+    "th": 35.0,
+    "tw": 90.0
    },
-   "h": 50,
+   "h": 40,
    "kind": "text",
    "label": "정조준",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@168",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@172",
    "sx": 1.0,
-   "w": 250,
+   "w": 167,
    "x": 1056,
-   "y": 814
+   "y": 747
   },
   {
    "extra": {
     "align": 1,
-    "fs": 26,
-    "req": 26,
-    "th": 31.0,
-    "tw": 89.0
+    "fs": 22,
+    "req": 22,
+    "th": 26.0,
+    "tw": 75.0
    },
-   "h": 36,
+   "h": 30,
    "kind": "text",
    "label": "새 속성",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@168",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@172",
    "sx": 1.0,
-   "w": 250,
+   "w": 167,
    "x": 1056,
-   "y": 866
+   "y": 789
   },
   {
    "extra": {
-    "fs": 24,
-    "lines": 1,
-    "need_h": 32.4,
+    "fs": 20,
+    "lines": 2,
+    "need_h": 54.0,
     "para": true,
-    "req": 24
+    "req": 20
    },
-   "h": 124,
+   "h": 57,
    "kind": "text",
    "label": "치명타 피해 +25%",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@168",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@172",
    "sx": 1.0,
-   "w": 238,
-   "x": 1062,
-   "y": 912
+   "w": 159,
+   "x": 1060,
+   "y": 827
+  },
+  {
+   "extra": {},
+   "h": 93,
+   "kind": "button",
+   "label": "absorb_slot_0",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@173",
+   "sx": 1.0,
+   "w": 232,
+   "x": 538,
+   "y": 957
   },
   {
    "extra": {
@@ -1129,121 +1113,211 @@
     "fs": 28,
     "req": 28,
     "th": 33.0,
-    "tw": 531.0
+    "tw": 122.0
    },
-   "h": 40,
+   "h": 93,
    "kind": "text",
-   "label": "칸이 가득 찼어요 · 바꿀 속성을 고르세요",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@169",
-   "sx": 1.0,
-   "w": 880,
-   "x": 456,
-   "y": 1070
-  },
-  {
-   "extra": {},
-   "h": 80,
-   "kind": "button",
    "label": "속사 Lv.1",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@170",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@173",
    "sx": 1.0,
-   "w": 260,
-   "x": 761,
-   "y": 1120
+   "w": 216,
+   "x": 546,
+   "y": 957
   },
   {
    "extra": {},
-   "h": 80,
-   "kind": "panel",
-   "label": "tab_purple",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@170",
+   "h": 93,
+   "kind": "button",
+   "label": "absorb_slot_1",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@174",
    "sx": 1.0,
-   "w": 260,
-   "x": 761,
-   "y": 1120
+   "w": 233,
+   "x": 781,
+   "y": 957
   },
   {
    "extra": {
     "align": 1,
-    "fs": 27,
-    "req": 27,
-    "th": 32.0,
-    "tw": 117.0
+    "fs": 40,
+    "req": 40,
+    "th": 47.0,
+    "tw": 30.0
    },
-   "h": 80,
+   "h": 93,
    "kind": "text",
-   "label": "속사 Lv.1",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@170",
+   "label": "+",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@174",
    "sx": 1.0,
-   "w": 244,
-   "x": 769,
-   "y": 1120
+   "w": 217,
+   "x": 789,
+   "y": 957
   },
   {
    "extra": {},
-   "h": 120,
+   "h": 93,
    "kind": "button",
-   "label": "tab_yellow",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@171",
+   "label": "absorb_slot_2",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@175",
    "sx": 1.0,
-   "w": 330,
-   "x": 916,
-   "y": 1260
+   "w": 232,
+   "x": 1024,
+   "y": 957
   },
   {
    "extra": {},
-   "h": 120,
-   "kind": "panel",
-   "label": "tab_yellow",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@171",
-   "sx": 1.0,
-   "w": 330,
-   "x": 916,
-   "y": 1260
-  },
-  {
-   "extra": {},
-   "h": 74,
+   "h": 40,
    "kind": "image",
-   "label": "act_absorb",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@171",
+   "label": "ic_lock",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@175",
    "sx": 1.0,
-   "w": 74,
-   "x": 1044,
-   "y": 1283
+   "w": 40,
+   "x": 1084,
+   "y": 977
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 47.0
+   },
+   "h": 93,
+   "kind": "text",
+   "label": "★3",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@175",
+   "sx": 1.0,
+   "w": 120,
+   "x": 1128,
+   "y": 957
   },
   {
    "extra": {},
-   "h": 120,
+   "h": 92,
    "kind": "button",
-   "label": "tab_wood",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@172",
+   "label": "absorb_slot_0",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@176",
    "sx": 1.0,
-   "w": 330,
-   "x": 546,
-   "y": 1260
+   "w": 232,
+   "x": 538,
+   "y": 1053
   },
   {
    "extra": {},
-   "h": 120,
-   "kind": "panel",
-   "label": "tab_wood",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@172",
-   "sx": 1.0,
-   "w": 330,
-   "x": 546,
-   "y": 1260
-  },
-  {
-   "extra": {},
-   "h": 74,
+   "h": 40,
    "kind": "image",
-   "label": "act_cancel",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@172",
+   "label": "ic_lock",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@176",
    "sx": 1.0,
-   "w": 74,
-   "x": 674,
-   "y": 1283
+   "w": 40,
+   "x": 598,
+   "y": 1073
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 47.0
+   },
+   "h": 92,
+   "kind": "text",
+   "label": "★4",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@176",
+   "sx": 1.0,
+   "w": 120,
+   "x": 642,
+   "y": 1053
+  },
+  {
+   "extra": {},
+   "h": 92,
+   "kind": "button",
+   "label": "absorb_slot_1",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@177",
+   "sx": 1.0,
+   "w": 233,
+   "x": 781,
+   "y": 1053
+  },
+  {
+   "extra": {},
+   "h": 40,
+   "kind": "image",
+   "label": "ic_lock",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@177",
+   "sx": 1.0,
+   "w": 40,
+   "x": 841,
+   "y": 1073
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 47.0
+   },
+   "h": 92,
+   "kind": "text",
+   "label": "★5",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@177",
+   "sx": 1.0,
+   "w": 120,
+   "x": 885,
+   "y": 1053
+  },
+  {
+   "extra": {},
+   "h": 92,
+   "kind": "button",
+   "label": "absorb_slot_2",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@178",
+   "sx": 1.0,
+   "w": 232,
+   "x": 1024,
+   "y": 1053
+  },
+  {
+   "extra": {},
+   "h": 40,
+   "kind": "image",
+   "label": "ic_lock",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@178",
+   "sx": 1.0,
+   "w": 40,
+   "x": 1084,
+   "y": 1073
+  },
+  {
+   "extra": {
+    "align": 0,
+    "fs": 28,
+    "req": 28,
+    "th": 33.0,
+    "tw": 47.0
+   },
+   "h": 92,
+   "kind": "text",
+   "label": "★6",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@178",
+   "sx": 1.0,
+   "w": 120,
+   "x": 1128,
+   "y": 1053
+  },
+  {
+   "extra": {},
+   "h": 133,
+   "kind": "button",
+   "label": "absorb_btn_ok",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@179",
+   "sx": 1.0,
+   "w": 372,
+   "x": 710,
+   "y": 1165
   },
   {
    "extra": {
@@ -1266,7 +1340,7 @@
    "h": 1328,
    "kind": "area",
    "label": "battle_field",
-   "node": "/root/Main/screen_layer/Battle/@Control@130",
+   "node": "/root/Main/screen_layer/Battle/@Control@131",
    "w": 1024,
    "x": 384,
    "y": 0
@@ -1279,7 +1353,7 @@
    "h": 340,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Battle/@Control@131",
+   "node": "/root/Main/screen_layer/Battle/@Control@132",
    "w": 140,
    "x": 1268,
    "y": 356
@@ -1289,78 +1363,26 @@
     "clip": false,
     "parent_clip": false
    },
-   "h": 518,
+   "h": 517,
    "kind": "area",
    "label": "slot_view",
-   "node": "/root/Main/screen_layer/Battle/@Control@132",
-   "w": 537,
-   "x": 384,
-   "y": 1274
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 518,
-   "kind": "area",
-   "label": "draw_layer",
    "node": "/root/Main/screen_layer/Battle/@Control@133",
-   "w": 487,
-   "x": 921,
-   "y": 1274
+   "w": 526,
+   "x": 396,
+   "y": 1248
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 70,
+   "h": 517,
    "kind": "area",
    "label": "draw_layer",
    "node": "/root/Main/screen_layer/Battle/@Control@134",
-   "w": 152,
-   "x": 955,
-   "y": 1640
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 310,
-   "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@135",
-   "w": 116,
-   "x": 975,
-   "y": 1318
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 199,
-   "kind": "area",
-   "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Battle/@Control@136",
-   "w": 111,
-   "x": 977,
-   "y": 1318
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 198,
-   "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/screen_layer/Battle/@BaseButton@137",
-   "w": 270,
-   "x": 1114,
-   "y": 1335
+   "w": 469,
+   "x": 929,
+   "y": 1248
   },
   {
    "extra": {
@@ -1368,76 +1390,128 @@
     "parent_clip": false
    },
    "h": 110,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/screen_layer/Battle/@Control@135",
+   "w": 174,
+   "x": 944,
+   "y": 1600
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 283,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@136",
+   "w": 96,
+   "x": 981,
+   "y": 1287
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 249,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/screen_layer/Battle/@Control@137",
+   "w": 84,
+   "x": 987,
+   "y": 1287
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 195,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@138",
+   "w": 232,
+   "x": 1134,
+   "y": 1287
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 233,
    "kind": "area",
    "label": "px_button",
    "node": "/root/Main/screen_layer/Battle/@BaseButton@139",
-   "w": 218,
-   "x": 400,
-   "y": 28
+   "w": 234,
+   "x": 1134,
+   "y": 1504
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 110,
+   "h": 97,
    "kind": "area",
    "label": "px_button",
    "node": "/root/Main/screen_layer/Battle/@BaseButton@140",
-   "w": 177,
-   "x": 619,
-   "y": 28
+   "w": 197,
+   "x": 419,
+   "y": 31
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 110,
+   "h": 97,
    "kind": "area",
    "label": "px_button",
    "node": "/root/Main/screen_layer/Battle/@BaseButton@141",
-   "w": 181,
-   "x": 794,
-   "y": 28
+   "w": 201,
+   "x": 622,
+   "y": 31
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 110,
+   "h": 97,
    "kind": "area",
    "label": "px_button",
    "node": "/root/Main/screen_layer/Battle/@BaseButton@142",
-   "w": 179,
-   "x": 973,
-   "y": 28
+   "w": 198,
+   "x": 828,
+   "y": 31
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 116,
+   "h": 97,
    "kind": "area",
    "label": "px_button",
    "node": "/root/Main/screen_layer/Battle/@BaseButton@143",
-   "w": 118,
-   "x": 1152,
-   "y": 28
+   "w": 169,
+   "x": 1031,
+   "y": 31
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 116,
+   "h": 103,
    "kind": "area",
    "label": "px_button",
    "node": "/root/Main/screen_layer/Battle/@BaseButton@144",
-   "w": 116,
-   "x": 1272,
+   "w": 90,
+   "x": 1207,
    "y": 28
   },
   {
@@ -1445,13 +1519,26 @@
     "clip": false,
     "parent_clip": false
    },
-   "h": 102,
+   "h": 103,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/screen_layer/Battle/@BaseButton@145",
+   "w": 89,
+   "x": 1302,
+   "y": 28
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 88,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Battle/@Control@145",
-   "w": 985,
-   "x": 404,
-   "y": 142
+   "node": "/root/Main/screen_layer/Battle/@Control@146",
+   "w": 967,
+   "x": 418,
+   "y": 139
   },
   {
    "extra": {
@@ -1461,10 +1548,10 @@
    "h": 120,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Battle/@Control@146",
+   "node": "/root/Main/screen_layer/Battle/@Control@147",
    "w": 968,
    "x": 410,
-   "y": 252
+   "y": 235
   },
   {
    "extra": {
@@ -1474,7 +1561,7 @@
    "h": 220,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Battle/@Control@147",
+   "node": "/root/Main/screen_layer/Battle/@Control@148",
    "w": 1024,
    "x": 384,
    "y": 560
@@ -1487,7 +1574,7 @@
    "h": 120,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/screen_layer/Battle/@Control@148",
+   "node": "/root/Main/screen_layer/Battle/@Control@149",
    "w": 944,
    "x": 424,
    "y": 300
@@ -1500,7 +1587,7 @@
    "h": 1792,
    "kind": "area",
    "label": "absorb",
-   "node": "/root/Main/popup_layer/@Control@149",
+   "node": "/root/Main/popup_layer/@Control@150",
    "w": 1792,
    "x": 0,
    "y": 0
@@ -1513,7 +1600,7 @@
    "h": 1792,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@150",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@151",
    "w": 1792,
    "x": 0,
    "y": 0
@@ -1523,65 +1610,52 @@
     "clip": false,
     "parent_clip": false
    },
-   "h": 1104,
+   "h": 1792,
    "kind": "area",
    "label": "Control",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151",
-   "w": 920,
-   "x": 436,
-   "y": 316
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152",
+   "w": 1024,
+   "x": 384,
+   "y": 0
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 1040,
+   "h": 896,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@152",
-   "w": 920,
-   "x": 436,
-   "y": 380
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@153",
+   "w": 792,
+   "x": 500,
+   "y": 427
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 124,
+   "h": 97,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@153",
-   "w": 560,
-   "x": 616,
-   "y": 322
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@154",
+   "w": 527,
+   "x": 632,
+   "y": 386
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 88,
+   "h": 86,
    "kind": "area",
    "label": "px_button",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@154",
-   "w": 88,
-   "x": 1264,
-   "y": 350
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 170,
-   "kind": "area",
-   "label": "Control",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@158",
-   "w": 170,
-   "x": 596,
-   "y": 480
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@155",
+   "w": 89,
+   "x": 1202,
+   "y": 403
   },
   {
    "extra": {
@@ -1591,140 +1665,49 @@
    "h": 170,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@158/@Control@155",
-   "w": 170,
-   "x": 596,
-   "y": 480
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@156",
+   "w": 179,
+   "x": 618,
+   "y": 504
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 123,
+   "kind": "area",
+   "label": "Control",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@160",
+   "w": 132,
+   "x": 641,
+   "y": 527
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 123,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@160/@Control@157",
+   "w": 132,
+   "x": 641,
+   "y": 527
   },
   {
    "extra": {
     "clip": true,
     "parent_clip": false
    },
-   "h": 158,
+   "h": 111,
    "kind": "area",
    "label": "art_rect",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@158/@Control@156",
-   "w": 158,
-   "x": 602,
-   "y": 486
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 170,
-   "kind": "area",
-   "label": "Control",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@162",
-   "w": 170,
-   "x": 1026,
-   "y": 480
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 170,
-   "kind": "area",
-   "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@162/@Control@159",
-   "w": 170,
-   "x": 1026,
-   "y": 480
-  },
-  {
-   "extra": {
-    "clip": true,
-    "parent_clip": false
-   },
-   "h": 158,
-   "kind": "area",
-   "label": "art_rect",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@162/@Control@160",
-   "w": 158,
-   "x": 1032,
-   "y": 486
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 110,
-   "kind": "area",
-   "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@163",
-   "w": 220,
-   "x": 786,
-   "y": 510
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 44,
-   "kind": "area",
-   "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@164",
-   "w": 920,
-   "x": 436,
-   "y": 656
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 80,
-   "kind": "area",
-   "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@165",
-   "w": 880,
-   "x": 456,
-   "y": 710
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 250,
-   "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@166",
-   "w": 270,
-   "x": 466,
-   "y": 800
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 250,
-   "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@167",
-   "w": 270,
-   "x": 756,
-   "y": 800
-  },
-  {
-   "extra": {
-    "clip": false,
-    "parent_clip": false
-   },
-   "h": 250,
-   "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@168",
-   "w": 270,
-   "x": 1046,
-   "y": 800
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@160/@Control@158",
+   "w": 120,
+   "x": 647,
+   "y": 533
   },
   {
    "extra": {
@@ -1734,49 +1717,231 @@
    "h": 40,
    "kind": "area",
    "label": "draw_layer",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@Control@169",
-   "w": 880,
-   "x": 456,
-   "y": 1070
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@161",
+   "w": 239,
+   "x": 588,
+   "y": 676
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 80,
+   "h": 170,
    "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@170",
-   "w": 260,
-   "x": 761,
-   "y": 1120
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@162",
+   "w": 177,
+   "x": 998,
+   "y": 504
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 120,
+   "h": 124,
    "kind": "area",
-   "label": "px_button",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@171",
-   "w": 330,
-   "x": 916,
-   "y": 1260
+   "label": "Control",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@166",
+   "w": 131,
+   "x": 1021,
+   "y": 527
   },
   {
    "extra": {
     "clip": false,
     "parent_clip": false
    },
-   "h": 120,
+   "h": 124,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@166/@Control@163",
+   "w": 131,
+   "x": 1021,
+   "y": 527
+  },
+  {
+   "extra": {
+    "clip": true,
+    "parent_clip": false
+   },
+   "h": 112,
+   "kind": "area",
+   "label": "art_rect",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@166/@Control@164",
+   "w": 119,
+   "x": 1027,
+   "y": 533
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 40,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@167",
+   "w": 237,
+   "x": 968,
+   "y": 676
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 95,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@168",
+   "w": 116,
+   "x": 839,
+   "y": 544
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 36,
+   "kind": "area",
+   "label": "draw_layer",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@Control@169",
+   "w": 718,
+   "x": 538,
+   "y": 716
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 245,
    "kind": "area",
    "label": "px_button",
-   "node": "/root/Main/popup_layer/@Control@149/@Control@151/@BaseButton@172",
-   "w": 330,
-   "x": 546,
-   "y": 1260
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@170",
+   "w": 232,
+   "x": 538,
+   "y": 692
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 245,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@171",
+   "w": 233,
+   "x": 781,
+   "y": 692
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 245,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@172",
+   "w": 232,
+   "x": 1024,
+   "y": 692
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 93,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@173",
+   "w": 232,
+   "x": 538,
+   "y": 957
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 93,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@174",
+   "w": 233,
+   "x": 781,
+   "y": 957
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 93,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@175",
+   "w": 232,
+   "x": 1024,
+   "y": 957
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 92,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@176",
+   "w": 232,
+   "x": 538,
+   "y": 1053
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 92,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@177",
+   "w": 233,
+   "x": 781,
+   "y": 1053
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 92,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@178",
+   "w": 232,
+   "x": 1024,
+   "y": 1053
+  },
+  {
+   "extra": {
+    "clip": false,
+    "parent_clip": false
+   },
+   "h": 133,
+   "kind": "area",
+   "label": "px_button",
+   "node": "/root/Main/popup_layer/@Control@150/@Control@152/@BaseButton@179",
+   "w": 372,
+   "x": 710,
+   "y": 1165
   },
   {
    "extra": {

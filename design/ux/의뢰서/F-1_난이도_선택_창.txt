@@ -1,0 +1,25 @@
+IMAGE 1 is a finished screen of my 2D pixel art game (set in China's Three Kingdoms era). Draw one more screen of the same game: the difficulty select window. Keep it simple and clean, in exactly the same style as IMAGE 1: same pixel size, same dark outlines, same flat brown panels with a thin dark outline and a thin lighter inner line, same dark-brown empty slots for numbers, same icon style. Flat: no bevels, no gloss, no gradients, no drop shadows.
+
+IMAGE 2 (grey boxes with numbers) only shows WHERE things go. Follow its positions and sizes, but do not copy the grey, the numbers or any letters.
+
+If another window of this game is attached as an extra image, use exactly the same window frame, title bar and close button as in it.
+
+Behind the window: the lobby screen of IMAGE 1, darkened as if covered by a 70% black veil.
+
+The window (numbers of IMAGE 2):
+1. Window frame: a tall brown panel.
+2. Title bar across the top edge of the window: an empty tan strip.
+3. Close button at the top right corner: a small red square button with a white X.
+4. Enemy info box: a wide, low, empty dark-brown slot.
+5. A small square button right of it, with a dice icon.
+6. Difficulty button "normal": a wide button with ONE skull icon in the middle.
+7. Difficulty button "hard": the same button with TWO skull icons side by side.
+8. Difficulty button "hell": the same button but red, with THREE skull icons side by side.
+9. "Go back one stage" button: a lower button with a left-pointing arrow icon at the left, and at the right a gold bar icon with an empty dark slot for a number.
+
+Rules:
+- Every icon listed above must already be drawn. No blank placeholders where an icon is listed.
+- Places described as "empty" stay empty: the game writes the text, numbers and faces there.
+- No text, letters or numbers anywhere. No characters.
+- Every piece is opaque and has a closed dark outline. Pieces do not overlap and do not touch each other.
+- No sparkles, no watermark. Tall portrait image, 9:16.

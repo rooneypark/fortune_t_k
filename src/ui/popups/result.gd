@@ -19,12 +19,13 @@ func setup(params: Dictionary) -> void:
 	dim_closes = false
 	show_close = false
 	_out = p.get("out", {})
-	# 그림 창: 웨이브 승리 창 그림을 그대로 쓴다 (2026-11-24 민수 님). 패배는 제목 띠를 잿빛으로.
-	_art = use_art("wave")
+	# 8차 시안(결과8_시안1.png)의 자리 그대로, 틀 · 제목 띠 · 칸 · 버튼은 공용 부품. 승리는 금색 제목 띠, 패배는 잿빛.
+	# 패배 + 이어하기가 있으면 버튼이 한 줄 더 있어 창이 길다.
+	var tall := not victory and bool(p.get("can_continue", false))
+	use_kit(Rect2(116, 426, 792, 858 + (124 if tall else 0)), Rect2(244, 384, 536, 100), Rect2(), "kit_frame", "kit_title_gold" if victory else "kit_title")
 	title_size = 42
-	title_box = func(sz: Vector2) -> Rect2: return Rect2(sz.x * 0.16, 16, sz.x * 0.68, 66)
 	if not victory:
-		title_tint = Color(0.55, 0.55, 0.6)
+		title_tint = Color(0.6, 0.6, 0.66)
 
 
 func build() -> void:
@@ -83,78 +84,75 @@ func build() -> void:
 	set_process(true)
 
 
-# ---------------------------------------------------------------- 그림 창 (웨이브 승리 창 그림, 2026-11-24)
+# ---------------------------------------------------------------- 그림 창 (8차 시안 자리)
 
-## 그림 창: 한 줄 요약 · 기록 2줄(2칸씩) · 최고 활약 · 보상 칸 · (패배: 이어하기) · 로비로 · 다음/다시.
-## 부품은 웨이브 승리 창 그림 (wave_row · wave_mvp_* · wave_foes · wave_btn_next) + 공용 나무 버튼 btn_plain.
+const HEAD_AT := Rect2(148, 512, 728, 90)
+const CELL := Rect2(148, 625, 175, 121)        # 기록 칸 4개. 칸 간격 184
+const MVP_FACE := Rect2(154, 763, 143, 137)
+const MVP_INFO := Rect2(309, 763, 561, 137)
+const REWARD := Rect2(148, 916, 728, 185)
+const BTN_Y := 1123.0
+
+
+## 그림 창: 한 줄 요약 · 기록 4칸 · 최고 활약 · 보상 칸 · (패배: 이어하기) · 로비로 · 다음/다시.
 func _build_art() -> void:
-	var x0 := _r("row_0").position.x
-	var cw := _r("row_0").size.x
 	var head := DrawLayer.make(func(ci: Control) -> void:
 		var s := DB.t("result.clear", ["%d %s" % [int(p["stage"]), String(DB.difficulty(int(p["diff"]))["name"])]]) if victory else DB.t("result.fallen")
-		Px.text(ci, s, Rect2(Vector2.ZERO, ci.size), 40, Px.GOLD if victory else Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 7))
-	_place(head, Rect2(x0, 478, cw, 60))
+		Px.text(ci, s, Rect2(Vector2.ZERO, ci.size), 38, Px.GOLD if victory else Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 7))
+	_place(head, HEAD_AT)
 	var st: Dictionary = p["stats"]
 	var cells := [[DB.t("result.waves"), "%d/%d" % [int(p["waves"]), 10]], [DB.t("result.kills"), Px.num(int(st.get("kills", 0)))],
 		[DB.t("result.spins"), str(int(st.get("spins", 0)))], [DB.t("result.jackpots"), str(int(st.get("jackpots", 0)))]]
-	for row in 2:
-		var r := Rect2(x0, 546 + row * 104, cw, _r("row_0").size.y)
-		var pair := [cells[row * 2], cells[row * 2 + 1]]
-		var tex := "wave_row_%d" % row
-		var d := DrawLayer.make(func(ci: Control) -> void:
-			ci.draw_texture_rect(Px.tex(tex), Rect2(Vector2.ZERO, ci.size), false)
-			var half := ci.size.x * 0.5
-			for k in 2:
-				var c: Array = pair[k]
-				Px.text(ci, String(c[0]), Rect2(k * half + 28, 0, half * 0.5, ci.size.y), 28, Px.MUTED, HORIZONTAL_ALIGNMENT_LEFT)
-				Px.text(ci, String(c[1]), Rect2(k * half + half * 0.45, 0, half * 0.5, ci.size.y), 36, Px.GOLD, HORIZONTAL_ALIGNMENT_RIGHT)
-			ci.draw_rect(Rect2(half - 2, 16, 4, ci.size.y - 32), Color(0, 0, 0, 0.35)))
-		_place(d, r)
-	var fr := Rect2(x0, 764, _r("mvp_face").size.x, _r("mvp_face").size.y)
-	var ir := Rect2(_r("mvp_info").position.x, 764, _r("mvp_info").size.x, _r("mvp_info").size.y)
-	_place(_pic("wave_mvp_face"), fr)
-	_place(_pic("wave_mvp_info"), ir)
+	for i in cells.size():
+		var c: Array = cells[i]
+		var box := DrawLayer.make(func(ci: Control) -> void:
+			Px.nine(ci, "kit_box", Rect2(Vector2.ZERO, ci.size))
+			Px.text(ci, String(c[0]), Rect2(0, 16, ci.size.x, 34), 22, Px.MUTED)
+			Px.text(ci, String(c[1]), Rect2(0, 52, ci.size.x, 52), 36, Px.GOLD))
+		_place(box, Rect2(CELL.position + Vector2(i * 184.3, 0), CELL.size))
 	var mvp := String(p.get("mvp", ""))
+	var face := DrawLayer.make(func(ci: Control) -> void: Px.nine(ci, "kit_box", Rect2(Vector2.ZERO, ci.size)))
+	_place(face, MVP_FACE)
 	if mvp != "":
-		var inner := fr.grow(-fr.size.x * 0.12)
+		var inner := MVP_FACE.grow(-16)
 		_place(W.portrait(mvp, inner.size), inner)
 	var ml := DrawLayer.make(func(ci: Control) -> void:
-		Px.text(ci, DB.t("result.mvp"), Rect2(28, 22, ci.size.x - 56, 40), 26, Px.MUTED, HORIZONTAL_ALIGNMENT_LEFT)
-		Px.text(ci, DB.unit_name(mvp) if mvp != "" else "-", Rect2(28, 70, ci.size.x - 56, 60), 42, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT))
-	_place(ml, ir)
+		Px.nine(ci, "kit_box", Rect2(Vector2.ZERO, ci.size))
+		Px.text(ci, DB.t("result.mvp"), Rect2(28, 18, ci.size.x - 56, 36), 24, Px.MUTED, HORIZONTAL_ALIGNMENT_LEFT)
+		Px.text(ci, DB.unit_name(mvp) if mvp != "" else "-", Rect2(28, 58, ci.size.x - 56, 56), 40, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT))
+	_place(ml, MVP_INFO)
 	var rw := DrawLayer.make(func(ci: Control) -> void:
-		ci.draw_texture_rect(Px.tex("wave_foes"), Rect2(Vector2.ZERO, ci.size), false)
-		# 칸 테두리 안쪽으로 (리본 장식이 가운데 위에 있다)
-		ci.draw_set_transform(Vector2(14, 22))
+		Px.nine(ci, "kit_box", Rect2(Vector2.ZERO, ci.size))
+		ci.draw_set_transform(Vector2(14, 8))
 		_draw_rewards(ci)
 		ci.draw_set_transform(Vector2.ZERO))
-	_place(rw, Rect2(x0, 950, cw, _r("foes").size.y))
-	var by := 1290.0
+	_place(rw, REWARD)
+	var by := BTN_Y
 	if not victory and bool(p.get("can_continue", false)):
-		var cont := PxButton.make("btn_plain", false, Vector2(cw * 0.66, 100))
+		# 이어하기: 보라 버튼 (금괴 + 값)
+		var cont := PxButton.make("kit_btn_purple", true, Vector2(467, 110))
 		cont.pulse = true
 		cont.overlay = func(b: PxButton, off: Vector2) -> void:
-			Px.text(b, DB.t("result.continue"), Rect2(off + Vector2(0, 0), Vector2(b.size.x * 0.6, b.size.y)), 34, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 6)
-			Px.fit(b, Px.tex("icon_gold"), Rect2(off + Vector2(b.size.x * 0.6, b.size.y * 0.5 - 22), Vector2(44, 44)))
-			Px.text(b, Px.num(int(DB.rules["continue_gold"])), Rect2(off + Vector2(b.size.x * 0.6 + 50, 0), Vector2(b.size.x * 0.4 - 70, b.size.y)), 30, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT, 6)
+			Px.text(b, DB.t("result.continue"), Rect2(off + Vector2(16, 0), Vector2(b.size.x * 0.56, b.size.y)), 32, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 6)
+			Px.fit(b, Px.tex("icon_gold"), Rect2(off + Vector2(b.size.x * 0.6, b.size.y * 0.5 - 22), Vector2(48, 44)))
+			Px.text(b, Px.num(int(DB.rules["continue_gold"])), Rect2(off + Vector2(b.size.x * 0.6 + 54, 0), Vector2(b.size.x * 0.4 - 70, b.size.y)), 28, Px.GOLD, HORIZONTAL_ALIGNMENT_LEFT, 6)
 		cont.pressed.connect(func() -> void:
 			var b: Node = Game.app.current
 			if b != null and b.has_method("continue_run") and b.continue_run():
 				close())
-		_place(cont, Rect2(x0 + cw * 0.17, 1174, cw * 0.66, 100))
-	var bw := (cw - 20) * 0.5
-	var home := PxButton.make("btn_plain", false, Vector2(bw, 120))
-	home.overlay = func(b: PxButton, off: Vector2) -> void:
-		Px.text(b, DB.t("result.lobby"), Rect2(off, b.size), 36, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 6)
+		_place(cont, Rect2(278, by, 467, 110))
+		by += 124
+	# 로비로 (어두운 버튼) · 다음/다시 (빨간 버튼)
+	var home := PxButton.make("kit_box", true, Vector2(354, 110))
+	home.font_size = 34
+	home.text = DB.t("result.lobby")
 	home.pressed.connect(func() -> void: _leave("lobby"))
-	_place(home, Rect2(x0, by, bw, 120))
-	var again_label := DB.t("result.next") if victory and int(p["stage"]) < DB.stage_count() else DB.t("result.again")
-	var again := PxButton.make("wave_btn_next", false, Vector2(bw, 120))
-	again.overlay = func(b: PxButton, off: Vector2) -> void:
-		# ▶가 오른쪽 끝에 그려져 있다: 글자는 왼쪽 넓은 곳에
-		Px.text(b, again_label, Rect2(off + Vector2(16, 0), Vector2(b.size.x * 0.72, b.size.y)), 32, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 6)
+	_place(home, Rect2(148, by, 354, 110))
+	var again := PxButton.make("kit_btn_red", true, Vector2(354, 110))
+	again.font_size = 34
+	again.text = DB.t("result.next") if victory and int(p["stage"]) < DB.stage_count() else DB.t("result.again")
 	again.pressed.connect(func() -> void: _leave("again"))
-	_place(again, Rect2(x0 + bw + 20, by, bw, 120))
+	_place(again, Rect2(522, by, 354, 110))
 	if bool(p.get("tutorial", false)) and victory:
 		again.disabled = true
 		home.pulse = true

@@ -1,0 +1,27 @@
+IMAGE 1 is a finished screen of my 2D pixel art game (set in China's Three Kingdoms era). Draw one more screen of the same game: the hero detail window. Keep it simple and clean, in exactly the same style as IMAGE 1: same pixel size, same dark outlines, same flat brown panels with a thin dark outline and a thin lighter inner line, same dark-brown empty slots for numbers, same icon style. Flat: no bevels, no gloss, no gradients, no drop shadows.
+
+IMAGE 2 (grey boxes with numbers) only shows WHERE things go. Follow its positions and sizes, but do not copy the grey, the numbers or any letters.
+
+If another window of this game is attached as an extra image, use exactly the same window frame, title bar and close button as in it.
+
+This is a big window that covers the middle of the lobby screen of IMAGE 1. Keep the top UI of IMAGE 1 (portrait frame, two chips, round buttons) and its five bottom tabs exactly as they are; the window fills the area between them.
+
+The window (numbers of IMAGE 2; the light grey boxes marked as existing are the window frame, three tabs and three square slots):
+- Window frame: a big brown panel, with a small red square close button (white X) at the top right corner.
+1. Info panel at the top: a big empty dark-brown box (the game draws a big portrait and stats there).
+2. Two small arrow buttons at the left and right edges of the info panel: a white left triangle and a white right triangle.
+3. Grade strip: a short empty strip with a thin gold line.
+4. Two short empty strips of the same height.
+- Three tabs in a row: a star icon, a flame icon, a sword-and-shield icon. The first one is selected (brighter).
+5. Content panel under the tabs: a big empty dark-brown box.
+- Three square equipment slots in a row inside it: empty, dark, with a thin gold border.
+6. A small blue button with a gold star icon.
+7. A small red button with an up arrow icon.
+8. Bond strip at the bottom: a long low empty strip with a small gold knot icon at its left end.
+
+Rules:
+- Every icon listed above must already be drawn. No blank placeholders where an icon is listed.
+- Places described as "empty" stay empty: the game writes the text, numbers and faces there.
+- No text, letters or numbers anywhere. No characters.
+- Every piece is opaque and has a closed dark outline. Pieces do not overlap and do not touch each other.
+- No sparkles, no watermark. Tall portrait image, 9:16.

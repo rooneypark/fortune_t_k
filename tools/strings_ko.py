@@ -19,7 +19,7 @@ S = {
  # tabs
  "tab.heroes": "장수", "tab.items": "아이템", "tab.arena": "쟁패", "tab.shop": "상점",
  # lobby
- "lobby.btn_stage": "출정", "lobby.shop": "상점", "lobby.arena_soon": "쟁패는 준비 중이에요", "lobby.soon": "준비 중", "lobby.btn_arena": "쟁패", "lobby.mail": "우편", "lobby.missions": "임무", "lobby.bag": "장수", "lobby.recruit": "가방", 
+ "lobby.btn_stage": "출정", "lobby.shop": "상점", "lobby.arena_soon": "쟁패는 준비 중이에요", "lobby.btn_arena": "쟁패", "lobby.mail": "우편", "lobby.missions": "임무", "lobby.bag": "장수", "lobby.recruit": "가방", 
  "lobby.attendance": "출석 %d일차", "lobby.monthly": "월정액 금 +%d",
  # battle
  "battle.no_rice": "군량이 부족해요 · 위의 군량을 눌러 금으로 채울 수 있어요",

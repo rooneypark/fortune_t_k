@@ -24,6 +24,9 @@ var title_box := func(sz: Vector2) -> Rect2: return Rect2(28, 10, sz.x - 56, sz.
 ## 제목 띠 그림의 색 (패배 창은 잿빛으로).
 var title_tint := Color.WHITE
 static var _layouts: Dictionary = {}
+## 공용 그림 창 (2026-11-25 8차): 창마다 부품을 따로 두지 않고 공용 부품(kit_frame · kit_title · btn_close)으로 틀을 그린다.
+## setup()에서 use_kit(틀 자리, 제목 띠 자리, 닫기 자리)를 부르면 그림 창이 되고, 내용은 화면 px 그대로 _place() 한다.
+var _kit := {}
 ## Header band above the frame (ribbon + close X) — inside the panel container.
 const HEAD := 64.0
 
@@ -63,6 +66,15 @@ func use_art(prefix: String) -> bool:
 	_art = Px.has_art(prefix + "_frame") and _r(prefix + "_frame").size != Vector2.ZERO
 	if not _art:
 		art = ""
+	return _art
+
+
+## 공용 부품으로 그리는 그림 창을 켠다. 자리는 시안에서 잰 화면 px.
+## [param frame_art] kit_frame(작은 창) · kit_frame2(안쪽 판이 있는 큰 창), [param title_art] kit_title · kit_title_green · kit_title_gold.
+func use_kit(frame: Rect2, title_r: Rect2, close_r := Rect2(), frame_art := "kit_frame", title_art := "kit_title") -> bool:
+	_art = Px.has_nine(frame_art)
+	if _art:
+		_kit = {"frame": frame, "title": title_r, "close": close_r, "frame_art": frame_art, "title_art": title_art}
 	return _art
 
 
@@ -137,6 +149,21 @@ func _build_art_frame() -> void:
 	panel.size = Px.CANVAS
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(panel)
+	if not _kit.is_empty():
+		var fart := String(_kit["frame_art"])
+		var kf := DrawLayer.make(func(ci: Control) -> void: Px.nine(ci, fart, Rect2(Vector2.ZERO, ci.size)))
+		kf.mouse_filter = Control.MOUSE_FILTER_STOP
+		_place(kf, _kit["frame"] as Rect2)
+		if title != "" and (_kit["title"] as Rect2).size != Vector2.ZERO:
+			var tart := String(_kit["title_art"])
+			var kh := DrawLayer.make(func(ci: Control) -> void:
+				Px.nine(ci, tart, Rect2(Vector2.ZERO, ci.size), title_tint)
+				Px.text(ci, title, title_box.call(ci.size), title_size, Px.WHITE, HORIZONTAL_ALIGNMENT_CENTER, 7))
+			kh.mouse_filter = Control.MOUSE_FILTER_STOP
+			_place(kh, _kit["title"] as Rect2)
+		if show_close and (_kit["close"] as Rect2).size != Vector2.ZERO:
+			_place(W.close_button(close), _kit["close"] as Rect2)
+		return
 	var frame := _pic(art + "_frame")
 	frame.mouse_filter = Control.MOUSE_FILTER_STOP
 	Px.rec(frame, "image", Rect2(), art + "_frame")

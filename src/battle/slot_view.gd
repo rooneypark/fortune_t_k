@@ -38,12 +38,12 @@ var _thump: Array = [0.0, 0.0, 0.0]
 var _tick_t := 0.0
 static var _weapon: Dictionary = {}
 
-# ---- 그림 슬롯 (2026-11-24): 판 · 릴 · 화살표는 완성 화면에서 떼어 낸 그림 (tools/import_battle3_ui.py).
+# ---- 그림 슬롯 (2026-11-24): 판 · 릴 · 화살표는 완성 화면에서 떼어 낸 그림 (tools/import_battle7_ui.py).
 # 릴은 통째로 구른다: 릴 그림의 한 마디(battle_reel_tile = 크림색 띠 40 + 어두운 칸 92)를 위아래로 이어 붙인
 # 끝없는 띠가, 칸 속의 얼굴 · 무기 아이콘과 함께 위에서 아래로 굴러간다. 보이는 곳은 릴 그림의 자리(147 x 308)뿐이다.
 # 멈추면 가운데 칸이 결과이고, 위아래로 잘린 칸이 조금 보인다 (완성 화면과 같은 모습).
 ## 릴 그림 안의 칸 자리 (릴 그림 왼쪽 위 기준 px). 그림마다 다르므로 battle_layout.json 에서 읽는다
-## (reel_hole · reel_hole_top · reel_hole_bot · reel_step · reel_inner, tools/import_battle3_ui.py). 없으면 예전 값.
+## (reel_hole · reel_hole_top · reel_hole_bot · reel_step · reel_inner, tools/import_battle7_ui.py). 없으면 예전 값.
 static var HOLE := Rect2(27, 105, 93, 92)
 static var HOLE_TOP := Rect2(27, 8, 93, 57)
 static var HOLE_BOT := Rect2(27, 237, 93, 62)
